@@ -1,0 +1,54 @@
+{
+  "name": "univoice",
+  "version": "0.0.1",
+  "description": "Unified Voice SDK for TTS and ASR",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tts": {
+      "import": "./dist/tts/index.js",
+      "types": "./dist/tts/index.d.ts"
+    },
+    "./asr": {
+      "import": "./dist/asr/index.js",
+      "types": "./dist/asr/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types/index.d.ts",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "spell": "cspell lint .",
+    "release": "release-it",
+    "release:dry": "release-it --dry-run"
+  },
+  "keywords": ["tts", "asr", "voice", "speech", "audio"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^22.0.0",
+    "cspell": "^8.0.0",
+    "release-it": "^18.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
