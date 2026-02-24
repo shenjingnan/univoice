@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "univoice",
+    "tts",
+    "asr",
+    "doubao",
+    "minimax",
+    "qwen",
+    "openai",
+    "gemini",
+    "paraformer",
+    "afplay",
+    "vitest",
+    "biomejs",
+    "esbuild"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "*.lock",
+    "pnpm-lock.yaml"
+  ]
+}
