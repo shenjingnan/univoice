@@ -1,11 +1,11 @@
-export { collectAudio } from './collect.js';
-export type { CollectOptions } from './collect.js';
+export { collectAudio } from './collect';
+export type { CollectOptions } from './collect';
 
-export { saveAudio } from './save.js';
-export type { SaveOptions } from './save.js';
+export { saveAudio } from './save';
+export type { SaveOptions } from './save';
 
-export { playAudio } from './play.js';
-export type { PlayOptions } from './play.js';
+export { playAudio } from './play';
+export type { PlayOptions } from './play';
 
-export { teeAudio } from './tee.js';
-export type { TeeOptions } from './tee.js';
+export { teeAudio } from './tee';
+export type { TeeOptions } from './tee';

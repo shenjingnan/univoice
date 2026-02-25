@@ -1,5 +1,5 @@
-export { BaseTTS } from './base.js';
-export { createTTS, registerTTSProvider, getTTSProviders, synthesize } from './factory.js';
+export { BaseTTS } from './base';
+export { createTTS, registerTTSProvider, getTTSProviders, synthesize } from './factory';
 
-export * from './utils/index.js';
-export * from '@/types/tts.js';
+export * from './utils/index';
+export * from '@/types/tts';

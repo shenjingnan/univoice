@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import type { TTSResponse } from '@/types/tts.js';
+import type { TTSResponse } from '@/types/tts';
 
 export interface PlayOptions {
   player?: string;

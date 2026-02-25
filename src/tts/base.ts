@@ -4,7 +4,7 @@ import type {
   TTSRequest,
   TTSResponse,
   TTSVoice,
-} from '@/types/tts.js';
+} from '@/types/tts';
 
 export abstract class BaseTTS implements TTSProvider {
   abstract name: string;

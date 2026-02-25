@@ -1,4 +1,4 @@
-import type { ASROptions, ASRProvider, ASRRequest, ASRResponse } from '@/types/asr.js';
+import type { ASROptions, ASRProvider, ASRRequest, ASRResponse } from '@/types/asr';
 
 export abstract class BaseASR implements ASRProvider {
   abstract name: string;

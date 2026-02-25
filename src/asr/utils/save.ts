@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import type { ASRResponse } from '@/types/asr.js';
+import type { ASRResponse } from '@/types/asr';
 
 export interface SaveOptions {
   filename?: string;

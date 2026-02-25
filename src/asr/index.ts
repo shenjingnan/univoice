@@ -1,5 +1,5 @@
-export { BaseASR } from './base.js';
-export { createASR, registerASRProvider, getASRProviders, recognize } from './factory.js';
+export { BaseASR } from './base';
+export { createASR, registerASRProvider, getASRProviders, recognize } from './factory';
 
-export * from './utils/index.js';
-export * from '@/types/asr.js';
+export * from './utils/index';
+export * from '@/types/asr';

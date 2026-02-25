@@ -4,8 +4,8 @@ export {
   registerTTSProvider,
   getTTSProviders,
   synthesize,
-} from './tts/index.js';
-export { collectAudio, saveAudio, playAudio, teeAudio } from './tts/utils/index.js';
+} from './tts/index';
+export { collectAudio, saveAudio, playAudio, teeAudio } from './tts/utils/index';
 export type {
   TTSOptions,
   TTSRequest,
@@ -13,7 +13,7 @@ export type {
   TTSProvider,
   TTSVoice,
   TTSProviderType,
-} from '@/types/tts.js';
+} from '@/types/tts';
 
 export {
   BaseASR,
@@ -21,8 +21,8 @@ export {
   registerASRProvider,
   getASRProviders,
   recognize,
-} from './asr/index.js';
-export { collectText, saveText } from './asr/utils/index.js';
+} from './asr/index';
+export { collectText, saveText } from './asr/utils/index';
 export type {
   ASROptions,
   ASRRequest,
@@ -30,6 +30,6 @@ export type {
   ASRProvider,
   ASRSegment,
   ASRProviderType,
-} from '@/types/asr.js';
+} from '@/types/asr';
 
-export type { ProviderConfig, AudioFormat, AudioData } from '@/types/index.js';
+export type { ProviderConfig, AudioFormat, AudioData } from '@/types/index';

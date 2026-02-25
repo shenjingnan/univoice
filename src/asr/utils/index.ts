@@ -1,5 +1,5 @@
-export { collectText } from './collect.js';
-export type { CollectOptions } from './collect.js';
+export { collectText } from './collect';
+export type { CollectOptions } from './collect';
 
-export { saveText } from './save.js';
-export type { SaveOptions } from './save.js';
+export { saveText } from './save';
+export type { SaveOptions } from './save';
