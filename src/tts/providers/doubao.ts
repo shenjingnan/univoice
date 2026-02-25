@@ -1,6 +1,6 @@
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 import { BaseTTS } from '@/tts/base';
 import { registerTTSProvider } from '@/tts/factory';
+import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 
 export class DoubaoTTS extends BaseTTS {
   name = 'doubao';

@@ -1,6 +1,6 @@
-import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr';
 import { BaseASR } from '@/asr/base';
 import { registerASRProvider } from '@/asr/factory';
+import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr';
 
 export class DoubaoASR extends BaseASR {
   name = 'doubao';

@@ -1,5 +1,5 @@
-import type { TTSOptions, TTSProvider, TTSProviderType, TTSResponse } from '@/types/tts';
 import { BaseTTS } from '@/tts/base';
+import type { TTSOptions, TTSProvider, TTSProviderType, TTSResponse } from '@/types/tts';
 
 const providers = new Map<string, new (options: TTSOptions) => BaseTTS>();
 
