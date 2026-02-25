@@ -1,10 +1,10 @@
-import type { TTSOptions, TTSProvider, TTSProviderType, TTSResponse } from '@/types/tts';
+import type { TTSOptions, TTSProvider, TTSResponse } from '@/types/tts';
 import { BaseTTS } from '@/tts/base';
 
 const providers = new Map<string, new (options: TTSOptions) => BaseTTS>();
 
 export function registerTTSProvider(
-  type: TTSProviderType,
+  type: string,
   provider: new (options: TTSOptions) => BaseTTS
 ): void {
   providers.set(type, provider);

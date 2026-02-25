@@ -35,4 +35,4 @@ export interface TTSVoice {
   gender?: 'male' | 'female' | 'neutral';
 }
 
-export type TTSProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
+export type TTSProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini';
