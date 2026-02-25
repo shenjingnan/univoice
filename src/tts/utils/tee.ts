@@ -1,7 +1,7 @@
 import type { TTSResponse } from '@/types/tts';
-import { collectAudio } from './collect';
-import { playAudio } from './play';
-import { saveAudio } from './save';
+import { collectAudio } from '@/tts/utils/collect';
+import { playAudio } from '@/tts/utils/play';
+import { saveAudio } from '@/tts/utils/save';
 
 export interface TeeOptions {
   save?: {

@@ -2,12 +2,12 @@ import type { ASROptions, ASRProvider, ASRRequest, ASRResponse } from '@/types/a
 
 export abstract class BaseASR implements ASRProvider {
   abstract name: string;
-  protected apiKey: string;
-  protected baseUrl: string;
-  protected model: string;
-  protected language: string;
-  protected prompt: string;
-  protected responseFormat: 'json' | 'text' | 'srt' | 'vtt' | 'verbose_json';
+  public apiKey: string;
+  public baseUrl: string;
+  public model: string;
+  public language: string;
+  public prompt: string;
+  public responseFormat: 'json' | 'text' | 'srt' | 'vtt' | 'verbose_json';
 
   constructor(options: ASROptions) {
     this.apiKey = options.apiKey || '';
@@ -20,7 +20,7 @@ export abstract class BaseASR implements ASRProvider {
 
   abstract recognize(request: ASRRequest): Promise<ASRResponse>;
 
-  protected buildRequestOptions(request: ASRRequest): ASROptions {
+  public buildRequestOptions(request: ASRRequest): ASROptions {
     return {
       provider: this.constructor.name,
       apiKey: this.apiKey,

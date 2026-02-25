@@ -1,6 +1,6 @@
 import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr';
-import { BaseASR } from '../base';
-import { registerASRProvider } from '../factory';
+import { BaseASR } from '@/asr/base';
+import { registerASRProvider } from '@/asr/factory';
 
 export class QwenASR extends BaseASR {
   name = 'qwen';

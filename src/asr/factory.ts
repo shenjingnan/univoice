@@ -1,5 +1,5 @@
 import type { ASROptions, ASRProvider, ASRProviderType, ASRResponse } from '@/types/asr';
-import { BaseASR } from './base';
+import { BaseASR } from '@/asr/base';
 
 const providers = new Map<string, new (options: ASROptions) => BaseASR>();
 

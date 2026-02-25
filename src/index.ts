@@ -4,8 +4,8 @@ export {
   registerTTSProvider,
   getTTSProviders,
   synthesize,
-} from './tts/index';
-export { collectAudio, saveAudio, playAudio, teeAudio } from './tts/utils/index';
+} from '@/tts/index';
+export { collectAudio, saveAudio, playAudio, teeAudio } from '@/tts/utils/index';
 export type {
   TTSOptions,
   TTSRequest,
@@ -21,8 +21,8 @@ export {
   registerASRProvider,
   getASRProviders,
   recognize,
-} from './asr/index';
-export { collectText, saveText } from './asr/utils/index';
+} from '@/asr/index';
+export { collectText, saveText } from '@/asr/utils/index';
 export type {
   ASROptions,
   ASRRequest,

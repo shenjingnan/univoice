@@ -1,6 +1,6 @@
 import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
-import { BaseTTS } from '../base';
-import { registerTTSProvider } from '../factory';
+import { BaseTTS } from '@/tts/base';
+import { registerTTSProvider } from '@/tts/factory';
 
 export class MinimaxTTS extends BaseTTS {
   name = 'minimax';
