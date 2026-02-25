@@ -1,0 +1,102 @@
+import { Callout, Steps, Tabs } from "nextra/components";
+
+# 快速上手
+
+快速入门指南将会向你展示最快速的安装和基本使用方法。
+
+完成本指南后，你将能够使用 univoice SDK 进行 TTS（文字转语音）和 ASR（语音转文字）。
+
+## 环境准备
+
+请先安装好 node（>=20.0.0）与 pnpm。
+
+<Callout type="info">如果你已经准备好 node & pnpm 可以跳过此步骤</Callout>
+
+<Steps>
+## 安装Node
+    请前往 [Node官方安装地址](https://nodejs.org/en/download) 进行安装，并验证安装是否成功。
+
+    以下为 node:22(LTS) + pnpm 的安装方式
+
+    <Tabs items={['macos / linux', 'windows']}>
+      <Tabs.Tab>
+        ```bash
+        # 下载并安装 nvm:
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+        # 重启shell
+        \. "$HOME/.nvm/nvm.sh"
+
+        # 下载并安装 Node.js:
+        nvm install 22
+
+        # 验证 Node.js 版本:
+        node -v # 应该打印出 "v22.19.0".
+
+        # 下载并安装 pnpm:
+        corepack enable pnpm
+
+        # 验证 pnpm 版本:
+        pnpm -v
+        ```
+      </Tabs.Tab>
+
+      <Tabs.Tab>
+        ```bash
+        # 下载并安装 Chocolatey:
+        powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
+
+        # 下载并安装 Node.js:
+        choco install nodejs --version="22.19.0"
+
+        # 验证 Node.js 版本:
+        node -v # 应该打印出 "v22.19.0".
+
+        # 下载并安装 pnpm:
+        corepack enable pnpm
+
+        # 验证 pnpm 版本:
+        pnpm -v
+        ```
+      </Tabs.Tab>
+    </Tabs>
+
+## 安装 univoice SDK
+    <Tabs items={['pnpm', 'npm']}>
+    <Tabs.Tab>
+    ```bash
+    pnpm add univoice
+    ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+    ```bash
+    npm install univoice
+    ```
+    </Tabs.Tab>
+    </Tabs>
+
+## 使用 TTS（文字转语音）
+
+```typescript
+import { TTS } from 'univoice/tts';
+
+const tts = new TTS({
+  // 配置选项
+});
+
+const audio = await tts.synthesize('你好，世界！');
+```
+
+## 使用 ASR（语音转文字）
+
+```typescript
+import { ASR } from 'univoice/asr';
+
+const asr = new ASR({
+  // 配置选项
+});
+
+const text = await asr.recognize(audioBuffer);
+```
+
+</Steps>
