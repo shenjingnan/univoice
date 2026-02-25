@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises';
-import type { TTSResponse } from '../../../types/tts.js';
+import type { TTSResponse } from '@/types/tts.js';
 
 export interface SaveOptions {
   filename?: string;

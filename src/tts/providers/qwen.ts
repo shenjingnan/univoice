@@ -1,4 +1,4 @@
-import type { TTSOptions, TTSRequest, TTSResponse } from '../../../types/tts.js';
+import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 import { BaseTTS } from '../base.js';
 import { registerTTSProvider } from '../factory.js';
 

@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { BaseTTS } from '../../src/tts/base.js';
+import { BaseTTS } from '@/tts/base.js';
 import {
   createTTS,
   getTTSProviders,
   registerTTSProvider,
   synthesize,
-} from '../../src/tts/factory.js';
-import type { TTSOptions, TTSRequest, TTSResponse } from '../../types/tts.js';
+} from '@/tts/factory.js';
+import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 
 // 创建一个模拟的 TTS 提供商
 class MockTTSProvider extends BaseTTS {

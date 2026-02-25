@@ -1,4 +1,4 @@
-import type { ASROptions, ASRRequest, ASRResponse } from '../../../types/asr.js';
+import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
 import { BaseASR } from '../base.js';
 import { registerASRProvider } from '../factory.js';
 

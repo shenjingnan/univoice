@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { BaseASR } from '../../src/asr/base.js';
-import type { ASROptions, ASRRequest } from '../../types/asr.js';
+import { BaseASR } from '@/asr/base.js';
+import type { ASROptions, ASRRequest } from '@/types/asr.js';
 
 // 创建一个具体的 ASR 实现类用于测试
 class MockASR extends BaseASR {

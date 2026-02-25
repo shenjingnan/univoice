@@ -1,4 +1,4 @@
-import type { TTSResponse } from '../../../types/tts.js';
+import type { TTSResponse } from '@/types/tts.js';
 import { collectAudio } from './collect.js';
 import { playAudio } from './play.js';
 import { saveAudio } from './save.js';

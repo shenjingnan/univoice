@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import type { TTSResponse } from '../../../types/tts.js';
+import type { TTSResponse } from '@/types/tts.js';
 
 export interface CollectOptions {
   onChunk?: (chunk: Uint8Array) => void;
