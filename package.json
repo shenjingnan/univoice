@@ -3,20 +3,20 @@
   "version": "0.0.1",
   "description": "Unified Voice SDK for TTS and ASR",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
     },
     "./tts": {
-      "import": "./dist/tts/index.js",
-      "types": "./dist/tts/index.d.ts"
+      "import": "./dist/src/tts/index.js",
+      "types": "./dist/src/tts/index.d.ts"
     },
     "./asr": {
-      "import": "./dist/asr/index.js",
-      "types": "./dist/asr/index.d.ts"
+      "import": "./dist/src/asr/index.js",
+      "types": "./dist/src/asr/index.d.ts"
     },
     "./types": {
       "import": "./dist/types/index.d.ts",
