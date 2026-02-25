@@ -22,6 +22,6 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["*.ts", "tts/**/*.ts", "asr/**/*.ts", "types/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts", "types/**/*.ts"],
+  "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }
