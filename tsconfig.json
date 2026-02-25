@@ -27,6 +27,6 @@
       "@/types/*": ["types/*"]
     }
   },
-  "include": ["src/**/*.ts", "types/**/*.ts"],
+  "include": ["src/**/*.ts", "types/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }
