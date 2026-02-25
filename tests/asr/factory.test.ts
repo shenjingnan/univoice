@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { BaseASR } from '../../src/asr/base.js';
+import { BaseASR } from '@/asr/base.js';
 import {
   createASR,
   getASRProviders,
   recognize,
   registerASRProvider,
-} from '../../src/asr/factory.js';
-import type { ASROptions, ASRRequest, ASRResponse } from '../../types/asr.js';
+} from '@/asr/factory.js';
+import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {

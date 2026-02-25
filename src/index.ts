@@ -13,7 +13,7 @@ export type {
   TTSProvider,
   TTSVoice,
   TTSProviderType,
-} from '../types/tts.js';
+} from '@/types/tts.js';
 
 export {
   BaseASR,
@@ -30,6 +30,6 @@ export type {
   ASRProvider,
   ASRSegment,
   ASRProviderType,
-} from '../types/asr.js';
+} from '@/types/asr.js';
 
-export type { ProviderConfig, AudioFormat, AudioData } from '../types/index.js';
+export type { ProviderConfig, AudioFormat, AudioData } from '@/types/index.js';

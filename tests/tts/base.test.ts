@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { BaseTTS } from '../../src/tts/base.js';
-import type { TTSOptions, TTSRequest } from '../../types/tts.js';
+import { BaseTTS } from '@/tts/base.js';
+import type { TTSOptions, TTSRequest } from '@/types/tts.js';
 
 // 创建一个具体的 TTS 实现类用于测试
 class MockTTS extends BaseTTS {

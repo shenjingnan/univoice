@@ -20,8 +20,13 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/types/*": ["types/*"]
+    }
   },
-  "include": ["src/**/*.ts", "types/**/*.ts"],
+  "include": ["src/**/*.ts", "types/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }

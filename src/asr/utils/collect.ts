@@ -1,4 +1,4 @@
-import type { ASRResponse } from '../../../types/asr.js';
+import type { ASRResponse } from '@/types/asr.js';
 
 export interface CollectOptions {
   onSegment?: (segment: string) => void;
