@@ -1,10 +1,10 @@
-import type { ASROptions, ASRProvider, ASRResponse } from '@/types/asr';
 import { BaseASR } from '@/asr/base';
+import type { ASROptions, ASRProvider, ASRProviderType, ASRResponse } from '@/types/asr';
 
 const providers = new Map<string, new (options: ASROptions) => BaseASR>();
 
 export function registerASRProvider(
-  type: string,
+  type: ASRProviderType,
   provider: new (options: ASROptions) => BaseASR
 ): void {
   providers.set(type, provider);

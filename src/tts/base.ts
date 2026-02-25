@@ -1,10 +1,4 @@
-import type {
-  TTSOptions,
-  TTSProvider,
-  TTSRequest,
-  TTSResponse,
-  TTSVoice,
-} from '@/types/tts';
+import type { TTSOptions, TTSProvider, TTSRequest, TTSResponse, TTSVoice } from '@/types/tts';
 
 export abstract class BaseTTS implements TTSProvider {
   abstract name: string;

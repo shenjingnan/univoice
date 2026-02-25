@@ -34,4 +34,4 @@ export interface ASRProvider {
   recognize(request: ASRRequest): Promise<ASRResponse>;
 }
 
-export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini';
+export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
