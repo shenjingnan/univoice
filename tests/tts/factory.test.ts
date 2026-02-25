@@ -12,7 +12,7 @@ import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 class MockTTSProvider extends BaseTTS {
   name = 'mock-provider';
 
-  async synthesize(request: TTSRequest): Promise<TTSResponse> {
+  async synthesize(_request: TTSRequest): Promise<TTSResponse> {
     return {
       audio: new Uint8Array([1, 2, 3]),
       format: 'mp3',
@@ -94,7 +94,7 @@ describe('TTS Factory', () => {
     });
 
     it('应该将文本和选项正确传递给 TTS 实例', async () => {
-      const synthesizeSpy = vi.fn(async (request: TTSRequest): Promise<TTSResponse> => {
+      const synthesizeSpy = vi.fn(async (_request: TTSRequest): Promise<TTSResponse> => {
         return {
           audio: new Uint8Array(0),
           format: 'mp3',

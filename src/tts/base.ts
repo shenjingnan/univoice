@@ -4,19 +4,19 @@ import type {
   TTSRequest,
   TTSResponse,
   TTSVoice,
-} from '@/types/tts.js';
+} from '@/types/tts';
 
 export abstract class BaseTTS implements TTSProvider {
   abstract name: string;
-  protected apiKey: string;
-  protected baseUrl: string;
-  protected model: string;
-  protected voice: string;
-  protected speed: number;
-  protected volume: number;
-  protected pitch: number;
-  protected format: 'mp3' | 'wav' | 'ogg' | 'flac';
-  protected language: string;
+  public apiKey: string;
+  public baseUrl: string;
+  public model: string;
+  public voice: string;
+  public speed: number;
+  public volume: number;
+  public pitch: number;
+  public format: 'mp3' | 'wav' | 'ogg' | 'flac';
+  public language: string;
 
   constructor(options: TTSOptions) {
     this.apiKey = options.apiKey || '';
@@ -36,7 +36,7 @@ export abstract class BaseTTS implements TTSProvider {
     return [];
   }
 
-  protected buildRequestOptions(request: TTSRequest): TTSOptions {
+  public buildRequestOptions(request: TTSRequest): TTSOptions {
     return {
       provider: this.constructor.name,
       apiKey: this.apiKey,

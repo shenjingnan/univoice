@@ -1,6 +1,6 @@
-import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
-import { BaseASR } from '../base.js';
-import { registerASRProvider } from '../factory.js';
+import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr';
+import { BaseASR } from '@/asr/base';
+import { registerASRProvider } from '@/asr/factory';
 
 export class GeminiASR extends BaseASR {
   name = 'gemini';

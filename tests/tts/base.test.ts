@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { BaseTTS } from '@/tts/base.js';
 import type { TTSOptions, TTSRequest } from '@/types/tts.js';
 

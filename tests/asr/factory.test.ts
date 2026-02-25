@@ -12,7 +12,7 @@ import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
 class MockASRProvider extends BaseASR {
   name = 'mock-provider';
 
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async recognize(_request: ASRRequest): Promise<ASRResponse> {
     return {
       text: 'Transcribed text',
       language: 'zh-CN',
@@ -95,7 +95,7 @@ describe('ASR Factory', () => {
     });
 
     it('应该将音频和选项正确传递给 ASR 实例', async () => {
-      const recognizeSpy = vi.fn(async (request: ASRRequest): Promise<ASRResponse> => {
+      const recognizeSpy = vi.fn(async (_request: ASRRequest): Promise<ASRResponse> => {
         return {
           text: '',
           language: 'zh-CN',

@@ -1,6 +1,6 @@
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
-import { BaseTTS } from '../base.js';
-import { registerTTSProvider } from '../factory.js';
+import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
+import { BaseTTS } from '@/tts/base';
+import { registerTTSProvider } from '@/tts/factory';
 
 export class TTS1 extends BaseTTS {
   name = 'openai';
