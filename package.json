@@ -23,9 +23,7 @@
       "types": "./dist/types/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -38,13 +36,7 @@
     "release": "release-it",
     "release:dry": "release-it --dry-run"
   },
-  "keywords": [
-    "tts",
-    "asr",
-    "voice",
-    "speech",
-    "audio"
-  ],
+  "keywords": ["tts", "asr", "voice", "speech", "audio"],
   "author": "",
   "license": "MIT",
   "engines": {
@@ -54,6 +46,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "cspell": "^8.0.0",
     "release-it": "^18.0.0",
     "typescript": "^5.7.0",
