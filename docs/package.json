@@ -10,13 +10,7 @@
     "start": "next start",
     "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
   },
-  "keywords": [
-    "univoice",
-    "tts",
-    "asr",
-    "voice",
-    "speech"
-  ],
+  "keywords": ["univoice", "tts", "asr", "voice", "speech"],
   "author": "shenjingnan <sjn.code@gmail.com>",
   "license": "MIT",
   "packageManager": "pnpm@10.13.1",
