@@ -2,19 +2,29 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "univoice",
-    "tts",
-    "asr",
-    "doubao",
-    "minimax",
-    "qwen",
-    "openai",
-    "gemini",
-    "paraformer",
     "afplay",
-    "vitest",
+    "asr",
     "biomejs",
-    "esbuild"
+    "doubao",
+    "esbuild",
+    "gemini",
+    "gitee",
+    "Gitee",
+    "GITEE",
+    "minimax",
+    "openai",
+    "paraformer",
+    "qwen",
+    "tts",
+    "univoice",
+    "vitest",
+    "webfactory"
   ],
-  "ignorePaths": ["docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
+  "ignorePaths": [
+    "docs",
+    "node_modules",
+    "dist",
+    "*.lock",
+    "pnpm-lock.yaml"
+  ]
 }
