@@ -50,7 +50,7 @@ jobs:
     - name: 代码检查
       run: pnpm run lint
 
-    # 构建（必须在类型检查之前，因为类型定义文件需要通过构建生成）
+    # 构建
     - name: 构建
       uses: nick-invision/retry@v3
       with:
@@ -74,34 +74,9 @@ jobs:
         retry_on: error
         command: pnpm run test:run
 
-    # 上传覆盖率（仅 Ubuntu）
+    # 上传覆盖率报告
     - name: 上传覆盖率报告
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       if: matrix.os == 'ubuntu-latest'
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: |
-          ./coverage/lcov.info
-        flags: unittests
-        name: codecov-${{ matrix.os }}-node${{ matrix.node-version }}
-        fail_ci_if_error: true
-        verbose: true
-
-    # 上传构建产物
-    - name: 上传覆盖率报告
-      uses: actions/upload-artifact@v4
-      if: always() && matrix.os == 'ubuntu-latest'
-      with:
-        name: coverage-report-${{ matrix.os }}-node${{ matrix.node-version }}
-        path: |
-          coverage/
-        retention-days: 30
-
-    - name: 上传构建产物
-      uses: actions/upload-artifact@v4
-      if: success()
-      with:
-        name: build-artifacts-${{ matrix.os }}-node${{ matrix.node-version }}
-        path: |
-          dist/
-        retention-days: 7
