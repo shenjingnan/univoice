@@ -20,11 +20,5 @@
     "vitest",
     "webfactory"
   ],
-  "ignorePaths": [
-    "docs",
-    "node_modules",
-    "dist",
-    "*.lock",
-    "pnpm-lock.yaml"
-  ]
+  "ignorePaths": ["docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
 }
