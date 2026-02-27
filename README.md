@@ -5,5 +5,5 @@
 <br />
 
 <div align="center">
-  <a href="https://codecov.io/gh/shenjingnan/xiaozhi-client" target="_blank"><img src="https://codecov.io/gh/shenjingnan/xiaozhi-client/branch/main/graph/badge.svg" alt="codecov" /></a>
+  <a href="https://codecov.io/gh/shenjingnan/univoice" target="_blank"><img src="https://codecov.io/gh/shenjingnan/univoice/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
