@@ -45,7 +45,7 @@
   "packageManager": "pnpm@9.0.0",
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^25.3.2",
     "@vitest/coverage-v8": "^4.0.18",
     "cspell": "^8.0.0",
     "release-it": "^18.0.0",
