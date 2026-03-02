@@ -4,6 +4,7 @@
   "words": [
     "afplay",
     "asr",
+    "bidirection",
     "bigtts",
     "biomejs",
     "BYTEDANCE",
@@ -15,12 +16,15 @@
     "GITEE",
     "minimax",
     "openai",
+    "openspeech",
     "paraformer",
     "qwen",
     "tianmeixiaoyuan",
     "tts",
     "univoice",
+    "unmarshal",
     "vitest",
+    "volcengine",
     "webfactory"
   ],
   "ignorePaths": [
