@@ -8,19 +8,23 @@
   "exports": {
     ".": {
       "import": "./dist/src/index.js",
-      "types": "./dist/src/index.d.ts"
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
     },
     "./tts": {
       "import": "./dist/src/tts/index.js",
-      "types": "./dist/src/tts/index.d.ts"
+      "types": "./dist/src/tts/index.d.ts",
+      "default": "./dist/src/tts/index.js"
     },
     "./asr": {
       "import": "./dist/src/asr/index.js",
-      "types": "./dist/src/asr/index.d.ts"
+      "types": "./dist/src/asr/index.d.ts",
+      "default": "./dist/src/asr/index.js"
     },
     "./types": {
       "import": "./dist/types/index.d.ts",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/types/index.d.ts"
     }
   },
   "files": ["dist"],
@@ -47,11 +51,15 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@types/node": "^25.3.2",
+    "@types/ws": "^8.18.1",
     "@vitest/coverage-v8": "^4.0.18",
     "cspell": "^8.0.0",
     "release-it": "^18.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "ws": "^8.19.0"
   }
 }

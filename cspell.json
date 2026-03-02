@@ -4,7 +4,10 @@
   "words": [
     "afplay",
     "asr",
+    "bidirection",
+    "bigtts",
     "biomejs",
+    "BYTEDANCE",
     "doubao",
     "esbuild",
     "gemini",
@@ -13,11 +16,15 @@
     "GITEE",
     "minimax",
     "openai",
+    "openspeech",
     "paraformer",
     "qwen",
+    "tianmeixiaoyuan",
     "tts",
     "univoice",
+    "unmarshal",
     "vitest",
+    "volcengine",
     "webfactory"
   ],
   "ignorePaths": ["docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
