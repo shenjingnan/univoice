@@ -9,6 +9,17 @@ export interface TTSOptions {
   pitch?: number;
   format?: 'mp3' | 'wav' | 'ogg' | 'flac';
   language?: string;
+
+  /** 火山引擎 App ID (doubao 专用) */
+  appId?: string;
+  /** 火山引擎 Access Token (doubao 专用) */
+  accessToken?: string;
+  /** 火山引擎 Resource ID (doubao 专用) */
+  resourceId?: string;
+  /** 采样率 (默认 24000) */
+  sampleRate?: number;
+  /** 是否启用时间戳 */
+  enableTimestamp?: boolean;
 }
 
 export interface TTSRequest {
