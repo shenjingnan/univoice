@@ -82,6 +82,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1
+      univoice:
+        specifier: workspace:*
+        version: link:..
 
 packages:
 

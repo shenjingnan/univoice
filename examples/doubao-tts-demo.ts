@@ -4,7 +4,7 @@
  */
 import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
-import { createTTS } from '../dist/src/tts';
+import { createTTS } from 'univoice';
 
 async function main() {
   // 从环境变量获取配置
@@ -24,6 +24,7 @@ async function main() {
     accessToken,
     voice,
     format: 'mp3',
+    resourceId: 'seed-tts-2.0',
     sampleRate: 24000,
   });
 
