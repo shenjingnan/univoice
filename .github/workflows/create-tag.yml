@@ -1,0 +1,80 @@
+# .github/workflows/create-tag.yml
+name: Create Tag
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "package.json"
+
+jobs:
+  create-tag:
+    name: Create Git Tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # 需要获取前一个 commit 来比较
+
+      - name: Check if version changed
+        id: version
+        run: |
+          # 获取当前版本
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+
+          # 获取上一个 commit 的版本
+          git checkout HEAD~1 -- package.json
+          PREVIOUS_VERSION=$(node -p "require('./package.json').version")
+          git checkout HEAD -- package.json
+
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "previous=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
+
+          if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Version changed: $PREVIOUS_VERSION → $CURRENT_VERSION"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ Version not changed"
+          fi
+
+      - name: Check if tag exists
+        id: tag-check
+        if: steps.version.outputs.changed == 'true'
+        run: |
+          TAG="v${{ steps.version.outputs.current }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Tag $TAG already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Tag $TAG does not exist, will create"
+          fi
+
+      - name: Create and push tag
+        if: steps.version.outputs.changed == 'true' && steps.tag-check.outputs.exists == 'false'
+        run: |
+          TAG="v${{ steps.version.outputs.current }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+
+          echo "✅ Created and pushed tag: $TAG"
+
+      - name: Summary
+        if: steps.version.outputs.changed == 'true'
+        run: |
+          echo "### 🏷️ Tag Created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: v${{ steps.version.outputs.current }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Previous**: v${{ steps.version.outputs.previous }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The publish workflow will be triggered automatically." >> $GITHUB_STEP_SUMMARY
