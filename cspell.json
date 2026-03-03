@@ -25,7 +25,8 @@
     "unmarshal",
     "vitest",
     "volcengine",
-    "webfactory"
+    "webfactory",
+    "shenjingnan"
   ],
   "ignorePaths": ["docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
 }
