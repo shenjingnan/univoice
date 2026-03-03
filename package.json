@@ -20,17 +20,11 @@
       "import": "./dist/src/asr/index.js",
       "types": "./dist/src/asr/index.d.ts",
       "default": "./dist/src/asr/index.js"
-    },
-    "./types": {
-      "import": "./dist/types/index.d.ts",
-      "types": "./dist/types/index.d.ts",
-      "default": "./dist/types/index.d.ts"
     }
   },
   "files": ["dist"],
   "scripts": {
-    "build": "tsup && pnpm copy-types",
-    "copy-types": "node -e \"require('fs').cpSync('types', 'dist/types', {recursive: true})\"",
+    "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest",
     "test:run": "vitest run",
