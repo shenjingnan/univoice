@@ -1,5 +1,5 @@
 # .github/workflows/create-tag.yml
-name: Create Tag
+name: 创建标签
 
 on:
   push:
@@ -10,18 +10,18 @@ on:
 
 jobs:
   create-tag:
-    name: Create Git Tag
+    name: 创建 Git 标签
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-      - name: Checkout code
+      - name: 检出代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 2 # 需要获取前一个 commit 来比较
 
-      - name: Check if version changed
+      - name: 检查版本是否变更
         id: version
         run: |
           # 获取当前版本
@@ -37,26 +37,26 @@ jobs:
 
           if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "✅ Version changed: $PREVIOUS_VERSION → $CURRENT_VERSION"
+            echo "✅ 版本已变更: $PREVIOUS_VERSION → $CURRENT_VERSION"
           else
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "ℹ️ Version not changed"
+            echo "ℹ️ 版本未变更"
           fi
 
-      - name: Check if tag exists
+      - name: 检查标签是否存在
         id: tag-check
         if: steps.version.outputs.changed == 'true'
         run: |
           TAG="v${{ steps.version.outputs.current }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "⚠️ Tag $TAG already exists"
+            echo "⚠️ 标签 $TAG 已存在"
           else
             echo "exists=false" >> $GITHUB_OUTPUT
-            echo "✅ Tag $TAG does not exist, will create"
+            echo "✅ 标签 $TAG 不存在，将创建"
           fi
 
-      - name: Create and push tag
+      - name: 创建并推送标签
         if: steps.version.outputs.changed == 'true' && steps.tag-check.outputs.exists == 'false'
         run: |
           TAG="v${{ steps.version.outputs.current }}"
@@ -64,17 +64,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git tag -a "$TAG" -m "Release $TAG"
+          git tag -a "$TAG" -m "发布 $TAG"
           git push origin "$TAG"
 
-          echo "✅ Created and pushed tag: $TAG"
+          echo "✅ 已创建并推送标签: $TAG"
 
-      - name: Summary
+      - name: 摘要
         if: steps.version.outputs.changed == 'true'
         run: |
-          echo "### 🏷️ Tag Created" >> $GITHUB_STEP_SUMMARY
+          echo "### 🏷️ 标签已创建" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version**: v${{ steps.version.outputs.current }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Previous**: v${{ steps.version.outputs.previous }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **版本**: v${{ steps.version.outputs.current }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **上一版本**: v${{ steps.version.outputs.previous }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The publish workflow will be triggered automatically." >> $GITHUB_STEP_SUMMARY
+          echo "发布工作流将自动触发。" >> $GITHUB_STEP_SUMMARY

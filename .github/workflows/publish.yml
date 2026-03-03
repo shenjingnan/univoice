@@ -1,5 +1,5 @@
 # .github/workflows/publish.yml
-name: Publish
+name: 发布
 
 on:
   push:
@@ -8,34 +8,34 @@ on:
 
 jobs:
   publish:
-    name: Publish to NPM
+    name: 发布到 NPM
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
 
     steps:
-      - name: Checkout code
+      - name: 检出代码
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install pnpm
+      - name: 安装 pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.30.3
 
-      - name: Get pnpm store directory
+      - name: 获取 pnpm 存储目录
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
         id: pnpm-cache
 
-      - name: Setup pnpm cache
+      - name: 设置 pnpm 缓存
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -43,16 +43,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: 构建
         run: pnpm build
 
-      - name: Test
+      - name: 测试
         run: pnpm test:run
 
-      - name: Check if pre-release
+      - name: 检查是否为预发布版本
         id: prerelease
         env:
           TAG_NAME: ${{ github.ref_name }}
@@ -67,7 +67,7 @@ jobs:
             echo "📦 Detected stable release version"
           fi
 
-      - name: Publish to NPM
+      - name: 发布到 NPM
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TAG: ${{ steps.prerelease.outputs.npm_tag }}
@@ -76,7 +76,7 @@ jobs:
           pnpm publish --provenance --tag "${NPM_TAG}" --no-git-checks
           echo "✅ Published to NPM with tag: ${NPM_TAG}"
 
-      - name: Create GitHub Release
+      - name: 创建 GitHub Release
         uses: actions/github-script@v7
         env:
           IS_PRERELEASE: ${{ steps.prerelease.outputs.is_prerelease }}
@@ -109,7 +109,7 @@ jobs:
               .addRaw(`\n\n**NPM Tag**: \`${npmTag}\``)
               .write();
 
-      - name: Comment on PR
+      - name: 在 PR 上评论
         uses: actions/github-script@v7
         env:
           REPO_NAME: ${{ github.event.repository.name }}
