@@ -24,10 +24,9 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/types/*": ["types/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "types/**/*.ts", "tests/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }

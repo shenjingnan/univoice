@@ -15,11 +15,4 @@ export default defineConfig({
   clean: true,
   keepNames: true,
   platform: 'node',
-  esbuildOptions(options) {
-    options.alias = {
-      '@/types/tts': './types/tts.d.ts',
-      '@/types/asr': './types/asr.d.ts',
-    };
-    return options;
-  },
 });
