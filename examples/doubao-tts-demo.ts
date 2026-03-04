@@ -3,8 +3,13 @@
  * 演示如何使用 univoice SDK 调用火山引擎 TTS 服务
  */
 import 'dotenv/config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
+
+const __filename = fileURLToPath(import.meta.url);
+const basename = path.basename(__filename, path.extname(__filename));
 
 async function main() {
   // 从环境变量获取配置
@@ -37,7 +42,7 @@ async function main() {
     });
 
     // 保存音频文件
-    const outputFile = `doubao-tts-demo.${response.format}`;
+    const outputFile = `${basename}.${response.format}`;
     writeFileSync(outputFile, response.audio);
     console.log(`音频已保存至: ${outputFile}`);
     console.log(`音频大小: ${response.audio.length} bytes`);
