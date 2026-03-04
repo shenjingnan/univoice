@@ -26,14 +26,8 @@
     }
   },
   "hooks": {
-    "before:init": [
-      "pnpm lint",
-      "pnpm test:run",
-      "pnpm build"
-    ],
-    "after:bump": [
-      "echo '\n✓ Version bumped to ${version}'"
-    ],
+    "before:init": ["pnpm lint", "pnpm test:run", "pnpm build"],
+    "after:bump": ["echo '\n✓ Version bumped to ${version}'"],
     "before:git:release": [
       "git checkout -b release/v${version} 2>/dev/null || git checkout release/v${version}",
       "echo '✓ Switched to release branch: release/v${version}'"
