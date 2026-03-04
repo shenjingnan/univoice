@@ -173,42 +173,6 @@ jobs:
               .addRaw(`\n\n**NPM 标签**: \`${npmTag}\``)
               .write();
 
-      - name: 在 PR 上评论
-        if: steps.version.outputs.changed == 'true' && steps.tag-check.outputs.exists == 'false'
-        uses: actions/github-script@v7
-        env:
-          REPO_NAME: ${{ github.event.repository.name }}
-          VERSION: ${{ steps.version.outputs.current }}
-        with:
-          script: |
-            const version = process.env.VERSION;
-            const tag = `v${version}`;
-            const repoName = process.env.REPO_NAME;
-
-            // 查找对应的 release PR
-            const { data: prs } = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'closed',
-              sort: 'updated',
-              direction: 'desc',
-              per_page: 10
-            });
-
-            const releasePR = prs.find(pr =>
-              pr.merged_at &&
-              pr.title.includes(`release ${tag}`)
-            );
-
-            if (releasePR) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: releasePR.number,
-                body: `🎉 **发布 ${tag} 已完成！**\n\n- 📦 [NPM 包](https://www.npmjs.com/package/${repoName})\n- 📝 [GitHub Release](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/${tag})`
-              });
-            }
-
       - name: 摘要
         if: steps.version.outputs.changed == 'true'
         run: |
