@@ -33,11 +33,11 @@ async function main() {
   try {
     // 合成语音
     const response = await tts.synthesize({
-      text: '你好，欢迎使用 univoice SDK。这是一个统一的语音合成和语音识别 SDK。',
+      text: '欢迎来到杭州！我是您的智能导游。杭州，这座有着2200多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。让我们一起开启这段美妙的杭州之旅吧！',
     });
 
     // 保存音频文件
-    const outputFile = `output.${response.format}`;
+    const outputFile = `doubao-tts-demo.${response.format}`;
     writeFileSync(outputFile, response.audio);
     console.log(`音频已保存至: ${outputFile}`);
     console.log(`音频大小: ${response.audio.length} bytes`);

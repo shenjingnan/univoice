@@ -36,6 +36,8 @@ export interface TTSResponse {
 export interface TTSProvider {
   name: string;
   synthesize(request: TTSRequest): Promise<TTSResponse>;
+  /** 流式输出音频数据（可选） */
+  speak?(request: TTSRequest): AsyncIterable<Uint8Array>;
   listVoices?(): Promise<TTSVoice[]>;
 }
 
