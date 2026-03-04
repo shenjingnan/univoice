@@ -1,3 +1,9 @@
+# 更新日志
+
+本文档记录项目的所有重要变更。
+
+# [0.1.0-beta.3](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.2...v0.1.0-beta.3) (2026-03-04)
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
