@@ -11,6 +11,12 @@
     "requireBranch": false,
     "requireUpstream": false
   },
+  "prompt": {
+    "commit": false,
+    "tag": false,
+    "push": false,
+    "release": false
+  },
   "npm": {
     "publish": false,
     "skipChecks": true
