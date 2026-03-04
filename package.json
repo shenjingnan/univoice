@@ -1,6 +1,6 @@
 {
   "name": "univoice",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "description": "Unified Voice SDK for TTS and ASR",
   "repository": {
     "type": "git",
