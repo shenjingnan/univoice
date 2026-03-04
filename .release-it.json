@@ -3,6 +3,8 @@
     "commitMessage": "chore: release v${version}",
     "tagName": "v${version}",
     "push": true,
+    "pushArgs": ["--set-upstream", "--follow-tags"],
+    "pushRepo": "origin",
     "commit": true,
     "tag": false,
     "requireCleanWorkingDir": false,
@@ -24,14 +26,22 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm lint", "pnpm test:run", "pnpm build"],
+    "before:init": [
+      "pnpm lint",
+      "pnpm test:run",
+      "pnpm build"
+    ],
     "after:bump": [
-      "git checkout -b release/v${version}",
-      "echo '\n✓ Version bumped to ${version}'",
-      "echo '✓ Created release branch: release/v${version}'"
+      "echo '\n✓ Version bumped to ${version}'"
+    ],
+    "before:git:release": [
+      "git checkout -b release/v${version} 2>/dev/null || git checkout release/v${version}",
+      "echo '✓ Switched to release branch: release/v${version}'"
     ],
     "after:git:release": [
-      "echo '\n✓ Release commit pushed'",
+      "echo '\n✓ Release commit created'",
+      "echo '✓ Pushing to remote...'",
+      "git push -u origin release/v${version}",
       "echo '\n📝 Creating Pull Request...'",
       "gh pr create --title 'chore: release v${version}' --body 'Release version ${version}\n\n## Changes\nSee CHANGELOG.md for details.\n\n## Checklist\n- [x] Version bumped\n- [x] CHANGELOG updated\n- [x] Tests passed' --base main --head release/v${version}",
       "echo '\n✅ Pull Request created! Please review and merge.'"
