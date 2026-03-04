@@ -1,6 +1,6 @@
 {
   "name": "univoice",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Unified Voice SDK for TTS and ASR",
   "repository": {
     "type": "git",
@@ -32,7 +32,9 @@
       "default": "./dist/src/asr/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -49,7 +51,13 @@
     "release:minor": "release-it minor",
     "release:major": "release-it major"
   },
-  "keywords": ["tts", "asr", "voice", "speech", "audio"],
+  "keywords": [
+    "tts",
+    "asr",
+    "voice",
+    "speech",
+    "audio"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
