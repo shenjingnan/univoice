@@ -1,10 +1,9 @@
 /**
  * Doubao TTS 流式输出示例
- * 演示如何使用 speak() 方法流式获取音频数据，并使用 saveToFile() 保存
+ * 演示如何使用 speak() 方法流式获取音频数据，并使用 saveAudio() 保存
  */
 import 'dotenv/config';
-import { createTTS } from 'univoice';
-import { saveToFile } from 'univoice/tts';
+import { createTTS, saveAudio } from 'univoice';
 
 async function main() {
   // 从环境变量获取配置
@@ -49,7 +48,7 @@ async function main() {
     }
 
     // 保存到文件
-    await saveToFile('output-chunks.pcm', chunks);
+    await saveAudio('output-chunks.pcm', chunks);
     console.log('音频已保存至: output-chunks.pcm');
     console.log(`总大小: ${totalSize} bytes`);
   } catch (error) {
@@ -59,7 +58,7 @@ async function main() {
   console.log('\n=== 方式 2: 直接保存流 ===');
   try {
     // 直接将流保存到文件
-    await saveToFile('output-stream.pcm', tts.speak({ text }));
+    await saveAudio('output-stream.pcm', tts.speak({ text }));
     console.log('音频已保存至: output-stream.pcm');
   } catch (error) {
     console.error('方式 2 失败:', error);

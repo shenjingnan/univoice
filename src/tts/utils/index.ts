@@ -1,10 +1,10 @@
 export { collectAudio } from '@/tts/utils/collect';
 export type { CollectOptions } from '@/tts/utils/collect';
 
-export { saveAudio } from '@/tts/utils/save';
-export type { SaveOptions } from '@/tts/utils/save';
+export { saveAudio } from '@/tts/utils/save-audio';
 
-export { saveToFile } from '@/tts/utils/save-to-file';
+export { saveTTSResponse } from '@/tts/utils/save';
+export type { SaveOptions } from '@/tts/utils/save';
 
 export { playAudio } from '@/tts/utils/play';
 export type { PlayOptions } from '@/tts/utils/play';

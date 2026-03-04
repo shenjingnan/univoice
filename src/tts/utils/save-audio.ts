@@ -29,13 +29,13 @@ function concatUint8Arrays(arrays: Uint8Array[]): Uint8Array {
 /**
  * 保存音频数据到文件
  * 支持两种调用方式：
- * 1. saveToFile(filePath, chunks) - chunks 是 Uint8Array[]
- * 2. saveToFile(filePath, asyncIterable) - 直接传入异步迭代器
+ * 1. saveAudio(filePath, chunks) - chunks 是 Uint8Array[]
+ * 2. saveAudio(filePath, asyncIterable) - 直接传入异步迭代器
  *
  * @param filePath 目标文件路径
  * @param source 音频数据源，可以是 Uint8Array 数组或异步迭代器
  */
-export async function saveToFile(
+export async function saveAudio(
   filePath: string,
   source: Uint8Array[] | AsyncIterable<Uint8Array>
 ): Promise<void> {
