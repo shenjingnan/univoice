@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.1.0-beta.1](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.0...v0.1.0-beta.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* 合并工作流解决 publish.yml 未触发问题 ([f613e2b](https://github.com/shenjingnan/univoice/commit/f613e2b43c3df677ba367209ddd030d7c3c387ac))
+
 # 0.1.0-beta.0 (2026-03-03)
 
 
