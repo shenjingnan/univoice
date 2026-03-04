@@ -28,8 +28,7 @@ async function main() {
     sampleRate: 24000,
   });
 
-  const text =
-    '你好，欢迎使用 univoice SDK。这是一个统一的语音合成和语音识别 SDK，支持流式输出功能。';
+  const text = '来杭州吧，在西湖边撑一把油纸伞，品一口龙井茶，让江南烟雨洗去你所有的疲惫。';
 
   // 检查是否支持流式输出
   if (!tts.speak) {
