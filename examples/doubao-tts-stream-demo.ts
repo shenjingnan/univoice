@@ -3,7 +3,12 @@
  * 演示如何使用 speak() 方法流式获取音频数据，并使用 saveAudio() 保存
  */
 import 'dotenv/config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createTTS, saveAudio } from 'univoice';
+
+const __filename = fileURLToPath(import.meta.url);
+const basename = path.basename(__filename, path.extname(__filename));
 
 async function main() {
   // 从环境变量获取配置
@@ -48,7 +53,7 @@ async function main() {
     }
 
     // 保存到文件
-    await saveAudio('output-chunks.pcm', chunks);
+    await saveAudio(`${basename}-chunks.pcm`, chunks);
     console.log('音频已保存至: output-chunks.pcm');
     console.log(`总大小: ${totalSize} bytes`);
   } catch (error) {
@@ -58,7 +63,7 @@ async function main() {
   console.log('\n=== 方式 2: 直接保存流 ===');
   try {
     // 直接将流保存到文件
-    await saveAudio('output-stream.pcm', tts.speak({ text }));
+    await saveAudio(`${basename}-stream.pcm`, tts.speak({ text }));
     console.log('音频已保存至: output-stream.pcm');
   } catch (error) {
     console.error('方式 2 失败:', error);
