@@ -36,6 +36,7 @@
     "after:bump": ["echo '\n✓ 版本已更新至 ${version}'"],
     "before:git:release": [
       "pnpm lint:fix",
+      "git add -A",
       "echo '✓ 代码格式已修复'",
       "git checkout -b release/v${version} 2>/dev/null || git checkout release/v${version}",
       "echo '✓ 已切换到发布分支: release/v${version}'"
