@@ -60,7 +60,7 @@ jobs:
         command: pnpm run build
 
     - name: 类型检查
-      run: pnpm run build
+      run: pnpm run typecheck
 
     - name: 拼写检查
       run: pnpm run spell
