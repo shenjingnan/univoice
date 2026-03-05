@@ -36,7 +36,7 @@ async function* generateText(): AsyncGenerator<string> {
     '清晨在西湖边骑行，',
     '午后在茶园品茗，',
     '傍晚在古街巷听评弹，',
-    '这就是人间值得。'
+    '这就是人间值得。',
   ];
 
   for (const segment of segments) {
