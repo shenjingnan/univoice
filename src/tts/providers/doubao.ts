@@ -13,7 +13,13 @@ import {
   taskRequest,
   waitForEvent,
 } from '@/tts/protocols/volcengine';
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
+import type {
+  StreamingCallbacks,
+  TTSOptions,
+  TTSRequest,
+  TTSResponse,
+  TextStream,
+} from '@/types/tts';
 import WebSocket from 'ws';
 
 /**
@@ -187,6 +193,228 @@ export class DoubaoTTS extends BaseTTS {
       await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
     } finally {
       ws.close();
+    }
+  }
+
+  /**
+   * 边发边收模式：文本流式发送的同时，音频流式输出
+   * 使用 Promise.all 并发执行发送和接收流程，实现低延迟的实时语音合成
+   *
+   * @param text 要合成的文本
+   * @param callbacks 回调函数
+   */
+  async stream(text: string, callbacks: StreamingCallbacks): Promise<void> {
+    // 1. 创建 WebSocket 连接
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+      skipUTF8Validation: true,
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      ws.on('open', resolve);
+      ws.on('error', reject);
+    });
+
+    try {
+      // 2. 启动连接
+      await startConnection(ws);
+      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
+
+      // 3. 创建会话（不等待响应，由 receiveAudioFlow 统一处理）
+      const sessionId = randomUUID();
+      const sessionPayload = this.buildSessionPayload();
+      await startSession(ws, sessionPayload, sessionId);
+
+      // 标记接收结束的 Promise
+      let resolveReceive: () => void;
+      new Promise<void>((resolve) => {
+        resolveReceive = resolve;
+      });
+
+      // 4. 并发执行发送和接收
+      await Promise.all([
+        this.sendTextFlow(ws, sessionId, text),
+        this.receiveAudioFlow(ws, sessionId, callbacks, resolveReceive!),
+      ]);
+
+      // 5. 结束连接
+      await finishConnection(ws);
+      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
+    } finally {
+      ws.close();
+    }
+  }
+
+  /**
+   * 边发边收模式：流式文本输入
+   * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
+   *
+   * @param textStream 文本流（AsyncIterable<string>）
+   * @param callbacks 回调函数
+   */
+  async streamFrom(textStream: TextStream, callbacks: StreamingCallbacks): Promise<void> {
+    // 1. 创建 WebSocket 连接
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+      skipUTF8Validation: true,
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      ws.on('open', resolve);
+      ws.on('error', reject);
+    });
+
+    try {
+      // 2. 启动连接
+      await startConnection(ws);
+      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
+
+      // 3. 创建会话（不等待响应，由 receiveAudioFlow 统一处理）
+      const sessionId = randomUUID();
+      const sessionPayload = this.buildSessionPayload();
+      await startSession(ws, sessionPayload, sessionId);
+
+      // 标记接收结束的 Promise
+      let resolveReceive: () => void;
+      new Promise<void>((resolve) => {
+        resolveReceive = resolve;
+      });
+
+      // 4. 并发执行发送和接收
+      await Promise.all([
+        this.sendTextStreamFlow(ws, sessionId, textStream),
+        this.receiveAudioFlow(ws, sessionId, callbacks, resolveReceive!),
+      ]);
+
+      // 5. 结束连接
+      await finishConnection(ws);
+      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
+    } finally {
+      ws.close();
+    }
+  }
+
+  /**
+   * 发送流程：逐字符发送文本
+   */
+  private async sendTextFlow(ws: WebSocket, sessionId: string, text: string): Promise<void> {
+    // 构建请求模板
+    const requestTemplate = {
+      user: {
+        uid: randomUUID(),
+      },
+      req_params: {
+        speaker: this.voice,
+        audio_params: {
+          format: this.format,
+          sample_rate: this.sampleRate,
+          enable_timestamp: this.enableTimestamp,
+        },
+        additions: JSON.stringify({
+          disable_markdown_filter: true,
+        }),
+      },
+    };
+
+    // 逐字符发送
+    for (const char of text) {
+      const payload = new TextEncoder().encode(
+        JSON.stringify({
+          ...requestTemplate,
+          req_params: { ...requestTemplate.req_params, text: char },
+          event: EventType.TaskRequest,
+        })
+      );
+      await taskRequest(ws, payload, sessionId);
+    }
+
+    // 结束会话
+    await finishSession(ws, sessionId);
+  }
+
+  /**
+   * 发送流程：从文本流读取并发送
+   */
+  private async sendTextStreamFlow(
+    ws: WebSocket,
+    sessionId: string,
+    textStream: TextStream
+  ): Promise<void> {
+    // 构建请求模板
+    const requestTemplate = {
+      user: {
+        uid: randomUUID(),
+      },
+      req_params: {
+        speaker: this.voice,
+        audio_params: {
+          format: this.format,
+          sample_rate: this.sampleRate,
+          enable_timestamp: this.enableTimestamp,
+        },
+        additions: JSON.stringify({
+          disable_markdown_filter: true,
+        }),
+      },
+    };
+
+    // 从文本流读取并逐字符发送
+    for await (const chunk of textStream) {
+      for (const char of chunk) {
+        const payload = new TextEncoder().encode(
+          JSON.stringify({
+            ...requestTemplate,
+            req_params: { ...requestTemplate.req_params, text: char },
+            event: EventType.TaskRequest,
+          })
+        );
+        await taskRequest(ws, payload, sessionId);
+      }
+    }
+
+    // 结束会话
+    await finishSession(ws, sessionId);
+  }
+
+  /**
+   * 接收流程：持续监听并实时回调音频数据
+   */
+  private async receiveAudioFlow(
+    ws: WebSocket,
+    _sessionId: string,
+    callbacks: StreamingCallbacks,
+    onFinished: () => void
+  ): Promise<void> {
+    while (true) {
+      const msg = await receiveMessage(ws);
+
+      switch (msg.type) {
+        case MsgType.AudioOnlyServer:
+          // 实时回调音频块
+          callbacks.onAudioChunk(msg.payload);
+          break;
+
+        case MsgType.FullServerResponse:
+          // 处理服务端响应事件
+          if (msg.event === EventType.SessionStarted) {
+            callbacks.onEvent?.('SessionStarted');
+          } else if (msg.event === EventType.SessionFinished) {
+            callbacks.onEvent?.('SessionFinished');
+            onFinished();
+            return;
+          }
+          break;
+
+        case MsgType.Error:
+          const error = new Error(
+            `TTS error: ${msg.errorCode}, ${new TextDecoder().decode(msg.payload)}`
+          );
+          callbacks.onError?.(error);
+          throw error;
+
+        default:
+          throw new Error(`Unexpected message type: ${msg.type}`);
+      }
     }
   }
 
