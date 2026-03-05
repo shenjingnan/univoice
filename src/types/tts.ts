@@ -7,7 +7,7 @@ export interface TTSOptions {
   speed?: number;
   volume?: number;
   pitch?: number;
-  format?: 'mp3' | 'wav' | 'ogg' | 'flac';
+  format?: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm';
   language?: string;
 
   /** 火山引擎 App ID (doubao 专用) */
@@ -36,6 +36,8 @@ export interface TTSResponse {
 export interface TTSProvider {
   name: string;
   synthesize(request: TTSRequest): Promise<TTSResponse>;
+  /** 流式输出音频数据（可选） */
+  speak?(request: TTSRequest): AsyncIterable<Uint8Array>;
   listVoices?(): Promise<TTSVoice[]>;
 }
 

@@ -9,7 +9,7 @@ export abstract class BaseTTS implements TTSProvider {
   public speed: number;
   public volume: number;
   public pitch: number;
-  public format: 'mp3' | 'wav' | 'ogg' | 'flac';
+  public format: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm';
   public language: string;
 
   constructor(options: TTSOptions) {
@@ -25,6 +25,14 @@ export abstract class BaseTTS implements TTSProvider {
   }
 
   abstract synthesize(request: TTSRequest): Promise<TTSResponse>;
+
+  /**
+   * 流式输出音频数据
+   * 默认实现：不支持流式输出，子类可以覆盖此方法提供流式支持
+   */
+  speak(_request: TTSRequest): AsyncIterable<Uint8Array> {
+    throw new Error(`Provider ${this.name} does not support streaming output (speak method)`);
+  }
 
   async listVoices(): Promise<TTSVoice[]> {
     return [];

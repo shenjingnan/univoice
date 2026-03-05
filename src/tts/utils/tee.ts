@@ -1,6 +1,6 @@
 import { collectAudio } from '@/tts/utils/collect';
 import { playAudio } from '@/tts/utils/play';
-import { saveAudio } from '@/tts/utils/save';
+import { saveTTSResponse } from '@/tts/utils/save';
 import type { TTSResponse } from '@/types/tts';
 
 export interface TeeOptions {
@@ -20,7 +20,7 @@ export async function teeAudio(
   const audio = await collectAudio(response);
 
   if (options.save) {
-    await saveAudio({ ...response, audio }, options.save);
+    await saveTTSResponse({ ...response, audio }, options.save);
   }
 
   if (options.play) {

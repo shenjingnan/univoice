@@ -5,7 +5,7 @@ export {
   getTTSProviders,
   synthesize,
 } from '@/tts/index';
-export { collectAudio, saveAudio, playAudio, teeAudio } from '@/tts/utils/index';
+export { collectAudio, saveAudio, saveTTSResponse, playAudio, teeAudio } from '@/tts/utils/index';
 export type {
   TTSOptions,
   TTSRequest,

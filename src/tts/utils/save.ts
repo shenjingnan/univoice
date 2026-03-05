@@ -6,7 +6,18 @@ export interface SaveOptions {
   directory?: string;
 }
 
-export async function saveAudio(response: TTSResponse, options: SaveOptions = {}): Promise<string> {
+/**
+ * 保存 TTSResponse 到文件
+ * 自动生成文件名，适合快速保存 TTS 响应
+ *
+ * @param response TTS 响应对象
+ * @param options 保存选项
+ * @returns 保存的文件路径
+ */
+export async function saveTTSResponse(
+  response: TTSResponse,
+  options: SaveOptions = {}
+): Promise<string> {
   const { format } = response;
   const timestamp = Date.now();
   const filename = options.filename || `tts_${timestamp}.${format}`;
