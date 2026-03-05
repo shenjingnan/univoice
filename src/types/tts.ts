@@ -38,8 +38,31 @@ export interface TTSProvider {
   synthesize(request: TTSRequest): Promise<TTSResponse>;
   /** 流式输出音频数据（可选） */
   speak?(request: TTSRequest): AsyncIterable<Uint8Array>;
+  /** 边发边收模式 - 完整文本（可选） */
+  stream?(text: string, callbacks: StreamingCallbacks): Promise<void>;
+  /** 边发边收模式 - 流式文本输入（可选） */
+  streamFrom?(textStream: TextStream, callbacks: StreamingCallbacks): Promise<void>;
   listVoices?(): Promise<TTSVoice[]>;
 }
+
+/**
+ * 边发边收回调接口
+ */
+export interface StreamingCallbacks {
+  /** 收到音频块时调用 */
+  onAudioChunk: (chunk: Uint8Array) => void;
+  /** 收到事件时调用（可选） */
+  onEvent?: (event: string) => void;
+  /** 发生错误时调用（可选） */
+  onError?: (error: Error) => void;
+}
+
+/**
+ * 流式文本输入接口
+ * 支持 AsyncIterable<string> 或 AsyncGenerator<string>
+ * 适用于 LLM 流式输出转语音等场景
+ */
+export type TextStream = AsyncIterable<string> | AsyncGenerator<string>;
 
 export interface TTSVoice {
   id: string;
