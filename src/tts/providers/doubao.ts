@@ -225,16 +225,16 @@ export class DoubaoTTS extends BaseTTS {
       const sessionPayload = this.buildSessionPayload();
       await startSession(ws, sessionPayload, sessionId);
 
-      // 标记接收结束的 Promise
-      let resolveReceive: () => void;
+      // 标记接收结束
+      const resolveHolder: { resolve: () => void } = {} as { resolve: () => void };
       new Promise<void>((resolve) => {
-        resolveReceive = resolve;
+        resolveHolder.resolve = resolve;
       });
 
       // 4. 并发执行发送和接收
       await Promise.all([
         this.sendTextFlow(ws, sessionId, text),
-        this.receiveAudioFlow(ws, sessionId, callbacks, resolveReceive!),
+        this.receiveAudioFlow(ws, sessionId, callbacks, resolveHolder.resolve),
       ]);
 
       // 5. 结束连接
@@ -253,6 +253,8 @@ export class DoubaoTTS extends BaseTTS {
    * @param callbacks 回调函数
    */
   async streamFrom(textStream: TextStream, callbacks: StreamingCallbacks): Promise<void> {
+    console.log('[双向流] ========== 开始流式输入处理 ==========');
+
     // 1. 创建 WebSocket 连接
     const ws = new WebSocket(this.baseUrl, {
       headers: this.buildAuthHeaders(),
@@ -263,32 +265,38 @@ export class DoubaoTTS extends BaseTTS {
       ws.on('open', resolve);
       ws.on('error', reject);
     });
+    console.log('[双向流] WebSocket 已连接');
 
     try {
       // 2. 启动连接
       await startConnection(ws);
       await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
+      console.log('[双向流] 连接已启动 (ConnectionStarted)');
 
       // 3. 创建会话（不等待响应，由 receiveAudioFlow 统一处理）
       const sessionId = randomUUID();
       const sessionPayload = this.buildSessionPayload();
       await startSession(ws, sessionPayload, sessionId);
+      console.log(`[双向流] 会话已创建 (sessionId: ${sessionId.slice(0, 8)}...)`);
 
-      // 标记接收结束的 Promise
-      let resolveReceive: () => void;
+      // 标记接收结束
+      const resolveHolder: { resolve: () => void } = {} as { resolve: () => void };
       new Promise<void>((resolve) => {
-        resolveReceive = resolve;
+        resolveHolder.resolve = resolve;
       });
+
+      console.log('[双向流] 启动发送和接收并发流程...');
 
       // 4. 并发执行发送和接收
       await Promise.all([
         this.sendTextStreamFlow(ws, sessionId, textStream),
-        this.receiveAudioFlow(ws, sessionId, callbacks, resolveReceive!),
+        this.receiveAudioFlow(ws, sessionId, callbacks, resolveHolder.resolve),
       ]);
 
       // 5. 结束连接
       await finishConnection(ws);
       await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
+      console.log('[双向流] 连接已结束 (ConnectionFinished)');
     } finally {
       ws.close();
     }
@@ -340,6 +348,8 @@ export class DoubaoTTS extends BaseTTS {
     sessionId: string,
     textStream: TextStream
   ): Promise<void> {
+    console.log('[发送流程] 开始监听文本流...');
+
     // 构建请求模板
     const requestTemplate = {
       user: {
@@ -359,8 +369,13 @@ export class DoubaoTTS extends BaseTTS {
     };
 
     // 从文本流读取并逐字符发送
+    let chunkIndex = 0;
     for await (const chunk of textStream) {
+      chunkIndex++;
+      console.log(`[发送流程] 收到文本块 #${chunkIndex}: "${chunk}"`);
+
       for (const char of chunk) {
+        console.log(`[发送流程] 发送字符: "${char}"`);
         const payload = new TextEncoder().encode(
           JSON.stringify({
             ...requestTemplate,
@@ -372,6 +387,7 @@ export class DoubaoTTS extends BaseTTS {
       }
     }
 
+    console.log('[发送流程] 文本流结束，发送会话结束信号');
     // 结束会话
     await finishSession(ws, sessionId);
   }
@@ -385,32 +401,41 @@ export class DoubaoTTS extends BaseTTS {
     callbacks: StreamingCallbacks,
     onFinished: () => void
   ): Promise<void> {
+    console.log('[接收流程] 开始监听音频流...');
+    let audioIndex = 0;
+
     while (true) {
       const msg = await receiveMessage(ws);
 
       switch (msg.type) {
         case MsgType.AudioOnlyServer:
           // 实时回调音频块
+          audioIndex++;
+          console.log(`[接收流程] 收到音频块 #${audioIndex}: ${msg.payload.length} bytes`);
           callbacks.onAudioChunk(msg.payload);
           break;
 
         case MsgType.FullServerResponse:
           // 处理服务端响应事件
           if (msg.event === EventType.SessionStarted) {
+            console.log('[接收流程] 会话已启动 (SessionStarted)');
             callbacks.onEvent?.('SessionStarted');
           } else if (msg.event === EventType.SessionFinished) {
+            console.log('[接收流程] 会话已结束 (SessionFinished)');
             callbacks.onEvent?.('SessionFinished');
             onFinished();
             return;
           }
           break;
 
-        case MsgType.Error:
+        case MsgType.Error: {
           const error = new Error(
             `TTS error: ${msg.errorCode}, ${new TextDecoder().decode(msg.payload)}`
           );
+          console.log(`[接收流程] 错误: ${msg.errorCode}`);
           callbacks.onError?.(error);
           throw error;
+        }
 
         default:
           throw new Error(`Unexpected message type: ${msg.type}`);

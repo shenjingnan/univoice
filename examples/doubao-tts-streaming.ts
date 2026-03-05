@@ -16,6 +16,16 @@ const __filename = fileURLToPath(import.meta.url);
 const basename = path.basename(__filename, path.extname(__filename));
 
 /**
+ * 格式化时间戳
+ */
+function timestamp(): string {
+  const now = new Date();
+  const ms = String(now.getMilliseconds()).padStart(3, '0');
+  const time = now.toTimeString().split(' ')[0];
+  return `${time}.${ms}`;
+}
+
+/**
  * 模拟 LLM 流式输出的文本生成器
  * 在实际应用中，这里可以替换为真实的 LLM API 调用
  */
@@ -31,10 +41,10 @@ async function* generateText(): AsyncGenerator<string> {
     '淡淡的茶香。',
   ];
 
-  for (const segment of segments) {
+  for (const [index, segment] of segments.entries()) {
     // 模拟 LLM 输出延迟
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    console.log(`[LLM 输出] "${segment}"`);
+    await new Promise((resolve) => setTimeout(resolve, index * 100));
+    console.log(`[${timestamp()}] [LLM 输出] "${segment}"`);
     yield segment;
   }
 }
@@ -64,7 +74,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log('=== 流式输入模式演示 ===\n');
+  console.log(`\n[${timestamp()}] === 流式输入模式演示 ===\n`);
   console.log('模拟 LLM 流式输出转语音场景\n');
 
   const chunks: Uint8Array[] = [];
@@ -77,21 +87,20 @@ async function main() {
       chunkCount++;
       if (chunkCount === 1) {
         firstChunkTime = Date.now();
-        console.log(`\n[首字延迟] ${firstChunkTime - startTime} ms\n`);
+        console.log(`\n[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
       }
-      console.log(`[音频块 #${chunkCount}] ${chunk.length} bytes`);
       chunks.push(chunk);
     },
     onEvent: (event) => {
-      console.log(`[事件] ${event}`);
+      console.log(`[${timestamp()}] [事件] ${event}`);
     },
     onError: (error) => {
-      console.error(`[错误] ${error.message}`);
+      console.error(`[${timestamp()}] [错误] ${error.message}`);
     },
   });
 
   const totalTime = Date.now() - startTime;
-  console.log('\n=== 统计信息 ===');
+  console.log(`\n[${timestamp()}] === 统计信息 ===`);
   console.log(`总耗时: ${totalTime} ms`);
   console.log(`总音频块数: ${chunkCount}`);
   console.log(`总音频大小: ${chunks.reduce((sum, c) => sum + c.length, 0)} bytes`);
