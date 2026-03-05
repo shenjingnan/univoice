@@ -31,19 +31,17 @@ function timestamp(): string {
  */
 async function* generateText(): AsyncGenerator<string> {
   const segments = [
-    '欢迎来到',
-    '龙井村。',
-    '这里是西湖龙井茶的',
-    '原产地，',
-    '漫山遍野的茶园',
-    '层层叠叠，',
-    '空气中弥漫着',
-    '淡淡的茶香。',
+    '杭州，',
+    '一座让你想放慢脚步的城市，',
+    '清晨在西湖边骑行，',
+    '午后在茶园品茗，',
+    '傍晚在古街巷听评弹，',
+    '这就是人间值得。'
   ];
 
-  for (const [index, segment] of segments.entries()) {
+  for (const segment of segments) {
     // 模拟 LLM 输出延迟
-    await new Promise((resolve) => setTimeout(resolve, index * 100));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(`[${timestamp()}] [LLM 输出] "${segment}"`);
     yield segment;
   }

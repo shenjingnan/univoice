@@ -368,23 +368,21 @@ export class DoubaoTTS extends BaseTTS {
       },
     };
 
-    // 从文本流读取并逐字符发送
+    // 从文本流读取并发送
     let chunkIndex = 0;
     for await (const chunk of textStream) {
       chunkIndex++;
       console.log(`[发送流程] 收到文本块 #${chunkIndex}: "${chunk}"`);
 
-      for (const char of chunk) {
-        console.log(`[发送流程] 发送字符: "${char}"`);
-        const payload = new TextEncoder().encode(
-          JSON.stringify({
-            ...requestTemplate,
-            req_params: { ...requestTemplate.req_params, text: char },
-            event: EventType.TaskRequest,
-          })
-        );
-        await taskRequest(ws, payload, sessionId);
-      }
+      // 直接发送整个文本块
+      const payload = new TextEncoder().encode(
+        JSON.stringify({
+          ...requestTemplate,
+          req_params: { ...requestTemplate.req_params, text: chunk },
+          event: EventType.TaskRequest,
+        })
+      );
+      await taskRequest(ws, payload, sessionId);
     }
 
     console.log('[发送流程] 文本流结束，发送会话结束信号');
