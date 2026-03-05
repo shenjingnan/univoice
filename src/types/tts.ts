@@ -41,7 +41,7 @@ export interface TTSProvider {
   /** 边发边收模式 - 完整文本（可选） */
   stream?(text: string, callbacks: StreamingCallbacks): Promise<void>;
   /** 边发边收模式 - 流式文本输入（可选） */
-  streamFrom?(textStream: TextStream, callbacks: StreamingCallbacks): Promise<void>;
+  streamFrom?(input: string | TextStream, callbacks: StreamingCallbacks): Promise<void>;
   listVoices?(): Promise<TTSVoice[]>;
 }
 

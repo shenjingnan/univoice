@@ -249,10 +249,18 @@ export class DoubaoTTS extends BaseTTS {
    * 边发边收模式：流式文本输入
    * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
    *
-   * @param textStream 文本流（AsyncIterable<string>）
+   * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
    * @param callbacks 回调函数
    */
-  async streamFrom(textStream: TextStream, callbacks: StreamingCallbacks): Promise<void> {
+  async streamFrom(input: string | TextStream, callbacks: StreamingCallbacks): Promise<void> {
+    // 如果是字符串，转换为 AsyncIterable
+    const textStream: TextStream =
+      typeof input === 'string'
+        ? (async function* () {
+            yield input;
+          })()
+        : input;
+
     console.log('[双向流] ========== 开始流式输入处理 ==========');
 
     // 1. 创建 WebSocket 连接
