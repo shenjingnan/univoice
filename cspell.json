@@ -10,6 +10,7 @@
     "BYTEDANCE",
     "doubao",
     "esbuild",
+    "ffplay",
     "gemini",
     "gitee",
     "Gitee",
@@ -19,14 +20,14 @@
     "openspeech",
     "paraformer",
     "qwen",
+    "shenjingnan",
     "tianmeixiaoyuan",
     "tts",
     "univoice",
     "unmarshal",
     "vitest",
     "volcengine",
-    "webfactory",
-    "shenjingnan"
+    "webfactory"
   ],
   "ignorePaths": ["docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
 }
