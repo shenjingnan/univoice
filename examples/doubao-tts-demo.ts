@@ -3,9 +3,9 @@
  * 演示如何使用 univoice SDK 调用火山引擎 TTS 服务
  */
 import 'dotenv/config';
+import { writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);

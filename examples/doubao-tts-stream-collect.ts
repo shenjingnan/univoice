@@ -30,7 +30,8 @@ async function main() {
     sampleRate: 24000,
   });
 
-  const text = '如果人间有天堂，那一定是清晨的西湖、雨后的龙井村、夜晚的钱塘江——杭州，一座来了就会爱上的城市。';
+  const text =
+    '如果人间有天堂，那一定是清晨的西湖、雨后的龙井村、夜晚的钱塘江——杭州，一座来了就会爱上的城市。';
 
   if (!tts.speak) {
     console.error('当前 TTS 提供商不支持流式输出');
