@@ -145,3 +145,4 @@ examples/**/*.mp3
 examples/**/*.pcm
 examples/**/*.wav
 examples/**/*.ogg
+examples/output
