@@ -1,6 +1,6 @@
 /**
- * OpenAI stream 直接传入 TTS speak 的示例
- * 演示如何将 OpenAI SDK 的流式输出直接转换为语音
+ * LLM 流式输出转 TTS 语音示例
+ * 演示如何将 LLM（如 OpenAI）的流式输出直接转换为语音，实现实时语音合成
  */
 import 'dotenv/config';
 import * as fs from 'node:fs';
