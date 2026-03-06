@@ -32,7 +32,9 @@
       "default": "./dist/src/asr/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -50,7 +52,13 @@
     "release:minor": "release-it minor --ci",
     "release:major": "release-it major --ci"
   },
-  "keywords": ["tts", "asr", "voice", "speech", "audio"],
+  "keywords": [
+    "tts",
+    "asr",
+    "voice",
+    "speech",
+    "audio"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },

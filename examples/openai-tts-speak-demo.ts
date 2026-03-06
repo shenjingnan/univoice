@@ -6,8 +6,8 @@ import 'dotenv/config';
 import * as fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createTTS } from '@/index';
 import OpenAI from 'openai';
+import { createTTS } from '@/index';
 
 const __filename = fileURLToPath(import.meta.url);
 const basename = path.basename(__filename, path.extname(__filename));

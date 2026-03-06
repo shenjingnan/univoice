@@ -1,6 +1,6 @@
+import { describe, expect, it } from 'vitest';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream.js';
 import type { OpenAIChatCompletionChunk } from '@/types/llm-stream.js';
-import { describe, expect, it } from 'vitest';
 
 describe('normalizeTextStream', () => {
   describe('字符串输入', () => {

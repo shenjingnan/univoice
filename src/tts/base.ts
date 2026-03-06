@@ -1,11 +1,11 @@
 import type {
+  TextStream,
   TTSOptions,
   TTSProvider,
   TTSRequest,
   TTSResponse,
   TTSStreamChunk,
   TTSVoice,
-  TextStream,
 } from '@/types/tts';
 
 export abstract class BaseTTS implements TTSProvider {
