@@ -17,7 +17,7 @@ import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type { TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk, TextStream } from '@/types/tts';
 import WebSocket from 'ws';
 
-/** 队列项类型，用于 streamFrom 的推拉转换 */
+/** 队列项类型，用于 speak 的推拉转换 */
 type QueueItem =
   | { type: 'audio'; chunk: Uint8Array }
   | { type: 'error'; error: Error }
@@ -135,7 +135,7 @@ export class DoubaoTTS extends BaseTTS {
    * @param input 文本输入，可以是字符串、文本流（AsyncIterable<string>）或 OpenAI stream
    * @returns 流式音频块
    */
-  async *streamFrom(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+  async *speak(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     // 使用 normalizeTextStream 统一处理输入
     // 自动处理 string、AsyncIterable<string> 和 OpenAI stream
     const textStream = normalizeTextStream(input);
@@ -286,7 +286,7 @@ export class DoubaoTTS extends BaseTTS {
 
   /**
    * 接收流程：持续监听并将音频数据推入队列
-   * 用于 streamFrom 方法的 AsyncGenerator 实现
+   * 用于 speak 方法的 AsyncGenerator 实现
    */
   private async receiveAudioFlowToQueue(
     ws: WebSocket,

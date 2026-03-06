@@ -41,10 +41,8 @@ export abstract class BaseTTS implements TTSProvider {
    * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
    * @returns 流式音频块
    */
-  streamFrom(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
-    throw new Error(
-      `Provider ${this.name} does not support streaming input mode (streamFrom method)`
-    );
+  speak(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+    throw new Error(`Provider ${this.name} does not support streaming input mode (speak method)`);
   }
 
   async listVoices(): Promise<TTSVoice[]> {

@@ -33,7 +33,7 @@ async function main() {
   const text =
     '如果人间有天堂，那一定是清晨的西湖、雨后的龙井村、夜晚的钱塘江——杭州，一座来了就会爱上的城市。';
 
-  if (!tts.streamFrom) {
+  if (!tts.speak) {
     console.error('当前 TTS 提供商不支持流式输出');
     process.exit(1);
   }
@@ -42,7 +42,7 @@ async function main() {
   let totalSize = 0;
 
   // 流式获取音频块
-  for await (const { audioChunk } of tts.streamFrom(text)) {
+  for await (const { audioChunk } of tts.speak(text)) {
     chunks.push(audioChunk);
     totalSize += audioChunk.length;
     console.log(`收到音频块: ${audioChunk.length} bytes, 累计: ${totalSize} bytes`);

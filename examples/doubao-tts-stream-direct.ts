@@ -33,13 +33,13 @@ async function main() {
   const text =
     '欢迎来到龙井村。这里是西湖龙井茶的原产地，漫山遍野的茶园层层叠叠，空气中弥漫着淡淡的茶香。春天采茶季节，您还能看到茶农们忙碌的身影。';
 
-  if (!tts.streamFrom) {
+  if (!tts.speak) {
     console.error('当前 TTS 提供商不支持流式输出');
     process.exit(1);
   }
 
   // 直接将流保存到文件
-  await saveAudio(`${basename}.pcm`, tts.streamFrom(text));
+  await saveAudio(`${basename}.pcm`, tts.speak(text));
   console.log(`音频已保存至: ${basename}.pcm`);
 
   console.log('\n=== 播放提示 ===');

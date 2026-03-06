@@ -39,13 +39,13 @@ export interface TTSProvider {
   name: string;
   synthesize(request: TTSRequest): Promise<TTSResponse>;
   /** 边发边收模式 - 流式文本输入（可选），返回流式音频块 */
-  streamFrom?(input: string | TextStream): AsyncIterable<TTSStreamChunk>;
+  speak?(input: string | TextStream): AsyncIterable<TTSStreamChunk>;
   listVoices?(): Promise<TTSVoice[]>;
 }
 
 /**
  * TTS 流式音频块
- * 用于 streamFrom 方法的返回值，便于后续扩展更多字段
+ * 用于 speak 方法的返回值，便于后续扩展更多字段
  */
 export interface TTSStreamChunk {
   /** 音频数据块 */
