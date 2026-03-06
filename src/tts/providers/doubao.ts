@@ -1,12 +1,13 @@
 import { Buffer } from 'node:buffer';
 import { randomUUID } from 'node:crypto';
+import WebSocket from 'ws';
 import { BaseTTS } from '@/tts/base';
 import { registerTTSProvider } from '@/tts/factory';
 import {
   EventType,
-  MsgType,
   finishConnection,
   finishSession,
+  MsgType,
   receiveMessage,
   startConnection,
   startSession,
@@ -14,8 +15,7 @@ import {
   waitForEvent,
 } from '@/tts/protocols/volcengine';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type { TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk, TextStream } from '@/types/tts';
-import WebSocket from 'ws';
+import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
 
 /** 队列项类型，用于 speak 的推拉转换 */
 type QueueItem =

@@ -32,7 +32,9 @@
       "default": "./dist/src/asr/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -50,13 +52,19 @@
     "release:minor": "release-it minor --ci",
     "release:major": "release-it major --ci"
   },
-  "keywords": ["tts", "asr", "voice", "speech", "audio"],
+  "keywords": [
+    "tts",
+    "asr",
+    "voice",
+    "speech",
+    "audio"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
   "packageManager": "pnpm@10.30.3",
   "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
+    "@biomejs/biome": "^2.4.6",
     "@types/node": "^25.3.2",
     "@types/ws": "^8.18.1",
     "@vitest/coverage-v8": "^4.0.18",

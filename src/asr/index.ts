@@ -6,7 +6,7 @@ import '@/asr/providers/openai';
 import '@/asr/providers/gemini';
 
 export { BaseASR } from '@/asr/base';
-export { createASR, registerASRProvider, getASRProviders, recognize } from '@/asr/factory';
+export { createASR, getASRProviders, recognize, registerASRProvider } from '@/asr/factory';
 
 export * from '@/asr/utils/index';
 export * from '@/types/asr';
