@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI
 
 # 触发条件：只在PR到main分支时运行CI
 on:
