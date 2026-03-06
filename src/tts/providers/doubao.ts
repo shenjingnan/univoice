@@ -14,13 +14,7 @@ import {
   waitForEvent,
 } from '@/tts/protocols/volcengine';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type {
-  TTSOptions,
-  TTSRequest,
-  TTSResponse,
-  TTSStreamChunk,
-  TextStream,
-} from '@/types/tts';
+import type { TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk, TextStream } from '@/types/tts';
 import WebSocket from 'ws';
 
 /** 队列项类型，用于 streamFrom 的推拉转换 */
