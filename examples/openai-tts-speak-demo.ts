@@ -1,5 +1,5 @@
 /**
- * OpenAI stream 直接传入 TTS streamFrom 的示例
+ * OpenAI stream 直接传入 TTS speak 的示例
  * 演示如何将 OpenAI SDK 的流式输出直接转换为语音
  */
 import 'dotenv/config';
@@ -48,7 +48,7 @@ async function main() {
     sampleRate: 24000,
   });
 
-  if (!tts.streamFrom) {
+  if (!tts.speak) {
     console.error('当前 TTS 提供商不支持流式输入模式');
     process.exit(1);
   }
@@ -70,7 +70,7 @@ async function main() {
 
   console.log('开始将 OpenAI 流转换为语音...\n');
 
-  // 4. 直接将 OpenAI stream 传入 TTS streamFrom
+  // 4. 直接将 OpenAI stream 传入 TTS speak
   // 注意：这里直接传入 openaiStream，无需手动转换
   const chunks: Uint8Array[] = [];
   const startTime = Date.now();
@@ -78,7 +78,7 @@ async function main() {
   let chunkCount = 0;
 
   try {
-    for await (const { audioChunk } of tts.streamFrom(openaiStream)) {
+    for await (const { audioChunk } of tts.speak(openaiStream)) {
       chunkCount++;
       if (chunkCount === 1) {
         firstChunkTime = Date.now();
