@@ -80,22 +80,18 @@ async function main() {
   let firstChunkTime = 0;
   let chunkCount = 0;
 
-  await tts.streamFrom(generateText(), {
-    onAudioChunk: (chunk) => {
+  try {
+    for await (const { audioChunk } of tts.streamFrom(generateText())) {
       chunkCount++;
       if (chunkCount === 1) {
         firstChunkTime = Date.now();
         console.log(`\n[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
       }
-      chunks.push(chunk);
-    },
-    onEvent: (event) => {
-      console.log(`[${timestamp()}] [事件] ${event}`);
-    },
-    onError: (error) => {
-      console.error(`[${timestamp()}] [错误] ${error.message}`);
-    },
-  });
+      chunks.push(audioChunk);
+    }
+  } catch (error) {
+    console.error(`[${timestamp()}] [错误] ${(error as Error).message}`);
+  }
 
   const totalTime = Date.now() - startTime;
   console.log(`\n[${timestamp()}] === 统计信息 ===`);

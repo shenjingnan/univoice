@@ -6,9 +6,7 @@
  * - streamFrom(textStream): 流式文本输入 - 适用于 LLM 流式输出场景
  * - streamFrom(string): 字符串输入 - 适用于已知完整文本的场景
  *
- * 与 stream() 方法的区别:
- * - stream(text): 明确表示发送完整文本，内部逐字符发送
- * - streamFrom(string): 统一接口，字符串转单次 AsyncIterable
+ * 返回值: AsyncIterable<TTSStreamChunk>，可通过 for await...of 消费
  */
 import 'dotenv/config';
 import * as fs from 'node:fs';
@@ -66,23 +64,15 @@ async function main() {
   let firstChunkTime = 0;
   let chunkCount = 0;
 
-  // 使用 streamFrom 直接传入字符串
-  await tts.streamFrom(text, {
-    onAudioChunk: (chunk) => {
-      chunkCount++;
-      if (chunkCount === 1) {
-        firstChunkTime = Date.now();
-        console.log(`[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
-      }
-      chunks.push(chunk);
-    },
-    onEvent: (event) => {
-      console.log(`[${timestamp()}] [事件] ${event}`);
-    },
-    onError: (error) => {
-      console.error(`[${timestamp()}] [错误] ${error.message}`);
-    },
-  });
+  // 使用 streamFrom 直接传入字符串，通过 for await...of 消费流式音频
+  for await (const { audioChunk } of tts.streamFrom(text)) {
+    chunkCount++;
+    if (chunkCount === 1) {
+      firstChunkTime = Date.now();
+      console.log(`[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
+    }
+    chunks.push(audioChunk);
+  }
 
   const totalTime = Date.now() - startTime;
   console.log(`\n[${timestamp()}] === 统计信息 ===`);
