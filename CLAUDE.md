@@ -106,6 +106,20 @@ pnpm release:dry
 2. **代码风格**: `pnpm lint`
 3. **测试**: `pnpm test`
 
+## Git 提交规范
+
+### Co-Authored-By 签名
+
+在提交代码时，如果需要添加 Co-Authored-By 签名，请先确认当前使用的实际模型名称，而非使用硬编码的模型名。
+
+确认方式：
+- Claude Code 会在系统信息中告知当前使用的模型（如 "You are powered by the model glm-5"）
+- 根据实际模型名称填写签名，例如：
+  - `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>`
+  - `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+  - `Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>`
+  - 或其他实际使用的模型
+
 ## 架构特点
 
 - **工厂模式**: 使用工厂函数动态创建 TTS/ASR 提供商
