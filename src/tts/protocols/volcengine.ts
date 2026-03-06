@@ -542,7 +542,7 @@ export async function receiveMessage(ws: WebSocket): Promise<Message> {
     }
 
     const errorHandler = (error: WebSocket.ErrorEvent) => {
-      const index = state.callbacks.findIndex((cb) => cb === resolver);
+      const index = state.callbacks.indexOf(resolver);
       if (index !== -1) {
         state.callbacks.splice(index, 1);
       }
