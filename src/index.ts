@@ -14,7 +14,9 @@ export type {
   TTSVoice,
   TTSProviderType,
   TTSStreamChunk,
+  TextStream,
 } from '@/types/tts';
+export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';
 
 export {
   BaseASR,

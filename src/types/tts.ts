@@ -1,3 +1,5 @@
+import type { OpenAIStream } from './llm-stream';
+
 export interface TTSOptions {
   provider: string;
   apiKey?: string;
@@ -69,9 +71,10 @@ export interface StreamingCallbacks {
 /**
  * 流式文本输入接口
  * 支持 AsyncIterable<string> 或 AsyncGenerator<string>
+ * 也支持 OpenAI SDK 的流式输出（Stream<ChatCompletionChunk>）
  * 适用于 LLM 流式输出转语音等场景
  */
-export type TextStream = AsyncIterable<string> | AsyncGenerator<string>;
+export type TextStream = AsyncIterable<string> | AsyncGenerator<string> | OpenAIStream;
 
 export interface TTSVoice {
   id: string;
