@@ -35,14 +35,6 @@ export abstract class BaseTTS implements TTSProvider {
   abstract synthesize(request: TTSRequest): Promise<TTSResponse>;
 
   /**
-   * 流式输出音频数据
-   * 默认实现：不支持流式输出，子类可以覆盖此方法提供流式支持
-   */
-  speak(_request: TTSRequest): AsyncIterable<Uint8Array> {
-    throw new Error(`Provider ${this.name} does not support streaming output (speak method)`);
-  }
-
-  /**
    * 边发边收模式 - 流式文本输入
    * 默认实现：不支持流式输入，子类可以覆盖此方法提供支持
    *
