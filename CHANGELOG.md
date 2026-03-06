@@ -2,6 +2,19 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.1.0](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.4...v0.1.0) (2026-03-06)
+
+
+### Features
+
+* **examples:** 为 OpenAI 流式示例添加输出保存功能 ([#64](https://github.com/shenjingnan/univoice/issues/64)) ([1f12b71](https://github.com/shenjingnan/univoice/commit/1f12b7127e2c6686e7e8a2b636c89c87fb611db3))
+* **examples:** 添加 OpenAI SDK 流式请求示例 ([#60](https://github.com/shenjingnan/univoice/issues/60)) ([18dde3a](https://github.com/shenjingnan/univoice/commit/18dde3aa16ac42898a48e89a4f0b307340b461d7))
+* **tts:** streamFrom 方法支持字符串输入 ([#56](https://github.com/shenjingnan/univoice/issues/56)) ([7b0a497](https://github.com/shenjingnan/univoice/commit/7b0a497d698f11122a1670a035851cbe5a1980af))
+* **tts:** streamFrom 方法返回 AsyncIterable ([#57](https://github.com/shenjingnan/univoice/issues/57)) ([d60f772](https://github.com/shenjingnan/univoice/commit/d60f772b9f9479fc9915721363c4b093715f9479))
+* **tts:** 支持 OpenAI 流式输出直接转换为语音 ([#65](https://github.com/shenjingnan/univoice/issues/65)) ([a8da10f](https://github.com/shenjingnan/univoice/commit/a8da10f708b814eb2bf5667fe74d3d693f2e42e3))
+* **tts:** 添加 TTS 流式输入 API ([#55](https://github.com/shenjingnan/univoice/issues/55)) ([42eb4e5](https://github.com/shenjingnan/univoice/commit/42eb4e5079ca86e2efa7dc59d34dd14057000028))
+* **tts:** 添加 TTS 流式输出功能 ([#53](https://github.com/shenjingnan/univoice/issues/53)) ([29b5eb1](https://github.com/shenjingnan/univoice/commit/29b5eb1781d29b9728ac153829af76f8fb366c8f))
+
 # [0.1.0-beta.4](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.3...v0.1.0-beta.4) (2026-03-04)
 
 # [0.1.0-beta.3](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.2...v0.1.0-beta.3) (2026-03-04)
