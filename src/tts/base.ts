@@ -1,5 +1,4 @@
 import type {
-  StreamingCallbacks,
   TTSOptions,
   TTSProvider,
   TTSRequest,
@@ -41,17 +40,6 @@ export abstract class BaseTTS implements TTSProvider {
    */
   speak(_request: TTSRequest): AsyncIterable<Uint8Array> {
     throw new Error(`Provider ${this.name} does not support streaming output (speak method)`);
-  }
-
-  /**
-   * 边发边收模式
-   * 默认实现：不支持边发边收，子类可以覆盖此方法提供支持
-   *
-   * @param text 要合成的文本
-   * @param callbacks 回调函数
-   */
-  stream(_text: string, _callbacks: StreamingCallbacks): Promise<void> {
-    throw new Error(`Provider ${this.name} does not support streaming mode (stream method)`);
   }
 
   /**

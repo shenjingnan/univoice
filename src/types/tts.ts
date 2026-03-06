@@ -40,8 +40,6 @@ export interface TTSProvider {
   synthesize(request: TTSRequest): Promise<TTSResponse>;
   /** 流式输出音频数据（可选） */
   speak?(request: TTSRequest): AsyncIterable<Uint8Array>;
-  /** 边发边收模式 - 完整文本（可选） */
-  stream?(text: string, callbacks: StreamingCallbacks): Promise<void>;
   /** 边发边收模式 - 流式文本输入（可选），返回流式音频块 */
   streamFrom?(input: string | TextStream): AsyncIterable<TTSStreamChunk>;
   listVoices?(): Promise<TTSVoice[]>;
@@ -54,18 +52,6 @@ export interface TTSProvider {
 export interface TTSStreamChunk {
   /** 音频数据块 */
   audioChunk: Uint8Array;
-}
-
-/**
- * 边发边收回调接口
- */
-export interface StreamingCallbacks {
-  /** 收到音频块时调用 */
-  onAudioChunk: (chunk: Uint8Array) => void;
-  /** 收到事件时调用（可选） */
-  onEvent?: (event: string) => void;
-  /** 发生错误时调用（可选） */
-  onError?: (error: Error) => void;
 }
 
 /**
