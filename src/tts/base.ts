@@ -4,6 +4,7 @@ import type {
   TTSProvider,
   TTSRequest,
   TTSResponse,
+  TTSStreamChunk,
   TTSVoice,
   TextStream,
 } from '@/types/tts';
@@ -58,9 +59,9 @@ export abstract class BaseTTS implements TTSProvider {
    * 默认实现：不支持流式输入，子类可以覆盖此方法提供支持
    *
    * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
-   * @param callbacks 回调函数
+   * @returns 流式音频块
    */
-  streamFrom(_input: string | TextStream, _callbacks: StreamingCallbacks): Promise<void> {
+  streamFrom(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     throw new Error(
       `Provider ${this.name} does not support streaming input mode (streamFrom method)`
     );

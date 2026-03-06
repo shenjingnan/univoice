@@ -18,9 +18,16 @@ import type {
   TTSOptions,
   TTSRequest,
   TTSResponse,
+  TTSStreamChunk,
   TextStream,
 } from '@/types/tts';
 import WebSocket from 'ws';
+
+/** 队列项类型，用于 streamFrom 的推拉转换 */
+type QueueItem =
+  | { type: 'audio'; chunk: Uint8Array }
+  | { type: 'error'; error: Error }
+  | { type: 'end' };
 
 /**
  * 火山引擎 TTS 提供商
@@ -250,9 +257,9 @@ export class DoubaoTTS extends BaseTTS {
    * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
    *
    * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
-   * @param callbacks 回调函数
+   * @returns 流式音频块
    */
-  async streamFrom(input: string | TextStream, callbacks: StreamingCallbacks): Promise<void> {
+  async *streamFrom(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     // 如果是字符串，转换为 AsyncIterable
     const textStream: TextStream =
       typeof input === 'string'
@@ -262,6 +269,16 @@ export class DoubaoTTS extends BaseTTS {
         : input;
 
     console.log('[双向流] ========== 开始流式输入处理 ==========');
+
+    // 创建队列和同步机制
+    const queue: QueueItem[] = [];
+    const syncState = { resolveWait: null as (() => void) | null, finished: false };
+
+    const enqueue = (item: QueueItem) => {
+      queue.push(item);
+      syncState.resolveWait?.();
+      syncState.resolveWait = null;
+    };
 
     // 1. 创建 WebSocket 连接
     const ws = new WebSocket(this.baseUrl, {
@@ -275,38 +292,73 @@ export class DoubaoTTS extends BaseTTS {
     });
     console.log('[双向流] WebSocket 已连接');
 
+    // 启动 WebSocket 处理流程（后台并发执行）
+    const processPromise = (async () => {
+      try {
+        // 2. 启动连接
+        await startConnection(ws);
+        await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
+        console.log('[双向流] 连接已启动 (ConnectionStarted)');
+
+        // 3. 创建会话
+        const sessionId = randomUUID();
+        const sessionPayload = this.buildSessionPayload();
+        await startSession(ws, sessionPayload, sessionId);
+        console.log(`[双向流] 会话已创建 (sessionId: ${sessionId.slice(0, 8)}...)`);
+
+        console.log('[双向流] 启动发送和接收并发流程...');
+
+        // 4. 并发执行发送和接收
+        await Promise.all([
+          this.sendTextStreamFlow(ws, sessionId, textStream),
+          this.receiveAudioFlowToQueue(ws, enqueue),
+        ]);
+
+        // 5. 结束连接
+        await finishConnection(ws);
+        await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
+        console.log('[双向流] 连接已结束 (ConnectionFinished)');
+      } catch (error) {
+        enqueue({
+          type: 'error',
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      } finally {
+        syncState.finished = true;
+        syncState.resolveWait?.();
+        syncState.resolveWait = null;
+        ws.close();
+      }
+    })();
+
+    // Generator 主循环：从队列中取出数据
     try {
-      // 2. 启动连接
-      await startConnection(ws);
-      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
-      console.log('[双向流] 连接已启动 (ConnectionStarted)');
+      while (!syncState.finished || queue.length > 0) {
+        // 等待队列有数据
+        while (queue.length === 0 && !syncState.finished) {
+          await new Promise<void>((resolve) => {
+            syncState.resolveWait = resolve;
+          });
+        }
 
-      // 3. 创建会话（不等待响应，由 receiveAudioFlow 统一处理）
-      const sessionId = randomUUID();
-      const sessionPayload = this.buildSessionPayload();
-      await startSession(ws, sessionPayload, sessionId);
-      console.log(`[双向流] 会话已创建 (sessionId: ${sessionId.slice(0, 8)}...)`);
+        if (queue.length === 0) break;
 
-      // 标记接收结束
-      const resolveHolder: { resolve: () => void } = {} as { resolve: () => void };
-      new Promise<void>((resolve) => {
-        resolveHolder.resolve = resolve;
-      });
+        const item = queue.shift();
+        if (!item) break;
 
-      console.log('[双向流] 启动发送和接收并发流程...');
-
-      // 4. 并发执行发送和接收
-      await Promise.all([
-        this.sendTextStreamFlow(ws, sessionId, textStream),
-        this.receiveAudioFlow(ws, sessionId, callbacks, resolveHolder.resolve),
-      ]);
-
-      // 5. 结束连接
-      await finishConnection(ws);
-      await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionFinished);
-      console.log('[双向流] 连接已结束 (ConnectionFinished)');
+        switch (item.type) {
+          case 'audio':
+            yield { audioChunk: item.chunk };
+            break;
+          case 'error':
+            throw item.error;
+          case 'end':
+            return;
+        }
+      }
     } finally {
-      ws.close();
+      // 确保 WebSocket 被正确关闭
+      await processPromise.catch(() => {});
     }
   }
 
@@ -445,6 +497,58 @@ export class DoubaoTTS extends BaseTTS {
 
         default:
           throw new Error(`Unexpected message type: ${msg.type}`);
+      }
+    }
+  }
+
+  /**
+   * 接收流程：持续监听并将音频数据推入队列
+   * 用于 streamFrom 方法的 AsyncGenerator 实现
+   */
+  private async receiveAudioFlowToQueue(
+    ws: WebSocket,
+    enqueue: (item: QueueItem) => void
+  ): Promise<void> {
+    console.log('[接收流程] 开始监听音频流...');
+    let audioIndex = 0;
+
+    while (true) {
+      const msg = await receiveMessage(ws);
+
+      switch (msg.type) {
+        case MsgType.AudioOnlyServer:
+          // 将音频块推入队列
+          audioIndex++;
+          console.log(`[接收流程] 收到音频块 #${audioIndex}: ${msg.payload.length} bytes`);
+          enqueue({ type: 'audio', chunk: msg.payload });
+          break;
+
+        case MsgType.FullServerResponse:
+          // 处理服务端响应事件
+          if (msg.event === EventType.SessionStarted) {
+            console.log('[接收流程] 会话已启动 (SessionStarted)');
+          } else if (msg.event === EventType.SessionFinished) {
+            console.log('[接收流程] 会话已结束 (SessionFinished)');
+            enqueue({ type: 'end' });
+            return;
+          }
+          break;
+
+        case MsgType.Error: {
+          const error = new Error(
+            `TTS error: ${msg.errorCode}, ${new TextDecoder().decode(msg.payload)}`
+          );
+          console.log(`[接收流程] 错误: ${msg.errorCode}`);
+          enqueue({ type: 'error', error });
+          return;
+        }
+
+        default:
+          enqueue({
+            type: 'error',
+            error: new Error(`Unexpected message type: ${msg.type}`),
+          });
+          return;
       }
     }
   }

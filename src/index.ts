@@ -13,6 +13,7 @@ export type {
   TTSProvider,
   TTSVoice,
   TTSProviderType,
+  TTSStreamChunk,
 } from '@/types/tts';
 
 export {
