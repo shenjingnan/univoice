@@ -39,7 +39,7 @@ async function main() {
   }
 
   // 直接将流保存到文件
-  await saveAudio(`${basename}.pcm`, tts.speak({ text }));
+  await saveAudio(`${basename}.pcm`, tts.speak(text));
   console.log(`音频已保存至: ${basename}.pcm`);
 
   console.log('\n=== 播放提示 ===');

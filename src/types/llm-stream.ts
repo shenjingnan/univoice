@@ -1,6 +1,6 @@
 /**
  * OpenAI ChatCompletionChunk 的简化类型定义
- * 用于 streamFrom 方法直接接收 OpenAI SDK 的流式输出
+ * 用于 speak 方法直接接收 OpenAI SDK 的流式输出
  */
 export interface OpenAIChatCompletionChunk {
   choices?: Array<{
