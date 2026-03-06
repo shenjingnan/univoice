@@ -13,6 +13,7 @@ import {
   taskRequest,
   waitForEvent,
 } from '@/tts/protocols/volcengine';
+import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type {
   StreamingCallbacks,
   TTSOptions,
@@ -256,17 +257,13 @@ export class DoubaoTTS extends BaseTTS {
    * 边发边收模式：流式文本输入
    * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
    *
-   * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
+   * @param input 文本输入，可以是字符串、文本流（AsyncIterable<string>）或 OpenAI stream
    * @returns 流式音频块
    */
   async *streamFrom(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
-    // 如果是字符串，转换为 AsyncIterable
-    const textStream: TextStream =
-      typeof input === 'string'
-        ? (async function* () {
-            yield input;
-          })()
-        : input;
+    // 使用 normalizeTextStream 统一处理输入
+    // 自动处理 string、AsyncIterable<string> 和 OpenAI stream
+    const textStream = normalizeTextStream(input);
 
     console.log('[双向流] ========== 开始流式输入处理 ==========');
 

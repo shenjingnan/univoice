@@ -1,5 +1,6 @@
 export * from './tts.js';
 export * from './asr.js';
+export * from './llm-stream.js';
 
 export interface ProviderConfig {
   apiKey: string;
