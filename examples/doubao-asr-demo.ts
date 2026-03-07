@@ -21,7 +21,7 @@ async function main() {
   }
 
   // 音频文件路径（请替换为实际的音频文件路径）
-  const audioPath = '/Users/nemo/Projects/shenjingnan/univoice/examples/output/doubao-tts-demo.mp3';
+  const audioPath = './output/doubao-tts-demo.mp3';
 
   console.log(`准备识别音频: ${audioPath}`);
 
