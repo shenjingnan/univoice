@@ -6,6 +6,24 @@ export interface ASROptions {
   language?: string;
   prompt?: string;
   responseFormat?: 'json' | 'text' | 'srt' | 'vtt' | 'verbose_json';
+
+  // 豆包专用参数
+  appKey?: string;
+  accessKey?: string;
+  resourceId?: string;
+  mode?: 'streaming' | 'nostream' | 'async';
+
+  // 音频配置
+  sampleRate?: number;
+  bits?: number;
+  channel?: number;
+  segmentDuration?: number;
+
+  // 识别配置
+  enableItn?: boolean;
+  enablePunc?: boolean;
+  enableDdc?: boolean;
+  showUtterances?: boolean;
 }
 
 export interface ASRRequest {
