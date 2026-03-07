@@ -45,12 +45,5 @@
     "volcengine",
     "webfactory"
   ],
-  "ignorePaths": [
-    "coverage",
-    "docs",
-    "node_modules",
-    "dist",
-    "*.lock",
-    "pnpm-lock.yaml"
-  ]
+  "ignorePaths": ["coverage", "docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
 }
