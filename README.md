@@ -8,7 +8,7 @@
 
 [![npm version](https://img.shields.io/npm/v/univoice.svg)](https://www.npmjs.com/package/univoice)
 [![npm downloads](https://img.shields.io/npm/dm/univoice.svg)](https://www.npmjs.com/package/univoice)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![codecov](https://codecov.io/gh/shenjingnan/univoice/branch/main/graph/badge.svg)](https://codecov.io/gh/shenjingnan/univoice)
 
 **统一的 TTS（文字转语音）和 ASR（语音识别）SDK**
@@ -462,7 +462,7 @@ src/
 
 ## 许可证
 
-[MIT](LICENSE)
+[Apache-2.0](LICENSE)
 
 ---
 
