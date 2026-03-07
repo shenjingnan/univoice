@@ -141,8 +141,4 @@ vite.config.ts.timestamp-*
 .DS_Store
 
 # Examples
-examples/**/*.mp3
-examples/**/*.pcm
-examples/**/*.wav
-examples/**/*.ogg
 examples/output
