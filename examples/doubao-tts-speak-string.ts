@@ -9,12 +9,13 @@
  * 返回值: AsyncIterable<TTSStreamChunk>，可通过 for await...of 消费
  */
 import 'dotenv/config';
-import * as fs from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createTTS } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const basename = path.basename(__filename, path.extname(__filename));
 
 /**
@@ -81,9 +82,11 @@ async function main() {
   console.log(`总音频大小: ${chunks.reduce((sum, c) => sum + c.length, 0)} bytes`);
 
   // 保存音频
-  const outputPath = `${basename}.pcm`;
+  const outputDir = path.join(__dirname, 'output');
+  mkdirSync(outputDir, { recursive: true });
+  const outputPath = path.join(outputDir, `${basename}.pcm`);
   const buffer = Buffer.concat(chunks.map((c) => Buffer.from(c)));
-  fs.writeFileSync(outputPath, buffer);
+  writeFileSync(outputPath, buffer);
   console.log(`\n音频已保存至: ${outputPath}`);
 
   console.log('\n=== 播放提示 ===');

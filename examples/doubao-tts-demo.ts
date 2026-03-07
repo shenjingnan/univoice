@@ -3,12 +3,13 @@
  * 演示如何使用 univoice SDK 调用火山引擎 TTS 服务
  */
 import 'dotenv/config';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createTTS } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const basename = path.basename(__filename, path.extname(__filename));
 
 async function main() {
@@ -42,7 +43,9 @@ async function main() {
     });
 
     // 保存音频文件
-    const outputFile = `${basename}.${response.format}`;
+    const outputDir = path.join(__dirname, 'output');
+    mkdirSync(outputDir, { recursive: true });
+    const outputFile = path.join(outputDir, `${basename}.${response.format}`);
     writeFileSync(outputFile, response.audio);
     console.log(`音频已保存至: ${outputFile}`);
     console.log(`音频大小: ${response.audio.length} bytes`);

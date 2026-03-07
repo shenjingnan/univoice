@@ -3,11 +3,13 @@
  * 演示如何直接将流保存到文件，适合简单快速保存的场景
  */
 import 'dotenv/config';
+import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createTTS, saveAudio } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const basename = path.basename(__filename, path.extname(__filename));
 
 async function main() {
@@ -39,12 +41,15 @@ async function main() {
   }
 
   // 直接将流保存到文件
-  await saveAudio(`${basename}.pcm`, tts.speak(text));
-  console.log(`音频已保存至: ${basename}.pcm`);
+  const outputDir = path.join(__dirname, 'output');
+  mkdirSync(outputDir, { recursive: true });
+  const outputFile = path.join(outputDir, `${basename}.pcm`);
+  await saveAudio(outputFile, tts.speak(text));
+  console.log(`音频已保存至: ${outputFile}`);
 
   console.log('\n=== 播放提示 ===');
   console.log('PCM 格式播放命令 (24000 Hz, 16-bit, mono):');
-  console.log(`ffplay -f s16le -ar 24000 ${basename}.pcm`);
+  console.log(`ffplay -f s16le -ar 24000 ${outputFile}`);
 }
 
 main();
