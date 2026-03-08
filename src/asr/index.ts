@@ -10,6 +10,7 @@ export {
   createASR,
   getASRProviders,
   listen,
+  listenStream,
   registerASRProvider,
   stream,
 } from '@/asr/factory';

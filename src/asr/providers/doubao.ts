@@ -13,7 +13,15 @@ import {
   type SAUCUtterance,
 } from '@/asr/protocols/sauc';
 import { DEFAULT_SAMPLE_RATE, processAudio, splitAudio } from '@/asr/utils/audio';
-import type { ASROptions, ASRRequest, ASRResponse, ASRSegment, ASRStreamChunk } from '@/types/asr';
+import type {
+  ASROptions,
+  ASRRequest,
+  ASRResponse,
+  ASRSegment,
+  ASRStreamChunk,
+  AudioStream,
+  AudioStreamOptions,
+} from '@/types/asr';
 
 /**
  * 豆包 ASR 提供商
@@ -109,6 +117,17 @@ export class DoubaoASR extends BaseASR {
    * 执行语音识别
    */
   async listen(request: ASRRequest): Promise<ASRResponse> {
+    // 检查是否为流式音频输入
+    if (
+      typeof request.audio !== 'string' &&
+      !Buffer.isBuffer(request.audio) &&
+      !(request.audio instanceof Uint8Array)
+    ) {
+      throw new Error(
+        'AudioStream is not supported in listen() method. Use listenStream() instead.'
+      );
+    }
+
     // 合并请求选项
     const opts = this.buildRequestOptions(request);
 
@@ -205,6 +224,17 @@ export class DoubaoASR extends BaseASR {
    * 实时返回识别结果，支持 for await...of 语法
    */
   async *stream(request: ASRRequest): AsyncIterable<ASRStreamChunk> {
+    // 检查是否为流式音频输入
+    if (
+      typeof request.audio !== 'string' &&
+      !Buffer.isBuffer(request.audio) &&
+      !(request.audio instanceof Uint8Array)
+    ) {
+      throw new Error(
+        'AudioStream is not supported in stream() method. Use listenStream() instead.'
+      );
+    }
+
     // 合并请求选项
     const opts = this.buildRequestOptions(request);
 
@@ -304,6 +334,162 @@ export class DoubaoASR extends BaseASR {
       }
     } finally {
       ws.close();
+    }
+  }
+
+  /**
+   * 流式音频输入识别
+   * 接收流式音频输入并实时返回识别结果
+   *
+   * @param audioStream 音频流（PCM 或 WAV 格式）
+   * @param streamOptions 流式音频格式选项
+   * @returns 流式识别结果
+   */
+  async *listenStream(
+    audioStream: AudioStream,
+    streamOptions?: AudioStreamOptions
+  ): AsyncIterable<ASRStreamChunk> {
+    // 验证必要参数
+    if (!this.appKey) {
+      throw new Error('appKey is required for Doubao ASR');
+    }
+    if (!this.accessKey) {
+      throw new Error('accessKey is required for Doubao ASR');
+    }
+
+    // 解析流式音频选项
+    const format = streamOptions?.format || 'pcm';
+    const sampleRate = streamOptions?.sampleRate || this.sampleRate;
+    const bits = streamOptions?.bits || this.bits;
+    const channel = streamOptions?.channel || this.channel;
+
+    // 创建 WebSocket 连接
+    const url = this.getWebSocketUrl();
+    const headers = buildAuthHeaders({
+      appKey: this.appKey,
+      accessKey: this.accessKey,
+      resourceId: this.resourceId,
+    });
+
+    const ws = new WebSocket(url, { headers });
+
+    try {
+      // 等待连接建立
+      await this.waitForConnection(ws);
+
+      // 初始化序列号
+      let sequence = 1;
+
+      // 构建 Full Client Request 参数（使用流式音频格式）
+      const fullClientParams: FullClientRequestParams = {
+        user: {
+          uid: 'univoice-sdk',
+        },
+        audio: {
+          format: format,
+          codec: 'raw',
+          rate: sampleRate,
+          bits: bits,
+          channel: channel,
+          language: this.language,
+        },
+        request: {
+          model_name: 'bigmodel',
+          enable_itn: this.enableItn,
+          enable_punc: this.enablePunc,
+          enable_ddc: this.enableDdc,
+          show_utterances: this.showUtterances,
+        },
+      };
+
+      // 发送 Full Client Request
+      const fullClientRequest = buildFullClientRequest(fullClientParams, sequence++);
+      ws.send(fullClientRequest);
+
+      // 等待服务端确认
+      const initResponse = await this.receiveMessage(ws);
+      if (initResponse.code !== 0) {
+        throw new Error(`Init failed: ${getErrorMessage(initResponse.code)}`);
+      }
+
+      // 用于跟踪是否还有音频要发送
+      let audioDone = false;
+      let lastSequence = sequence;
+
+      // 创建一个异步迭代器来处理音频流
+      const processAudioStream = async () => {
+        try {
+          for await (const chunk of audioStream) {
+            const audioBuffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+            const audioRequest = buildAudioOnlyRequest(lastSequence, audioBuffer, false);
+            ws.send(audioRequest);
+            lastSequence++;
+          }
+          // 发送结束标记
+          const endRequest = buildAudioOnlyRequest(lastSequence, Buffer.alloc(0), true);
+          ws.send(endRequest);
+        } catch (error) {
+          // 发生错误时关闭连接
+          ws.close();
+          throw error;
+        }
+        audioDone = true;
+      };
+
+      // 启动音频发送任务（不等待）
+      const sendPromise = processAudioStream();
+
+      // 接收识别结果
+      while (!audioDone || ws.readyState === WebSocket.OPEN) {
+        try {
+          const response = await this.receiveMessage(ws);
+
+          if (response.code !== 0) {
+            throw new Error(`ASR error: ${getErrorMessage(response.code)}`);
+          }
+
+          // 实时 yield 识别结果
+          if (response.payloadMsg?.result) {
+            const result = response.payloadMsg.result;
+            const chunk: ASRStreamChunk = {
+              text: result.text,
+              isFinal: response.isLastPackage,
+            };
+
+            // 如果有 utterances，添加分段信息
+            if (result.utterances && result.utterances.length > 0) {
+              const utt = result.utterances[0];
+              chunk.segment = {
+                id: 0,
+                start: utt.start_time,
+                end: utt.end_time,
+                text: utt.text,
+                confidence: utt.definite ? 1.0 : 0.8,
+              };
+            }
+
+            yield chunk;
+          }
+
+          // 如果是最后一包，结束循环
+          if (response.isLastPackage) {
+            break;
+          }
+        } catch (error) {
+          // 如果连接已关闭且音频已发送完毕，正常退出
+          if (audioDone && ws.readyState !== WebSocket.OPEN) {
+            break;
+          }
+          throw error;
+        }
+      }
+
+      // 等待音频发送完成
+      await sendPromise;
+    } finally {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
     }
   }
 

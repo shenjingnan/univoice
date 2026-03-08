@@ -5,6 +5,8 @@ import type {
   ASRProviderType,
   ASRResponse,
   ASRStreamChunk,
+  AudioStream,
+  AudioStreamOptions,
 } from '@/types/asr';
 
 // 重新导出 BaseASR 以便外部使用
@@ -57,4 +59,26 @@ export async function* stream(
     throw new Error(`Provider ${options.provider} does not support streaming`);
   }
   yield* asr.stream({ audio, options });
+}
+
+/**
+ * 流式音频输入识别
+ * 接收流式音频输入并实时返回识别结果
+ *
+ * @param audioStream 音频流
+ * @param options ASR 配置选项
+ * @param streamOptions 流式音频格式选项
+ * @returns 流式识别结果
+ * @throws 如果提供商不支持流式音频输入
+ */
+export async function* listenStream(
+  audioStream: AudioStream,
+  options: ASROptions,
+  streamOptions?: AudioStreamOptions
+): AsyncIterable<ASRStreamChunk> {
+  const asr = createASR(options);
+  if (!asr.listenStream) {
+    throw new Error(`Provider ${options.provider} does not support streaming audio input`);
+  }
+  yield* asr.listenStream(audioStream, streamOptions);
 }

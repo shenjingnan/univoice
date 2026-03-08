@@ -26,8 +26,25 @@ export interface ASROptions {
   showUtterances?: boolean;
 }
 
+/** 音频流类型 */
+export type AudioStream = AsyncIterable<Uint8Array> | AsyncGenerator<Uint8Array>;
+
+/** 流式音频输入选项（PCM 格式需要指定） */
+export interface AudioStreamOptions {
+  /** 音频格式，默认 'pcm' */
+  format?: 'pcm' | 'wav';
+  /** 采样率，默认 16000 */
+  sampleRate?: number;
+  /** 位深度，默认 16 */
+  bits?: number;
+  /** 声道数，默认 1 */
+  channel?: number;
+}
+
 export interface ASRRequest {
-  audio: Buffer | Uint8Array | string;
+  audio: Buffer | Uint8Array | string | AudioStream;
+  /** 流式音频输入时需要指定格式参数 */
+  streamOptions?: AudioStreamOptions;
   options?: Partial<ASROptions>;
 }
 
@@ -67,6 +84,11 @@ export interface ASRProvider {
   listen(request: ASRRequest): Promise<ASRResponse>;
   /** 流式识别方法（可选） - 实时返回识别结果 */
   stream?(request: ASRRequest): AsyncIterable<ASRStreamChunk>;
+  /** 流式音频输入识别方法（可选） - 接收流式音频输入并实时返回识别结果 */
+  listenStream?(
+    audioStream: AudioStream,
+    streamOptions?: AudioStreamOptions
+  ): AsyncIterable<ASRStreamChunk>;
 }
 
 export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
