@@ -49,7 +49,7 @@ export interface ASRSegment {
 
 export interface ASRProvider {
   name: string;
-  recognize(request: ASRRequest): Promise<ASRResponse>;
+  listen(request: ASRRequest): Promise<ASRResponse>;
 }
 
 export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;

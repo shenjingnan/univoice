@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
-import { createASR, getASRProviders, recognize, registerASRProvider } from '@/asr/factory.js';
+import { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory.js';
 import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
   name = 'mock-provider';
 
-  async recognize(_request: ASRRequest): Promise<ASRResponse> {
+  async listen(_request: ASRRequest): Promise<ASRResponse> {
     return {
       text: 'Transcribed text',
       language: 'zh-CN',
@@ -72,17 +72,17 @@ describe('ASR Factory', () => {
     });
   });
 
-  describe('recognize 快捷函数', () => {
-    it('应该成功调用 recognize 并返回结果', async () => {
-      registerASRProvider('recognize-test', MockASRProvider);
+  describe('listen 快捷函数', () => {
+    it('应该成功调用 listen 并返回结果', async () => {
+      registerASRProvider('listen-test', MockASRProvider);
 
       const options: ASROptions = {
-        provider: 'recognize-test',
+        provider: 'listen-test',
         apiKey: 'test-key',
       };
 
       const audio = Buffer.from('test audio data');
-      const result = await recognize(audio, options);
+      const result = await listen(audio, options);
 
       expect(result.text).toBe('Transcribed text');
       expect(result.language).toBe('zh-CN');
@@ -90,7 +90,7 @@ describe('ASR Factory', () => {
     });
 
     it('应该将音频和选项正确传递给 ASR 实例', async () => {
-      const recognizeSpy = vi.fn(async (_request: ASRRequest): Promise<ASRResponse> => {
+      const listenSpy = vi.fn(async (_request: ASRRequest): Promise<ASRResponse> => {
         return {
           text: '',
           language: 'zh-CN',
@@ -100,8 +100,8 @@ describe('ASR Factory', () => {
       class SpyASR extends BaseASR {
         name = 'spy-provider';
 
-        async recognize(request: ASRRequest): Promise<ASRResponse> {
-          return recognizeSpy(request);
+        async listen(request: ASRRequest): Promise<ASRResponse> {
+          return listenSpy(request);
         }
       }
 
@@ -113,9 +113,9 @@ describe('ASR Factory', () => {
       };
 
       const audio = Buffer.from('test audio');
-      await recognize(audio, options);
+      await listen(audio, options);
 
-      expect(recognizeSpy).toHaveBeenCalledWith({
+      expect(listenSpy).toHaveBeenCalledWith({
         audio: Buffer.from('test audio'),
         options: options,
       });
@@ -130,7 +130,7 @@ describe('ASR Factory', () => {
       };
 
       const audio = new Uint8Array([1, 2, 3, 4]);
-      const result = await recognize(audio, options);
+      const result = await listen(audio, options);
 
       expect(result.text).toBeDefined();
     });
@@ -144,7 +144,7 @@ describe('ASR Factory', () => {
       };
 
       const audio = '/path/to/audio/file.mp3';
-      const result = await recognize(audio, options);
+      const result = await listen(audio, options);
 
       expect(result.text).toBeDefined();
     });

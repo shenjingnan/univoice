@@ -22,10 +22,10 @@ export function getASRProviders(): string[] {
   return Array.from(providers.keys());
 }
 
-export async function recognize(
+export async function listen(
   audio: Buffer | Uint8Array | string,
   options: ASROptions
 ): Promise<ASRResponse> {
   const asr = createASR(options);
-  return asr.recognize({ audio, options });
+  return asr.listen({ audio, options });
 }

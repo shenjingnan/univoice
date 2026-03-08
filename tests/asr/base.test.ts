@@ -6,7 +6,7 @@ import type { ASROptions, ASRRequest } from '@/types/asr.js';
 class MockASR extends BaseASR {
   name = 'mock-asr';
 
-  async recognize(request: ASRRequest) {
+  async listen(request: ASRRequest) {
     const opts = this.buildRequestOptions(request);
     return {
       text: 'Mocked transcription',

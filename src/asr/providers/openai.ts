@@ -11,7 +11,7 @@ export class WhisperASR extends BaseASR {
     this.model = options.model || 'whisper-1';
   }
 
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async listen(request: ASRRequest): Promise<ASRResponse> {
     const opts = this.buildRequestOptions(request);
     // TODO: Implement OpenAI Whisper API call
     return {

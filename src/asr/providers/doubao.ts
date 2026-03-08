@@ -108,7 +108,7 @@ export class DoubaoASR extends BaseASR {
   /**
    * 执行语音识别
    */
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async listen(request: ASRRequest): Promise<ASRResponse> {
     // 合并请求选项
     const opts = this.buildRequestOptions(request);
 

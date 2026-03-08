@@ -38,7 +38,7 @@ async function main() {
     console.log('开始语音识别...');
 
     // 执行语音识别
-    const result = await asr.recognize({
+    const result = await asr.listen({
       audio: audioPath,
     });
 
