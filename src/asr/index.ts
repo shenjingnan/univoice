@@ -5,8 +5,14 @@ import '@/asr/providers/qwen';
 import '@/asr/providers/openai';
 import '@/asr/providers/gemini';
 
-export { BaseASR } from '@/asr/base';
-export { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory';
+export {
+  BaseASR,
+  createASR,
+  getASRProviders,
+  listen,
+  registerASRProvider,
+  stream,
+} from '@/asr/factory';
 
 export * from '@/asr/utils/index';
 export * from '@/types/asr';

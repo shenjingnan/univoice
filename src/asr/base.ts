@@ -1,4 +1,4 @@
-import type { ASROptions, ASRProvider, ASRRequest, ASRResponse } from '@/types/asr';
+import type { ASROptions, ASRProvider, ASRRequest, ASRResponse, ASRStreamChunk } from '@/types/asr';
 
 export abstract class BaseASR implements ASRProvider {
   abstract name: string;
@@ -19,6 +19,17 @@ export abstract class BaseASR implements ASRProvider {
   }
 
   abstract listen(request: ASRRequest): Promise<ASRResponse>;
+
+  /**
+   * 流式识别方法
+   * 默认实现：不支持流式输出，子类可以覆盖此方法提供支持
+   *
+   * @param request 语音识别请求
+   * @returns 流式识别结果
+   */
+  stream(_request: ASRRequest): AsyncIterable<ASRStreamChunk> {
+    throw new Error(`Provider ${this.name} does not support streaming output`);
+  }
 
   public buildRequestOptions(request: ASRRequest): ASROptions {
     return {
