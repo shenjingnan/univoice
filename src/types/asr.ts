@@ -47,9 +47,26 @@ export interface ASRSegment {
   confidence?: number;
 }
 
+/**
+ * ASR 流式响应块
+ * 用于 stream 方法的返回值，便于后续扩展更多字段
+ */
+export interface ASRStreamChunk {
+  /** 本次识别的文本片段 */
+  text: string;
+  /** 是否为最终结果 */
+  isFinal: boolean;
+  /** 置信度（可选） */
+  confidence?: number;
+  /** 分段信息（可选） */
+  segment?: ASRSegment;
+}
+
 export interface ASRProvider {
   name: string;
   listen(request: ASRRequest): Promise<ASRResponse>;
+  /** 流式识别方法（可选） - 实时返回识别结果 */
+  stream?(request: ASRRequest): AsyncIterable<ASRStreamChunk>;
 }
 
 export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
