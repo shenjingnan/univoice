@@ -11,7 +11,7 @@ export class GeminiASR extends BaseASR {
     this.model = options.model || 'gemini-asr';
   }
 
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async listen(request: ASRRequest): Promise<ASRResponse> {
     const opts = this.buildRequestOptions(request);
     // TODO: Implement Gemini ASR API call
     return {

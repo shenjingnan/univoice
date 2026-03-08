@@ -18,7 +18,7 @@ export abstract class BaseASR implements ASRProvider {
     this.responseFormat = options.responseFormat || 'json';
   }
 
-  abstract recognize(request: ASRRequest): Promise<ASRResponse>;
+  abstract listen(request: ASRRequest): Promise<ASRResponse>;
 
   public buildRequestOptions(request: ASRRequest): ASROptions {
     return {

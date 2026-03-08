@@ -189,7 +189,7 @@ const asr = createASR({
 });
 
 const audioBuffer = readFileSync('audio.mp3');
-const result = await asr.recognize({
+const result = await asr.listen({
   audio: audioBuffer,
 });
 
@@ -269,7 +269,7 @@ const asr = createASR({
 
 | 方法 | 说明 | 返回类型 |
 |------|------|----------|
-| `asr.recognize(request)` | 语音识别 | `Promise<ASRResponse>` |
+| `asr.listen(request)` | 语音识别 | `Promise<ASRResponse>` |
 
 #### 工具函数
 

@@ -11,7 +11,7 @@ export class MinimaxASR extends BaseASR {
     this.model = options.model || 'speech-01';
   }
 
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async listen(request: ASRRequest): Promise<ASRResponse> {
     const opts = this.buildRequestOptions(request);
     // TODO: Implement Minimax ASR API call
     return {

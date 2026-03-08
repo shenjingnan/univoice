@@ -110,7 +110,7 @@ pnpm release:dry
 
 - **工厂模式**: 使用工厂函数动态创建 TTS/ASR 提供商
 - **插件化架构**: 通过 `registerTTSProvider` / `registerASRProvider` 注册新提供商
-- **统一 API**: TTS 使用 `synthesize()`，ASR 使用 `recognize()`
+- **统一 API**: TTS 使用 `synthesize()`，ASR 使用 `listen()`
 
 ## 可用技能
 

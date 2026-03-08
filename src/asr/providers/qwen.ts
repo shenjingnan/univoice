@@ -11,7 +11,7 @@ export class QwenASR extends BaseASR {
     this.model = options.model || 'paraformer-v2';
   }
 
-  async recognize(request: ASRRequest): Promise<ASRResponse> {
+  async listen(request: ASRRequest): Promise<ASRResponse> {
     const opts = this.buildRequestOptions(request);
     // TODO: Implement Qwen ASR API call
     return {
