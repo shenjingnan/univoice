@@ -13,7 +13,14 @@ import {
   type SAUCUtterance,
 } from '@/asr/protocols/sauc';
 import { DEFAULT_SAMPLE_RATE, processAudio, splitAudio } from '@/asr/utils/audio';
-import type { ASROptions, ASRRequest, ASRResponse, ASRSegment, ASRStreamChunk } from '@/types/asr';
+import type {
+  ASROptions,
+  ASRRequest,
+  ASRResponse,
+  ASRSegment,
+  ASRStreamChunk,
+  AudioStream,
+} from '@/types/asr';
 
 /**
  * 豆包 ASR 提供商
@@ -380,6 +387,128 @@ export class DoubaoASR extends BaseASR {
       duration,
       segments,
     };
+  }
+
+  /**
+   * 构建 PCM 格式的 Full Client Request 参数
+   * 使用实例属性配置音频格式
+   */
+  private buildPcmFullClientRequestParams(): FullClientRequestParams {
+    return {
+      user: {
+        uid: 'univoice-sdk',
+      },
+      audio: {
+        format: 'pcm',
+        codec: 'raw',
+        rate: this.sampleRate,
+        bits: this.bits,
+        channel: this.channel,
+        language: this.language,
+      },
+      request: {
+        model_name: 'bigmodel',
+        enable_itn: this.enableItn,
+        enable_punc: this.enablePunc,
+        enable_ddc: this.enableDdc,
+        show_utterances: this.showUtterances,
+      },
+    };
+  }
+
+  /**
+   * 流式输入识别方法
+   * 接收音频流进行识别
+   */
+  async *streamFrom(audio: AudioStream, _intervalMs?: number): AsyncIterable<ASRStreamChunk> {
+    // 验证必要参数
+    if (!this.appKey) {
+      throw new Error('appKey is required for Doubao ASR');
+    }
+    if (!this.accessKey) {
+      throw new Error('accessKey is required for Doubao ASR');
+    }
+
+    // 创建 WebSocket 连接
+    const url = this.getWebSocketUrl();
+    const headers = buildAuthHeaders({
+      appKey: this.appKey,
+      accessKey: this.accessKey,
+      resourceId: this.resourceId,
+    });
+
+    const ws = new WebSocket(url, { headers });
+
+    try {
+      // 等待连接建立
+      await this.waitForConnection(ws);
+
+      // 初始化序列号
+      let sequence = 1;
+
+      // 发送 Full Client Request
+      const fullClientRequest = buildFullClientRequest(
+        this.buildPcmFullClientRequestParams(),
+        sequence++
+      );
+      ws.send(fullClientRequest);
+
+      // 等待服务端确认
+      const initResponse = await this.receiveMessage(ws);
+      if (initResponse.code !== 0) {
+        throw new Error(`Init failed: ${getErrorMessage(initResponse.code)}`);
+      }
+
+      // 遍历音频流
+      for await (const chunk of audio) {
+        const data = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+        const isLast = false; // 流模式下无法确定是否为最后一包
+
+        // 发送音频数据
+        const audioRequest = buildAudioOnlyRequest(sequence, data, isLast);
+        ws.send(audioRequest);
+        sequence++;
+      }
+
+      // 发送最后一包
+      const lastRequest = buildAudioOnlyRequest(sequence, Buffer.alloc(0), true);
+      ws.send(lastRequest);
+
+      // 接收所有响应
+      while (true) {
+        const response = await this.receiveMessage(ws);
+        if (response.code !== 0) {
+          throw new Error(`ASR error: ${getErrorMessage(response.code)}`);
+        }
+
+        if (response.payloadMsg?.result) {
+          const result = response.payloadMsg.result;
+          const chunk: ASRStreamChunk = {
+            text: result.text,
+            isFinal: response.isLastPackage,
+          };
+
+          if (result.utterances && result.utterances.length > 0) {
+            const utt = result.utterances[0];
+            chunk.segment = {
+              id: 0,
+              start: utt.start_time,
+              end: utt.end_time,
+              text: utt.text,
+              confidence: utt.definite ? 1.0 : 0.8,
+            };
+          }
+
+          yield chunk;
+        }
+
+        if (response.isLastPackage) {
+          break;
+        }
+      }
+    } finally {
+      ws.close();
+    }
   }
 }
 
