@@ -65,18 +65,16 @@ export async function* stream(
  *
  * @param audio 音频流（AsyncIterable）
  * @param options ASR 配置选项
- * @param intervalMs 发包间隔（毫秒），可选
  * @returns 流式识别结果
  * @throws 如果提供商不支持流式输入
  */
 export async function* streamFrom(
   audio: AudioStream,
-  options: ASROptions,
-  intervalMs?: number
+  options: ASROptions
 ): AsyncIterable<ASRStreamChunk> {
   const asr = createASR(options);
   if (!asr.streamFrom) {
     throw new Error(`Provider ${options.provider} does not support streaming input`);
   }
-  yield* asr.streamFrom(audio, intervalMs);
+  yield* asr.streamFrom(audio);
 }
