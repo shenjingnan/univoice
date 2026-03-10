@@ -21,6 +21,14 @@ import type {
   ASRStreamChunk,
   AudioStream,
 } from '@/types/asr';
+import type {
+  ASROptions,
+  ASRRequest,
+  ASRResponse,
+  ASRSegment,
+  ASRStreamChunk,
+  AudioStream,
+} from '@/types/asr';
 
 /**
  * 豆包 ASR 提供商

@@ -75,3 +75,6 @@ export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini
 
 /** 音频流类型（异步迭代器） */
 export type AudioStream = AsyncIterable<Buffer | Uint8Array>;
+
+/** 音频流类型（异步迭代器） */
+export type AudioStream = AsyncIterable<Buffer | Uint8Array>;

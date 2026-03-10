@@ -6,6 +6,14 @@ import type {
   ASRStreamChunk,
   AudioStream,
 } from '@/types/asr';
+import type {
+  ASROptions,
+  ASRProvider,
+  ASRRequest,
+  ASRResponse,
+  ASRStreamChunk,
+  AudioStream,
+} from '@/types/asr';
 
 export abstract class BaseASR implements ASRProvider {
   abstract name: string;
