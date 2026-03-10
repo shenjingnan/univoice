@@ -1,5 +1,6 @@
 export type { WavInfo } from '@/asr/utils/audio';
 export {
+  bufferToAudioStream,
   convertToWav,
   DEFAULT_SAMPLE_RATE,
   isWav,

@@ -245,5 +245,41 @@ describe('ASR Factory', () => {
 
       expect(results).toHaveLength(2);
     });
+
+    it('应该支持 Buffer 类型的输入', async () => {
+      registerASRProvider('streamfrom-buffer-test', MockStreamFromProvider);
+
+      const options: ASROptions = {
+        provider: 'streamfrom-buffer-test',
+      };
+
+      // 使用 Buffer（会被转换为 AudioStream）
+      const audioBuffer = Buffer.from('test audio data');
+      const results: ASRStreamChunk[] = [];
+      for await (const chunk of streamFrom(audioBuffer, options)) {
+        results.push(chunk);
+      }
+
+      expect(results).toHaveLength(2);
+      expect(results[0].text).toBe('你好');
+      expect(results[1].text).toBe('世界');
+    });
+
+    it('应该支持 Uint8Array 类型的输入', async () => {
+      registerASRProvider('streamfrom-uint8array-test', MockStreamFromProvider);
+
+      const options: ASROptions = {
+        provider: 'streamfrom-uint8array-test',
+      };
+
+      // 使用 Uint8Array（会被转换为 AudioStream）
+      const audioData = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+      const results: ASRStreamChunk[] = [];
+      for await (const chunk of streamFrom(audioData, options)) {
+        results.push(chunk);
+      }
+
+      expect(results).toHaveLength(2);
+    });
   });
 });

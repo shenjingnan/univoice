@@ -271,3 +271,20 @@ export async function processAudio(
     audioData: wavInfo.data,
   };
 }
+
+/**
+ * 将 Buffer 或 Uint8Array 转换为音频流
+ * 用于 streamFrom 方法，支持流式输入识别
+ *
+ * @param buffer 音频数据
+ * @param chunkSize 分块大小（字节），默认 3200（100ms @ 16kHz 16bit mono）
+ * @returns 音频流
+ */
+export async function* bufferToAudioStream(
+  buffer: Buffer | Uint8Array,
+  chunkSize = 3200
+): AsyncIterable<Buffer | Uint8Array> {
+  for (let i = 0; i < buffer.length; i += chunkSize) {
+    yield buffer.slice(i, Math.min(i + chunkSize, buffer.length));
+  }
+}
