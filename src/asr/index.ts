@@ -12,6 +12,7 @@ export {
   listen,
   registerASRProvider,
   stream,
+  streamFrom,
 } from '@/asr/factory';
 
 export * from '@/asr/utils/index';

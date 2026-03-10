@@ -1,4 +1,11 @@
-import type { ASROptions, ASRProvider, ASRRequest, ASRResponse, ASRStreamChunk } from '@/types/asr';
+import type {
+  ASROptions,
+  ASRProvider,
+  ASRRequest,
+  ASRResponse,
+  ASRStreamChunk,
+  AudioStream,
+} from '@/types/asr';
 
 export abstract class BaseASR implements ASRProvider {
   abstract name: string;
@@ -29,6 +36,18 @@ export abstract class BaseASR implements ASRProvider {
    */
   stream(_request: ASRRequest): AsyncIterable<ASRStreamChunk> {
     throw new Error(`Provider ${this.name} does not support streaming output`);
+  }
+
+  /**
+   * 流式输入识别方法
+   * 默认实现：不支持流式输入，子类可以覆盖此方法提供支持
+   *
+   * @param audio 音频流
+   * @param intervalMs 发包间隔（毫秒）
+   * @returns 流式识别结果
+   */
+  streamFrom(_audio: AudioStream, _intervalMs?: number): AsyncIterable<ASRStreamChunk> {
+    throw new Error(`Provider ${this.name} does not support streaming input`);
   }
 
   public buildRequestOptions(request: ASRRequest): ASROptions {
