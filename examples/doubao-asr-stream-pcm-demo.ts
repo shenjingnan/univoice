@@ -1,12 +1,11 @@
-#!/usr/bin/env npx tsx
 /**
  * 豆包 ASR PCM 目录流式识别示例
  *
  * 演示如何从 PCM 文件目录进行流式语音识别
  *
  * 用法:
- *   npx tsx examples/doubao-asr-stream-pcm-demo.ts \
- *     --dir /path/to/pcm/files
+ *   cd examples
+ *   npx tsx doubao-asr-stream-pcm-demo.ts
  *
  * 注意: app-key 和 access-key 可通过环境变量配置:
  *   ASR_BYTEDANCE_APP_KEY
