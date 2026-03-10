@@ -6,7 +6,6 @@ import type {
   ASRResponse,
   ASRStreamChunk,
   AudioStream,
-  AudioStream,
 } from '@/types/asr';
 
 // 重新导出 BaseASR 以便外部使用
