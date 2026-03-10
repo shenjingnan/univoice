@@ -5,6 +5,7 @@
     "acodec",
     "afplay",
     "asr",
+    "audiostream",
     "bidirection",
     "bigasr",
     "bigmodel",
@@ -34,6 +35,7 @@
     "sauc",
     "SAUC",
     "shenjingnan",
+    "streamfrom",
     "subchunk",
     "tianmei",
     "tianmeixiaoyuan",
@@ -45,5 +47,13 @@
     "volcengine",
     "webfactory"
   ],
-  "ignorePaths": ["coverage", "docs", "node_modules", "dist", "*.lock", "pnpm-lock.yaml"]
+  "ignorePaths": [
+    "examples/output",
+    "coverage",
+    "docs",
+    "node_modules",
+    "dist",
+    "*.lock",
+    "pnpm-lock.yaml"
+  ]
 }

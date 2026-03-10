@@ -1,7 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
-import { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory.js';
-import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr.js';
+import {
+  createASR,
+  getASRProviders,
+  listen,
+  registerASRProvider,
+  streamFrom,
+} from '@/asr/factory.js';
+import type {
+  ASROptions,
+  ASRRequest,
+  ASRResponse,
+  ASRStreamChunk,
+  AudioStream,
+} from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
@@ -147,6 +159,91 @@ describe('ASR Factory', () => {
       const result = await listen(audio, options);
 
       expect(result.text).toBeDefined();
+    });
+  });
+
+  describe('streamFrom 快捷函数', () => {
+    // 创建一个支持 streamFrom 的模拟提供商
+    class MockStreamFromProvider extends BaseASR {
+      name = 'mock-streamfrom-provider';
+
+      async listen(_request: ASRRequest): Promise<ASRResponse> {
+        return { text: 'test' };
+      }
+
+      async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+        yield { text: '你好', isFinal: false };
+        yield { text: '世界', isFinal: true };
+      }
+    }
+
+    // 创建一个不支持 streamFrom 的模拟提供商
+    class MockNoStreamFromProvider extends BaseASR {
+      name = 'mock-no-streamfrom-provider';
+
+      async listen(_request: ASRRequest): Promise<ASRResponse> {
+        return { text: 'test' };
+      }
+
+      // 不实现 streamFrom 方法
+    }
+
+    it('应该支持 AudioStream 输入', async () => {
+      registerASRProvider('streamfrom-audiostream-test', MockStreamFromProvider);
+
+      const options: ASROptions = {
+        provider: 'streamfrom-audiostream-test',
+      };
+
+      // 创建模拟的 AudioStream
+      async function* mockAudioStream(): AudioStream {
+        yield Buffer.from('chunk1');
+        yield Buffer.from('chunk2');
+      }
+
+      const results: ASRStreamChunk[] = [];
+      for await (const chunk of streamFrom(mockAudioStream(), options)) {
+        results.push(chunk);
+      }
+
+      expect(results).toHaveLength(2);
+      expect(results[0].text).toBe('你好');
+      expect(results[1].text).toBe('世界');
+      expect(results[1].isFinal).toBe(true);
+    });
+
+    it('当提供商不支持 streamFrom 时应该抛出错误', async () => {
+      registerASRProvider('no-streamfrom-provider', MockNoStreamFromProvider);
+
+      const options: ASROptions = {
+        provider: 'no-streamfrom-provider',
+      };
+
+      async function* mockAudioStream(): AudioStream {
+        yield Buffer.from('chunk');
+      }
+
+      await expect(async () => {
+        for await (const _ of streamFrom(mockAudioStream(), options)) {
+          // 不应该到达这里
+        }
+      }).rejects.toThrow('does not support streaming input');
+    });
+
+    it('应该支持字符串类型的输入（文件路径）', async () => {
+      registerASRProvider('streamfrom-string-test', MockStreamFromProvider);
+
+      const options: ASROptions = {
+        provider: 'streamfrom-string-test',
+      };
+
+      // 使用字符串路径（会被转换为 AudioStream）
+      const results: ASRStreamChunk[] = [];
+      for await (const chunk of streamFrom('/path/to/audio.wav', options)) {
+        results.push(chunk);
+      }
+
+      expect(results).toHaveLength(2);
     });
   });
 });
