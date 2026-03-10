@@ -51,10 +51,11 @@ async function main() {
 
     const audioStream = pcmDirectoryToAudioStream(pcmFileDir, { intervalMs: 0 });
 
+    console.time('streamFrom');
     for await (const chunk of asr.streamFrom(audioStream)) {
       console.log(`[识别结果] isFinal: ${chunk.isFinal}, text: ${chunk.text}`);
     }
-
+    console.timeEnd('streamFrom');
     console.log('');
     console.log('识别完成!');
   } catch (error) {
