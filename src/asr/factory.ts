@@ -1,4 +1,5 @@
 import { BaseASR } from '@/asr/base';
+import { processAudio } from '@/asr/utils/audio';
 import type {
   ASROptions,
   ASRProvider,
@@ -6,6 +7,7 @@ import type {
   ASRResponse,
   ASRStreamChunk,
   AudioStream,
+  AudioStreamInput,
 } from '@/types/asr';
 
 // 重新导出 BaseASR 以便外部使用
@@ -61,20 +63,44 @@ export async function* stream(
 }
 
 /**
- * 从音频流进行流式识别
+ * 判断输入是否为 AudioStream
+ */
+function isAudioStream(input: AudioStreamInput): input is AudioStream {
+  return input !== null && typeof input === 'object' && Symbol.asyncIterator in input;
+}
+
+/**
+ * 将音频文件路径转换为 PCM 音频流
+ */
+async function* fileToPcmAudioStream(filePath: string): AudioStream {
+  const { audioData } = await processAudio(filePath);
+  const chunkSize = 3200; // 100ms @ 16kHz 16bit mono
+
+  for (let i = 0; i < audioData.length; i += chunkSize) {
+    const end = Math.min(i + chunkSize, audioData.length);
+    yield audioData.slice(i, end);
+  }
+}
+
+/**
+ * 从音频流或音频文件路径进行流式识别
  *
- * @param audio 音频流（AsyncIterable）
+ * @param audio 音频流（AsyncIterable）或音频文件路径
  * @param options ASR 配置选项
  * @returns 流式识别结果
  * @throws 如果提供商不支持流式输入
  */
 export async function* streamFrom(
-  audio: AudioStream,
+  audio: AudioStreamInput,
   options: ASROptions
 ): AsyncIterable<ASRStreamChunk> {
   const asr = createASR(options);
   if (!asr.streamFrom) {
     throw new Error(`Provider ${options.provider} does not support streaming input`);
   }
-  yield* asr.streamFrom(audio);
+
+  // 根据输入类型适配
+  const audioStream: AudioStream = isAudioStream(audio) ? audio : fileToPcmAudioStream(audio);
+
+  yield* asr.streamFrom(audioStream);
 }
