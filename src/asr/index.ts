@@ -11,7 +11,6 @@ export {
   getASRProviders,
   listen,
   registerASRProvider,
-  stream,
   streamFrom,
 } from '@/asr/factory';
 

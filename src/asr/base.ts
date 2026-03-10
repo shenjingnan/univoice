@@ -28,17 +28,6 @@ export abstract class BaseASR implements ASRProvider {
   abstract listen(request: ASRRequest): Promise<ASRResponse>;
 
   /**
-   * 流式识别方法
-   * 默认实现：不支持流式输出，子类可以覆盖此方法提供支持
-   *
-   * @param request 语音识别请求
-   * @returns 流式识别结果
-   */
-  stream(_request: ASRRequest): AsyncIterable<ASRStreamChunk> {
-    throw new Error(`Provider ${this.name} does not support streaming output`);
-  }
-
-  /**
    * 流式输入识别方法
    * 默认实现：不支持流式输入，子类可以覆盖此方法提供支持
    *

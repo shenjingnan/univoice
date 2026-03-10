@@ -4,7 +4,6 @@ export {
   getASRProviders,
   listen,
   registerASRProvider,
-  stream,
   streamFrom,
 } from '@/asr/index';
 export { collectText, saveText } from '@/asr/utils/index';

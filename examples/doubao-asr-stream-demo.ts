@@ -1,16 +1,17 @@
 /**
- * Doubao ASR stream 方法示例
- * 演示如何使用 stream() 方法进行流式语音识别
+ * Doubao ASR streamFrom 方法示例
+ * 演示如何使用 streamFrom() 方法进行流式语音识别
  *
- * stream 方法特点:
+ * streamFrom 方法特点:
  * - 实时返回识别结果，适用于长音频场景
  * - 返回 AsyncIterable<ASRStreamChunk>，可通过 for await...of 消费
  * - 每个 chunk 包含 text（文本片段）和 isFinal（是否为最终结果）
+ * - 支持音频流、Buffer、Uint8Array 或文件路径作为输入
  */
 import 'dotenv/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createASR } from 'univoice';
+import { streamFrom } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,23 +39,8 @@ async function main() {
   // 音频文件路径（请替换为实际的音频文件路径）
   const audioPath = path.join(__dirname, 'output', 'doubao-tts-demo.mp3');
 
-  console.log(`\n[${timestamp()}] === ASR stream 方法演示 ===\n`);
+  console.log(`\n[${timestamp()}] === ASR streamFrom 方法演示 ===\n`);
   console.log(`音频文件: ${audioPath}\n`);
-
-  // 创建 ASR 实例
-  const asr = createASR({
-    provider: 'doubao',
-    appKey,
-    accessKey,
-    mode: 'streaming',
-    language: 'zh-CN',
-  });
-
-  // 检查是否支持 stream 方法
-  if (!asr.stream) {
-    console.error('当前 ASR 提供商不支持流式识别');
-    process.exit(1);
-  }
 
   const startTime = Date.now();
   let firstChunkTime = 0;
@@ -65,8 +51,12 @@ async function main() {
     console.log('开始流式语音识别...\n');
 
     // 使用 for await...of 消费流式识别结果
-    for await (const chunk of asr.stream({
-      audio: audioPath,
+    for await (const chunk of streamFrom(audioPath, {
+      provider: 'doubao',
+      appKey,
+      accessKey,
+      mode: 'streaming',
+      language: 'zh-CN',
     })) {
       chunkCount++;
 

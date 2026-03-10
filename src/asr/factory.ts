@@ -1,5 +1,5 @@
 import { BaseASR } from '@/asr/base';
-import { processAudio } from '@/asr/utils/audio';
+import { bufferToAudioStream, processAudio } from '@/asr/utils/audio';
 import type {
   ASROptions,
   ASRProvider,
@@ -43,30 +43,17 @@ export async function listen(
 }
 
 /**
- * 流式语音识别
- * 实时返回识别结果，支持 for await...of 语法
- *
- * @param audio 音频数据，可以是 Buffer、Uint8Array 或文件路径
- * @param options ASR 配置选项
- * @returns 流式识别结果
- * @throws 如果提供商不支持流式输出
- */
-export async function* stream(
-  audio: Buffer | Uint8Array | string,
-  options: ASROptions
-): AsyncIterable<ASRStreamChunk> {
-  const asr = createASR(options);
-  if (!asr.stream) {
-    throw new Error(`Provider ${options.provider} does not support streaming`);
-  }
-  yield* asr.stream({ audio, options });
-}
-
-/**
  * 判断输入是否为 AudioStream
  */
 function isAudioStream(input: AudioStreamInput): input is AudioStream {
   return input !== null && typeof input === 'object' && Symbol.asyncIterator in input;
+}
+
+/**
+ * 判断输入是否为字符串（文件路径）
+ */
+function isString(input: AudioStreamInput): input is string {
+  return typeof input === 'string';
 }
 
 /**
@@ -83,9 +70,9 @@ async function* fileToPcmAudioStream(filePath: string): AudioStream {
 }
 
 /**
- * 从音频流或音频文件路径进行流式识别
+ * 从音频流、音频数据或音频文件路径进行流式识别
  *
- * @param audio 音频流（AsyncIterable）或音频文件路径
+ * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
  * @param options ASR 配置选项
  * @returns 流式识别结果
  * @throws 如果提供商不支持流式输入
@@ -100,7 +87,15 @@ export async function* streamFrom(
   }
 
   // 根据输入类型适配
-  const audioStream: AudioStream = isAudioStream(audio) ? audio : fileToPcmAudioStream(audio);
+  let audioStream: AudioStream;
+  if (isAudioStream(audio)) {
+    audioStream = audio;
+  } else if (isString(audio)) {
+    audioStream = fileToPcmAudioStream(audio);
+  } else {
+    // Buffer 或 Uint8Array
+    audioStream = bufferToAudioStream(audio);
+  }
 
   yield* asr.streamFrom(audioStream);
 }
