@@ -15,9 +15,9 @@
 
 import { createASR } from '@/asr';
 import 'dotenv/config';
-import { pcmDirectoryToAudioStream } from './utils/pcm-directory-to-stream';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pcmDirectoryToAudioStream } from './utils/pcm-directory-to-stream';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,7 +52,7 @@ async function main() {
 
     const audioStream = pcmDirectoryToAudioStream(pcmFileDir, { intervalMs: 0 });
 
-    for await (const chunk of asr.streamFrom(audioStream, 0)) {
+    for await (const chunk of asr.streamFrom(audioStream)) {
       console.log(`[识别结果] isFinal: ${chunk.isFinal}, text: ${chunk.text}`);
     }
 

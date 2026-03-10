@@ -43,10 +43,9 @@ export abstract class BaseASR implements ASRProvider {
    * 默认实现：不支持流式输入，子类可以覆盖此方法提供支持
    *
    * @param audio 音频流
-   * @param intervalMs 发包间隔（毫秒）
    * @returns 流式识别结果
    */
-  streamFrom(_audio: AudioStream, _intervalMs?: number): AsyncIterable<ASRStreamChunk> {
+  streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     throw new Error(`Provider ${this.name} does not support streaming input`);
   }
 
