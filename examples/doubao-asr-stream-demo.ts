@@ -66,7 +66,7 @@ async function main() {
     const { audioData } = await processAudio(audioPath);
 
     // 使用 for await...of 消费流式识别结果
-    for await (const chunk of asr.streamFrom!(bufferToAudioStream(audioData))) {
+    for await (const chunk of asr.streamFrom(bufferToAudioStream(audioData))) {
       chunkCount++;
 
       if (chunkCount === 1) {
