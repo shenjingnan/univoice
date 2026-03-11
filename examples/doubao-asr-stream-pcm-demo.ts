@@ -15,19 +15,14 @@
 import { createASR } from '@/asr';
 import 'dotenv/config';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { getASRConfig, getScriptMeta } from './utils/common';
 import { pcmDirectoryToAudioStream } from './utils/pcm-directory-to-stream';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+const { __dirname } = getScriptMeta(import.meta.url);
 const pcmFileDir = path.join(__dirname, 'output', 'doubao-tts-stream-chunks');
 
-// 命令行参数优先，否则使用环境变量
-const finalAppKey = process.env.ASR_BYTEDANCE_APP_KEY;
-const finalAccessKey = process.env.ASR_BYTEDANCE_ACCESS_KEY;
-
 async function main() {
+  const { appKey, accessKey } = getASRConfig();
   console.log('豆包 ASR PCM 目录流式识别示例');
   console.log('============================');
   console.log(`PCM 目录: ${pcmFileDir}`);
@@ -37,8 +32,8 @@ async function main() {
     // 使用 createASR 创建实例
     const asr = createASR({
       provider: 'doubao',
-      appKey: finalAppKey,
-      accessKey: finalAccessKey,
+      appKey,
+      accessKey,
       mode: 'streaming',
       sampleRate: 16000,
       bits: 16,

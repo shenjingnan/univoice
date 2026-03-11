@@ -9,34 +9,21 @@
  * 返回值: AsyncIterable<TTSStreamChunk>，可通过 for await...of 消费
  */
 import 'dotenv/config';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
+import {
+  ensureOutputDir,
+  getScriptMeta,
+  getTTSConfig,
+  printPlayTip,
+  printStats,
+  timestamp,
+} from './utils/common';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const basename = path.basename(__filename, path.extname(__filename));
-
-/**
- * 格式化时间戳
- */
-function timestamp(): string {
-  const now = new Date();
-  const ms = String(now.getMilliseconds()).padStart(3, '0');
-  const time = now.toTimeString().split(' ')[0];
-  return `${time}.${ms}`;
-}
+const { __dirname, basename } = getScriptMeta(import.meta.url);
 
 async function main() {
-  const appId = process.env.TTS_BYTEDANCE_APPID;
-  const accessToken = process.env.TTS_BYTEDANCE_TOKEN;
-  const voice = process.env.TTS_BYTEDANCE_VOICE_TYPE || 'zh_female_tianmeixiaoyuan_moon_bigtts';
-
-  if (!appId || !accessToken) {
-    console.error('请设置环境变量 TTS_BYTEDANCE_APPID 和 TTS_BYTEDANCE_TOKEN');
-    process.exit(1);
-  }
+  const { appId, accessToken, voice } = getTTSConfig();
 
   const tts = createTTS({
     provider: 'doubao',
@@ -75,23 +62,15 @@ async function main() {
     chunks.push(audioChunk);
   }
 
-  const totalTime = Date.now() - startTime;
-  console.log(`\n[${timestamp()}] === 统计信息 ===`);
-  console.log(`总耗时: ${totalTime} ms`);
-  console.log(`总音频块数: ${chunkCount}`);
-  console.log(`总音频大小: ${chunks.reduce((sum, c) => sum + c.length, 0)} bytes`);
+  printStats(startTime, chunkCount, chunks);
 
   // 保存音频
-  const outputDir = path.join(__dirname, 'output');
-  mkdirSync(outputDir, { recursive: true });
-  const outputPath = path.join(outputDir, `${basename}.pcm`);
+  const outputPath = ensureOutputDir(__dirname, basename);
   const buffer = Buffer.concat(chunks.map((c) => Buffer.from(c)));
   writeFileSync(outputPath, buffer);
   console.log(`\n音频已保存至: ${outputPath}`);
 
-  console.log('\n=== 播放提示 ===');
-  console.log('PCM 格式播放命令 (24000 Hz, 16-bit, mono):');
-  console.log(`ffplay -f s16le -ar 24000 ${outputPath}`);
+  printPlayTip(outputPath);
 }
 
 main();

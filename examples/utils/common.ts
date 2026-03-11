@@ -1,0 +1,119 @@
+/**
+ * 示例代码共享工具模块
+ * 提供公共函数，减少示例代码重复
+ */
+import { mkdirSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+/**
+ * 获取脚本路径信息
+ * @param importMetaUrl - import.meta.url
+ * @returns 脚本文件名、目录名和基础名（不含扩展名）
+ */
+export function getScriptMeta(importMetaUrl: string) {
+  const __filename = fileURLToPath(importMetaUrl);
+  const __dirname = path.dirname(__filename);
+  const basename = path.basename(__filename, path.extname(__filename));
+  return { __filename, __dirname, basename };
+}
+
+/**
+ * 格式化时间戳
+ * @returns 格式化的时间字符串，如 "14:30:25.123"
+ */
+export function timestamp(): string {
+  const now = new Date();
+  const ms = String(now.getMilliseconds()).padStart(3, '0');
+  const time = now.toTimeString().split(' ')[0];
+  return `${time}.${ms}`;
+}
+
+/**
+ * TTS 配置
+ */
+export interface TTSConfig {
+  appId: string;
+  accessToken: string;
+  voice: string;
+}
+
+/**
+ * 获取 TTS 配置（从环境变量）
+ * @returns TTS 配置对象
+ * @throws 如果环境变量未设置则退出进程
+ */
+export function getTTSConfig(): TTSConfig {
+  const appId = process.env.TTS_BYTEDANCE_APPID;
+  const accessToken = process.env.TTS_BYTEDANCE_TOKEN;
+  const voice = process.env.TTS_BYTEDANCE_VOICE_TYPE || 'zh_female_tianmeixiaoyuan_moon_bigtts';
+
+  if (!appId || !accessToken) {
+    console.error('请设置环境变量 TTS_BYTEDANCE_APPID 和 TTS_BYTEDANCE_TOKEN');
+    process.exit(1);
+  }
+
+  return { appId, accessToken, voice };
+}
+
+/**
+ * ASR 配置
+ */
+export interface ASRConfig {
+  appKey: string;
+  accessKey: string;
+}
+
+/**
+ * 获取 ASR 配置（从环境变量）
+ * @returns ASR 配置对象
+ * @throws 如果环境变量未设置则退出进程
+ */
+export function getASRConfig(): ASRConfig {
+  const appKey = process.env.ASR_BYTEDANCE_APP_KEY;
+  const accessKey = process.env.ASR_BYTEDANCE_ACCESS_KEY;
+
+  if (!appKey || !accessKey) {
+    console.error('请设置环境变量 ASR_BYTEDANCE_APP_KEY 和 ASR_BYTEDANCE_ACCESS_KEY');
+    process.exit(1);
+  }
+
+  return { appKey, accessKey };
+}
+
+/**
+ * 确保输出目录存在并返回输出文件路径
+ * @param __dirname - 脚本目录
+ * @param basename - 文件基础名
+ * @param ext - 文件扩展名，默认 'pcm'
+ * @returns 输出文件的完整路径
+ */
+export function ensureOutputDir(__dirname: string, basename: string, ext = 'pcm'): string {
+  const outputDir = path.join(__dirname, 'output');
+  mkdirSync(outputDir, { recursive: true });
+  return path.join(outputDir, `${basename}.${ext}`);
+}
+
+/**
+ * 打印 PCM 播放提示
+ * @param outputFile - 输出文件路径
+ */
+export function printPlayTip(outputFile: string): void {
+  console.log('\n=== 播放提示 ===');
+  console.log('PCM 格式播放命令 (24000 Hz, 16-bit, mono):');
+  console.log(`ffplay -f s16le -ar 24000 ${outputFile}`);
+}
+
+/**
+ * 打印统计信息
+ * @param startTime - 开始时间戳
+ * @param chunkCount - 音频块数量
+ * @param chunks - 音频块数组
+ */
+export function printStats(startTime: number, chunkCount: number, chunks: Uint8Array[]): void {
+  const totalTime = Date.now() - startTime;
+  console.log(`\n[${timestamp()}] === 统计信息 ===`);
+  console.log(`总耗时: ${totalTime} ms`);
+  console.log(`总音频块数: ${chunkCount}`);
+  console.log(`总音频大小: ${chunks.reduce((sum, c) => sum + c.length, 0)} bytes`);
+}

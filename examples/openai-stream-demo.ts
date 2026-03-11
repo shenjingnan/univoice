@@ -5,15 +5,17 @@
 import 'dotenv/config';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import OpenAI from 'openai';
+import { getScriptMeta } from './utils/common';
+
+const { __dirname } = getScriptMeta(import.meta.url);
 
 async function main() {
   // 生成输出文件路径（与脚本同级）
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
   const timestamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, '');
-  const outputFile = path.join(__dirname, 'output', `openai-stream-${timestamp}.jsonl`);
+  const outputDir = path.join(__dirname, 'output');
+  fs.mkdirSync(outputDir, { recursive: true });
+  const outputFile = path.join(outputDir, `openai-stream-${timestamp}.jsonl`);
 
   // 创建可写流
   const writeStream = fs.createWriteStream(outputFile, { flags: 'w' });
