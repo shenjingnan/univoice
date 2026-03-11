@@ -4,7 +4,7 @@
  */
 import 'dotenv/config';
 import path from 'node:path';
-import { listen } from 'univoice';
+import { createASR } from 'univoice';
 import { getASRConfig, getScriptMeta } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
@@ -20,14 +20,16 @@ async function main() {
   try {
     console.log('开始语音识别...');
 
-    // 执行非流式语音识别
-    const response = await listen(audioPath, {
+    // 创建 ASR 实例
+    const asr = createASR({
       provider: 'doubao',
       appKey,
       accessKey,
       language: 'zh-CN',
-      stream: false,
     });
+
+    // 使用实例方法进行识别
+    const response = await asr.listen(audioPath, { stream: false });
 
     console.log(`识别结果: ${response.text}`);
     if (response.segments && response.segments.length > 0) {
