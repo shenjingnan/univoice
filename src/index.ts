@@ -2,8 +2,8 @@ export {
   BaseASR,
   createASR,
   getASRProviders,
+  listen,
   registerASRProvider,
-  streamFrom,
 } from '@/asr/index';
 export * from '@/asr/utils/index';
 export {

@@ -5,7 +5,7 @@
 import 'dotenv/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { streamFrom } from 'univoice';
+import { listen } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,7 +29,7 @@ async function main() {
     console.log('开始语音识别...');
 
     // 执行流式语音识别
-    for await (const chunk of streamFrom(audioPath, {
+    for await (const chunk of listen(audioPath, {
       provider: 'doubao',
       appKey,
       accessKey,

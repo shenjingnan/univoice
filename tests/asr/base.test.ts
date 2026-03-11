@@ -6,7 +6,7 @@ import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
 class MockASR extends BaseASR {
   name = 'mock-asr';
 
-  async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     yield { text: 'Mocked transcription', isFinal: true };
   }
 }

@@ -2,6 +2,16 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.1.1](https://github.com/shenjingnan/univoice/compare/v0.1.0...v0.1.1) (2026-03-11)
+
+
+### Refactor
+
+* **asr:** 将 streamFrom 方法重命名为 listen ([#94](https://github.com/shenjingnan/univoice/issues/94)) ([xxxxxxx](https://github.com/shenjingnan/univoice/commit/xxxxxxx))
+  - 将 ASR 模块中的 `streamFrom` 方法重命名为 `listen`
+  - 更新所有提供商实现、测试文件和示例代码
+  - 更新 README 文档中的 API 说明
+
 # [0.1.0](https://github.com/shenjingnan/univoice/compare/v0.1.0-beta.4...v0.1.0) (2026-03-06)
 
 
