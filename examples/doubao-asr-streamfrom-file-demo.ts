@@ -31,13 +31,14 @@ async function main() {
   try {
     console.log('开始流式语音识别...\n');
 
-    // 使用 listen(audioPath) 直接传入文件路径
+    // 使用 listen(audioPath) 直接传入文件路径（流式模式）
     for await (const chunk of listen(audioPath, {
       provider: 'doubao',
       appKey,
       accessKey,
       mode: 'streaming',
       language: 'zh-CN',
+      stream: true as const,
     })) {
       chunkCount++;
 
