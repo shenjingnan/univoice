@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
 import { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory.js';
-import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
+import type { ASROptions, ASRStreamChunk, AudioStream, ListenOptions } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
@@ -9,6 +9,20 @@ class MockASRProvider extends BaseASR {
 
   async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     yield { text: 'Transcribed text', isFinal: true };
+  }
+}
+
+// 创建一个返回多个 chunk 的模拟 ASR 提供商
+class MockMultiChunkASRProvider extends BaseASR {
+  name = 'mock-multi-chunk-provider';
+
+  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+    yield { text: 'Hello', isFinal: false };
+    yield {
+      text: 'World',
+      isFinal: true,
+      segment: { id: 1, start: 0, end: 100, text: 'Hello World' },
+    };
   }
 }
 
@@ -69,78 +83,176 @@ describe('ASR Factory', () => {
   });
 
   describe('listen 快捷函数', () => {
-    it('应该支持 AudioStream 输入', async () => {
-      registerASRProvider('listen-audiostream-test', MockASRProvider);
+    describe('非流式模式（stream: false 或不传）', () => {
+      it('应该返回 ASRResponse', async () => {
+        registerASRProvider('listen-non-stream-test', MockASRProvider);
 
-      const options: ASROptions = {
-        provider: 'listen-audiostream-test',
-      };
+        const options: ListenOptions = {
+          provider: 'listen-non-stream-test',
+        };
 
-      // 创建模拟的 AudioStream
-      async function* mockAudioStream(): AudioStream {
-        yield Buffer.from('chunk1');
-        yield Buffer.from('chunk2');
-      }
+        // 不传 stream 参数，默认为非流式
+        const response = await listen(Buffer.from('test audio'), options);
 
-      const results: ASRStreamChunk[] = [];
-      for await (const chunk of listen(mockAudioStream(), options)) {
-        results.push(chunk);
-      }
+        expect(response.text).toBe('Transcribed text');
+      });
 
-      expect(results).toHaveLength(1);
-      expect(results[0].text).toBe('Transcribed text');
-      expect(results[0].isFinal).toBe(true);
+      it('stream: false 应该返回 ASRResponse', async () => {
+        registerASRProvider('listen-explicit-false-test', MockMultiChunkASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-explicit-false-test',
+          stream: false,
+        };
+
+        const response = await listen(Buffer.from('test audio'), options);
+
+        expect(response.text).toBe('World');
+        expect(response.segments).toBeDefined();
+        expect(response.segments).toHaveLength(1);
+      });
+
+      it('应该支持字符串类型的输入（文件路径）', async () => {
+        registerASRProvider('listen-string-non-stream-test', MockASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-string-non-stream-test',
+        };
+
+        // 使用字符串路径
+        const response = await listen('/path/to/audio.wav', options);
+
+        expect(response.text).toBe('Transcribed text');
+      });
+
+      it('应该支持 AudioStream 输入', async () => {
+        registerASRProvider('listen-audiostream-non-stream-test', MockASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-audiostream-non-stream-test',
+        };
+
+        // 创建模拟的 AudioStream
+        async function* mockAudioStream(): AudioStream {
+          yield Buffer.from('chunk1');
+          yield Buffer.from('chunk2');
+        }
+
+        const response = await listen(mockAudioStream(), options);
+
+        expect(response.text).toBe('Transcribed text');
+      });
+
+      it('应该支持 Uint8Array 类型的输入', async () => {
+        registerASRProvider('listen-uint8array-non-stream-test', MockASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-uint8array-non-stream-test',
+        };
+
+        const audioData = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+        const response = await listen(audioData, options);
+
+        expect(response.text).toBe('Transcribed text');
+      });
     });
 
-    it('应该支持字符串类型的输入（文件路径）', async () => {
-      registerASRProvider('listen-string-test', MockASRProvider);
+    describe('流式模式（stream: true）', () => {
+      it('应该返回 AsyncIterable<ASRStreamChunk>', async () => {
+        registerASRProvider('listen-stream-test', MockASRProvider);
 
-      const options: ASROptions = {
-        provider: 'listen-string-test',
-      };
+        const options: ListenOptions = {
+          provider: 'listen-stream-test',
+          stream: true,
+        };
 
-      // 使用字符串路径（会被转换为 AudioStream）
-      const results: ASRStreamChunk[] = [];
-      for await (const chunk of listen('/path/to/audio.wav', options)) {
-        results.push(chunk);
-      }
+        const results: ASRStreamChunk[] = [];
+        for await (const chunk of listen(Buffer.from('test audio'), options)) {
+          results.push(chunk);
+        }
 
-      expect(results).toHaveLength(1);
-    });
+        expect(results).toHaveLength(1);
+        expect(results[0].text).toBe('Transcribed text');
+        expect(results[0].isFinal).toBe(true);
+      });
 
-    it('应该支持 Buffer 类型的输入', async () => {
-      registerASRProvider('listen-buffer-test', MockASRProvider);
+      it('应该支持 AudioStream 输入', async () => {
+        registerASRProvider('listen-audiostream-stream-test', MockASRProvider);
 
-      const options: ASROptions = {
-        provider: 'listen-buffer-test',
-      };
+        const options: ListenOptions = {
+          provider: 'listen-audiostream-stream-test',
+          stream: true,
+        };
 
-      // 使用 Buffer（会被转换为 AudioStream）
-      const audioBuffer = Buffer.from('test audio data');
-      const results: ASRStreamChunk[] = [];
-      for await (const chunk of listen(audioBuffer, options)) {
-        results.push(chunk);
-      }
+        // 创建模拟的 AudioStream
+        async function* mockAudioStream(): AudioStream {
+          yield Buffer.from('chunk1');
+          yield Buffer.from('chunk2');
+        }
 
-      expect(results).toHaveLength(1);
-      expect(results[0].text).toBe('Transcribed text');
-    });
+        const results: ASRStreamChunk[] = [];
+        for await (const chunk of listen(mockAudioStream(), options)) {
+          results.push(chunk);
+        }
 
-    it('应该支持 Uint8Array 类型的输入', async () => {
-      registerASRProvider('listen-uint8array-test', MockASRProvider);
+        expect(results).toHaveLength(1);
+        expect(results[0].text).toBe('Transcribed text');
+        expect(results[0].isFinal).toBe(true);
+      });
 
-      const options: ASROptions = {
-        provider: 'listen-uint8array-test',
-      };
+      it('应该支持字符串类型的输入（文件路径）', async () => {
+        registerASRProvider('listen-string-stream-test', MockASRProvider);
 
-      // 使用 Uint8Array（会被转换为 AudioStream）
-      const audioData = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
-      const results: ASRStreamChunk[] = [];
-      for await (const chunk of listen(audioData, options)) {
-        results.push(chunk);
-      }
+        const options: ListenOptions = {
+          provider: 'listen-string-stream-test',
+          stream: true,
+        };
 
-      expect(results).toHaveLength(1);
+        // 使用字符串路径
+        const results: ASRStreamChunk[] = [];
+        for await (const chunk of listen('/path/to/audio.wav', options)) {
+          results.push(chunk);
+        }
+
+        expect(results).toHaveLength(1);
+      });
+
+      it('应该支持 Buffer 类型的输入', async () => {
+        registerASRProvider('listen-buffer-stream-test', MockASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-buffer-stream-test',
+          stream: true,
+        };
+
+        // 使用 Buffer
+        const audioBuffer = Buffer.from('test audio data');
+        const results: ASRStreamChunk[] = [];
+        for await (const chunk of listen(audioBuffer, options)) {
+          results.push(chunk);
+        }
+
+        expect(results).toHaveLength(1);
+        expect(results[0].text).toBe('Transcribed text');
+      });
+
+      it('应该支持 Uint8Array 类型的输入', async () => {
+        registerASRProvider('listen-uint8array-stream-test', MockASRProvider);
+
+        const options: ListenOptions = {
+          provider: 'listen-uint8array-stream-test',
+          stream: true,
+        };
+
+        // 使用 Uint8Array
+        const audioData = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
+        const results: ASRStreamChunk[] = [];
+        for await (const chunk of listen(audioData, options)) {
+          results.push(chunk);
+        }
+
+        expect(results).toHaveLength(1);
+      });
     });
   });
 });
