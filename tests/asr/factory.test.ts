@@ -7,7 +7,7 @@ import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
 class MockASRProvider extends BaseASR {
   name = 'mock-provider';
 
-  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+  async *listenStream(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     yield { text: 'Transcribed text', isFinal: true };
   }
 }
@@ -16,7 +16,7 @@ class MockASRProvider extends BaseASR {
 class MockMultiChunkASRProvider extends BaseASR {
   name = 'mock-multi-chunk-provider';
 
-  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+  async *listenStream(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     yield { text: 'Hello', isFinal: false };
     yield {
       text: 'World',

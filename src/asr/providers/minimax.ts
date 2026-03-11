@@ -12,8 +12,8 @@ export class MinimaxASR extends BaseASR {
   }
 
   // biome-ignore lint/correctness/useYield: TODO 待实现
-  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
-    throw new Error('Minimax ASR listen method is not implemented yet');
+  async *listenStream(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+    throw new Error('Minimax ASR listenStream method is not implemented yet');
   }
 }
 

@@ -8,12 +8,13 @@
  * - 每个 chunk 包含 text（文本片段）和 isFinal（是否为最终结果）
  *
  * 实例方法 vs 独立函数:
- * - 实例方法 asr.listen() 只接收 AudioStream，需要手动调用 processAudio 和 bufferToAudioStream
- * - 独立函数 listen() 支持文件路径、Buffer、AudioStream 多种输入，自动处理转换
+ * - 实例方法 asr.listen() 支持文件路径、Buffer、AudioStream 多种输入
+ * - 通过 options.stream 参数控制流式/非流式模式
+ * - 独立函数 listen() 需要传入完整配置（包括 provider）
  */
 import 'dotenv/config';
 import path from 'node:path';
-import { bufferToAudioStream, createASR, processAudio } from 'univoice';
+import { createASR } from 'univoice';
 import { getASRConfig, getScriptMeta, timestamp } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
@@ -44,11 +45,9 @@ async function main() {
       language: 'zh-CN',
     });
 
-    // 处理音频文件
-    const { audioData } = await processAudio(audioPath);
-
     // 使用 for await...of 消费流式识别结果
-    for await (const chunk of asr.listen(bufferToAudioStream(audioData))) {
+    // 新 API: 直接传入文件路径，通过 options.stream 控制流式模式
+    for await (const chunk of asr.listen(audioPath, { stream: true })) {
       chunkCount++;
 
       if (chunkCount === 1) {

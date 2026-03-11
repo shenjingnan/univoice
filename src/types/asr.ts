@@ -40,6 +40,19 @@ export interface ListenOptions extends ASROptions {
   stream?: boolean;
 }
 
+/**
+ * ASR 实例方法 listen() 的选项
+ */
+export interface ListenInstanceOptions {
+  /**
+   * 是否启用流式模式
+   * - true: 流式返回 AsyncIterable<ASRStreamChunk>
+   * - false 或不传: 一次性返回 Promise<ASRResponse>
+   * @default false
+   */
+  stream?: boolean;
+}
+
 export interface ASRRequest {
   audio: Buffer | Uint8Array | string;
   options?: Partial<ASROptions>;
@@ -79,7 +92,7 @@ export interface ASRStreamChunk {
 export interface ASRProvider {
   name: string;
   /** 流式输入识别方法 - 接收音频流进行识别 */
-  listen(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
+  listenStream(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
 }
 
 export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
