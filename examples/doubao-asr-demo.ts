@@ -5,7 +5,7 @@
 import 'dotenv/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createASR } from 'univoice';
+import { streamFrom } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,33 +25,24 @@ async function main() {
 
   console.log(`准备识别音频: ${audioPath}`);
 
-  // 创建 ASR 实例
-  const asr = createASR({
-    provider: 'doubao',
-    appKey,
-    accessKey,
-    mode: 'nostream',
-    language: 'zh-CN',
-  });
-
   try {
     console.log('开始语音识别...');
 
-    // 执行语音识别
-    const result = await asr.listen({
-      audio: audioPath,
-    });
-
-    console.log('\n--- 识别结果 ---');
-    console.log(`识别文本: ${result.text}`);
-    if (result.duration) {
-      console.log(`音频时长: ${result.duration} ms`);
-    }
-    if (result.segments && result.segments.length > 0) {
-      console.log('\n分段信息:');
-      for (const segment of result.segments) {
+    // 执行流式语音识别
+    for await (const chunk of streamFrom(audioPath, {
+      provider: 'doubao',
+      appKey,
+      accessKey,
+      mode: 'nostream',
+      language: 'zh-CN',
+    })) {
+      console.log(`识别文本: ${chunk.text}`);
+      if (chunk.isFinal) {
+        console.log('识别完成');
+      }
+      if (chunk.segment) {
         console.log(
-          `  [${segment.start}ms - ${segment.end}ms] ${segment.text}${segment.confidence ? ` (置信度: ${segment.confidence.toFixed(2)})` : ''}`
+          `  [${chunk.segment.start}ms - ${chunk.segment.end}ms] ${chunk.segment.text}${chunk.segment.confidence ? ` (置信度: ${chunk.segment.confidence.toFixed(2)})` : ''}`
         );
       }
     }

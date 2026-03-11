@@ -1,30 +1,14 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
-import {
-  createASR,
-  getASRProviders,
-  listen,
-  registerASRProvider,
-  streamFrom,
-} from '@/asr/factory.js';
-import type {
-  ASROptions,
-  ASRRequest,
-  ASRResponse,
-  ASRStreamChunk,
-  AudioStream,
-} from '@/types/asr.js';
+import { createASR, getASRProviders, registerASRProvider, streamFrom } from '@/asr/factory.js';
+import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
   name = 'mock-provider';
 
-  async listen(_request: ASRRequest): Promise<ASRResponse> {
-    return {
-      text: 'Transcribed text',
-      language: 'zh-CN',
-      duration: 1.5,
-    };
+  async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+    yield { text: 'Transcribed text', isFinal: true };
   }
 }
 
@@ -84,101 +68,9 @@ describe('ASR Factory', () => {
     });
   });
 
-  describe('listen 快捷函数', () => {
-    it('应该成功调用 listen 并返回结果', async () => {
-      registerASRProvider('listen-test', MockASRProvider);
-
-      const options: ASROptions = {
-        provider: 'listen-test',
-        apiKey: 'test-key',
-      };
-
-      const audio = Buffer.from('test audio data');
-      const result = await listen(audio, options);
-
-      expect(result.text).toBe('Transcribed text');
-      expect(result.language).toBe('zh-CN');
-      expect(result.duration).toBe(1.5);
-    });
-
-    it('应该将音频和选项正确传递给 ASR 实例', async () => {
-      const listenSpy = vi.fn(async (_request: ASRRequest): Promise<ASRResponse> => {
-        return {
-          text: '',
-          language: 'zh-CN',
-        };
-      });
-
-      class SpyASR extends BaseASR {
-        name = 'spy-provider';
-
-        async listen(request: ASRRequest): Promise<ASRResponse> {
-          return listenSpy(request);
-        }
-      }
-
-      registerASRProvider('spy-test', SpyASR);
-
-      const options: ASROptions = {
-        provider: 'spy-test',
-        apiKey: 'test-key',
-      };
-
-      const audio = Buffer.from('test audio');
-      await listen(audio, options);
-
-      expect(listenSpy).toHaveBeenCalledWith({
-        audio: Buffer.from('test audio'),
-        options: options,
-      });
-    });
-
-    it('应该支持 Uint8Array 类型的音频输入', async () => {
-      registerASRProvider('uint8array-test', MockASRProvider);
-
-      const options: ASROptions = {
-        provider: 'uint8array-test',
-        apiKey: 'test-key',
-      };
-
-      const audio = new Uint8Array([1, 2, 3, 4]);
-      const result = await listen(audio, options);
-
-      expect(result.text).toBeDefined();
-    });
-
-    it('应该支持 string 类型的音频输入', async () => {
-      registerASRProvider('string-test', MockASRProvider);
-
-      const options: ASROptions = {
-        provider: 'string-test',
-        apiKey: 'test-key',
-      };
-
-      const audio = '/path/to/audio/file.mp3';
-      const result = await listen(audio, options);
-
-      expect(result.text).toBeDefined();
-    });
-  });
-
   describe('streamFrom 快捷函数', () => {
-    // 创建一个支持 streamFrom 的模拟提供商
-    class MockStreamFromProvider extends BaseASR {
-      name = 'mock-streamfrom-provider';
-
-      async listen(_request: ASRRequest): Promise<ASRResponse> {
-        return { text: 'test' };
-      }
-
-      async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
-        yield { text: '你好', isFinal: false };
-        yield { text: '世界', isFinal: true };
-      }
-    }
-
     it('应该支持 AudioStream 输入', async () => {
-      registerASRProvider('streamfrom-audiostream-test', MockStreamFromProvider);
+      registerASRProvider('streamfrom-audiostream-test', MockASRProvider);
 
       const options: ASROptions = {
         provider: 'streamfrom-audiostream-test',
@@ -195,14 +87,13 @@ describe('ASR Factory', () => {
         results.push(chunk);
       }
 
-      expect(results).toHaveLength(2);
-      expect(results[0].text).toBe('你好');
-      expect(results[1].text).toBe('世界');
-      expect(results[1].isFinal).toBe(true);
+      expect(results).toHaveLength(1);
+      expect(results[0].text).toBe('Transcribed text');
+      expect(results[0].isFinal).toBe(true);
     });
 
     it('应该支持字符串类型的输入（文件路径）', async () => {
-      registerASRProvider('streamfrom-string-test', MockStreamFromProvider);
+      registerASRProvider('streamfrom-string-test', MockASRProvider);
 
       const options: ASROptions = {
         provider: 'streamfrom-string-test',
@@ -214,11 +105,11 @@ describe('ASR Factory', () => {
         results.push(chunk);
       }
 
-      expect(results).toHaveLength(2);
+      expect(results).toHaveLength(1);
     });
 
     it('应该支持 Buffer 类型的输入', async () => {
-      registerASRProvider('streamfrom-buffer-test', MockStreamFromProvider);
+      registerASRProvider('streamfrom-buffer-test', MockASRProvider);
 
       const options: ASROptions = {
         provider: 'streamfrom-buffer-test',
@@ -231,13 +122,12 @@ describe('ASR Factory', () => {
         results.push(chunk);
       }
 
-      expect(results).toHaveLength(2);
-      expect(results[0].text).toBe('你好');
-      expect(results[1].text).toBe('世界');
+      expect(results).toHaveLength(1);
+      expect(results[0].text).toBe('Transcribed text');
     });
 
     it('应该支持 Uint8Array 类型的输入', async () => {
-      registerASRProvider('streamfrom-uint8array-test', MockStreamFromProvider);
+      registerASRProvider('streamfrom-uint8array-test', MockASRProvider);
 
       const options: ASROptions = {
         provider: 'streamfrom-uint8array-test',
@@ -250,7 +140,7 @@ describe('ASR Factory', () => {
         results.push(chunk);
       }
 
-      expect(results).toHaveLength(2);
+      expect(results).toHaveLength(1);
     });
   });
 });
