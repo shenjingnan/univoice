@@ -26,7 +26,7 @@ async function main() {
       appKey,
       accessKey,
       language: 'zh-CN',
-      stream: false as const,
+      stream: false,
     });
 
     console.log(`识别结果: ${response.text}`);
