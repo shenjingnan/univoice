@@ -1,15 +1,15 @@
 /**
  * Doubao ASR listen 文件路径示例
- * 演示如何使用 listen(audioPath) 直接传入音频文件路径
+ * 演示如何使用 asr.listen(audioPath) 直接传入音频文件路径
  *
- * listen 文件路径特点:
+ * asr.listen 文件路径特点:
  * - 简化调用：无需手动读取文件或创建流
  * - 自动处理：内部自动将文件转换为 PCM 流
  * - 实时返回：边发送边接收识别结果
  */
 import 'dotenv/config';
 import path from 'node:path';
-import { listen } from 'univoice';
+import { createASR } from 'univoice';
 import { getASRConfig, getScriptMeta, timestamp } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
@@ -31,15 +31,17 @@ async function main() {
   try {
     console.log('开始流式语音识别...\n');
 
-    // 使用 listen(audioPath) 直接传入文件路径（流式模式）
-    for await (const chunk of listen(audioPath, {
+    // 创建 ASR 实例
+    const asr = createASR({
       provider: 'doubao',
       appKey,
       accessKey,
       mode: 'streaming',
       language: 'zh-CN',
-      stream: true as const,
-    })) {
+    });
+
+    // 使用实例方法进行流式识别
+    for await (const chunk of asr.listen(audioPath, { stream: true })) {
       chunkCount++;
 
       if (chunkCount === 1) {
