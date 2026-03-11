@@ -70,7 +70,7 @@
     "@types/ws": "^8.18.1",
     "@vitest/coverage-v8": "^4.0.18",
     "cspell": "^8.0.0",
-    "release-it": "^18.0.0",
+    "release-it": "^19.0.0",
     "@release-it/conventional-changelog": "^10.0.5",
     "tsup": "^8.5.1",
     "typescript": "^5.7.0",
@@ -78,5 +78,10 @@
   },
   "dependencies": {
     "ws": "^8.19.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "lodash": ">=4.17.23"
+    }
   }
 }
