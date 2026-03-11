@@ -24,6 +24,7 @@
       "Bash(pnpm test:run)",
       "Bash(pnpm test)",
       "Bash(pnpm format)",
+      "Bash(pnpm audit --audit-level moderate)",
       "Bash(node:*)",
       "Bash(sed:*)",
       "Bash(find:*)",
@@ -37,7 +38,11 @@
       "Bash(ls:*)",
       "Bash(grep:*)",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "mcp__web-reader__webReader",
+      "mcp__zread__read_file",
+      "Bash(pnpm spell)",
+      "Bash(pnpm typecheck)"
     ],
     "deny": [],
     "ask": []
