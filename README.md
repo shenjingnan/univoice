@@ -189,13 +189,14 @@ const asr = createASR({
 });
 
 const audioBuffer = readFileSync('audio.mp3');
-const result = await asr.listen({
-  audio: audioBuffer,
-});
 
-console.log(`识别结果: ${result.text}`);
-console.log(`语言: ${result.language}`);
-console.log(`时长: ${result.duration}s`);
+// 流式识别
+for await (const chunk of asr.streamFrom(audioBuffer)) {
+  console.log(`识别文本: ${chunk.text}`);
+  if (chunk.isFinal) {
+    console.log('识别完成');
+  }
+}
 ```
 
 ---
@@ -269,7 +270,7 @@ const asr = createASR({
 
 | 方法 | 说明 | 返回类型 |
 |------|------|----------|
-| `asr.listen(request)` | 语音识别 | `Promise<ASRResponse>` |
+| `asr.streamFrom(audio)` | 流式语音识别 | `AsyncIterable<ASRStreamChunk>` |
 
 #### 工具函数
 

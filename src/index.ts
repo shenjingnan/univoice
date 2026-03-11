@@ -2,7 +2,6 @@ export {
   BaseASR,
   createASR,
   getASRProviders,
-  listen,
   registerASRProvider,
   streamFrom,
 } from '@/asr/index';
@@ -19,9 +18,9 @@ export type {
   ASROptions,
   ASRProvider,
   ASRProviderType,
-  ASRRequest,
   ASRResponse,
   ASRSegment,
+  ASRStreamChunk,
 } from '@/types/asr';
 export type { AudioData, AudioFormat, ProviderConfig } from '@/types/index';
 export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';

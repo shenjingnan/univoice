@@ -2,9 +2,7 @@ import { BaseASR } from '@/asr/base';
 import { bufferToAudioStream, processAudio } from '@/asr/utils/audio';
 import type {
   ASROptions,
-  ASRProvider,
   ASRProviderType,
-  ASRResponse,
   ASRStreamChunk,
   AudioStream,
   AudioStreamInput,
@@ -22,7 +20,7 @@ export function registerASRProvider(
   providers.set(type, provider);
 }
 
-export function createASR(options: ASROptions): ASRProvider {
+export function createASR(options: ASROptions): BaseASR {
   const ProviderClass = providers.get(options.provider);
   if (!ProviderClass) {
     throw new Error(`ASR provider "${options.provider}" not found`);
@@ -32,14 +30,6 @@ export function createASR(options: ASROptions): ASRProvider {
 
 export function getASRProviders(): string[] {
   return Array.from(providers.keys());
-}
-
-export async function listen(
-  audio: Buffer | Uint8Array | string,
-  options: ASROptions
-): Promise<ASRResponse> {
-  const asr = createASR(options);
-  return asr.listen({ audio, options });
 }
 
 /**
@@ -75,16 +65,12 @@ async function* fileToPcmAudioStream(filePath: string): AudioStream {
  * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
  * @param options ASR 配置选项
  * @returns 流式识别结果
- * @throws 如果提供商不支持流式输入
  */
 export async function* streamFrom(
   audio: AudioStreamInput,
   options: ASROptions
 ): AsyncIterable<ASRStreamChunk> {
   const asr = createASR(options);
-  if (!asr.streamFrom) {
-    throw new Error(`Provider ${options.provider} does not support streaming input`);
-  }
 
   // 根据输入类型适配
   let audioStream: AudioStream;

@@ -37,21 +37,15 @@ async function main() {
   try {
     console.log('开始语音识别...');
 
-    // 执行语音识别
-    const result = await asr.listen({
-      audio: audioPath,
-    });
-
-    console.log('\n--- 识别结果 ---');
-    console.log(`识别文本: ${result.text}`);
-    if (result.duration) {
-      console.log(`音频时长: ${result.duration} ms`);
-    }
-    if (result.segments && result.segments.length > 0) {
-      console.log('\n分段信息:');
-      for (const segment of result.segments) {
+    // 执行流式语音识别
+    for await (const chunk of asr.streamFrom(audioPath)) {
+      console.log(`识别文本: ${chunk.text}`);
+      if (chunk.isFinal) {
+        console.log('识别完成');
+      }
+      if (chunk.segment) {
         console.log(
-          `  [${segment.start}ms - ${segment.end}ms] ${segment.text}${segment.confidence ? ` (置信度: ${segment.confidence.toFixed(2)})` : ''}`
+          `  [${chunk.segment.start}ms - ${chunk.segment.end}ms] ${chunk.segment.text}${chunk.segment.confidence ? ` (置信度: ${chunk.segment.confidence.toFixed(2)})` : ''}`
         );
       }
     }
