@@ -40,10 +40,6 @@ async function main() {
       channel: 1,
     });
 
-    if (!asr.listen) {
-      throw new Error('Provider does not support listen');
-    }
-
     const audioStream = pcmDirectoryToAudioStream(pcmFileDir, { intervalMs: 0 });
 
     console.time('listen');
