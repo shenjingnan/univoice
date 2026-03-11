@@ -7,10 +7,10 @@
  * - 返回 AsyncIterable<ASRStreamChunk>，可通过 for await...of 消费
  * - 每个 chunk 包含 text（文本片段）和 isFinal（是否为最终结果）
  *
- * 实例方法 vs 独立函数:
- * - 实例方法 asr.listen() 支持文件路径、Buffer、AudioStream 多种输入
+ * API 使用方式:
+ * - 先通过 createASR() 创建 ASR 实例
+ * - 调用 asr.listen() 方法，支持文件路径、Buffer、AudioStream 多种输入
  * - 通过 options.stream 参数控制流式/非流式模式
- * - 独立函数 listen() 需要传入完整配置（包括 provider）
  */
 import 'dotenv/config';
 import path from 'node:path';

@@ -2,7 +2,6 @@ export {
   BaseASR,
   createASR,
   getASRProviders,
-  listen,
   registerASRProvider,
 } from '@/asr/index';
 export * from '@/asr/utils/index';
@@ -11,7 +10,6 @@ export {
   createTTS,
   getTTSProviders,
   registerTTSProvider,
-  synthesize,
 } from '@/tts/index';
 export { collectAudio, playAudio, saveAudio, saveTTSResponse, teeAudio } from '@/tts/utils/index';
 export type {
@@ -21,7 +19,6 @@ export type {
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
-  ListenOptions,
 } from '@/types/asr';
 export type { AudioData, AudioFormat, ProviderConfig } from '@/types/index';
 export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';

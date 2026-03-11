@@ -31,7 +31,7 @@
 
 ## 目录结构
 
-```
+\`\`\`
 src/
 ├── index.ts           # 主入口
 ├── tts/               # TTS 模块
@@ -48,7 +48,7 @@ types/                  # 类型定义
 tests/                  # 测试文件
 docs/                   # 文档站点 (Next.js)
 examples/               # 示例代码
-```
+\`\`\`
 
 ## 代码规范
 
@@ -56,7 +56,7 @@ examples/               # 示例代码
 
 - **目标**: ES2022
 - **严格模式**: 启用
-- **禁止 any**: `noImplicitAny: true`， Biome 规则 `noExplicitAny: error`
+- **禁止 any**: \`noImplicitAny: true\`， Biome 规则 \`noExplicitAny: error\`
 
 ### Biome 配置
 
@@ -67,12 +67,12 @@ examples/               # 示例代码
 
 ### 路径别名
 
-- `@/*` → `src/*`
-- `@/types/*` → ` 开发命令
+- \`@/*\` → \`src/*\`
+- \`@/types/*\` → \`types/*\`
 
-```types/*`
+## 开发命令
 
-##bash
+\`\`\`bash
 # 构建
 pnpm build
 
@@ -96,21 +96,21 @@ pnpm spell
 # 发布
 pnpm release
 pnpm release:dry
-```
+\`\`\`
 
 ## 质量检查
 
 在提交代码前，确保通过以下检查：
 
-1. **类型检查**: `pnpm build` (tsc 编译)
-2. **代码风格**: `pnpm lint`
-3. **测试**: `pnpm test`
+1. **类型检查**: \`pnpm build\` (tsc 编译)
+2. **代码风格**: \`pnpm lint\`
+3. **测试**: \`pnpm test\`
 
 ## 架构特点
 
-- **工厂模式**: 使用工厂函数动态创建 TTS/ASR 提供商
-- **插件化架构**: 通过 `registerTTSProvider` / `registerASRProvider` 注册新提供商
-- **统一 API**: TTS 使用 `synthesize()`，ASR 使用 `listen()`
+- **工厂模式**: 使用工厂函数 \`createTTS()\` / \`createASR()\` 创建提供商实例
+- **插件化架构**: 通过 \`registerTTSProvider\` / \`registerASRProvider\` 注册新提供商
+- **实例方法**: TTS 实例使用 \`tts.synthesize()\`，ASR 实例使用 \`asr.listen()\`
 
 ## 可用技能
 

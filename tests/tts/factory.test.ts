@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseTTS } from '@/tts/base.js';
-import { createTTS, getTTSProviders, registerTTSProvider, synthesize } from '@/tts/factory.js';
+import { createTTS, getTTSProviders, registerTTSProvider } from '@/tts/factory.js';
 import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 
 // 创建一个模拟的 TTS 提供商
@@ -69,55 +69,6 @@ describe('TTS Factory', () => {
     it('当没有注册提供商时应该返回空数组', () => {
       const providers = getTTSProviders();
       expect(Array.isArray(providers)).toBe(true);
-    });
-  });
-
-  describe('synthesize 快捷函数', () => {
-    it('应该成功调用 synthesize 并返回结果', async () => {
-      registerTTSProvider('synthesize-test', MockTTSProvider);
-
-      const options: TTSOptions = {
-        provider: 'synthesize-test',
-        apiKey: 'test-key',
-      };
-
-      const result = await synthesize('Hello World', options);
-
-      expect(result.audio).toBeDefined();
-      expect(result.format).toBe('mp3');
-      expect(result.duration).toBe(1.0);
-    });
-
-    it('应该将文本和选项正确传递给 TTS 实例', async () => {
-      const synthesizeSpy = vi.fn(async (_request: TTSRequest): Promise<TTSResponse> => {
-        return {
-          audio: new Uint8Array(0),
-          format: 'mp3',
-          duration: 0,
-        };
-      });
-
-      class SpyTTS extends BaseTTS {
-        name = 'spy-provider';
-
-        async synthesize(request: TTSRequest): Promise<TTSResponse> {
-          return synthesizeSpy(request);
-        }
-      }
-
-      registerTTSProvider('spy-test', SpyTTS);
-
-      const options: TTSOptions = {
-        provider: 'spy-test',
-        apiKey: 'test-key',
-      };
-
-      await synthesize('Test text', options);
-
-      expect(synthesizeSpy).toHaveBeenCalledWith({
-        text: 'Test text',
-        options: options,
-      });
     });
   });
 });
