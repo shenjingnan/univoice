@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
 import { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory.js';
-import type { ASROptions, ASRStreamChunk, AudioStream, ListenOptions } from '@/types/asr.js';
+import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
@@ -87,7 +87,7 @@ describe('ASR Factory', () => {
       it('应该返回 ASRResponse', async () => {
         registerASRProvider('listen-non-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-non-stream-test',
         };
 
@@ -100,7 +100,7 @@ describe('ASR Factory', () => {
       it('stream: false 应该返回 ASRResponse', async () => {
         registerASRProvider('listen-explicit-false-test', MockMultiChunkASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-explicit-false-test',
           stream: false,
         };
@@ -115,7 +115,7 @@ describe('ASR Factory', () => {
       it('应该支持字符串类型的输入（文件路径）', async () => {
         registerASRProvider('listen-string-non-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-string-non-stream-test',
         };
 
@@ -128,7 +128,7 @@ describe('ASR Factory', () => {
       it('应该支持 AudioStream 输入', async () => {
         registerASRProvider('listen-audiostream-non-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-audiostream-non-stream-test',
         };
 
@@ -146,7 +146,7 @@ describe('ASR Factory', () => {
       it('应该支持 Uint8Array 类型的输入', async () => {
         registerASRProvider('listen-uint8array-non-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-uint8array-non-stream-test',
         };
 
@@ -161,9 +161,9 @@ describe('ASR Factory', () => {
       it('应该返回 AsyncIterable<ASRStreamChunk>', async () => {
         registerASRProvider('listen-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-stream-test',
-          stream: true,
+          stream: true as const,
         };
 
         const results: ASRStreamChunk[] = [];
@@ -179,9 +179,9 @@ describe('ASR Factory', () => {
       it('应该支持 AudioStream 输入', async () => {
         registerASRProvider('listen-audiostream-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-audiostream-stream-test',
-          stream: true,
+          stream: true as const,
         };
 
         // 创建模拟的 AudioStream
@@ -203,9 +203,9 @@ describe('ASR Factory', () => {
       it('应该支持字符串类型的输入（文件路径）', async () => {
         registerASRProvider('listen-string-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-string-stream-test',
-          stream: true,
+          stream: true as const,
         };
 
         // 使用字符串路径
@@ -220,9 +220,9 @@ describe('ASR Factory', () => {
       it('应该支持 Buffer 类型的输入', async () => {
         registerASRProvider('listen-buffer-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-buffer-stream-test',
-          stream: true,
+          stream: true as const,
         };
 
         // 使用 Buffer
@@ -239,9 +239,9 @@ describe('ASR Factory', () => {
       it('应该支持 Uint8Array 类型的输入', async () => {
         registerASRProvider('listen-uint8array-stream-test', MockASRProvider);
 
-        const options: ListenOptions = {
+        const options = {
           provider: 'listen-uint8array-stream-test',
-          stream: true,
+          stream: true as const,
         };
 
         // 使用 Uint8Array

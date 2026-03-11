@@ -24,7 +24,10 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "univoice": ["src/index.ts"],
+      "univoice/asr": ["src/asr/index.ts"],
+      "univoice/tts": ["src/tts/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "examples/**/*.ts"],

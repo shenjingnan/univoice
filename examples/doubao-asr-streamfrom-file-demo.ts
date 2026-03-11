@@ -38,7 +38,7 @@ async function main() {
       accessKey,
       mode: 'streaming',
       language: 'zh-CN',
-      stream: true,
+      stream: true as const,
     })) {
       chunkCount++;
 

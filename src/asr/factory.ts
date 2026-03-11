@@ -71,28 +71,18 @@ function adaptAudioInput(audio: AudioStreamInput): AudioStream {
 }
 
 /**
- * 从音频流、音频数据或音频文件路径进行语音识别（非流式）
+ * 从音频流、音频数据或音频文件路径进行语音识别
  *
  * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
- * @param options ASR 配置选项（stream 为 false 或不传）
- * @returns 识别结果
+ * @param options ASR 配置选项
+ * @returns 根据 stream 参数返回不同的结果类型：
+ *   - stream: true 时返回 AsyncIterable<ASRStreamChunk>
+ *   - stream: false 或不传时返回 Promise<ASRResponse>
  */
-export function listen(
+export function listen<T extends ListenOptions>(
   audio: AudioStreamInput,
-  options: ListenOptions & { stream?: false }
-): Promise<ASRResponse>;
-
-/**
- * 从音频流、音频数据或音频文件路径进行语音识别（流式）
- *
- * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
- * @param options ASR 配置选项（stream 为 true）
- * @returns 流式识别结果
- */
-export function listen(
-  audio: AudioStreamInput,
-  options: ListenOptions & { stream: true }
-): AsyncIterable<ASRStreamChunk>;
+  options: T
+): T['stream'] extends true ? AsyncIterable<ASRStreamChunk> : Promise<ASRResponse>;
 
 /**
  * listen 实现
