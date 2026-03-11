@@ -1,6 +1,6 @@
 import { BaseASR } from '@/asr/base';
 import { registerASRProvider } from '@/asr/factory';
-import type { ASROptions, ASRRequest, ASRResponse } from '@/types/asr';
+import type { ASROptions, ASRRequest, ASRResponse, ASRStreamChunk, AudioStream } from '@/types/asr';
 
 export class GeminiASR extends BaseASR {
   name = 'gemini';
@@ -18,6 +18,13 @@ export class GeminiASR extends BaseASR {
       text: '',
       language: opts.language,
     };
+  }
+
+  // biome-ignore lint/correctness/useYield: 空实现，等待后续完善
+  async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+    // TODO: 实现 Gemini ASR 流式识别
+    console.warn('Gemini ASR streamFrom method is not implemented yet');
+    return;
   }
 }
 
