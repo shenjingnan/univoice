@@ -1,6 +1,15 @@
-import type { ASROptions, ASRProvider, ASRStreamChunk, AudioStream } from '@/types/asr';
+import { bufferToAudioStream, processAudio } from '@/asr/utils/audio';
+import type {
+  ASROptions,
+  ASRResponse,
+  ASRSegment,
+  ASRStreamChunk,
+  AudioStream,
+  AudioStreamInput,
+  ListenInstanceOptions,
+} from '@/types/asr';
 
-export abstract class BaseASR implements ASRProvider {
+export abstract class BaseASR {
   abstract name: string;
   public apiKey: string;
   public baseUrl: string;
@@ -25,5 +34,110 @@ export abstract class BaseASR implements ASRProvider {
    * @param audio 音频流
    * @returns 流式识别结果
    */
-  abstract listen(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
+  abstract listenStream(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
+
+  /**
+   * 判断输入是否为 AudioStream
+   */
+  private isAudioStream(input: AudioStreamInput): input is AudioStream {
+    return input !== null && typeof input === 'object' && Symbol.asyncIterator in input;
+  }
+
+  /**
+   * 判断输入是否为字符串（文件路径）
+   */
+  private isString(input: AudioStreamInput): input is string {
+    return typeof input === 'string';
+  }
+
+  /**
+   * 适配音频输入为音频流
+   */
+  private adaptAudioInput(audio: AudioStreamInput): AudioStream {
+    if (this.isAudioStream(audio)) return audio;
+    if (this.isString(audio)) return this.fileToPcmAudioStream(audio);
+    return bufferToAudioStream(audio);
+  }
+
+  /**
+   * 将音频文件路径转换为 PCM 音频流
+   */
+  private async *fileToPcmAudioStream(filePath: string): AudioStream {
+    const { audioData } = await processAudio(filePath);
+    const chunkSize = 3200; // 100ms @ 16kHz 16bit mono
+
+    for (let i = 0; i < audioData.length; i += chunkSize) {
+      const end = Math.min(i + chunkSize, audioData.length);
+      yield audioData.slice(i, end);
+    }
+  }
+
+  /**
+   * 创建流式迭代器
+   */
+  private async *createStreamIterable(audio: AudioStreamInput): AsyncIterable<ASRStreamChunk> {
+    const audioStream = this.adaptAudioInput(audio);
+    yield* this.listenStream(audioStream);
+  }
+
+  /**
+   * 收集非流式识别结果
+   */
+  private async collectASRResponse(audio: AudioStreamInput): Promise<ASRResponse> {
+    const segments: ASRSegment[] = [];
+    const textParts: string[] = [];
+
+    const audioStream = this.adaptAudioInput(audio);
+
+    for await (const chunk of this.listenStream(audioStream)) {
+      if (chunk.isFinal && chunk.text) {
+        textParts.push(chunk.text);
+      }
+      if (chunk.segment) {
+        segments.push(chunk.segment);
+      }
+    }
+
+    return {
+      text: textParts.join(''),
+      segments: segments.length > 0 ? segments : undefined,
+    };
+  }
+
+  /**
+   * 从音频流、音频数据或音频文件路径进行语音识别（流式模式）
+   *
+   * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
+   * @param options 识别选项
+   * @returns 流式识别结果
+   */
+  listen(
+    audio: AudioStreamInput,
+    options: ListenInstanceOptions & { stream: true }
+  ): AsyncIterable<ASRStreamChunk>;
+
+  /**
+   * 从音频流、音频数据或音频文件路径进行语音识别（非流式模式）
+   *
+   * @param audio 音频流（AsyncIterable）、音频数据（Buffer/Uint8Array）或音频文件路径
+   * @param options 识别选项
+   * @returns 非流式识别结果
+   */
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions & { stream?: false }
+  ): Promise<ASRResponse>;
+
+  /**
+   * listen 实现
+   */
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions
+  ): Promise<ASRResponse> | AsyncIterable<ASRStreamChunk> {
+    if (options?.stream === true) {
+      return this.createStreamIterable(audio);
+    }
+    return this.collectASRResponse(audio);
+  }
 }
