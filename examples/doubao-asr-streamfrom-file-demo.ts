@@ -1,8 +1,8 @@
 /**
- * Doubao ASR streamFrom 文件路径示例
- * 演示如何使用 streamFrom(audioPath) 直接传入音频文件路径
+ * Doubao ASR listen 文件路径示例
+ * 演示如何使用 listen(audioPath) 直接传入音频文件路径
  *
- * streamFrom 文件路径特点:
+ * listen 文件路径特点:
  * - 简化调用：无需手动读取文件或创建流
  * - 自动处理：内部自动将文件转换为 PCM 流
  * - 实时返回：边发送边接收识别结果
@@ -10,7 +10,7 @@
 import 'dotenv/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { streamFrom } from 'univoice';
+import { listen } from 'univoice';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,7 +38,7 @@ async function main() {
   // 音频文件路径
   const audioPath = path.join(__dirname, 'output', 'doubao-tts-demo.mp3');
 
-  console.log(`\n[${timestamp()}] === ASR streamFrom 文件路径演示 ===\n`);
+  console.log(`\n[${timestamp()}] === ASR listen 文件路径演示 ===\n`);
   console.log(`音频文件: ${audioPath}\n`);
 
   const startTime = Date.now();
@@ -49,8 +49,8 @@ async function main() {
   try {
     console.log('开始流式语音识别...\n');
 
-    // 使用 streamFrom(audioPath) 直接传入文件路径
-    for await (const chunk of streamFrom(audioPath, {
+    // 使用 listen(audioPath) 直接传入文件路径
+    for await (const chunk of listen(audioPath, {
       provider: 'doubao',
       appKey,
       accessKey,

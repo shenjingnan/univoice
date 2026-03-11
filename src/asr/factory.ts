@@ -66,7 +66,7 @@ async function* fileToPcmAudioStream(filePath: string): AudioStream {
  * @param options ASR 配置选项
  * @returns 流式识别结果
  */
-export async function* streamFrom(
+export async function* listen(
   audio: AudioStreamInput,
   options: ASROptions
 ): AsyncIterable<ASRStreamChunk> {
@@ -83,5 +83,5 @@ export async function* streamFrom(
     audioStream = bufferToAudioStream(audio);
   }
 
-  yield* asr.streamFrom(audioStream);
+  yield* asr.listen(audioStream);
 }

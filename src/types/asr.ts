@@ -65,7 +65,7 @@ export interface ASRStreamChunk {
 export interface ASRProvider {
   name: string;
   /** 流式输入识别方法 - 接收音频流进行识别 */
-  streamFrom(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
+  listen(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
 }
 
 export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;

@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
-import { createASR, getASRProviders, registerASRProvider, streamFrom } from '@/asr/factory.js';
+import { createASR, getASRProviders, listen, registerASRProvider } from '@/asr/factory.js';
 import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
 
 // 创建一个模拟的 ASR 提供商
 class MockASRProvider extends BaseASR {
   name = 'mock-provider';
 
-  async *streamFrom(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+  async *listen(_audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     yield { text: 'Transcribed text', isFinal: true };
   }
 }
@@ -68,12 +68,12 @@ describe('ASR Factory', () => {
     });
   });
 
-  describe('streamFrom 快捷函数', () => {
+  describe('listen 快捷函数', () => {
     it('应该支持 AudioStream 输入', async () => {
-      registerASRProvider('streamfrom-audiostream-test', MockASRProvider);
+      registerASRProvider('listen-audiostream-test', MockASRProvider);
 
       const options: ASROptions = {
-        provider: 'streamfrom-audiostream-test',
+        provider: 'listen-audiostream-test',
       };
 
       // 创建模拟的 AudioStream
@@ -83,7 +83,7 @@ describe('ASR Factory', () => {
       }
 
       const results: ASRStreamChunk[] = [];
-      for await (const chunk of streamFrom(mockAudioStream(), options)) {
+      for await (const chunk of listen(mockAudioStream(), options)) {
         results.push(chunk);
       }
 
@@ -93,15 +93,15 @@ describe('ASR Factory', () => {
     });
 
     it('应该支持字符串类型的输入（文件路径）', async () => {
-      registerASRProvider('streamfrom-string-test', MockASRProvider);
+      registerASRProvider('listen-string-test', MockASRProvider);
 
       const options: ASROptions = {
-        provider: 'streamfrom-string-test',
+        provider: 'listen-string-test',
       };
 
       // 使用字符串路径（会被转换为 AudioStream）
       const results: ASRStreamChunk[] = [];
-      for await (const chunk of streamFrom('/path/to/audio.wav', options)) {
+      for await (const chunk of listen('/path/to/audio.wav', options)) {
         results.push(chunk);
       }
 
@@ -109,16 +109,16 @@ describe('ASR Factory', () => {
     });
 
     it('应该支持 Buffer 类型的输入', async () => {
-      registerASRProvider('streamfrom-buffer-test', MockASRProvider);
+      registerASRProvider('listen-buffer-test', MockASRProvider);
 
       const options: ASROptions = {
-        provider: 'streamfrom-buffer-test',
+        provider: 'listen-buffer-test',
       };
 
       // 使用 Buffer（会被转换为 AudioStream）
       const audioBuffer = Buffer.from('test audio data');
       const results: ASRStreamChunk[] = [];
-      for await (const chunk of streamFrom(audioBuffer, options)) {
+      for await (const chunk of listen(audioBuffer, options)) {
         results.push(chunk);
       }
 
@@ -127,16 +127,16 @@ describe('ASR Factory', () => {
     });
 
     it('应该支持 Uint8Array 类型的输入', async () => {
-      registerASRProvider('streamfrom-uint8array-test', MockASRProvider);
+      registerASRProvider('listen-uint8array-test', MockASRProvider);
 
       const options: ASROptions = {
-        provider: 'streamfrom-uint8array-test',
+        provider: 'listen-uint8array-test',
       };
 
       // 使用 Uint8Array（会被转换为 AudioStream）
       const audioData = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
       const results: ASRStreamChunk[] = [];
-      for await (const chunk of streamFrom(audioData, options)) {
+      for await (const chunk of listen(audioData, options)) {
         results.push(chunk);
       }
 

@@ -274,7 +274,7 @@ export async function processAudio(
 
 /**
  * 将 Buffer 或 Uint8Array 转换为音频流
- * 用于 streamFrom 方法，支持流式输入识别
+ * 用于 listen 方法，支持流式输入识别
  *
  * @param buffer 音频数据
  * @param chunkSize 分块大小（字节），默认 3200（100ms @ 16kHz 16bit mono）

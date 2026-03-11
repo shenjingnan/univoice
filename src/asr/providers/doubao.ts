@@ -279,7 +279,7 @@ export class DoubaoASR extends BaseASR {
    * 流式输入识别方法
    * 接收音频流进行识别，实现双向通信：边发边收
    */
-  async *streamFrom(audio: AudioStream): AsyncIterable<ASRStreamChunk> {
+  async *listen(audio: AudioStream): AsyncIterable<ASRStreamChunk> {
     // 验证必要参数
     if (!this.appKey) {
       throw new Error('appKey is required for Doubao ASR');

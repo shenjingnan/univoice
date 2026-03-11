@@ -25,5 +25,5 @@ export abstract class BaseASR implements ASRProvider {
    * @param audio 音频流
    * @returns 流式识别结果
    */
-  abstract streamFrom(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
+  abstract listen(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
 }
