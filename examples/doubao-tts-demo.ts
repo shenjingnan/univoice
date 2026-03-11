@@ -3,25 +3,14 @@
  * 演示如何使用 univoice SDK 调用火山引擎 TTS 服务
  */
 import 'dotenv/config';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
+import { ensureOutputDir, getScriptMeta, getTTSConfig } from './utils/common';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const basename = path.basename(__filename, path.extname(__filename));
+const { __dirname, basename } = getScriptMeta(import.meta.url);
 
 async function main() {
-  // 从环境变量获取配置
-  const appId = process.env.TTS_BYTEDANCE_APPID;
-  const accessToken = process.env.TTS_BYTEDANCE_TOKEN;
-  const voice = process.env.TTS_BYTEDANCE_VOICE_TYPE || 'zh_female_tianmeixiaoyuan_moon_bigtts';
-
-  if (!appId || !accessToken) {
-    console.error('请设置环境变量 TTS_BYTEDANCE_APPID 和 TTS_BYTEDANCE_TOKEN');
-    process.exit(1);
-  }
+  const { appId, accessToken, voice } = getTTSConfig();
 
   // 创建 TTS 实例
   const tts = createTTS({
@@ -43,9 +32,7 @@ async function main() {
     });
 
     // 保存音频文件
-    const outputDir = path.join(__dirname, 'output');
-    mkdirSync(outputDir, { recursive: true });
-    const outputFile = path.join(outputDir, `${basename}.${response.format}`);
+    const outputFile = ensureOutputDir(__dirname, basename, response.format);
     writeFileSync(outputFile, response.audio);
     console.log(`音频已保存至: ${outputFile}`);
     console.log(`音频大小: ${response.audio.length} bytes`);
