@@ -2,6 +2,22 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.2.0](https://github.com/shenjingnan/univoice/compare/v0.1.0...v0.2.0) (2026-03-11)
+
+
+### Bug Fixes
+
+* **deps:** 修复 lodash 安全漏洞并升级 release-it ([#91](https://github.com/shenjingnan/univoice/issues/91)) ([3901a2f](https://github.com/shenjingnan/univoice/commit/3901a2ff7d491d6fbc3ad669fd8695ab40351498))
+
+
+### Features
+
+* **asr:** streamFrom 支持音频文件路径输入 ([#87](https://github.com/shenjingnan/univoice/issues/87)) ([11a63fb](https://github.com/shenjingnan/univoice/commit/11a63fb1dec26da882b656ca1109762fc2bed67f))
+* **asr:** 实现豆包 ASR 提供商 ([#78](https://github.com/shenjingnan/univoice/issues/78)) ([8f9c723](https://github.com/shenjingnan/univoice/commit/8f9c7232fe2d45c617fdc439c74f4d26a9eebff7))
+* **asr:** 添加 stream 流式识别方法 ([#80](https://github.com/shenjingnan/univoice/issues/80)) ([74fb883](https://github.com/shenjingnan/univoice/commit/74fb883e59f97d9be6f2ddaa5337841c29f14dd8))
+* **asr:** 添加 streamFrom 流式输入识别方法 ([#83](https://github.com/shenjingnan/univoice/issues/83)) ([cc21c3a](https://github.com/shenjingnan/univoice/commit/cc21c3afd20aa1f1aa670a59a7f62834a3e57006))
+* **examples:** 添加 TTS 流式分块保存示例 ([#81](https://github.com/shenjingnan/univoice/issues/81)) ([9aa23cf](https://github.com/shenjingnan/univoice/commit/9aa23cf49b31399cbc6534f8fa03c11dcd0a05e1))
+
 # [0.1.1](https://github.com/shenjingnan/univoice/compare/v0.1.0...v0.1.1) (2026-03-11)
 
 
