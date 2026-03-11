@@ -6,7 +6,7 @@ import '@/tts/providers/openai';
 import '@/tts/providers/gemini';
 
 export { BaseTTS } from '@/tts/base';
-export { createTTS, getTTSProviders, registerTTSProvider, synthesize } from '@/tts/factory';
+export { createTTS, getTTSProviders, registerTTSProvider } from '@/tts/factory';
 
 export * from '@/tts/utils/index';
 export * from '@/types/tts';

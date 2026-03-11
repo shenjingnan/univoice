@@ -27,20 +27,6 @@ export interface ASROptions {
 }
 
 /**
- * ASR listen 函数选项
- * 扩展 ASROptions，添加 stream 参数控制流式/非流式模式
- */
-export interface ListenOptions extends ASROptions {
-  /**
-   * 是否启用流式模式
-   * - true: 流式返回 AsyncIterable<ASRStreamChunk>
-   * - false 或不传: 一次性返回 Promise<ASRResponse>
-   * @default false
-   */
-  stream?: boolean;
-}
-
-/**
  * ASR 实例方法 listen() 的选项
  */
 export interface ListenInstanceOptions {

@@ -9,7 +9,6 @@ export {
   BaseASR,
   createASR,
   getASRProviders,
-  listen,
   registerASRProvider,
 } from '@/asr/factory';
 
