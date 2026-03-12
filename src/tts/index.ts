@@ -1,12 +1,13 @@
-// 导入所有 provider 以触发注册（副作用导入）
-import '@/tts/providers/doubao';
-import '@/tts/providers/minimax';
-import '@/tts/providers/qwen';
-import '@/tts/providers/openai';
-import '@/tts/providers/gemini';
+// 导出 Provider 类（命名导出，可被 tree-shake）
 
-export { BaseTTS } from '@/tts/base';
-export { createTTS, getTTSProviders, registerTTSProvider } from '@/tts/factory';
-
-export * from '@/tts/utils/index';
 export * from '@/types/tts';
+// 导出工厂函数和基类
+export { BaseTTS } from './base';
+export { createTTS, getTTSProviders, registerTTSProvider } from './factory';
+export { DoubaoTTS } from './providers/doubao';
+export { GeminiTTS } from './providers/gemini';
+export { MinimaxTTS } from './providers/minimax';
+export { TTS1 } from './providers/openai';
+export { QwenTTS } from './providers/qwen';
+// 导出工具函数
+export * from './utils/index';

@@ -1,5 +1,4 @@
 import { BaseASR } from '@/asr/base';
-import { registerASRProvider } from '@/asr/factory';
 import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr';
 
 export class GeminiASR extends BaseASR {
@@ -16,5 +15,3 @@ export class GeminiASR extends BaseASR {
     throw new Error('Gemini ASR listenStream method is not implemented yet');
   }
 }
-
-registerASRProvider('gemini', GeminiASR);

@@ -1,16 +1,13 @@
-// 导入所有 provider 以触发注册（副作用导入）
-import '@/asr/providers/doubao';
-import '@/asr/providers/minimax';
-import '@/asr/providers/qwen';
-import '@/asr/providers/openai';
-import '@/asr/providers/gemini';
+// 导出 Provider 类（命名导出，可被 tree-shake）
 
-export {
-  BaseASR,
-  createASR,
-  getASRProviders,
-  registerASRProvider,
-} from '@/asr/factory';
-
-export * from '@/asr/utils/index';
 export * from '@/types/asr';
+// 导出工厂函数和基类
+export { BaseASR } from './base';
+export { createASR, getASRProviders, registerASRProvider } from './factory';
+export { DoubaoASR } from './providers/doubao';
+export { GeminiASR } from './providers/gemini';
+export { MinimaxASR } from './providers/minimax';
+export { WhisperASR } from './providers/openai';
+export { QwenASR } from './providers/qwen';
+// 导出工具函数
+export * from './utils/index';
