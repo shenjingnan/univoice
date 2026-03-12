@@ -101,14 +101,17 @@ export abstract class BaseTTS implements TTSProvider {
   }
 
   /**
-   * 流式语音合成（子类可选实现）
-   * 支持"边发边收"模式，适合 LLM 流式输出转语音等场景
-   * 默认实现：不支持，子类可以覆盖此方法提供支持
+   * 流式语音合成（内部实现方法，子类可选覆盖）
+   *
+   * 此方法为内部实现细节，仅供 speak 方法调用。
+   * 子类可以覆盖此方法以提供流式语音合成支持。
+   * 用户应使用 speak(input, { stream: true }) 获取流式音频。
    *
    * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
    * @returns 流式音频块
+   * @internal
    */
-  speakStream(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+  protected speakStream(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     throw new Error(
       `Provider ${this.name} does not support streaming input mode (speakStream method)`
     );
