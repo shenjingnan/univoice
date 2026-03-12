@@ -8,7 +8,8 @@
  */
 import 'dotenv/config';
 import path from 'node:path';
-import { createASR } from 'univoice';
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
 import { getASRConfig, getScriptMeta, timestamp } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
@@ -26,12 +27,11 @@ async function main() {
   let chunkCount = 0;
   const textParts: string[] = [];
 
-  // 创建 ASR 实例（流式模式需要指定 mode: 'streaming'）
+  // 创建 ASR 实例（async 为默认模式，性能最优）
   const asr = createASR({
     provider: 'doubao',
     appKey,
     accessKey,
-    mode: 'streaming',
     language: 'zh-CN',
   });
 

@@ -12,7 +12,8 @@
  *   ASR_BYTEDANCE_ACCESS_KEY
  */
 
-import { createASR } from '@/asr';
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
 import 'dotenv/config';
 import path from 'node:path';
 import { getASRConfig, getScriptMeta } from './utils/common';
@@ -29,12 +30,11 @@ async function main() {
   console.log('');
 
   try {
-    // 使用 createASR 创建实例
+    // 使用 createASR 创建实例（async 为默认模式，性能最优）
     const asr = createASR({
       provider: 'doubao',
       appKey,
       accessKey,
-      mode: 'streaming',
       sampleRate: 16000,
       bits: 16,
       channel: 1,

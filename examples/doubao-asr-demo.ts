@@ -4,7 +4,8 @@
  */
 import 'dotenv/config';
 import path from 'node:path';
-import { createASR } from 'univoice';
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
 import { getASRConfig, getScriptMeta } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
