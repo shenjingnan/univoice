@@ -31,6 +31,20 @@ export class DoubaoASR extends BaseASR {
   public channel: number;
   public segmentDuration: number;
 
+  /**
+   * 音频格式
+   * - 'pcm': PCM 原始音频
+   * - 'ogg_opus': OGG 容器封装的 Opus 音频
+   */
+  public audioFormat: 'pcm' | 'ogg_opus';
+
+  /**
+   * 音频编码
+   * - 'raw': PCM 原始数据
+   * - 'opus': Opus 编码
+   */
+  public audioCodec: 'raw' | 'opus';
+
   // 识别配置
   public enableItn: boolean;
   public enablePunc: boolean;
@@ -51,6 +65,8 @@ export class DoubaoASR extends BaseASR {
     this.bits = options.bits || 16;
     this.channel = options.channel || 1;
     this.segmentDuration = options.segmentDuration || 200;
+    this.audioFormat = options.audioFormat || 'pcm';
+    this.audioCodec = options.audioCodec || 'raw';
 
     // 识别配置
     this.enableItn = options.enableItn ?? true;
@@ -116,10 +132,35 @@ export class DoubaoASR extends BaseASR {
   }
 
   /**
-   * 构建 Full Client Request 参数（PCM 格式）
-   * 使用实例属性配置音频格式
+   * 构建 Full Client Request 参数
+   * 根据音频格式自动选择正确的参数配置
    */
-  private buildPcmFullClientRequestParams(): FullClientRequestParams {
+  private buildFullClientRequestParams(): FullClientRequestParams {
+    // 根据音频格式选择参数
+    if (this.audioFormat === 'ogg_opus') {
+      return {
+        user: {
+          uid: 'univoice-sdk',
+        },
+        audio: {
+          format: 'ogg',
+          codec: 'opus',
+          rate: this.sampleRate || 48000,
+          bits: 16,
+          channel: this.channel || 1,
+          language: this.language,
+        },
+        request: {
+          model_name: 'bigmodel',
+          enable_itn: this.enableItn,
+          enable_punc: this.enablePunc,
+          enable_ddc: this.enableDdc,
+          show_utterances: this.showUtterances,
+        },
+      };
+    }
+
+    // 默认 PCM 格式
     return {
       user: {
         uid: 'univoice-sdk',
@@ -315,7 +356,7 @@ export class DoubaoASR extends BaseASR {
 
         // 发送 Full Client Request
         const fullClientRequest = buildFullClientRequest(
-          this.buildPcmFullClientRequestParams(),
+          this.buildFullClientRequestParams(),
           sequence++
         );
         ws.send(fullClientRequest);

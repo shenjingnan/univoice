@@ -19,6 +19,20 @@ export interface ASROptions {
   channel?: number;
   segmentDuration?: number;
 
+  /**
+   * 音频格式
+   * - 'pcm': PCM 原始音频（默认）
+   * - 'ogg_opus': OGG 容器封装的 Opus 音频
+   */
+  audioFormat?: 'pcm' | 'ogg_opus';
+
+  /**
+   * 音频编码
+   * - 'raw': PCM 原始数据（默认）
+   * - 'opus': Opus 编码
+   */
+  audioCodec?: 'raw' | 'opus';
+
   // 识别配置
   enableItn?: boolean;
   enablePunc?: boolean;
