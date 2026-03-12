@@ -1,18 +1,36 @@
 import { describe, expect, it } from 'vitest';
 import { BaseTTS } from '@/tts/base.js';
-import type { TTSOptions, TTSRequest } from '@/types/tts.js';
+import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 
 // 创建一个具体的 TTS 实现类用于测试
 class MockTTS extends BaseTTS {
   name = 'mock-tts';
+  private _synthesizeCalled = false;
+  private _lastText = '';
 
-  async synthesize(request: TTSRequest) {
+  async synthesize(request: TTSRequest): Promise<TTSResponse> {
+    this._synthesizeCalled = true;
+    this._lastText = request.text;
     const opts = this.buildRequestOptions(request);
     return {
       audio: new Uint8Array(0),
       format: opts.format || 'mp3',
       duration: 0,
     };
+  }
+
+  // 测试辅助方法
+  get synthesizeCalled() {
+    return this._synthesizeCalled;
+  }
+
+  get lastText() {
+    return this._lastText;
+  }
+
+  reset() {
+    this._synthesizeCalled = false;
+    this._lastText = '';
   }
 }
 
@@ -113,6 +131,74 @@ describe('BaseTTS', () => {
       expect(result.speed).toBe(1.2);
       // 基础选项应该保留
       expect(result.apiKey).toBe('test-key');
+    });
+  });
+
+  describe('speak 方法', () => {
+    it('字符串输入 + 非流式输出应该调用 synthesize', async () => {
+      const tts = new MockTTS({
+        provider: 'test',
+        apiKey: 'test-key',
+      });
+
+      const response = await tts.speak('你好世界');
+
+      expect(tts.synthesizeCalled).toBe(true);
+      expect(tts.lastText).toBe('你好世界');
+      expect(response.format).toBe('mp3');
+    });
+
+    it('流式输入 + 非流式输出应该收集文本后调用 synthesize', async () => {
+      const tts = new MockTTS({
+        provider: 'test',
+        apiKey: 'test-key',
+      });
+
+      async function* textStream() {
+        yield '你好';
+        yield ' ';
+        yield '世界';
+      }
+
+      const response = await tts.speak(textStream());
+
+      expect(tts.synthesizeCalled).toBe(true);
+      expect(tts.lastText).toBe('你好 世界');
+      expect(response.format).toBe('mp3');
+    });
+
+    it('字符串输入 + 流式输出应该抛错（provider 不支持）', async () => {
+      const tts = new MockTTS({
+        provider: 'test',
+        apiKey: 'test-key',
+      });
+
+      const iterable = tts.speak('你好世界', { stream: true });
+
+      await expect(async () => {
+        for await (const _ of iterable) {
+          // 不应该到达这里
+        }
+      }).rejects.toThrow('Provider mock-tts 不支持流式输出模式');
+    });
+
+    it('流式输入 + 流式输出应该抛错（provider 不支持）', async () => {
+      const tts = new MockTTS({
+        provider: 'test',
+        apiKey: 'test-key',
+      });
+
+      async function* textStream() {
+        yield '你好';
+      }
+
+      const iterable = tts.speak(textStream(), { stream: true });
+
+      await expect(async () => {
+        for await (const _ of iterable) {
+          // 不应该到达这里
+        }
+      }).rejects.toThrow('Provider mock-tts 不支持流式输出模式');
     });
   });
 });
