@@ -31,7 +31,7 @@ async function main() {
 
   // 直接将流保存到文件
   const outputFile = ensureOutputDir(__dirname, basename);
-  await saveAudio(outputFile, tts.speak(text));
+  await saveAudio(outputFile, tts.speak(text, { stream: true }));
   console.log(`音频已保存至: ${outputFile}`);
 
   printPlayTip(outputFile);

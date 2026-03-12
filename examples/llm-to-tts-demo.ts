@@ -67,7 +67,7 @@ async function main() {
   let chunkCount = 0;
 
   try {
-    for await (const { audioChunk } of tts.speak(openaiStream)) {
+    for await (const { audioChunk } of tts.speak(openaiStream, { stream: true })) {
       chunkCount++;
       if (chunkCount === 1) {
         firstChunkTime = Date.now();

@@ -35,11 +35,22 @@ export interface TTSResponse {
   duration?: number;
 }
 
+/**
+ * speak 方法的选项
+ */
+export interface SpeakInstanceOptions {
+  /** 是否启用流式模式，默认 false */
+  stream?: boolean;
+}
+
 export interface TTSProvider {
   name: string;
   synthesize(request: TTSRequest): Promise<TTSResponse>;
-  /** 边发边收模式 - 流式文本输入（可选），返回流式音频块 */
-  speak?(input: string | TextStream): AsyncIterable<TTSStreamChunk>;
+  /** 边发边收模式 - 流式文本输入（可选） */
+  speak?(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions
+  ): AsyncIterable<TTSStreamChunk> | Promise<TTSResponse>;
   listVoices?(): Promise<TTSVoice[]>;
 }
 

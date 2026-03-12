@@ -135,7 +135,7 @@ export class DoubaoTTS extends BaseTTS {
    * @param input 文本输入，可以是字符串、文本流（AsyncIterable<string>）或 OpenAI stream
    * @returns 流式音频块
    */
-  async *speak(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+  async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     // 使用 normalizeTextStream 统一处理输入
     // 自动处理 string、AsyncIterable<string> 和 OpenAI stream
     const textStream = normalizeTextStream(input);

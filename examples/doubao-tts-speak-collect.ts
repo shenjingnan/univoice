@@ -35,7 +35,7 @@ async function main() {
   let totalSize = 0;
 
   // 流式获取音频块
-  for await (const { audioChunk } of tts.speak(text)) {
+  for await (const { audioChunk } of tts.speak(text, { stream: true })) {
     chunks.push(audioChunk);
     totalSize += audioChunk.length;
     console.log(`收到音频块: ${audioChunk.length} bytes, 累计: ${totalSize} bytes`);
