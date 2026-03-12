@@ -129,13 +129,15 @@ export class DoubaoTTS extends BaseTTS {
   }
 
   /**
+   * 流式语音合成（内部实现方法）
    * 边发边收模式：流式文本输入
    * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
    *
    * @param input 文本输入，可以是字符串、文本流（AsyncIterable<string>）或 OpenAI stream
    * @returns 流式音频块
+   * @internal
    */
-  async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+  protected async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     // 使用 normalizeTextStream 统一处理输入
     // 自动处理 string、AsyncIterable<string> 和 OpenAI stream
     const textStream = normalizeTextStream(input);
