@@ -44,7 +44,7 @@ export class DoubaoASR extends BaseASR {
     this.appKey = options.appKey || '';
     this.accessKey = options.accessKey || options.apiKey || '';
     this.resourceId = options.resourceId || 'volc.bigasr.sauc.duration';
-    this.mode = options.mode || 'nostream';
+    this.mode = options.mode || 'streaming';
 
     // 音频配置
     this.sampleRate = options.sampleRate || DEFAULT_SAMPLE_RATE;

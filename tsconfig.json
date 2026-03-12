@@ -27,6 +27,7 @@
       "@/*": ["src/*"],
       "univoice": ["src/index.ts"],
       "univoice/asr": ["src/asr/index.ts"],
+      "univoice/asr/providers": ["src/asr/providers/index.ts"],
       "univoice/tts": ["src/tts/index.ts"]
     }
   },
