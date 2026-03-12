@@ -1,7 +1,6 @@
 import { Buffer } from 'node:buffer';
 import WebSocket from 'ws';
 import { BaseASR } from '@/asr/base';
-import { registerASRProvider } from '@/asr/factory';
 import {
   buildAudioOnlyRequest,
   buildAuthHeaders,
@@ -362,5 +361,3 @@ export class DoubaoASR extends BaseASR {
     }
   }
 }
-
-registerASRProvider('doubao', DoubaoASR);

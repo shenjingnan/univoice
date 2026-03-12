@@ -1,5 +1,4 @@
 import { BaseASR } from '@/asr/base';
-import { registerASRProvider } from '@/asr/factory';
 import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr';
 
 export class QwenASR extends BaseASR {
@@ -16,5 +15,3 @@ export class QwenASR extends BaseASR {
     throw new Error('Qwen ASR listenStream method is not implemented yet');
   }
 }
-
-registerASRProvider('qwen', QwenASR);

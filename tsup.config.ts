@@ -5,6 +5,8 @@ export default defineConfig({
     'src/index': 'src/index.ts',
     'src/tts/index': 'src/tts/index.ts',
     'src/asr/index': 'src/asr/index.ts',
+    'src/tts/providers/index': 'src/tts/providers/index.ts',
+    'src/asr/providers/index': 'src/asr/providers/index.ts',
   },
   outDir: 'dist',
   format: 'esm',
@@ -15,4 +17,6 @@ export default defineConfig({
   clean: true,
   keepNames: true,
   platform: 'node',
+  treeshake: true,
+  splitting: true,
 });

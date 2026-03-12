@@ -2,6 +2,7 @@
   "name": "univoice",
   "version": "0.2.0",
   "description": "Unified Voice SDK for TTS and ASR",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/shenjingnan/univoice.git"
@@ -26,10 +27,20 @@
       "types": "./dist/src/tts/index.d.ts",
       "default": "./dist/src/tts/index.js"
     },
+    "./tts/providers": {
+      "import": "./dist/src/tts/providers/index.js",
+      "types": "./dist/src/tts/providers/index.d.ts",
+      "default": "./dist/src/tts/providers/index.js"
+    },
     "./asr": {
       "import": "./dist/src/asr/index.js",
       "types": "./dist/src/asr/index.d.ts",
       "default": "./dist/src/asr/index.js"
+    },
+    "./asr/providers": {
+      "import": "./dist/src/asr/providers/index.js",
+      "types": "./dist/src/asr/providers/index.d.ts",
+      "default": "./dist/src/asr/providers/index.js"
     }
   },
   "files": [

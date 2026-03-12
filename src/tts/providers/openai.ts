@@ -1,5 +1,4 @@
 import { BaseTTS } from '@/tts/base';
-import { registerTTSProvider } from '@/tts/factory';
 import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 
 export class TTS1 extends BaseTTS {
@@ -21,5 +20,3 @@ export class TTS1 extends BaseTTS {
     };
   }
 }
-
-registerTTSProvider('openai', TTS1);

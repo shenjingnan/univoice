@@ -2,7 +2,6 @@ import { Buffer } from 'node:buffer';
 import { randomUUID } from 'node:crypto';
 import WebSocket from 'ws';
 import { BaseTTS } from '@/tts/base';
-import { registerTTSProvider } from '@/tts/factory';
 import {
   EventType,
   finishConnection,
@@ -417,5 +416,3 @@ export class DoubaoTTS extends BaseTTS {
     }
   }
 }
-
-registerTTSProvider('doubao', DoubaoTTS);

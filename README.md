@@ -30,6 +30,7 @@
 - 🚀 **边发边收** - LLM 流式输出可直接转换为语音，显著降低首字延迟
 - 🔌 **插件化架构** - 轻松扩展支持新的语音服务提供商
 - 📦 **TypeScript 优先** - 完整的类型定义支持
+- 🌳 **Tree-Shaking 支持** - 按需加载，减少打包体积
 
 ### 适用场景
 
@@ -198,6 +199,63 @@ for await (const chunk of asr.listen(audioBuffer)) {
   }
 }
 ```
+
+---
+
+## 按需加载（Tree-Shaking）
+
+univoice 支持 tree-shaking，你可以按需加载所需的 provider，减少打包体积。
+
+### 方式一：自动注册全部 Provider
+
+适合需要使用多个 provider 的场景：
+
+```typescript
+import 'univoice/tts/providers';  // 注册所有 TTS provider
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({ provider: 'doubao', ... });
+```
+
+### 方式二：手动注册单个 Provider（推荐）
+
+只打包需要的 provider，最小化打包体积：
+
+```typescript
+import { createTTS, registerTTSProvider } from 'univoice/tts';
+import { DoubaoTTS } from 'univoice/tts/providers/doubao';
+
+// 只注册需要的 provider
+registerTTSProvider('doubao', DoubaoTTS);
+
+const tts = createTTS({ provider: 'doubao', ... });
+```
+
+### 方式三：直接使用 Provider 类
+
+最精简的方式，不使用工厂函数：
+
+```typescript
+import { DoubaoTTS } from 'univoice/tts/providers/doubao';
+
+const tts = new DoubaoTTS({
+  appId: 'your-app-id',
+  accessToken: 'your-access-token',
+  // ...
+});
+
+const response = await tts.synthesize({ text: '你好' });
+```
+
+### 可用导入路径
+
+| 路径 | 说明 |
+|------|------|
+| `univoice` | 主入口，导出所有 API（不自动注册 provider） |
+| `univoice/tts` | TTS 模块入口 |
+| `univoice/tts/providers` | 自动注册所有 TTS provider |
+| `univoice/asr` | ASR 模块入口 |
+| `univoice/asr/providers` | 自动注册所有 ASR provider |
 
 ---
 
@@ -405,14 +463,14 @@ pnpm format
 1. 在 `src/tts/providers/` 或 `src/asr/providers/` 创建新文件
 2. 继承 `BaseTTS` 或 `BaseASR` 类
 3. 实现必要的方法
-4. 在文件末尾调用 `registerTTSProvider()` 或 `registerASRProvider()`
+4. 导出 Provider 类
 
 ```typescript
 // src/tts/providers/my-provider.ts
-import { BaseTTS, registerTTSProvider } from '@/tts/index';
+import { BaseTTS } from '@/tts/index';
 import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 
-class MyTTS extends BaseTTS {
+export class MyTTS extends BaseTTS {
   constructor(options: TTSOptions) {
     super(options);
   }
@@ -425,8 +483,15 @@ class MyTTS extends BaseTTS {
     };
   }
 }
+```
 
-registerTTSProvider('my-provider', (options) => new MyTTS(options));
+然后在 `src/tts/providers/index.ts` 中添加自动注册：
+
+```typescript
+import { MyTTS } from './my-provider';
+import { registerTTSProvider } from '../index';
+
+registerTTSProvider('my-provider', MyTTS);
 ```
 
 ### 项目结构
