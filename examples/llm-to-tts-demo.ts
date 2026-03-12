@@ -51,7 +51,7 @@ async function main() {
     messages: [
       {
         role: 'user',
-        content: '请用一句话介绍 TypeScript',
+        content: '请用一句话介绍美丽杭州',
       },
     ],
     stream: true,

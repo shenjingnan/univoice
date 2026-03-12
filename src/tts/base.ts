@@ -1,4 +1,3 @@
-import { Buffer } from 'node:buffer';
 import type {
   SpeakInstanceOptions,
   TextStream,
@@ -9,6 +8,7 @@ import type {
   TTSStreamChunk,
   TTSVoice,
 } from '@/types/tts';
+import { normalizeTextStream } from './utils/normalize-text-stream';
 
 export abstract class BaseTTS implements TTSProvider {
   abstract name: string;
@@ -68,11 +68,13 @@ export abstract class BaseTTS implements TTSProvider {
     input: string | TextStream,
     options?: SpeakInstanceOptions
   ): Promise<TTSResponse> | AsyncIterable<TTSStreamChunk> {
-    // 只有明确指定 stream: true 时才返回流式模式
+    // 流式输出模式：使用 speakStream（需要 provider 支持）
     if (options?.stream === true) {
       return this.createSpeakStreamIterable(input);
     }
-    return this.collectTTSResponse(input);
+
+    // 非流式输出模式：使用 synthesize（所有 provider 支持）
+    return this.synthesizeFromInput(input);
   }
 
   /**
@@ -85,19 +87,17 @@ export abstract class BaseTTS implements TTSProvider {
   }
 
   /**
-   * 收集完整音频响应
+   * 使用 synthesize 处理输入（非流式输出）
+   * 字符串输入直接调用，流式输入先收集再调用
    */
-  private async collectTTSResponse(input: string | TextStream): Promise<TTSResponse> {
-    const chunks: Uint8Array[] = [];
-
-    for await (const chunk of this.speakStream(input)) {
-      chunks.push(chunk.audioChunk);
+  private async synthesizeFromInput(input: string | TextStream): Promise<TTSResponse> {
+    // 使用 normalizeTextStream 统一处理输入（支持字符串、AsyncIterable<string>、OpenAIStream）
+    const textChunks: string[] = [];
+    for await (const chunk of normalizeTextStream(input)) {
+      textChunks.push(chunk);
     }
 
-    return {
-      audio: Buffer.concat(chunks),
-      format: this.format,
-    };
+    return this.synthesize({ text: textChunks.join('') });
   }
 
   /**
@@ -113,7 +113,8 @@ export abstract class BaseTTS implements TTSProvider {
    */
   protected speakStream(_input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     throw new Error(
-      `Provider ${this.name} does not support streaming input mode (speakStream method)`
+      `Provider ${this.name} 不支持流式输出模式。` +
+        `请使用 speak('text') 或 synthesize({ text: 'text' }) 进行非流式语音合成。`
     );
   }
 
