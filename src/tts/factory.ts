@@ -1,5 +1,5 @@
 import { BaseTTS } from '@/tts/base';
-import type { TTSOptions, TTSProvider, TTSProviderType } from '@/types/tts';
+import type { TTSOptions, TTSProviderType } from '@/types/tts';
 
 const providers = new Map<string, new (options: TTSOptions) => BaseTTS>();
 
@@ -10,7 +10,7 @@ export function registerTTSProvider(
   providers.set(type, provider);
 }
 
-export function createTTS(options: TTSOptions): TTSProvider {
+export function createTTS(options: TTSOptions): BaseTTS {
   const ProviderClass = providers.get(options.provider);
   if (!ProviderClass) {
     throw new Error(`TTS provider "${options.provider}" not found`);

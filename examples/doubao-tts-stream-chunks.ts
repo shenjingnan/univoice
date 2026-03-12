@@ -39,7 +39,7 @@ async function main() {
 
   // 流式获取并保存每个 chunk
   let index = 1;
-  for await (const { audioChunk } of tts.speak(text)) {
+  for await (const { audioChunk } of tts.speak(text, { stream: true })) {
     const filePath = path.join(outputDir, `${index}.pcm`);
     await fs.writeFile(filePath, audioChunk);
     console.log(`已保存: ${filePath} (${audioChunk.length} bytes)`);

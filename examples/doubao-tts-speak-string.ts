@@ -53,7 +53,7 @@ async function main() {
   let chunkCount = 0;
 
   // 使用 speak 直接传入字符串，通过 for await...of 消费流式音频
-  for await (const { audioChunk } of tts.speak(text)) {
+  for await (const { audioChunk } of tts.speak(text, { stream: true })) {
     chunkCount++;
     if (chunkCount === 1) {
       firstChunkTime = Date.now();
