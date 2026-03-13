@@ -41,9 +41,11 @@ async function main() {
       provider: 'doubao',
       appKey,
       accessKey,
-      sampleRate: 16000,
-      bits: 16,
-      channel: 1,
+      audioFormat: {
+        sampleRate: 16000,
+        bits: 16,
+        channel: 1,
+      },
     });
 
     // 创建 PCM 流（从 Opus 数据包转换）
