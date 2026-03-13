@@ -21,7 +21,6 @@
       "Bash(pnpm build)",
       "Bash(pnpm lint)",
       "Bash(pnpm lint:fix)",
-      "Bash(pnpm test:run)",
       "Bash(pnpm test)",
       "Bash(pnpm format)",
       "Bash(pnpm audit --audit-level moderate)",
