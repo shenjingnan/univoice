@@ -91,7 +91,7 @@ pnpm lint:fix
 pnpm format
 
 # 拼写检查
-pnpm spell
+pnpm spellcheck
 
 # 发布
 pnpm release

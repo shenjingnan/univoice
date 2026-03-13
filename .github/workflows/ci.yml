@@ -63,7 +63,7 @@ jobs:
         run: pnpm run typecheck
 
       - name: 拼写检查
-        run: pnpm run spell
+        run: pnpm run spellcheck
 
       # 测试
       - name: 测试

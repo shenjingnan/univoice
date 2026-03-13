@@ -41,7 +41,7 @@
       "WebSearch",
       "mcp__web-reader__webReader",
       "mcp__zread__read_file",
-      "Bash(pnpm spell)",
+      "Bash(pnpm spellcheck)",
       "Bash(pnpm typecheck)"
     ],
     "deny": [],
