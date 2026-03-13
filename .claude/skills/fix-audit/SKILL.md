@@ -56,8 +56,8 @@ pnpm check:type
 # 运行 pnpm lint 修复代码格式问题
 pnpm lint:fix
 
-# 执行 pnpm check:spell 检查拼写
-pnpm check:spell
+# 执行 pnpm spellcheck 检查拼写
+pnpm spellcheck
 ```
 
 ## 风险控制
