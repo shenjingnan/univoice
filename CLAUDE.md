@@ -81,7 +81,7 @@ pnpm dev
 
 # 测试
 pnpm test
-pnpm test:run
+pnpm test:watch
 
 # 代码检查
 pnpm lint
