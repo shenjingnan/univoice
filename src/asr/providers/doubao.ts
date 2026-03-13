@@ -46,10 +46,11 @@ export class DoubaoASR extends BaseASR {
     this.resourceId = options.resourceId || 'volc.bigasr.sauc.duration';
     this.mode = options.mode || 'streaming';
 
-    // 音频配置
-    this.sampleRate = options.sampleRate || DEFAULT_SAMPLE_RATE;
-    this.bits = options.bits || 16;
-    this.channel = options.channel || 1;
+    // 音频格式配置
+    const audioFormat = options.audioFormat || {};
+    this.sampleRate = audioFormat.sampleRate || DEFAULT_SAMPLE_RATE;
+    this.bits = audioFormat.bits || 16;
+    this.channel = audioFormat.channel || 1;
     this.segmentDuration = options.segmentDuration || 200;
 
     // 识别配置

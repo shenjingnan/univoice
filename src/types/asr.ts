@@ -1,3 +1,15 @@
+/**
+ * 音频格式配置
+ */
+export interface AudioFormat {
+  /** 采样率，默认 16000 */
+  sampleRate?: number;
+  /** 位深度，默认 16 */
+  bits?: number;
+  /** 声道数，默认 1 */
+  channel?: number;
+}
+
 export interface ASROptions {
   provider: string;
   apiKey?: string;
@@ -13,10 +25,8 @@ export interface ASROptions {
   resourceId?: string;
   mode?: 'streaming' | 'nostream' | 'async';
 
-  // 音频配置
-  sampleRate?: number;
-  bits?: number;
-  channel?: number;
+  // 音频格式配置
+  audioFormat?: AudioFormat;
   segmentDuration?: number;
 
   // 识别配置

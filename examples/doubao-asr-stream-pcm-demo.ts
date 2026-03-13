@@ -35,9 +35,11 @@ async function main() {
       provider: 'doubao',
       appKey,
       accessKey,
-      sampleRate: 16000,
-      bits: 16,
-      channel: 1,
+      audioFormat: {
+        sampleRate: 16000,
+        bits: 16,
+        channel: 1,
+      },
     });
 
     const audioStream = pcmDirectoryToAudioStream(pcmFileDir, { intervalMs: 0 });
