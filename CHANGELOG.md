@@ -2,6 +2,21 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.3.0-beta.0](https://github.com/shenjingnan/univoice/compare/v0.2.0...v0.3.0-beta.0) (2026-03-14)
+
+
+### Features
+
+* **asr:** 将 Doubao ASR 默认模式改为 streaming ([#108](https://github.com/shenjingnan/univoice/issues/108)) ([2b7cbd1](https://github.com/shenjingnan/univoice/commit/2b7cbd195508c3b266e2d70af2a4a4de6c9a0f98))
+* **asr:** 支持流式和非流式两种识别模式 ([#96](https://github.com/shenjingnan/univoice/issues/96)) ([5ce74f6](https://github.com/shenjingnan/univoice/commit/5ce74f68723b7d99c22314b934acb98ba942a7f1))
+* **examples:** 添加 ASR listen 流式和非流式模式示例 ([#106](https://github.com/shenjingnan/univoice/issues/106)) ([5be0f12](https://github.com/shenjingnan/univoice/commit/5be0f12cd3b820901c02fbfd8c954fcb597a0fe0))
+* **examples:** 添加 OGG 到 Opus 数据包转换示例 ([#110](https://github.com/shenjingnan/univoice/issues/110)) ([612c90e](https://github.com/shenjingnan/univoice/commit/612c90ee52c4867c245287b5cd348355abea83eb))
+* **examples:** 添加 OGG 文件 ASR 识别示例 ([#116](https://github.com/shenjingnan/univoice/issues/116)) ([9b9bc67](https://github.com/shenjingnan/univoice/commit/9b9bc67269cd790942c58b8e1bf31b9371bcec8c))
+* **examples:** 添加 Opus 数据包合并为 OGG 文件功能 ([#119](https://github.com/shenjingnan/univoice/issues/119)) ([78d6a97](https://github.com/shenjingnan/univoice/commit/78d6a97e55c347f3b9ee39bfc9d96a14aeab4b50))
+* **examples:** 添加 Opus 数据包转 ASR 示例 ([#112](https://github.com/shenjingnan/univoice/issues/112)) ([d63f456](https://github.com/shenjingnan/univoice/commit/d63f4569468caf14d5d3b329e778e6a312daf943))
+* **tts:** 重构 speak 方法支持流式/非流式统一接口 ([#103](https://github.com/shenjingnan/univoice/issues/103)) ([091725d](https://github.com/shenjingnan/univoice/commit/091725dd738eb03eadfb162614ad38ae54c9bbcc))
+* 支持 Tree-Shaking 按需加载 ([#107](https://github.com/shenjingnan/univoice/issues/107)) ([e282244](https://github.com/shenjingnan/univoice/commit/e282244a12c63ac246b81b8795a64f1d9c27651a))
+
 # [0.2.0](https://github.com/shenjingnan/univoice/compare/v0.1.0...v0.2.0) (2026-03-11)
 
 
