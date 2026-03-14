@@ -117,17 +117,17 @@ export class DoubaoASR extends BaseASR {
   }
 
   /**
-   * 构建 Full Client Request 参数（PCM 格式）
-   * 使用实例属性配置音频格式
+   * 构建 Full Client Request 参数
+   * 使用实例属性配置音频格式，支持 PCM、OGG/Opus 等格式
    */
-  private buildPcmFullClientRequestParams(): FullClientRequestParams {
+  private buildFullClientRequestParams(): FullClientRequestParams {
     return {
       user: {
         uid: 'univoice-sdk',
       },
       audio: {
-        format: 'pcm',
-        codec: 'raw',
+        format: this.format,
+        codec: this.codec,
         rate: this.sampleRate,
         bits: this.bits,
         channel: this.channel,
@@ -316,7 +316,7 @@ export class DoubaoASR extends BaseASR {
 
         // 发送 Full Client Request
         const fullClientRequest = buildFullClientRequest(
-          this.buildPcmFullClientRequestParams(),
+          this.buildFullClientRequestParams(),
           sequence++
         );
         ws.send(fullClientRequest);
