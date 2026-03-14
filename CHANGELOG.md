@@ -2,6 +2,8 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.3.0](https://github.com/shenjingnan/univoice/compare/v0.3.0-beta.1...v0.3.0) (2026-03-14)
+
 # [0.3.0-beta.1](https://github.com/shenjingnan/univoice/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2026-03-14)
 
 # [0.3.0-beta.0](https://github.com/shenjingnan/univoice/compare/v0.2.0...v0.3.0-beta.0) (2026-03-14)
