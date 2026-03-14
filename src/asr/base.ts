@@ -4,6 +4,8 @@ import type {
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
+  AudioCodecFormat,
+  AudioContainerFormat,
   AudioStream,
   AudioStreamInput,
   ListenInstanceOptions,
@@ -17,6 +19,8 @@ export abstract class BaseASR {
   public language: string;
   public prompt: string;
   public responseFormat: 'json' | 'text' | 'srt' | 'vtt' | 'verbose_json';
+  public format: AudioContainerFormat;
+  public codec: AudioCodecFormat;
 
   constructor(options: ASROptions) {
     this.apiKey = options.apiKey || '';
@@ -25,6 +29,8 @@ export abstract class BaseASR {
     this.language = options.language || 'zh-CN';
     this.prompt = options.prompt || '';
     this.responseFormat = options.responseFormat || 'json';
+    this.format = options.format || 'pcm';
+    this.codec = options.codec || 'raw';
   }
 
   /**

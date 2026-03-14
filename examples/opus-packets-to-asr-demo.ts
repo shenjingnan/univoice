@@ -52,7 +52,7 @@ async function main() {
     // Opus 数据包由 TTS 生成，采样率为 24000Hz
     // ASR 需要 16000Hz 的 PCM 数据
     const audioStream = opusPacketsToPcmStream(opusPacketsDir, {
-      opusSampleRate: 24000, // TTS 生成的 Opus 采样率
+      opusSampleRate: 16000, // TTS 生成的 Opus 采样率
       targetSampleRate: 16000, // ASR 需要的采样率
     });
 

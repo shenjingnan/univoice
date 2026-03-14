@@ -10,6 +10,16 @@ export interface AudioFormat {
   channel?: number;
 }
 
+/**
+ * 音频容器格式
+ */
+export type AudioContainerFormat = 'pcm' | 'wav' | 'ogg' | 'mp3';
+
+/**
+ * 音频编码格式
+ */
+export type AudioCodecFormat = 'raw' | 'opus';
+
 export interface ASROptions {
   provider: string;
   apiKey?: string;
@@ -27,6 +37,10 @@ export interface ASROptions {
 
   // 音频格式配置
   audioFormat?: AudioFormat;
+  /** 音频容器格式 (pcm, wav, ogg, mp3) */
+  format?: AudioContainerFormat;
+  /** 音频编码格式 (raw, opus) */
+  codec?: AudioCodecFormat;
   segmentDuration?: number;
 
   // 识别配置
