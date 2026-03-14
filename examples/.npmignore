@@ -1,0 +1,15 @@
+# 依赖
+node_modules/
+
+# 运行时生成
+output/
+.env
+
+# 调试文件
+*.jsonl
+*.mp3
+*.pcm
+*.ogg
+
+# 系统文件
+.DS_Store
