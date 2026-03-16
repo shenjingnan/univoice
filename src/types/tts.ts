@@ -22,6 +22,8 @@ export interface TTSOptions {
   sampleRate?: number;
   /** 是否启用时间戳 */
   enableTimestamp?: boolean;
+  /** Qwen 专用：指令文本（用于情感控制，如"请用温柔的语调朗读"） */
+  instruction?: string;
 }
 
 export interface TTSRequest {
