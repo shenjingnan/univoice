@@ -48,7 +48,9 @@
   },
   "files": [
     "dist",
-    "examples"
+    "examples",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup",
