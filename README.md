@@ -418,6 +418,14 @@ const tts = createTTS({
   voice: 'longxiaochun_v3',
   format: 'mp3',
 });
+
+const asr = createASR({
+  provider: 'qwen',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'paraformer-realtime-v2',
+  language: 'zh-CN',
+  format: 'mp3',
+});
 ```
 
 #### Gemini
