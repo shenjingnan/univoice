@@ -50,6 +50,12 @@ export interface ASROptions {
   showUtterances?: boolean;
   /** 是否启用词级时间戳（Qwen ASR 专用） */
   enableWords?: boolean;
+
+  // GLM ASR 专用参数
+  /** 热词列表（GLM ASR 专用），提高特定词汇识别准确率 */
+  hotwords?: string[];
+  /** 上下文文本（GLM ASR 专用），用于长文本场景优化 */
+  context?: string;
 }
 
 /**

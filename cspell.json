@@ -58,7 +58,9 @@
     "vitest",
     "volc",
     "volcengine",
-    "webfactory"
+    "webfactory",
+    "hotwords",
+    "glm"
   ],
   "ignorePaths": [
     "examples/output",
