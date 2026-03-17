@@ -414,8 +414,8 @@ const tts = createTTS({
 const tts = createTTS({
   provider: 'qwen',
   apiKey: process.env.QWEN_API_KEY,
-  model: 'cosyvoice-v1',
-  voice: 'longxiaochun',
+  model: 'cosyvoice-v3-flash',
+  voice: 'longxiaochun_v3',
   format: 'mp3',
 });
 ```
