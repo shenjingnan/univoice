@@ -60,7 +60,13 @@
     "volcengine",
     "webfactory",
     "hotwords",
-    "glm"
+    "glm",
+    "tongtong",
+    "xiaochen",
+    "chuichui",
+    "kazi",
+    "douji",
+    "luodo"
   ],
   "ignorePaths": [
     "examples/output",
