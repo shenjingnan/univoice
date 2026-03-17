@@ -172,6 +172,64 @@ export function convertToWav(
 }
 
 /**
+ * 使用 ffprobe 检测音频文件的采样率
+ *
+ * @param input 音频文件路径或 Buffer
+ * @returns 采样率（Hz），如果无法检测则返回 null
+ */
+export function detectSampleRate(input: Buffer | string): number | null {
+  if (!checkFfmpeg()) {
+    return null;
+  }
+
+  let inputPath: string;
+  let shouldCleanup = false;
+
+  if (Buffer.isBuffer(input)) {
+    // 将 Buffer 写入临时文件
+    const tempFile = join(getTempDir(), `input-${Date.now()}.tmp`);
+    writeFileSync(tempFile, input);
+    inputPath = tempFile;
+    shouldCleanup = true;
+  } else {
+    inputPath = input;
+  }
+
+  try {
+    const result = execFileSync(
+      'ffprobe',
+      [
+        '-v',
+        'error',
+        '-show_entries',
+        'stream=sample_rate',
+        '-of',
+        'default=noprint_wrappers=1:nokey=1',
+        inputPath,
+      ],
+      { encoding: 'utf8' }
+    );
+
+    const sampleRate = parseInt(result.trim(), 10);
+    if (Number.isNaN(sampleRate) || sampleRate <= 0) {
+      return null;
+    }
+
+    return sampleRate;
+  } catch {
+    return null;
+  } finally {
+    if (shouldCleanup) {
+      try {
+        unlinkSync(inputPath);
+      } catch {
+        // 忽略清理错误
+      }
+    }
+  }
+}
+
+/**
  * 根据时长计算分段大小（字节数）
  */
 export function calculateSegmentSize(

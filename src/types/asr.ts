@@ -48,6 +48,8 @@ export interface ASROptions {
   enablePunc?: boolean;
   enableDdc?: boolean;
   showUtterances?: boolean;
+  /** 是否启用词级时间戳（Qwen ASR 专用） */
+  enableWords?: boolean;
 }
 
 /**
