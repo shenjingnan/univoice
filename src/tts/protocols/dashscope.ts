@@ -524,6 +524,7 @@ export async function collectAudioData(ws: WebSocket): Promise<Uint8Array[]> {
     // 尝试接收音频数据
     const audio = await receiveAudioData(ws);
     if (audio) {
+      console.log(`[${Date.now()}] 收到音频块: ${audio.length} bytes`);
       audioChunks.push(audio);
     } else {
       // receiveAudioData 返回 null，表示收到结束事件
@@ -559,4 +560,83 @@ export function concatArrays(arrays: Uint8Array[]): Uint8Array {
     offset += arr.length;
   }
   return result;
+}
+
+/**
+ * 接收音频数据或事件
+ * 用于流式场景，可以同时处理二进制音频数据和 JSON 事件
+ *
+ * @returns 返回音频数据或事件，如果收到结束事件则返回 null
+ */
+export async function receiveAudioOrEvent(
+  ws: WebSocket
+): Promise<{ type: 'audio'; data: Uint8Array } | { type: 'event'; event: ServerResponse } | null> {
+  setupMessageHandler(ws);
+
+  return new Promise((resolve, reject) => {
+    const state = wsStates.get(ws);
+    if (!state) {
+      reject(new Error('WebSocket state not found'));
+      return;
+    }
+
+    // 先检查是否有缓存的音频数据
+    if (state.audioQueue.length > 0) {
+      const audio = state.audioQueue.shift();
+      resolve({ type: 'audio', data: audio || new Uint8Array() });
+      return;
+    }
+
+    // 再检查是否有缓存的消息
+    if (state.queue.length > 0) {
+      const msg = state.queue.shift();
+      if (msg) {
+        if (isFinishedEvent(msg) || isFailedEvent(msg)) {
+          resolve(null);
+        } else {
+          resolve({ type: 'event', event: msg });
+        }
+        return;
+      }
+    }
+
+    // 如果都没有，同时等待音频和消息
+    let resolved = false;
+    const cleanup = () => {
+      resolved = true;
+      ws.removeListener('error', errorHandler);
+    };
+
+    const errorHandler = (error: WebSocket.ErrorEvent) => {
+      if (resolved) return;
+      cleanup();
+      reject(error);
+    };
+
+    const audioCheckCallback = () => {
+      if (resolved) return;
+      if (state.audioQueue.length > 0) {
+        cleanup();
+        const audio = state.audioQueue.shift();
+        resolve({ type: 'audio', data: audio || new Uint8Array() });
+        return;
+      }
+      // 继续检查
+      setTimeout(audioCheckCallback, 10);
+    };
+
+    const messageResolver = (msg: ServerResponse) => {
+      if (resolved) return;
+      cleanup();
+      if (isFinishedEvent(msg) || isFailedEvent(msg)) {
+        resolve(null);
+      } else {
+        resolve({ type: 'event', event: msg });
+      }
+    };
+
+    state.callbacks.push(messageResolver);
+    ws.once('error', errorHandler);
+    audioCheckCallback();
+  });
 }
