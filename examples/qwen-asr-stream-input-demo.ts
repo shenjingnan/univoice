@@ -21,8 +21,8 @@ import 'dotenv/config';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import 'univoice/asr/providers';
-import { createASR } from 'univoice/asr';
 import type { AudioStream } from 'univoice/asr';
+import { createASR } from 'univoice/asr';
 import { getScriptMeta, timestamp } from './utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
