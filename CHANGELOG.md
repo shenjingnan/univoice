@@ -2,6 +2,20 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.4.0](https://github.com/shenjingnan/univoice/compare/v0.3.0...v0.4.0) (2026-03-17)
+
+
+### Bug Fixes
+
+* **tts:** 修复 Qwen TTS 流式输出卡住的问题 ([#132](https://github.com/shenjingnan/univoice/issues/132)) ([1e6f26b](https://github.com/shenjingnan/univoice/commit/1e6f26bb0f53db24431f25c718ca3e491bc0ef69))
+
+
+### Features
+
+* **asr:** 支持可配置的音频格式和编码 ([#128](https://github.com/shenjingnan/univoice/issues/128)) ([5f752cc](https://github.com/shenjingnan/univoice/commit/5f752ccda892ce0e4e8ee013d82355bf4d0bd597))
+* **tts:** 实现 Qwen TTS 基于 WebSocket 的语音合成 ([#131](https://github.com/shenjingnan/univoice/issues/131)) ([0cef446](https://github.com/shenjingnan/univoice/commit/0cef446cf7e33e2c92761066825dc65b3d78e539))
+* **tts:** 实现 Qwen TTS 流式输入的边发边收 ([#134](https://github.com/shenjingnan/univoice/issues/134)) ([b33bd8a](https://github.com/shenjingnan/univoice/commit/b33bd8aa39f6d6b8d1a213b44383fd097e001f25))
+
 # [0.3.0](https://github.com/shenjingnan/univoice/compare/v0.3.0-beta.1...v0.3.0) (2026-03-14)
 
 # [0.3.0-beta.1](https://github.com/shenjingnan/univoice/compare/v0.3.0-beta.0...v0.3.0-beta.1) (2026-03-14)
