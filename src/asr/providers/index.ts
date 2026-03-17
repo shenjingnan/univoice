@@ -13,4 +13,4 @@ registerASRProvider('openai', WhisperASR);
 registerASRProvider('gemini', GeminiASR);
 
 // 导出所有 provider
-export { DoubaoASR, MinimaxASR, QwenASR, WhisperASR, GeminiASR };
+export { DoubaoASR, GeminiASR, MinimaxASR, QwenASR, WhisperASR };

@@ -13,4 +13,4 @@ registerTTSProvider('openai', TTS1);
 registerTTSProvider('gemini', GeminiTTS);
 
 // 导出所有 provider
-export { DoubaoTTS, MinimaxTTS, QwenTTS, TTS1, GeminiTTS };
+export { DoubaoTTS, GeminiTTS, MinimaxTTS, QwenTTS, TTS1 };
