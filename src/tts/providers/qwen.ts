@@ -144,7 +144,8 @@ export class QwenTTS extends BaseTTS {
 
   /**
    * 流式语音合成（内部实现方法）
-   * 边收边输出模式：WebSocket 流式接收音频数据并立即 yield
+   * 边发边收模式：流式文本输入
+   * 支持用户持续发送文本片段，适用于 LLM 流式输出转语音等场景
    *
    * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
    * @returns 流式音频块
@@ -152,6 +153,8 @@ export class QwenTTS extends BaseTTS {
    */
   protected async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     const textStream = normalizeTextStream(input);
+
+    console.log('[双向流] ========== 开始流式输入处理 ==========');
 
     // 创建队列和同步机制
     const queue: QueueItem[] = [];
@@ -172,6 +175,7 @@ export class QwenTTS extends BaseTTS {
       ws.on('open', resolve);
       ws.on('error', reject);
     });
+    console.log('[双向流] WebSocket 已连接');
 
     // 启动 WebSocket 处理流程（后台并发执行）
     const processPromise = (async () => {
@@ -193,29 +197,15 @@ export class QwenTTS extends BaseTTS {
 
         // 2. 等待 task-started 事件
         await waitForTaskStarted(ws);
+        console.log('[双向流] 任务已启动 (task-started)');
 
-        // 3. 从文本流读取并发送
-        let textSent = false;
-        for await (const chunk of textStream) {
-          if (chunk) {
-            const continueTaskMsg = createContinueTaskMessage(taskId, chunk);
-            await sendMessage(ws, continueTaskMsg);
-            textSent = true;
-          }
-        }
+        console.log('[双向流] 启动发送和接收并发流程...');
 
-        // 如果没有发送任何文本，发送空字符串
-        if (!textSent) {
-          const continueTaskMsg = createContinueTaskMessage(taskId, '');
-          await sendMessage(ws, continueTaskMsg);
-        }
-
-        // 4. 发送 finish-task 指令
-        const finishTaskMsg = createFinishTaskMessage(taskId);
-        await sendMessage(ws, finishTaskMsg);
-
-        // 5. 接收音频数据并推入队列
-        await this.receiveAudioFlowToQueue(ws, enqueue);
+        // 3. 并发执行发送和接收 - 关键修改：边发边收
+        await Promise.all([
+          this.sendTextStreamFlow(ws, taskId, textStream),
+          this.receiveAudioFlowToQueue(ws, enqueue),
+        ]);
       } catch (error) {
         enqueue({
           type: 'error',
@@ -258,6 +248,42 @@ export class QwenTTS extends BaseTTS {
       // 确保 WebSocket 被正确关闭
       await processPromise.catch(() => {});
     }
+  }
+
+  /**
+   * 发送流程：从文本流读取并发送
+   */
+  private async sendTextStreamFlow(
+    ws: WebSocket,
+    taskId: string,
+    textStream: AsyncGenerator<string>
+  ): Promise<void> {
+    console.log('[发送流程] 开始监听文本流...');
+
+    // 从文本流读取并发送
+    let chunkIndex = 0;
+    let textSent = false;
+    for await (const chunk of textStream) {
+      if (chunk) {
+        chunkIndex++;
+        console.log(`[发送流程] 收到文本块 #${chunkIndex}: "${chunk}"`);
+        const continueTaskMsg = createContinueTaskMessage(taskId, chunk);
+        await sendMessage(ws, continueTaskMsg);
+        textSent = true;
+      }
+    }
+
+    // 如果没有发送任何文本，发送空字符串
+    if (!textSent) {
+      console.log('[发送流程] 没有文本，发送空字符串');
+      const continueTaskMsg = createContinueTaskMessage(taskId, '');
+      await sendMessage(ws, continueTaskMsg);
+    }
+
+    console.log('[发送流程] 文本流结束，发送 finish-task 指令');
+    // 发送 finish-task 指令
+    const finishTaskMsg = createFinishTaskMessage(taskId);
+    await sendMessage(ws, finishTaskMsg);
   }
 
   /**
