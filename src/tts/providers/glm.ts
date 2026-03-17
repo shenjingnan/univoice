@@ -158,7 +158,9 @@ export class GlmTTS extends BaseTTS {
     }
     const text = textChunks.join('');
 
-    const format = this.mapFormat(this.format);
+    // 流式模式只支持 PCM 格式
+    // 参考: docs/content/glm/文字转语音.md - 流式生成音频时，仅支持返回 pcm 格式的文件
+    const format = 'pcm';
 
     // 发送请求
     const response = await fetch(this.baseUrl, {
