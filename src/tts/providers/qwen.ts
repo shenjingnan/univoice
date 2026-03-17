@@ -8,10 +8,18 @@ import {
   createContinueTaskMessage,
   createFinishTaskMessage,
   createRunTaskMessage,
+  receiveAudioOrEvent,
   sendMessage,
   waitForTaskStarted,
 } from '@/tts/protocols/dashscope';
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
+import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
+import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
+
+/** 队列项类型，用于 speakStream 的推拉转换 */
+type QueueItem =
+  | { type: 'audio'; chunk: Uint8Array }
+  | { type: 'error'; error: Error }
+  | { type: 'end' };
 
 /**
  * Qwen TTS 提供商
@@ -28,6 +36,8 @@ export class QwenTTS extends BaseTTS {
 
   /** Qwen 专用：指令文本（用于情感控制） */
   public instruction?: string;
+  /** 采样率 */
+  public sampleRate?: number;
 
   constructor(options: TTSOptions) {
     super(options);
@@ -41,6 +51,8 @@ export class QwenTTS extends BaseTTS {
     this.format = options.format || 'mp3';
     // 情感控制指令
     this.instruction = options.instruction;
+    // 采样率
+    this.sampleRate = options.sampleRate;
   }
 
   /**
@@ -127,6 +139,155 @@ export class QwenTTS extends BaseTTS {
       };
     } finally {
       ws.close();
+    }
+  }
+
+  /**
+   * 流式语音合成（内部实现方法）
+   * 边收边输出模式：WebSocket 流式接收音频数据并立即 yield
+   *
+   * @param input 文本输入，可以是字符串或文本流（AsyncIterable<string>）
+   * @returns 流式音频块
+   * @internal
+   */
+  protected async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
+    const textStream = normalizeTextStream(input);
+
+    // 创建队列和同步机制
+    const queue: QueueItem[] = [];
+    const syncState = { resolveWait: null as (() => void) | null, finished: false };
+
+    const enqueue = (item: QueueItem) => {
+      queue.push(item);
+      syncState.resolveWait?.();
+      syncState.resolveWait = null;
+    };
+
+    // 创建 WebSocket 连接
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      ws.on('open', resolve);
+      ws.on('error', reject);
+    });
+
+    // 启动 WebSocket 处理流程（后台并发执行）
+    const processPromise = (async () => {
+      try {
+        // 生成任务 ID
+        const taskId = randomUUID();
+
+        // 1. 发送 run-task 指令
+        const runTaskMsg = createRunTaskMessage(taskId, {
+          model: this.model,
+          voice: this.voice,
+          format: this.format,
+          sampleRate: this.sampleRate,
+          volume: this.volume ? Math.round(this.volume * 100) : 50,
+          rate: this.speed,
+          pitch: this.pitch,
+        });
+        await sendMessage(ws, runTaskMsg);
+
+        // 2. 等待 task-started 事件
+        await waitForTaskStarted(ws);
+
+        // 3. 从文本流读取并发送
+        let textSent = false;
+        for await (const chunk of textStream) {
+          if (chunk) {
+            const continueTaskMsg = createContinueTaskMessage(taskId, chunk);
+            await sendMessage(ws, continueTaskMsg);
+            textSent = true;
+          }
+        }
+
+        // 如果没有发送任何文本，发送空字符串
+        if (!textSent) {
+          const continueTaskMsg = createContinueTaskMessage(taskId, '');
+          await sendMessage(ws, continueTaskMsg);
+        }
+
+        // 4. 发送 finish-task 指令
+        const finishTaskMsg = createFinishTaskMessage(taskId);
+        await sendMessage(ws, finishTaskMsg);
+
+        // 5. 接收音频数据并推入队列
+        await this.receiveAudioFlowToQueue(ws, enqueue);
+      } catch (error) {
+        enqueue({
+          type: 'error',
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      } finally {
+        syncState.finished = true;
+        syncState.resolveWait?.();
+        syncState.resolveWait = null;
+        ws.close();
+      }
+    })();
+
+    // Generator 主循环：从队列中取出数据
+    try {
+      while (!syncState.finished || queue.length > 0) {
+        // 等待队列有数据
+        while (queue.length === 0 && !syncState.finished) {
+          await new Promise<void>((resolve) => {
+            syncState.resolveWait = resolve;
+          });
+        }
+
+        if (queue.length === 0) break;
+
+        const item = queue.shift();
+        if (!item) break;
+
+        switch (item.type) {
+          case 'audio':
+            yield { audioChunk: item.chunk };
+            break;
+          case 'error':
+            throw item.error;
+          case 'end':
+            return;
+        }
+      }
+    } finally {
+      // 确保 WebSocket 被正确关闭
+      await processPromise.catch(() => {});
+    }
+  }
+
+  /**
+   * 接收音频数据并推入队列
+   * 使用主动拉取模式：循环调用 receiveAudioOrEvent 获取音频或事件
+   */
+  private async receiveAudioFlowToQueue(
+    ws: WebSocket,
+    enqueue: (item: QueueItem) => void
+  ): Promise<void> {
+    console.log('[接收流程] 开始监听音频流...');
+    let audioIndex = 0;
+
+    while (true) {
+      const result = await receiveAudioOrEvent(ws);
+
+      // 收到结束事件或失败事件
+      if (result === null) {
+        console.log('[接收流程] 收到结束事件，结束接收');
+        enqueue({ type: 'end' });
+        return;
+      }
+
+      if (result.type === 'audio') {
+        // 收到音频数据
+        audioIndex++;
+        console.log(`[接收流程] 收到音频块 #${audioIndex}: ${result.data.length} bytes`);
+        enqueue({ type: 'audio', chunk: result.data });
+      }
+      // 如果是其他事件，忽略继续等待
     }
   }
 }

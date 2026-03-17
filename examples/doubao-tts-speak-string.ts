@@ -59,6 +59,7 @@ async function main() {
       firstChunkTime = Date.now();
       console.log(`[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
     }
+    console.log(`[${timestamp()}] 收到音频块: ${audioChunk.length} bytes`);
     chunks.push(audioChunk);
   }
 
