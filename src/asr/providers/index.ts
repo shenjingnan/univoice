@@ -1,6 +1,7 @@
 import { registerASRProvider } from '../factory';
 import { DoubaoASR } from './doubao';
 import { GeminiASR } from './gemini';
+import { GlmASR } from './glm';
 import { MinimaxASR } from './minimax';
 import { WhisperASR } from './openai';
 import { QwenASR } from './qwen';
@@ -11,6 +12,7 @@ registerASRProvider('minimax', MinimaxASR);
 registerASRProvider('qwen', QwenASR);
 registerASRProvider('openai', WhisperASR);
 registerASRProvider('gemini', GeminiASR);
+registerASRProvider('glm', GlmASR);
 
 // 导出所有 provider
-export { DoubaoASR, GeminiASR, MinimaxASR, QwenASR, WhisperASR };
+export { DoubaoASR, GeminiASR, GlmASR, MinimaxASR, QwenASR, WhisperASR };
