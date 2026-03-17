@@ -35,18 +35,7 @@ async function main() {
       format: 'mp3',
     });
 
-    // 使用流式模式进行识别以调试
-    console.log('使用流式模式...');
-    const chunks = asr.listen(audioPath, { stream: true });
-
-    for await (const chunk of chunks) {
-      console.log(`收到块: isFinal=${chunk.isFinal}, text="${chunk.text}"`);
-    }
-
-    console.log('流式识别完成');
-
-    // 使用非流式模式进行识别
-    console.log('\n使用非流式模式...');
+    // 使用非流式模式进行识别（默认）
     const response = await asr.listen(audioPath);
 
     console.log(`识别结果: ${response.text}`);
