@@ -176,14 +176,14 @@ export function parseServerResponse(data: WebSocket.Data): ServerResponse {
  * 检查是否是连接成功事件
  */
 export function isConnectedSuccessEvent(event: ServerResponse): event is ConnectedSuccessEvent {
-  return event.event === 'connected_success';
+  return 'event' in event && event.event === 'connected_success';
 }
 
 /**
  * 检查是否是任务启动成功事件
  */
 export function isTaskStartedEvent(event: ServerResponse): event is TaskStartedEvent {
-  return event.event === 'task_started';
+  return 'event' in event && event.event === 'task_started';
 }
 
 /**
@@ -197,7 +197,7 @@ export function isAudioDataEvent(event: ServerResponse): event is AudioDataEvent
  * 检查是否是失败事件
  */
 export function isFailedEvent(event: ServerResponse): event is TaskFailedEvent {
-  return event.event === 'task_failed';
+  return 'event' in event && event.event === 'task_failed';
 }
 
 /**
