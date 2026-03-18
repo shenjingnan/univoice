@@ -350,6 +350,7 @@ const asr = createASR({
 | MiniMax | `minimax` | ✅ |
 | 通义千问 | `qwen` | ✅ |
 | Gemini | `gemini` | ❌ |
+| 智谱 GLM | `glm` | ✅ |
 
 ### ASR 提供商
 
@@ -360,6 +361,7 @@ const asr = createASR({
 | MiniMax | `minimax` |
 | 通义千问 | `qwen` |
 | Gemini | `gemini` |
+| 智谱 GLM | `glm` |
 
 ### 配置示例
 
@@ -436,6 +438,26 @@ const tts = createTTS({
   apiKey: process.env.GEMINI_API_KEY,
   voice: 'Kore',
   language: 'zh-CN',
+});
+```
+
+#### 智谱 GLM
+
+```typescript
+const tts = createTTS({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+  model: 'glm-tts',
+  voice: 'tongtong', // 可选: xiaochen, chuichui, jam, kazi, douji, luodo, female, male
+  format: 'pcm',     // 支持 wav 和 pcm，流式只支持 pcm
+});
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+  model: 'glm-asr-2512',
+  hotwords: ['人工智能', '机器学习'], // 可选：热词列表，提高特定词汇识别准确率
+  context: '这是一段技术演讲',        // 可选：上下文文本，用于长文本场景优化
 });
 ```
 
@@ -554,3 +576,4 @@ src/
 - [MiniMax](https://www.minimaxi.com/)
 - [阿里云通义千问](https://tongyi.aliyun.com/)
 - [Google Gemini](https://ai.google.dev/)
+- [智谱 AI](https://open.bigmodel.cn/)
