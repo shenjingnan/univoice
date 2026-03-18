@@ -116,6 +116,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
+      "pnpm typecheck",
       "pnpm spellcheck"
     ]
   }
