@@ -2,6 +2,16 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.5.0](https://github.com/shenjingnan/univoice/compare/v0.4.1...v0.5.0) (2026-03-18)
+
+
+### Features
+
+* **asr:** 实现 Qwen ASR WebSocket 实时语音识别 ([#140](https://github.com/shenjingnan/univoice/issues/140)) ([b8a9403](https://github.com/shenjingnan/univoice/commit/b8a9403c79cc4c8d9cbcca6443d3c01ce622c5c2))
+* **asr:** 添加智谱 GLM ASR 提供商支持 ([#144](https://github.com/shenjingnan/univoice/issues/144)) ([f541513](https://github.com/shenjingnan/univoice/commit/f5415133d7b8adc70299abdf6cf8fced5f4cb323))
+* **example:** 添加 Qwen ASR 流式音频输入示例 ([#142](https://github.com/shenjingnan/univoice/issues/142)) ([21c0b66](https://github.com/shenjingnan/univoice/commit/21c0b66b13a3f1b31890f64e20f2793d96d6e846))
+* **tts:** 添加智谱 GLM TTS 提供商支持 ([#148](https://github.com/shenjingnan/univoice/issues/148)) ([ba1a11d](https://github.com/shenjingnan/univoice/commit/ba1a11d5ff5eeac5dbb8be6488f8e78fa1f6b10c))
+
 ## [0.4.1](https://github.com/shenjingnan/univoice/compare/v0.4.0...v0.4.1) (2026-03-17)
 
 # [0.4.0](https://github.com/shenjingnan/univoice/compare/v0.3.0...v0.4.0) (2026-03-17)
