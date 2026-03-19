@@ -64,6 +64,7 @@ export type MinimaxEvent =
   | ConnectedSuccessEvent
   | TaskStartedEvent
   | AudioDataEvent
+  | TaskFinishedEvent
   | TaskFailedEvent;
 
 /**
@@ -88,6 +89,13 @@ export interface AudioDataEvent {
     audio: string; // hex 编码的音频数据
   };
   is_final: boolean;
+}
+
+/**
+ * task_finished 事件 - 任务结束成功
+ */
+export interface TaskFinishedEvent {
+  event: 'task_finished';
 }
 
 /**
@@ -201,6 +209,13 @@ export function isFailedEvent(event: ServerResponse): event is TaskFailedEvent {
 }
 
 /**
+ * 检查是否是任务结束事件
+ */
+export function isTaskFinishedEvent(event: ServerResponse): event is TaskFinishedEvent {
+  return 'event' in event && event.event === 'task_finished';
+}
+
+/**
  * 从 hex 解码音频数据
  */
 export function decodeAudioData(hex: string): Uint8Array {
@@ -212,7 +227,8 @@ export function decodeAudioData(hex: string): Uint8Array {
  */
 interface WebSocketState {
   queue: ServerResponse[];
-  callbacks: ((msg: ServerResponse) => void)[];
+  callbacks: ((msg: ServerResponse | null) => void)[];
+  isClosed: boolean;
 }
 
 const wsStates = new Map<WebSocket, WebSocketState>();
@@ -220,7 +236,7 @@ const wsStates = new Map<WebSocket, WebSocketState>();
 function getOrCreateState(ws: WebSocket): WebSocketState {
   let state = wsStates.get(ws);
   if (!state) {
-    state = { queue: [], callbacks: [] };
+    state = { queue: [], callbacks: [], isClosed: false };
     wsStates.set(ws, state);
   }
   return state;
@@ -246,6 +262,12 @@ function setupMessageHandler(ws: WebSocket) {
     });
 
     ws.on('close', () => {
+      state.isClosed = true;
+      // 通知所有等待的回调，传递 null 表示连接关闭
+      while (state.callbacks.length > 0) {
+        const callback = state.callbacks.shift();
+        if (callback) callback(null);
+      }
       wsStates.delete(ws);
     });
   }
@@ -280,9 +302,13 @@ export async function receiveResponse(ws: WebSocket): Promise<ServerResponse> {
       reject(error);
     };
 
-    const resolver = (msg: ServerResponse) => {
+    const resolver = (msg: ServerResponse | null) => {
       ws.removeListener('error', errorHandler);
-      resolve(msg);
+      if (msg !== null) {
+        resolve(msg);
+      } else {
+        reject(new Error('WebSocket connection closed'));
+      }
     };
 
     state.callbacks.push(resolver);
@@ -377,7 +403,11 @@ export function concatArrays(arrays: Uint8Array[]): Uint8Array {
  * 接收音频数据或事件
  * 用于流式场景
  *
- * @returns 返回音频数据或事件，如果收到结束标志则返回 null
+ * 注意：
+ * - is_final 标志表示当前批次的音频数据已返回完毕，但不代表任务结束
+ * - task_finished 事件是任务结束信号，但服务端也可能直接关闭连接
+ *
+ * @returns 返回音频数据或事件，如果收到 task_finished/task_failed 或连接关闭则返回 null
  */
 export async function receiveAudioOrEvent(
   ws: WebSocket
@@ -391,23 +421,33 @@ export async function receiveAudioOrEvent(
       return;
     }
 
+    // 检查连接是否已关闭
+    if (state.isClosed) {
+      resolve(null);
+      return;
+    }
+
     // 检查是否有缓存的消息
     if (state.queue.length > 0) {
       const msg = state.queue.shift();
       if (msg) {
-        if (isFailedEvent(msg)) {
+        // 收到 task_finished 或 task_failed，返回 null 表示结束
+        if (isTaskFinishedEvent(msg) || isFailedEvent(msg)) {
           resolve(null);
           return;
         }
+        // 收到音频数据，先处理音频（无论 is_final 是什么）
         if (isAudioDataEvent(msg)) {
-          if (msg.is_final) {
-            resolve(null);
+          if (msg.data.audio) {
+            const audioData = decodeAudioData(msg.data.audio);
+            resolve({ type: 'audio', data: audioData });
             return;
           }
-          const audioData = decodeAudioData(msg.data.audio);
-          resolve({ type: 'audio', data: audioData });
+          // 没有 audio 数据，继续等待下一条消息
+          receiveAudioOrEvent(ws).then(resolve, reject);
           return;
         }
+        // 其他事件，返回给调用者处理
         resolve({ type: 'event', event: msg });
         return;
       }
@@ -426,25 +466,38 @@ export async function receiveAudioOrEvent(
       reject(error);
     };
 
-    const messageResolver = (msg: ServerResponse) => {
+    const messageResolver = (msg: ServerResponse | null) => {
       if (resolved) return;
-      cleanup();
 
-      if (isFailedEvent(msg)) {
+      // msg 为 null 表示连接关闭
+      if (msg === null) {
+        cleanup();
         resolve(null);
         return;
       }
 
-      if (isAudioDataEvent(msg)) {
-        if (msg.is_final) {
-          resolve(null);
-          return;
-        }
-        const audioData = decodeAudioData(msg.data.audio);
-        resolve({ type: 'audio', data: audioData });
+      // 收到 task_finished 或 task_failed，返回 null 表示结束
+      if (isTaskFinishedEvent(msg) || isFailedEvent(msg)) {
+        cleanup();
+        resolve(null);
         return;
       }
 
+      // 收到音频数据，先处理音频（无论 is_final 是什么）
+      if (isAudioDataEvent(msg)) {
+        if (msg.data.audio) {
+          cleanup();
+          const audioData = decodeAudioData(msg.data.audio);
+          resolve({ type: 'audio', data: audioData });
+          return;
+        }
+        // 没有 audio 数据，继续等待下一条消息（不调用 cleanup，保持 resolved = false）
+        state.callbacks.push(messageResolver);
+        return;
+      }
+
+      // 其他事件，返回给调用者处理
+      cleanup();
       resolve({ type: 'event', event: msg });
     };
 
