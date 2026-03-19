@@ -12,6 +12,9 @@ TTS_BYTEDANCE_APPID=your_app_id
 TTS_BYTEDANCE_TOKEN=your_access_token
 TTS_BYTEDANCE_VOICE_TYPE=zh_female_tianmeixiaoyuan_moon_bigtts
 
+# Minimax TTS 配置
+MINIMAX_API_KEY=your_api_key
+
 # OpenAI 配置（用于 LLM 示例）
 OPENAI_API_KEY=your_api_key
 OPENAI_BASE_URL=https://api.openai.com/v1
@@ -20,12 +23,28 @@ OPENAI_MODEL=gpt-4o-mini
 
 ## 示例列表
 
+### Doubao TTS 示例
+
 | 文件 | 说明 | 输出格式 |
 |------|------|----------|
 | [doubao-tts-demo.ts](./doubao-tts-demo.ts) | 基础 TTS 合成示例 | MP3 |
 | [doubao-tts-speak-collect.ts](./doubao-tts-speak-collect.ts) | 流式音频收集示例 | PCM |
 | [doubao-tts-speak-string.ts](./doubao-tts-speak-string.ts) | 字符串输入模式示例 | PCM |
 | [doubao-tts-stream-direct.ts](./doubao-tts-stream-direct.ts) | 直接流式保存示例 | PCM |
+
+### Minimax TTS 示例
+
+| 文件 | 说明 | 输出格式 |
+|------|------|----------|
+| [minimax-tts-speak-non-stream.ts](./minimax-tts-speak-non-stream.ts) | 非流式输出示例 | MP3 |
+| [minimax-tts-speak-string.ts](./minimax-tts-speak-string.ts) | 字符串输入 + 流式输出 | MP3 |
+| [minimax-tts-speak-stream-input.ts](./minimax-tts-speak-stream-input.ts) | 流式输入 + 流式输出 | MP3 |
+| [minimax-tts-speak-collect.ts](./minimax-tts-speak-collect.ts) | 流式输入 + 非流式输出 | MP3 |
+
+### 其他示例
+
+| 文件 | 说明 | 输出格式 |
+|------|------|----------|
 | [llm-to-tts-demo.ts](./llm-to-tts-demo.ts) | LLM 流转语音示例 | PCM |
 | [openai-stream-demo.ts](./openai-stream-demo.ts) | OpenAI 流式调试示例 | JSONL |
 
@@ -96,14 +115,68 @@ OpenAI 流式调试示例，用于调试流式返回数据。
 
 **适用场景：** 调试 OpenAI 流式响应，分析数据格式。
 
+### Minimax TTS 示例
+
+#### minimax-tts-speak-non-stream.ts
+
+非流式输出示例，演示 `speak(text)` 获取完整音频的用法。
+
+**核心功能：**
+- 使用 `speak(string)` 获取完整音频
+- 等待所有音频数据返回后再输出
+- 保存为 MP3 格式
+
+**适用场景：** 已知完整文本，需要一次性获取完整音频。
+
+#### minimax-tts-speak-string.ts
+
+字符串输入 + 流式输出示例，演示 `speak(text, { stream: true })` 的用法。
+
+**核心功能：**
+- 字符串输入，流式音频输出
+- 实时接收音频块，降低首字延迟
+- 输出首字延迟统计信息
+
+**适用场景：** 已知完整文本，但希望获得流式输出的低延迟体验。
+
+#### minimax-tts-speak-stream-input.ts
+
+流式输入 + 流式输出示例，演示 `speak(textStream, { stream: true })` 的用法。
+
+**核心功能：**
+- 文本流输入（模拟 LLM 流式输出）
+- 实时流式音频输出
+- 边发边收，首字延迟最低
+
+**适用场景：** LLM 对话、语音助手等需要实时响应的场景。
+
+#### minimax-tts-speak-collect.ts
+
+流式输入 + 非流式输出示例，演示 `speak(textStream)` 获取完整音频的用法。
+
+**核心功能：**
+- 文本流输入（模拟 LLM 流式输出）
+- 等待完整音频后一次性返回
+- 适用于需要完整音频数据的场景
+
+**适用场景：** 接收流式文本，但需要保存完整音频文件或进行二次处理。
+
 ## 运行方式
 
 ```bash
-# 运行指定示例
+# Doubao TTS 示例
 pnpm tsx examples/doubao-tts-demo.ts
 pnpm tsx examples/doubao-tts-speak-collect.ts
 pnpm tsx examples/doubao-tts-speak-string.ts
 pnpm tsx examples/doubao-tts-stream-direct.ts
+
+# Minimax TTS 示例
+pnpm tsx examples/minimax-tts-speak-non-stream.ts
+pnpm tsx examples/minimax-tts-speak-string.ts
+pnpm tsx examples/minimax-tts-speak-stream-input.ts
+pnpm tsx examples/minimax-tts-speak-collect.ts
+
+# 其他示例
 pnpm tsx examples/llm-to-tts-demo.ts
 pnpm tsx examples/openai-stream-demo.ts
 ```
@@ -114,12 +187,16 @@ pnpm tsx examples/openai-stream-demo.ts
 
 ```
 examples/output/
-├── doubao-tts-demo.mp3           # MP3 格式音频
-├── doubao-tts-speak-collect.pcm  # PCM 格式音频
-├── doubao-tts-speak-string.pcm   # PCM 格式音频
-├── doubao-tts-stream-direct.pcm  # PCM 格式音频
-├── llm-to-tts-demo.pcm           # PCM 格式音频
-└── openai-stream-*.jsonl         # OpenAI 流式数据
+├── doubao-tts-demo.mp3                     # Doubao MP3 格式音频
+├── doubao-tts-speak-collect.pcm            # Doubao PCM 格式音频
+├── doubao-tts-speak-string.pcm             # Doubao PCM 格式音频
+├── doubao-tts-stream-direct.pcm            # Doubao PCM 格式音频
+├── minimax-tts-speak-non-stream.mp3        # Minimax MP3 格式音频
+├── minimax-tts-speak-string.mp3            # Minimax MP3 格式音频
+├── minimax-tts-speak-stream-input.mp3      # Minimax MP3 格式音频
+├── minimax-tts-speak-collect.mp3           # Minimax MP3 格式音频
+├── llm-to-tts-demo.pcm                     # LLM 转 TTS PCM 格式音频
+└── openai-stream-*.jsonl                   # OpenAI 流式数据
 ```
 
 ### 播放 PCM 音频
