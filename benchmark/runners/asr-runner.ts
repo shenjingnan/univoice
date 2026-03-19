@@ -253,6 +253,10 @@ export async function runASRSuite(options?: {
   audioFiles?: AudioFixture[];
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
+
+  // 导入所有 provider 模块（自动注册）
+  await import('../../src/asr/providers');
+
   const providerConfigs = getASRProviderConfigs().filter(
     (p) => !options?.providers || options.providers.includes(p.provider)
   );
@@ -273,9 +277,6 @@ export async function runASRSuite(options?: {
 
   for (const providerConfig of providerConfigs) {
     console.log(`\n--- 测试提供商: ${providerConfig.displayName} ---\n`);
-
-    // 导入 provider 模块
-    await import(`../../src/asr/providers/${providerConfig.provider}`);
 
     for (const audio of audioFiles) {
       console.log(`\n  音频: "${audio.name}" (${audio.duration}s, ${audio.format})`);

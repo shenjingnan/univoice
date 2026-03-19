@@ -341,6 +341,10 @@ export async function runTTSSuite(options?: {
   iterations?: number;
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
+
+  // 导入所有 provider 模块（自动注册）
+  await import('../../src/tts/providers');
+
   const providerConfigs = getProviderConfigs().filter(
     (p) => !options?.providers || options.providers.includes(p.provider)
   );
@@ -359,9 +363,6 @@ export async function runTTSSuite(options?: {
 
   for (const providerConfig of providerConfigs) {
     console.log(`\n--- 测试提供商: ${providerConfig.displayName} ---\n`);
-
-    // 导入 provider 模块
-    await import(`../../src/tts/providers/${providerConfig.provider}`);
 
     // 测试不同文本长度
     const { textFixtures } = await import('../fixtures/texts');
