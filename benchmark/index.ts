@@ -2,7 +2,7 @@
  * Benchmark CLI 入口
  * 用于运行性能测试并生成报告
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
@@ -13,6 +13,10 @@ import type {
   ProviderCapabilities,
   ProviderSummary,
 } from './metrics/types';
+import { generateMarkdownReport } from './utils/report-generator';
+
+export type { BenchmarkReport, BenchmarkResult, ProviderCapabilities, ProviderSummary };
+
 import { getASRProviderConfigs, runASRSuite } from './runners/asr-runner';
 import { getProviderConfigs, runTTSSuite } from './runners/tts-runner';
 
@@ -125,149 +129,6 @@ function generateJsonReport(results: BenchmarkResult[]): BenchmarkReport {
     asrProviders: asrProviders.map((p) => summarizeProvider(p, results, getASRCapabilities)),
     results,
   };
-}
-
-/**
- * 生成 Markdown 报告
- */
-function generateMarkdownReport(report: BenchmarkReport): string {
-  const lines: string[] = [];
-
-  lines.push('# Univoice 性能基准测试报告');
-  lines.push('');
-  lines.push(`> 生成时间: ${new Date(report.generatedAt).toLocaleString('zh-CN')}`);
-  lines.push('');
-  lines.push(
-    `> 环境: Node.js ${report.environment.node}, ${report.environment.platform} ${report.environment.arch}`
-  );
-  lines.push('');
-
-  // TTS 部分
-  if (report.ttsProviders.length > 0) {
-    lines.push('## TTS 性能指标');
-    lines.push('');
-    lines.push('### 首包延迟（短文本，流式输出）');
-    lines.push('');
-    lines.push('| 提供商 | 平均延迟 | P50 | P95 | 成功率 |');
-    lines.push('|--------|---------|-----|-----|--------|');
-
-    for (const p of report.ttsProviders) {
-      if (p.performance.sampleCount > 0) {
-        const avg = p.performance.avgFirstChunkLatency.toFixed(0);
-        const p50 = p.performance.p50FirstChunkLatency.toFixed(0);
-        const p95 = p.performance.p95FirstChunkLatency.toFixed(0);
-        const rate = (p.performance.successRate * 100).toFixed(0);
-        lines.push(`| ${p.capabilities.displayName} | ${avg}ms | ${p50}ms | ${p95}ms | ${rate}% |`);
-      }
-    }
-
-    lines.push('');
-    lines.push('### 能力矩阵');
-    lines.push('');
-    lines.push('| 提供商 | 流式输入 | 流式输出 | 协议 |');
-    lines.push('|--------|:--------:|:--------:|:----:|');
-
-    for (const p of report.ttsProviders) {
-      const streamIn = p.capabilities.streamInput ? '✅' : '❌';
-      const streamOut = p.capabilities.streamOutput ? '✅' : '❌';
-      lines.push(
-        `| ${p.capabilities.displayName} | ${streamIn} | ${streamOut} | ${p.capabilities.protocol} |`
-      );
-    }
-
-    lines.push('');
-  }
-
-  // ASR 部分
-  if (report.asrProviders.length > 0) {
-    lines.push('## ASR 性能指标');
-    lines.push('');
-    lines.push('### 首包延迟');
-    lines.push('');
-    lines.push('| 提供商 | 平均延迟 | P50 | P95 | 成功率 |');
-    lines.push('|--------|---------|-----|-----|--------|');
-
-    for (const p of report.asrProviders) {
-      if (p.performance.sampleCount > 0) {
-        const avg = p.performance.avgFirstChunkLatency.toFixed(0);
-        const p50 = p.performance.p50FirstChunkLatency.toFixed(0);
-        const p95 = p.performance.p95FirstChunkLatency.toFixed(0);
-        const rate = (p.performance.successRate * 100).toFixed(0);
-        lines.push(`| ${p.capabilities.displayName} | ${avg}ms | ${p50}ms | ${p95}ms | ${rate}% |`);
-      }
-    }
-
-    lines.push('');
-  }
-
-  // 场景推荐
-  lines.push('## 场景推荐');
-  lines.push('');
-
-  if (report.ttsProviders.length > 0) {
-    // 找出首包延迟最低的提供商
-    const sortedByLatency = [...report.ttsProviders]
-      .filter((p) => p.performance.sampleCount > 0)
-      .sort((a, b) => a.performance.avgFirstChunkLatency - b.performance.avgFirstChunkLatency);
-
-    if (sortedByLatency.length > 0) {
-      const fastest = sortedByLatency[0];
-      lines.push(`| 场景 | 推荐提供商 | 原因 |`);
-      lines.push('|------|-----------|------|');
-      lines.push(
-        `| LLM 实时对话 | ${fastest.capabilities.displayName} | 最低首包延迟 (${fastest.performance.avgFirstChunkLatency.toFixed(0)}ms) |`
-      );
-    }
-  }
-
-  lines.push('');
-  lines.push('---');
-  lines.push('');
-  lines.push(`*数据更新于: ${new Date().toISOString().split('T')[0]}*`);
-
-  return lines.join('\n');
-}
-
-/**
- * 更新 README.md
- */
-function updateReadme(report: BenchmarkReport): void {
-  const readmePath = join(__dirname, '..', 'README.md');
-
-  if (!existsSync(readmePath)) {
-    console.log('README.md 不存在，跳过更新');
-    return;
-  }
-
-  let readme = readFileSync(readmePath, 'utf-8');
-
-  // 生成性能基准章节
-  const benchmarkSection = generateMarkdownReport(report);
-
-  // 查找性能基准章节的位置
-  const benchmarkStart = readme.indexOf('## 性能基准');
-  const benchmarkEnd = readme.indexOf('---', benchmarkStart);
-
-  if (benchmarkStart !== -1 && benchmarkEnd !== -1) {
-    // 替换现有章节
-    readme = `${readme.slice(0, benchmarkStart) + benchmarkSection}\n\n${readme.slice(benchmarkEnd)}`;
-  } else {
-    // 在「支持的提供商」章节后插入
-    const supportedStart = readme.indexOf('## 支持的提供商');
-    const nextSectionStart = readme.indexOf('\n## ', supportedStart + 1);
-
-    if (supportedStart !== -1 && nextSectionStart !== -1) {
-      readme =
-        readme.slice(0, nextSectionStart) +
-        '\n\n' +
-        benchmarkSection +
-        '\n' +
-        readme.slice(nextSectionStart);
-    }
-  }
-
-  writeFileSync(readmePath, readme);
-  console.log('README.md 已更新');
 }
 
 /**
@@ -395,9 +256,6 @@ async function main(): Promise<void> {
   const mdPath = join(latestDir, 'benchmark.md');
   writeFileSync(mdPath, mdReport);
   console.log(`✓ Markdown 报告已保存: ${mdPath}`);
-
-  // 更新 README
-  updateReadme(report);
 
   const totalTime = Date.now() - startTime;
   const ttsCount = allResults.filter((r) => r.testType === 'tts').length;
