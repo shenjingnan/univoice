@@ -63,6 +63,7 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "spellcheck": "cspell lint .",
+    "benchmark": "tsx benchmark/index.ts",
     "release": "release-it",
     "release:beta": "release-it --preRelease=beta --ci",
     "release:dry": "release-it --dry-run --ci",

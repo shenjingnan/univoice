@@ -476,6 +476,41 @@ const asr = createASR({
 
 ---
 
+## 性能基准
+
+### TTS 首包延迟（短文本，流式输出）
+
+| 提供商 | 平均延迟 | P50 | P95 | 成功率 |
+|--------|---------|-----|-----|--------|
+| doubao | --ms | --ms | --ms | --% |
+| qwen   | --ms | --ms | --ms | --% |
+| minimax| --ms | --ms | --ms | --% |
+| glm    | --ms | --ms | --ms | --% |
+
+> 数据更新于: YYYY-MM-DD，详见 [benchmark/results/](./benchmark/results/)
+
+### 场景推荐
+
+| 场景 | 推荐提供商 | 原因 |
+|------|-----------|------|
+| LLM 实时对话 | -- | 最低首包延迟 |
+| 长文本朗读 | -- | 稳定性好 |
+| 快速原型 | -- | HTTP 协议简单 |
+
+### 运行性能测试
+
+```bash
+# 运行性能基准测试
+pnpm benchmark
+
+# 查看测试报告
+cat benchmark/results/latest/benchmark.md
+```
+
+详细的性能测试说明请参阅 [benchmark/README.md](./benchmark/README.md)。
+
+---
+
 ## 开发指南
 
 ### 本地开发

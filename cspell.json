@@ -68,7 +68,9 @@
     "chuichui",
     "kazi",
     "douji",
-    "luodo"
+    "luodo",
+    "ttfb",
+    "yjsjy"
   ],
   "ignorePaths": [
     "examples/output",

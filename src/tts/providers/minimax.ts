@@ -259,11 +259,11 @@ export class MinimaxTTS extends BaseTTS {
     textStream: AsyncGenerator<string>
   ): Promise<void> {
     // 从文本流读取并发送
-    let chunkIndex = 0;
+    let _chunkIndex = 0;
     let textSent = false;
     for await (const chunk of textStream) {
       if (chunk) {
-        chunkIndex++;
+        _chunkIndex++;
         const taskContinueMsg = createTaskContinueMessage(chunk);
         await sendMessage(ws, taskContinueMsg);
         textSent = true;
