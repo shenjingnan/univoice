@@ -160,8 +160,6 @@ export class MinimaxTTS extends BaseTTS {
   protected async *speakStream(input: string | TextStream): AsyncIterable<TTSStreamChunk> {
     const textStream = normalizeTextStream(input);
 
-    console.log('[Minimax] ========== 开始流式输入处理 ==========');
-
     // 创建队列和同步机制
     const queue: QueueItem[] = [];
     const syncState = { resolveWait: null as (() => void) | null, finished: false };
@@ -184,7 +182,6 @@ export class MinimaxTTS extends BaseTTS {
 
     // 等待 connected_success 事件
     await waitForConnected(ws);
-    console.log('[Minimax] WebSocket 已连接');
 
     // 启动 WebSocket 处理流程（后台并发执行）
     const processPromise = (async () => {
@@ -204,9 +201,6 @@ export class MinimaxTTS extends BaseTTS {
 
         // 2. 等待 task_started 事件
         await waitForTaskStarted(ws);
-        console.log('[Minimax] 任务已启动 (task_started)');
-
-        console.log('[Minimax] 启动发送和接收并发流程...');
 
         // 3. 并发执行发送和接收 - 边发边收
         await Promise.all([
@@ -264,15 +258,12 @@ export class MinimaxTTS extends BaseTTS {
     ws: WebSocket,
     textStream: AsyncGenerator<string>
   ): Promise<void> {
-    console.log('[Minimax 发送流程] 开始监听文本流...');
-
     // 从文本流读取并发送
     let chunkIndex = 0;
     let textSent = false;
     for await (const chunk of textStream) {
       if (chunk) {
         chunkIndex++;
-        console.log(`[Minimax 发送流程] 收到文本块 #${chunkIndex}: "${chunk}"`);
         const taskContinueMsg = createTaskContinueMessage(chunk);
         await sendMessage(ws, taskContinueMsg);
         textSent = true;
@@ -281,12 +272,10 @@ export class MinimaxTTS extends BaseTTS {
 
     // 如果没有发送任何文本，发送空字符串
     if (!textSent) {
-      console.log('[Minimax 发送流程] 没有文本，发送空字符串');
       const taskContinueMsg = createTaskContinueMessage('');
       await sendMessage(ws, taskContinueMsg);
     }
 
-    console.log('[Minimax 发送流程] 文本流结束，发送 task_finish 指令');
     // 发送 task_finish 指令
     const taskFinishMsg = createTaskFinishMessage();
     await sendMessage(ws, taskFinishMsg);
@@ -295,28 +284,23 @@ export class MinimaxTTS extends BaseTTS {
   /**
    * 接收音频数据并推入队列
    * 使用主动拉取模式：循环调用 receiveAudioOrEvent 获取音频或事件
+   * 注意：receiveAudioOrEvent 在收到 task_finished 或 task_failed 时返回 null
    */
   private async receiveAudioFlowToQueue(
     ws: WebSocket,
     enqueue: (item: QueueItem) => void
   ): Promise<void> {
-    console.log('[Minimax 接收流程] 开始监听音频流...');
-    let audioIndex = 0;
-
     while (true) {
       const result = await receiveAudioOrEvent(ws);
 
-      // 收到结束事件或失败事件
+      // 收到 task_finished 或 task_failed，结束接收
       if (result === null) {
-        console.log('[Minimax 接收流程] 收到结束事件，结束接收');
         enqueue({ type: 'end' });
         return;
       }
 
       if (result.type === 'audio') {
         // 收到音频数据
-        audioIndex++;
-        console.log(`[Minimax 接收流程] 收到音频块 #${audioIndex}: ${result.data.length} bytes`);
         enqueue({ type: 'audio', chunk: result.data });
       }
       // 如果是其他事件，忽略继续等待
