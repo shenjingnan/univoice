@@ -310,11 +310,8 @@ export class QwenASR extends BaseASR {
         // 等待 task-started 事件
         await waitForTaskStarted(ws);
 
-        // 启动发送任务（不等待，让它在后台运行）
-        const sendPromise = this.sendAudioStream(ws, audio);
-
-        // 等待发送完成后发送 finish-task 指令
-        sendPromise.then(async () => {
+        // 启动发送任务，完成后发送 finish-task
+        const sendWithFinishPromise = this.sendAudioStream(ws, audio).then(async () => {
           const finishTaskMsg = createFinishTaskMessage(taskId);
           await sendMessage(ws, finishTaskMsg);
         });
@@ -330,6 +327,9 @@ export class QwenASR extends BaseASR {
 
           yield chunk;
         }
+
+        // 等待发送任务和 finish-task 完成
+        await sendWithFinishPromise;
 
         // 检查是否有错误
         const queueError = queue.getError();

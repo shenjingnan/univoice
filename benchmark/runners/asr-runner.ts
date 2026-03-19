@@ -45,6 +45,9 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
         model: 'paraformer-realtime-v2',
         language: 'zh-CN',
         format: 'mp3',
+        audioFormat: {
+          sampleRate: 24000,
+        },
       },
     });
   }
