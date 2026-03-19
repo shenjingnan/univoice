@@ -13,10 +13,11 @@ import type {
   ProviderCapabilities,
   ProviderSummary,
 } from './metrics/types';
-import { generateMarkdownReport } from './utils/report-generator';
+import { generateMarkdownReport, syncToReadme } from './utils/report-generator';
 
 export type { BenchmarkReport, BenchmarkResult, ProviderCapabilities, ProviderSummary };
 
+import { generateAudioFixtures, getAudioFixtures, hasAudioFixtures } from './fixtures/audios';
 import { getASRProviderConfigs, runASRSuite } from './runners/asr-runner';
 import { getProviderConfigs, runTTSSuite } from './runners/tts-runner';
 
@@ -232,8 +233,20 @@ async function main(): Promise<void> {
   // ASR 测试
   if (type === 'asr' || type === 'all') {
     console.log('\n🎤 开始 ASR 性能测试...\n');
-    const asrResults = await runASRSuite({ providers, iterations });
-    allResults.push(...asrResults);
+
+    // 检查并生成音频
+    if (!hasAudioFixtures()) {
+      console.log('📝 音频文件不存在，正在生成...\n');
+      await generateAudioFixtures();
+    }
+
+    const audioFiles = await getAudioFixtures();
+    if (audioFiles.length === 0) {
+      console.log('⚠️ 无法获取音频文件，跳过 ASR 测试');
+    } else {
+      const asrResults = await runASRSuite({ providers, iterations, audioFiles });
+      allResults.push(...asrResults);
+    }
   }
 
   // 生成报告
@@ -256,6 +269,9 @@ async function main(): Promise<void> {
   const mdPath = join(latestDir, 'benchmark.md');
   writeFileSync(mdPath, mdReport);
   console.log(`✓ Markdown 报告已保存: ${mdPath}`);
+
+  // 同步到 README.md
+  syncToReadme(mdReport);
 
   const totalTime = Date.now() - startTime;
   const ttsCount = allResults.filter((r) => r.testType === 'tts').length;

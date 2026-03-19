@@ -288,25 +288,41 @@ export async function runASRSuite(options?: {
       // 测试流式输入
       if (providerConfig.streamInput) {
         for (let i = 0; i < iterations; i++) {
-          const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
-            inputMode: 'stream',
-          });
-          results.push(result);
-          console.log(
-            `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
-          );
+          try {
+            const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
+              inputMode: 'stream',
+            });
+            results.push(result);
+            console.log(
+              `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+            );
+          } catch (error) {
+            console.error(
+              `    [${i + 1}/${iterations}] 流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`
+            );
+          }
+          // 每次测试后等待 1 秒，避免连接复用问题
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 
       // 测试非流式输入
       for (let i = 0; i < iterations; i++) {
-        const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
-          inputMode: 'non-stream',
-        });
-        results.push(result);
-        console.log(
-          `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
-        );
+        try {
+          const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
+            inputMode: 'non-stream',
+          });
+          results.push(result);
+          console.log(
+            `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+          );
+        } catch (error) {
+          console.error(
+            `    [${i + 1}/${iterations}] 非流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`
+          );
+        }
+        // 每次测试后等待 1 秒，避免连接复用问题
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
   }

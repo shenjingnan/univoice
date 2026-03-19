@@ -2,7 +2,13 @@
  * 报告生成工具
  * 用于从 BenchmarkReport 生成 Markdown 格式的报告
  */
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { BenchmarkReport } from '../metrics/types';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = join(__filename, '..', '..', '..');
 
 /**
  * 找出数组中的最小值和最大值索引
@@ -257,4 +263,33 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
   lines.push(`*数据更新于: ${new Date().toISOString().split('T')[0]}*`);
 
   return lines.join('\n');
+}
+
+/**
+ * 将性能报告同步到 README.md
+ * 替换 <!-- PERFORMANCE_TABLE_START --> 和 <!-- PERFORMANCE_TABLE_END --> 之间的内容
+ */
+export function syncToReadme(reportContent: string): void {
+  const readmePath = join(__dirname, 'README.md');
+  const readmeContent = readFileSync(readmePath, 'utf-8');
+
+  const startMarker = '<!-- PERFORMANCE_TABLE_START -->';
+  const endMarker = '<!-- PERFORMANCE_TABLE_END -->';
+
+  const startIndex = readmeContent.indexOf(startMarker);
+  const endIndex = readmeContent.indexOf(endMarker);
+
+  if (startIndex === -1 || endIndex === -1) {
+    throw new Error('README.md 中找不到性能表格标记');
+  }
+
+  const newReadmeContent =
+    readmeContent.slice(0, startIndex + startMarker.length) +
+    '\n\n' +
+    reportContent +
+    '\n' +
+    readmeContent.slice(endIndex);
+
+  writeFileSync(readmePath, newReadmeContent);
+  console.log('✓ 已同步性能报告到 README.md');
 }

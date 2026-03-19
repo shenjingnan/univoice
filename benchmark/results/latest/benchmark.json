@@ -1,759 +1,291 @@
 {
-  "generatedAt": "2026-03-19T07:38:18.215Z",
+  "generatedAt": "2026-03-19T10:59:19.020Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
     "arch": "arm64"
   },
-  "ttsProviders": [
+  "ttsProviders": [],
+  "asrProviders": [
     {
-      "provider": "doubao",
+      "provider": "glm",
       "capabilities": {
-        "provider": "doubao",
-        "displayName": "豆包",
-        "streamInput": true,
+        "provider": "glm",
+        "displayName": "智谱 GLM",
+        "streamInput": false,
         "streamOutput": true,
-        "protocol": "websocket"
+        "protocol": "http"
       },
       "performance": {
-        "avgFirstChunkLatency": 1312.851851851852,
-        "p50FirstChunkLatency": 1424,
-        "p95FirstChunkLatency": 1613,
-        "successRate": 1,
-        "sampleCount": 27
+        "avgFirstChunkLatency": 728,
+        "p50FirstChunkLatency": 614,
+        "p95FirstChunkLatency": 1063,
+        "successRate": 0.6666666666666666,
+        "sampleCount": 9
       }
     }
   ],
-  "asrProviders": [],
   "results": [
     {
-      "id": "ca320347-efca-4a39-839d-2a98790f3a23",
-      "timestamp": "2026-03-19T07:37:40.997Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
+      "id": "bfe9c646-3432-436e-865f-d51679292777",
+      "timestamp": "2026-03-19T10:59:13.170Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
-        "outputMode": "non-stream",
+        "outputMode": "stream",
         "format": "mp3",
-        "textLength": 6
+        "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1379,
-        "total": 1379
+        "firstChunk": 600,
+        "total": 600,
+        "perChar": 120,
+        "rtf": 0.6
       },
       "throughput": {
-        "dataRate": 8.525743292240755,
+        "dataRate": 0.025,
         "chunkCount": 1,
-        "avgChunkSize": 11757
+        "avgChunkSize": 15
       },
       "quality": {
-        "dataSize": 11757
+        "dataSize": 15,
+        "textLength": 5
       },
       "status": "success"
     },
     {
-      "id": "d9491b69-cbb3-4ba0-b398-d75c19d1ce55",
-      "timestamp": "2026-03-19T07:37:42.534Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
+      "id": "38e6b49f-fef0-4700-bf03-61ecbd71a634",
+      "timestamp": "2026-03-19T10:59:13.589Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
-        "outputMode": "non-stream",
+        "outputMode": "stream",
         "format": "mp3",
-        "textLength": 6
+        "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1535,
-        "total": 1535
+        "firstChunk": 418,
+        "total": 418,
+        "perChar": 83.6,
+        "rtf": 0.418
       },
       "throughput": {
-        "dataRate": 8.53485342019544,
+        "dataRate": 0.03588516746411483,
         "chunkCount": 1,
-        "avgChunkSize": 13101
+        "avgChunkSize": 15
       },
       "quality": {
-        "dataSize": 13101
+        "dataSize": 15,
+        "textLength": 5
       },
       "status": "success"
     },
     {
-      "id": "b65f81ba-4e88-4829-92f7-3e1d2db23443",
-      "timestamp": "2026-03-19T07:37:43.594Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
+      "id": "0a5f7e95-ccf7-42c4-ba9e-8dba5c44f674",
+      "timestamp": "2026-03-19T10:59:14.213Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
-        "outputMode": "non-stream",
+        "outputMode": "stream",
         "format": "mp3",
-        "textLength": 6
+        "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1060,
-        "total": 1060
+        "firstChunk": 623,
+        "total": 623,
+        "perChar": 124.6,
+        "rtf": 0.623
       },
       "throughput": {
-        "dataRate": 12.35943396226415,
+        "dataRate": 0.024077046548956663,
         "chunkCount": 1,
-        "avgChunkSize": 13101
+        "avgChunkSize": 15
       },
       "quality": {
-        "dataSize": 13101
+        "dataSize": 15,
+        "textLength": 5
       },
       "status": "success"
     },
     {
-      "id": "704f62ce-ba7f-4390-8c26-6d3f53f716f0",
-      "timestamp": "2026-03-19T07:37:44.696Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
+      "id": "720f0a11-06e1-4fbb-89c0-615d1777223b",
+      "timestamp": "2026-03-19T10:59:15.277Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
         "format": "mp3",
-        "textLength": 6
+        "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 979,
-        "total": 1102
+        "firstChunk": 1063,
+        "total": 1063,
+        "perChar": 11.554347826086957,
+        "rtf": 0.132875
       },
       "throughput": {
-        "dataRate": 13.630671506352087,
-        "chunkCount": 6,
-        "avgChunkSize": 2503.5
-      },
-      "quality": {
-        "dataSize": 15021
-      },
-      "status": "success"
-    },
-    {
-      "id": "4ee3627f-222c-419c-83b0-3201ca4b3020",
-      "timestamp": "2026-03-19T07:37:45.701Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 921,
-        "total": 1005
-      },
-      "throughput": {
-        "dataRate": 13.035820895522388,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "6e547c44-a6e1-43da-9563-1c2be8664ad4",
-      "timestamp": "2026-03-19T07:37:46.807Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 960,
-        "total": 1106
-      },
-      "throughput": {
-        "dataRate": 11.845388788426764,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "c0f09cfd-b627-4a4f-95ef-c0dd1d80ef83",
-      "timestamp": "2026-03-19T07:37:48.284Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1424,
-        "total": 1476
-      },
-      "throughput": {
-        "dataRate": 7.965447154471545,
-        "chunkCount": 5,
-        "avgChunkSize": 2351.4
-      },
-      "quality": {
-        "dataSize": 11757
-      },
-      "status": "success"
-    },
-    {
-      "id": "e7688781-0b8b-4fe2-b127-c64baf14b578",
-      "timestamp": "2026-03-19T07:37:49.823Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1464,
-        "total": 1539
-      },
-      "throughput": {
-        "dataRate": 7.639376218323587,
-        "chunkCount": 5,
-        "avgChunkSize": 2351.4
-      },
-      "quality": {
-        "dataSize": 11757
-      },
-      "status": "success"
-    },
-    {
-      "id": "3894f7f1-0db0-4b6c-8654-53d45f60c704",
-      "timestamp": "2026-03-19T07:37:51.443Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1566,
-        "total": 1620
-      },
-      "throughput": {
-        "dataRate": 9.272222222222222,
-        "chunkCount": 6,
-        "avgChunkSize": 2503.5
-      },
-      "quality": {
-        "dataSize": 15021
-      },
-      "status": "success"
-    },
-    {
-      "id": "de3f59d5-a8de-4ffb-a3b1-55b4d3ef4f6e",
-      "timestamp": "2026-03-19T07:37:52.507Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1064,
-        "total": 1064
-      },
-      "throughput": {
-        "dataRate": 12.31296992481203,
+        "dataRate": 0.2596425211665099,
         "chunkCount": 1,
-        "avgChunkSize": 13101
+        "avgChunkSize": 276
       },
       "quality": {
-        "dataSize": 13101
+        "dataSize": 276,
+        "textLength": 92
       },
       "status": "success"
     },
     {
-      "id": "e799b070-816f-4450-88e2-964b6bf56a85",
-      "timestamp": "2026-03-19T07:37:54.073Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
+      "id": "8c8ec368-499e-4ded-882f-7494078c1f50",
+      "timestamp": "2026-03-19T10:59:15.891Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
-        "outputMode": "non-stream",
+        "outputMode": "stream",
         "format": "mp3",
-        "textLength": 8
+        "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 1563,
-        "total": 1563
+        "firstChunk": 614,
+        "total": 614,
+        "perChar": 6.673913043478261,
+        "rtf": 0.07675
       },
       "throughput": {
-        "dataRate": 8.381957773512475,
+        "dataRate": 0.4495114006514658,
         "chunkCount": 1,
-        "avgChunkSize": 13101
+        "avgChunkSize": 276
       },
       "quality": {
-        "dataSize": 13101
+        "dataSize": 276,
+        "textLength": 92
       },
       "status": "success"
     },
     {
-      "id": "91617aa9-8d29-4666-83d4-6fb70c268818",
-      "timestamp": "2026-03-19T07:37:55.123Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
+      "id": "084b3556-3b3e-4951-8633-c48bcf03fa31",
+      "timestamp": "2026-03-19T10:59:16.941Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
-        "outputMode": "non-stream",
+        "outputMode": "stream",
         "format": "mp3",
-        "textLength": 8
+        "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 1049,
-        "total": 1049
+        "firstChunk": 1050,
+        "total": 1050,
+        "perChar": 11.41304347826087,
+        "rtf": 0.13125
       },
       "throughput": {
-        "dataRate": 11.207816968541469,
+        "dataRate": 0.26285714285714284,
         "chunkCount": 1,
-        "avgChunkSize": 11757
+        "avgChunkSize": 276
       },
       "quality": {
-        "dataSize": 11757
+        "dataSize": 276,
+        "textLength": 92
       },
       "status": "success"
     },
     {
-      "id": "3a3f30d4-55ac-4b4f-b96e-6114ea76921b",
-      "timestamp": "2026-03-19T07:37:56.231Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
+      "id": "ff944872-a8d6-43fd-bb3b-a5cc75f8e95e",
+      "timestamp": "2026-03-19T10:59:17.926Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
+        "format": "mp3"
       },
       "latency": {
-        "firstChunk": 990,
-        "total": 1108
+        "firstChunk": 0,
+        "total": 979
       },
       "throughput": {
-        "dataRate": 11.824007220216606,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
       },
       "quality": {
-        "dataSize": 13101
+        "dataSize": 0
       },
-      "status": "success"
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
     },
     {
-      "id": "40ec817a-111b-4ed3-b5ae-bc98770eb378",
-      "timestamp": "2026-03-19T07:37:57.748Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
+      "id": "7f820db5-cec7-4983-b062-39e047adae0a",
+      "timestamp": "2026-03-19T10:59:18.622Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
+        "format": "mp3"
       },
       "latency": {
-        "firstChunk": 1441,
-        "total": 1517
+        "firstChunk": 0,
+        "total": 696
       },
       "throughput": {
-        "dataRate": 8.762689518787079,
-        "chunkCount": 5,
-        "avgChunkSize": 2658.6
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
       },
       "quality": {
-        "dataSize": 13293
+        "dataSize": 0
       },
-      "status": "success"
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
     },
     {
-      "id": "cc35f5e6-3213-4083-b626-62bdef4039ac",
-      "timestamp": "2026-03-19T07:37:58.808Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
+      "id": "e9b041ec-48f4-43d0-a335-23592ede13c9",
+      "timestamp": "2026-03-19T10:59:19.020Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
+        "format": "mp3"
       },
       "latency": {
-        "firstChunk": 973,
-        "total": 1060
+        "firstChunk": 0,
+        "total": 397
       },
       "throughput": {
-        "dataRate": 11.091509433962264,
-        "chunkCount": 5,
-        "avgChunkSize": 2351.4
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
       },
       "quality": {
-        "dataSize": 11757
+        "dataSize": 0
       },
-      "status": "success"
-    },
-    {
-      "id": "9b422a95-f494-47e3-9b16-270e151d0eb1",
-      "timestamp": "2026-03-19T07:38:00.878Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 2005,
-        "total": 2070
-      },
-      "throughput": {
-        "dataRate": 5.679710144927537,
-        "chunkCount": 5,
-        "avgChunkSize": 2351.4
-      },
-      "quality": {
-        "dataSize": 11757
-      },
-      "status": "success"
-    },
-    {
-      "id": "d3cd77eb-5d81-4631-b9b0-59c288d937e1",
-      "timestamp": "2026-03-19T07:38:02.918Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1512,
-        "total": 2040
-      },
-      "throughput": {
-        "dataRate": 6.422058823529412,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "dcec602b-565e-4b1c-957b-f008f7bb0785",
-      "timestamp": "2026-03-19T07:38:04.545Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1569,
-        "total": 1627
-      },
-      "throughput": {
-        "dataRate": 8.052243392747387,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "6ec6b5e3-062c-44c1-a379-d1cb5a585aa9",
-      "timestamp": "2026-03-19T07:38:05.614Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1069,
-        "total": 1069
-      },
-      "throughput": {
-        "dataRate": 12.255378858746493,
-        "chunkCount": 1,
-        "avgChunkSize": 13101
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "7acb0c18-7efa-47e3-aee4-b79f82d8b301",
-      "timestamp": "2026-03-19T07:38:07.153Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1539,
-        "total": 1539
-      },
-      "throughput": {
-        "dataRate": 9.760233918128655,
-        "chunkCount": 1,
-        "avgChunkSize": 15021
-      },
-      "quality": {
-        "dataSize": 15021
-      },
-      "status": "success"
-    },
-    {
-      "id": "f86439a9-df5a-4e43-ac5b-6555571b3503",
-      "timestamp": "2026-03-19T07:38:08.766Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1613,
-        "total": 1613
-      },
-      "throughput": {
-        "dataRate": 8.122132672039678,
-        "chunkCount": 1,
-        "avgChunkSize": 13101
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "80365985-8f5c-45fc-a944-1c2dcc2c92c2",
-      "timestamp": "2026-03-19T07:38:10.321Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1494,
-        "total": 1554
-      },
-      "throughput": {
-        "dataRate": 8.430501930501931,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "1263a945-9b71-433b-a9fc-85952126c931",
-      "timestamp": "2026-03-19T07:38:11.883Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 994,
-        "total": 1562
-      },
-      "throughput": {
-        "dataRate": 9.61651728553137,
-        "chunkCount": 6,
-        "avgChunkSize": 2503.5
-      },
-      "quality": {
-        "dataSize": 15021
-      },
-      "status": "success"
-    },
-    {
-      "id": "70cb7800-d8e4-46fe-b126-b2504e667665",
-      "timestamp": "2026-03-19T07:38:13.202Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 999,
-        "total": 1319
-      },
-      "throughput": {
-        "dataRate": 11.242608036391205,
-        "chunkCount": 6,
-        "avgChunkSize": 2471.5
-      },
-      "quality": {
-        "dataSize": 14829
-      },
-      "status": "success"
-    },
-    {
-      "id": "7612716a-ad46-49c6-bd34-c218c0be5f80",
-      "timestamp": "2026-03-19T07:38:14.503Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1245,
-        "total": 1301
-      },
-      "throughput": {
-        "dataRate": 10.069946195234435,
-        "chunkCount": 5,
-        "avgChunkSize": 2620.2
-      },
-      "quality": {
-        "dataSize": 13101
-      },
-      "status": "success"
-    },
-    {
-      "id": "ef695da2-1e1a-49d3-8fee-2f52e1b35e31",
-      "timestamp": "2026-03-19T07:38:16.588Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1516,
-        "total": 2085
-      },
-      "throughput": {
-        "dataRate": 7.1122302158273385,
-        "chunkCount": 6,
-        "avgChunkSize": 2471.5
-      },
-      "quality": {
-        "dataSize": 14829
-      },
-      "status": "success"
-    },
-    {
-      "id": "7e83b80b-45d1-49f1-8719-cf13fa96d3f1",
-      "timestamp": "2026-03-19T07:38:18.200Z",
-      "provider": "doubao",
-      "model": "seed-tts-2.0",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1524,
-        "total": 1612
-      },
-      "throughput": {
-        "dataRate": 9.199131513647643,
-        "chunkCount": 6,
-        "avgChunkSize": 2471.5
-      },
-      "quality": {
-        "dataSize": 14829
-      },
-      "status": "success"
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
     }
   ]
 }

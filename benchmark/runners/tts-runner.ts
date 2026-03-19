@@ -381,6 +381,8 @@ export async function runTTSSuite(options?: {
         console.log(
           `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
         );
+        // 每次测试后等待 1 秒，避免连接复用问题
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
 
       // 2. 非流式输入 + 流式输出
@@ -394,6 +396,7 @@ export async function runTTSSuite(options?: {
           console.log(
             `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
           );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
 
@@ -410,6 +413,7 @@ export async function runTTSSuite(options?: {
           console.log(
             `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
           );
+          await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
     }
