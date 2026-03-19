@@ -1,12 +1,62 @@
 {
-  "generatedAt": "2026-03-19T10:59:19.020Z",
+  "generatedAt": "2026-03-19T13:01:47.854Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
     "arch": "arm64"
   },
-  "ttsProviders": [],
-  "asrProviders": [
+  "ttsProviders": [
+    {
+      "provider": "doubao",
+      "capabilities": {
+        "provider": "doubao",
+        "displayName": "豆包",
+        "streamInput": true,
+        "streamOutput": true,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1362.2222222222222,
+        "p50FirstChunkLatency": 1532,
+        "p95FirstChunkLatency": 1725,
+        "successRate": 1,
+        "sampleCount": 27
+      }
+    },
+    {
+      "provider": "qwen",
+      "capabilities": {
+        "provider": "qwen",
+        "displayName": "通义千问",
+        "streamInput": true,
+        "streamOutput": true,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1368.4666666666667,
+        "p50FirstChunkLatency": 1093,
+        "p95FirstChunkLatency": 4241,
+        "successRate": 1,
+        "sampleCount": 45
+      }
+    },
+    {
+      "provider": "minimax",
+      "capabilities": {
+        "provider": "minimax",
+        "displayName": "MiniMax",
+        "streamInput": true,
+        "streamOutput": true,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 831.8518518518518,
+        "p50FirstChunkLatency": 860,
+        "p95FirstChunkLatency": 1296,
+        "successRate": 1,
+        "sampleCount": 27
+      }
+    },
     {
       "provider": "glm",
       "capabilities": {
@@ -17,18 +67,3261 @@
         "protocol": "http"
       },
       "performance": {
-        "avgFirstChunkLatency": 728,
-        "p50FirstChunkLatency": 614,
-        "p95FirstChunkLatency": 1063,
-        "successRate": 0.6666666666666666,
-        "sampleCount": 9
+        "avgFirstChunkLatency": 883,
+        "p50FirstChunkLatency": 855,
+        "p95FirstChunkLatency": 1170,
+        "successRate": 0.8888888888888888,
+        "sampleCount": 27
+      }
+    }
+  ],
+  "asrProviders": [
+    {
+      "provider": "qwen",
+      "capabilities": {
+        "provider": "qwen",
+        "displayName": "通义千问",
+        "streamInput": true,
+        "streamOutput": true,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1368.4666666666667,
+        "p50FirstChunkLatency": 1093,
+        "p95FirstChunkLatency": 4241,
+        "successRate": 1,
+        "sampleCount": 45
+      }
+    },
+    {
+      "provider": "glm",
+      "capabilities": {
+        "provider": "glm",
+        "displayName": "智谱 GLM",
+        "streamInput": false,
+        "streamOutput": true,
+        "protocol": "http"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 883,
+        "p50FirstChunkLatency": 855,
+        "p95FirstChunkLatency": 1170,
+        "successRate": 0.8888888888888888,
+        "sampleCount": 27
       }
     }
   ],
   "results": [
     {
-      "id": "bfe9c646-3432-436e-865f-d51679292777",
-      "timestamp": "2026-03-19T10:59:13.170Z",
+      "id": "5121f64a-cabe-4e10-8540-5ca1a217ac0f",
+      "timestamp": "2026-03-19T12:55:50.874Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1322,
+        "total": 1322
+      },
+      "throughput": {
+        "dataRate": 11.36232980332829,
+        "chunkCount": 1,
+        "avgChunkSize": 15021
+      },
+      "quality": {
+        "dataSize": 15021
+      },
+      "status": "success"
+    },
+    {
+      "id": "2dceb400-00aa-4fa0-88f1-ea5c746b6128",
+      "timestamp": "2026-03-19T12:55:53.503Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1627,
+        "total": 1627
+      },
+      "throughput": {
+        "dataRate": 8.052243392747387,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "e21643ef-e8cf-42aa-91a6-68c9e3fac78b",
+      "timestamp": "2026-03-19T12:55:55.573Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1069,
+        "total": 1069
+      },
+      "throughput": {
+        "dataRate": 10.998129092609917,
+        "chunkCount": 1,
+        "avgChunkSize": 11757
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "eb21f6b3-9b00-4b55-855d-5a4a9ed885fe",
+      "timestamp": "2026-03-19T12:55:58.651Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1635,
+        "total": 2076
+      },
+      "throughput": {
+        "dataRate": 6.3106936416184976,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "c5868504-c62f-4019-a5b0-1a34ae9a4d8f",
+      "timestamp": "2026-03-19T12:56:00.749Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 913,
+        "total": 1097
+      },
+      "throughput": {
+        "dataRate": 11.94257064721969,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "cc5d1f50-47a8-4a6f-9a4f-cf33a0d074df",
+      "timestamp": "2026-03-19T12:56:02.815Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 902,
+        "total": 1065
+      },
+      "throughput": {
+        "dataRate": 12.301408450704225,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "5df31a59-b3f3-468f-a601-5f66618007f6",
+      "timestamp": "2026-03-19T12:56:05.411Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1030,
+        "total": 1594
+      },
+      "throughput": {
+        "dataRate": 9.303011292346298,
+        "chunkCount": 6,
+        "avgChunkSize": 2471.5
+      },
+      "quality": {
+        "dataSize": 14829
+      },
+      "status": "success"
+    },
+    {
+      "id": "0ca547d7-9f2d-4ec5-8b6c-7c2569d4f51a",
+      "timestamp": "2026-03-19T12:56:08.239Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1719,
+        "total": 1824
+      },
+      "throughput": {
+        "dataRate": 6.4457236842105265,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "36d820f9-be60-46a7-be1c-8eba834986a1",
+      "timestamp": "2026-03-19T12:56:11.346Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1516,
+        "total": 2107
+      },
+      "throughput": {
+        "dataRate": 6.217845277645942,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "9c0f51f3-57ea-42e8-802f-fc975c069fa6",
+      "timestamp": "2026-03-19T12:56:14.404Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 2057,
+        "total": 2057
+      },
+      "throughput": {
+        "dataRate": 5.715605250364609,
+        "chunkCount": 1,
+        "avgChunkSize": 11757
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "9a3198ea-41b0-4f4e-b49b-12f066836f3b",
+      "timestamp": "2026-03-19T12:56:17.131Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1725,
+        "total": 1725
+      },
+      "throughput": {
+        "dataRate": 6.815652173913043,
+        "chunkCount": 1,
+        "avgChunkSize": 11757
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "dce42447-e180-4643-99f0-9bf69dd54e76",
+      "timestamp": "2026-03-19T12:56:19.180Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1048,
+        "total": 1048
+      },
+      "throughput": {
+        "dataRate": 12.500954198473282,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "2b419c38-6c22-491e-92c0-35405aca14b6",
+      "timestamp": "2026-03-19T12:56:21.682Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 877,
+        "total": 1500
+      },
+      "throughput": {
+        "dataRate": 7.838,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "b02c13d6-435c-41d2-ba86-edc509cd5497",
+      "timestamp": "2026-03-19T12:56:24.981Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1511,
+        "total": 2298
+      },
+      "throughput": {
+        "dataRate": 5.701044386422977,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "71225d4f-2372-41bc-ba30-b3ca336bf57e",
+      "timestamp": "2026-03-19T12:56:27.612Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1561,
+        "total": 1630
+      },
+      "throughput": {
+        "dataRate": 7.095092024539877,
+        "chunkCount": 5,
+        "avgChunkSize": 2313
+      },
+      "quality": {
+        "dataSize": 11565
+      },
+      "status": "success"
+    },
+    {
+      "id": "73677f88-1481-414a-be60-a07d1aced1d8",
+      "timestamp": "2026-03-19T12:56:30.224Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1545,
+        "total": 1612
+      },
+      "throughput": {
+        "dataRate": 8.127171215880892,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "e0097042-eb44-462b-a658-e23dce5fd495",
+      "timestamp": "2026-03-19T12:56:33.369Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1573,
+        "total": 2143
+      },
+      "throughput": {
+        "dataRate": 5.48623425104993,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
+      },
+      "quality": {
+        "dataSize": 11757
+      },
+      "status": "success"
+    },
+    {
+      "id": "7fae01c1-d4a1-43a2-9df3-b8792ec13bfb",
+      "timestamp": "2026-03-19T12:56:36.545Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1557,
+        "total": 2177
+      },
+      "throughput": {
+        "dataRate": 6.106109324758842,
+        "chunkCount": 5,
+        "avgChunkSize": 2658.6
+      },
+      "quality": {
+        "dataSize": 13293
+      },
+      "status": "success"
+    },
+    {
+      "id": "628738fc-3e2a-4a8e-811d-c774aed896a4",
+      "timestamp": "2026-03-19T12:56:39.142Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1596,
+        "total": 1596
+      },
+      "throughput": {
+        "dataRate": 8.208646616541353,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "f6a9abfa-a546-4b5d-8a26-53d1eaa3f3a8",
+      "timestamp": "2026-03-19T12:56:41.765Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1621,
+        "total": 1621
+      },
+      "throughput": {
+        "dataRate": 8.082048118445405,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "463dbe78-b0ef-426c-a7f3-30e045ca1450",
+      "timestamp": "2026-03-19T12:56:43.886Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1107,
+        "total": 1107
+      },
+      "throughput": {
+        "dataRate": 13.395663956639567,
+        "chunkCount": 1,
+        "avgChunkSize": 14829
+      },
+      "quality": {
+        "dataSize": 14829
+      },
+      "status": "success"
+    },
+    {
+      "id": "261ab68c-e332-4dec-af56-2dc6b6145225",
+      "timestamp": "2026-03-19T12:56:46.503Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1532,
+        "total": 1617
+      },
+      "throughput": {
+        "dataRate": 9.289424860853432,
+        "chunkCount": 6,
+        "avgChunkSize": 2503.5
+      },
+      "quality": {
+        "dataSize": 15021
+      },
+      "status": "success"
+    },
+    {
+      "id": "84b4bded-b994-4f2c-8be0-41eb64334d33",
+      "timestamp": "2026-03-19T12:56:49.094Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1014,
+        "total": 1591
+      },
+      "throughput": {
+        "dataRate": 9.441231929604022,
+        "chunkCount": 6,
+        "avgChunkSize": 2503.5
+      },
+      "quality": {
+        "dataSize": 15021
+      },
+      "status": "success"
+    },
+    {
+      "id": "b2fc7b15-c9e2-451f-8817-31a9de9fc96e",
+      "timestamp": "2026-03-19T12:56:51.217Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 658,
+        "total": 1122
+      },
+      "throughput": {
+        "dataRate": 11.676470588235293,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "e656a3b8-310b-4cae-b293-966cefe835e0",
+      "timestamp": "2026-03-19T12:56:54.368Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1575,
+        "total": 2146
+      },
+      "throughput": {
+        "dataRate": 6.104846225535881,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "9b455f68-6920-4e2c-adb2-3a20c5671930",
+      "timestamp": "2026-03-19T12:56:56.402Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 856,
+        "total": 1033
+      },
+      "throughput": {
+        "dataRate": 12.682478218780252,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "11d41e0d-519f-47db-a412-a6d34c1aa6cb",
+      "timestamp": "2026-03-19T12:56:59.104Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1634,
+        "total": 1700
+      },
+      "throughput": {
+        "dataRate": 7.706470588235294,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
+      },
+      "quality": {
+        "dataSize": 13101
+      },
+      "status": "success"
+    },
+    {
+      "id": "c19d3d75-7a20-48db-b398-8fdcaded770c",
+      "timestamp": "2026-03-19T12:57:01.188Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1070,
+        "total": 1070
+      },
+      "throughput": {
+        "dataRate": 24.757943925233644,
+        "chunkCount": 1,
+        "avgChunkSize": 26491
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "b02054c8-4d83-4475-b8e9-20d72d4a5e1c",
+      "timestamp": "2026-03-19T12:57:03.271Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1083,
+        "total": 1083
+      },
+      "throughput": {
+        "dataRate": 16.48291782086796,
+        "chunkCount": 1,
+        "avgChunkSize": 17851
+      },
+      "quality": {
+        "dataSize": 17851
+      },
+      "status": "success"
+    },
+    {
+      "id": "0c47d18a-ae29-48c3-91a1-1917cb558504",
+      "timestamp": "2026-03-19T12:57:05.370Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1098,
+        "total": 1098
+      },
+      "throughput": {
+        "dataRate": 16.25774134790528,
+        "chunkCount": 1,
+        "avgChunkSize": 17851
+      },
+      "quality": {
+        "dataSize": 17851
+      },
+      "status": "success"
+    },
+    {
+      "id": "eecf3a59-14fe-4bfe-8346-e8cd52444f11",
+      "timestamp": "2026-03-19T12:57:07.458Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1065,
+        "total": 1088
+      },
+      "throughput": {
+        "dataRate": 24.348345588235293,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "69a3fa8e-2690-43d3-919f-7fbb80607730",
+      "timestamp": "2026-03-19T12:57:09.558Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1068,
+        "total": 1094
+      },
+      "throughput": {
+        "dataRate": 24.214808043875685,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "d9c734a6-6190-4620-a143-67b30c3b2830",
+      "timestamp": "2026-03-19T12:57:11.655Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1066,
+        "total": 1096
+      },
+      "throughput": {
+        "dataRate": 24.170620437956206,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "256a381e-d58d-4e46-b287-56524268ec97",
+      "timestamp": "2026-03-19T12:57:14.314Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1583,
+        "total": 1658
+      },
+      "throughput": {
+        "dataRate": 15.977683956574186,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "5d467a34-069d-40fd-8caa-a29eee10de21",
+      "timestamp": "2026-03-19T12:57:16.867Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1186,
+        "total": 1551
+      },
+      "throughput": {
+        "dataRate": 17.079948420373952,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "ebf39327-497e-4e10-806e-eb9b9d95bc8d",
+      "timestamp": "2026-03-19T12:57:19.012Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1093,
+        "total": 1144
+      },
+      "throughput": {
+        "dataRate": 23.15646853146853,
+        "chunkCount": 9,
+        "avgChunkSize": 2943.4444444444443
+      },
+      "quality": {
+        "dataSize": 26491
+      },
+      "status": "success"
+    },
+    {
+      "id": "a13b6552-99a9-499b-b6d1-f2f585a26910",
+      "timestamp": "2026-03-19T12:57:21.106Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1092,
+        "total": 1092
+      },
+      "throughput": {
+        "dataRate": 10.193223443223443,
+        "chunkCount": 1,
+        "avgChunkSize": 11131
+      },
+      "quality": {
+        "dataSize": 11131
+      },
+      "status": "success"
+    },
+    {
+      "id": "9b6a8232-0240-45d0-a587-9369bea8e55b",
+      "timestamp": "2026-03-19T12:57:23.258Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1151,
+        "total": 1151
+      },
+      "throughput": {
+        "dataRate": 35.5264986967854,
+        "chunkCount": 1,
+        "avgChunkSize": 40891
+      },
+      "quality": {
+        "dataSize": 40891
+      },
+      "status": "success"
+    },
+    {
+      "id": "8e6ee052-c263-4768-82e9-e915acb06b4c",
+      "timestamp": "2026-03-19T12:57:25.299Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1041,
+        "total": 1041
+      },
+      "throughput": {
+        "dataRate": 10.692603266090298,
+        "chunkCount": 1,
+        "avgChunkSize": 11131
+      },
+      "quality": {
+        "dataSize": 11131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3edb826b-38e0-4aba-88a5-2888af18fe62",
+      "timestamp": "2026-03-19T12:57:27.408Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1073,
+        "total": 1108
+      },
+      "throughput": {
+        "dataRate": 38.204873646209386,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "ec688fee-b178-432a-97cf-0e37a8d281c1",
+      "timestamp": "2026-03-19T12:57:29.537Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1037,
+        "total": 1128
+      },
+      "throughput": {
+        "dataRate": 37.527482269503544,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "d378d1a8-356b-4e16-ab79-6feeb9a0febd",
+      "timestamp": "2026-03-19T12:57:31.627Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1013,
+        "total": 1090
+      },
+      "throughput": {
+        "dataRate": 38.835779816513764,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "6e343c64-fbc4-41a2-9fa0-a60584c17605",
+      "timestamp": "2026-03-19T12:57:34.210Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1538,
+        "total": 1582
+      },
+      "throughput": {
+        "dataRate": 26.757901390644754,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "f4405a05-9f31-40f0-aa82-03769c7be199",
+      "timestamp": "2026-03-19T12:57:36.796Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1200,
+        "total": 1584
+      },
+      "throughput": {
+        "dataRate": 26.724116161616163,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "31e81c3c-3318-4a96-ba5d-7ce1d4c401d7",
+      "timestamp": "2026-03-19T12:57:38.940Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1099,
+        "total": 1144
+      },
+      "throughput": {
+        "dataRate": 37.00262237762238,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "5e71cc51-2645-4d2a-a703-9e703bba73fa",
+      "timestamp": "2026-03-19T12:57:41.072Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1131,
+        "total": 1131
+      },
+      "throughput": {
+        "dataRate": 37.42793987621574,
+        "chunkCount": 1,
+        "avgChunkSize": 42331
+      },
+      "quality": {
+        "dataSize": 42331
+      },
+      "status": "success"
+    },
+    {
+      "id": "29eaac0c-fbca-4805-852b-b83d3bde80f8",
+      "timestamp": "2026-03-19T12:57:43.627Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1553,
+        "total": 1553
+      },
+      "throughput": {
+        "dataRate": 14.276239536381198,
+        "chunkCount": 1,
+        "avgChunkSize": 22171
+      },
+      "quality": {
+        "dataSize": 22171
+      },
+      "status": "success"
+    },
+    {
+      "id": "70e0751e-bb1a-4c03-8b47-4d6543df6c97",
+      "timestamp": "2026-03-19T12:57:45.787Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1159,
+        "total": 1159
+      },
+      "throughput": {
+        "dataRate": 24.927523727351165,
+        "chunkCount": 1,
+        "avgChunkSize": 28891
+      },
+      "quality": {
+        "dataSize": 28891
+      },
+      "status": "success"
+    },
+    {
+      "id": "d300e686-48aa-4a15-9d93-0159ed088296",
+      "timestamp": "2026-03-19T12:57:48.352Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1179,
+        "total": 1559
+      },
+      "throughput": {
+        "dataRate": 29.307889672867223,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "ff74b34c-1448-4af1-8a6a-5e41ad92e2bb",
+      "timestamp": "2026-03-19T12:57:50.471Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1076,
+        "total": 1117
+      },
+      "throughput": {
+        "dataRate": 40.905102954341984,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "41939b8a-6a51-455a-b9aa-942f21d090ef",
+      "timestamp": "2026-03-19T12:57:52.567Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1053,
+        "total": 1095
+      },
+      "throughput": {
+        "dataRate": 41.72694063926941,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "27818947-f8f6-4c1a-9dcc-4a93d470dc05",
+      "timestamp": "2026-03-19T12:57:54.496Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 860,
+        "total": 926
+      },
+      "throughput": {
+        "dataRate": 49.34233261339093,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "d524da8f-a8f4-42ce-b2e4-dfe49b72e657",
+      "timestamp": "2026-03-19T12:57:56.229Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 663,
+        "total": 733
+      },
+      "throughput": {
+        "dataRate": 62.33424283765348,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "51f8ea55-b7f9-49ea-b19c-217f9b64170f",
+      "timestamp": "2026-03-19T12:57:58.820Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1221,
+        "total": 1590
+      },
+      "throughput": {
+        "dataRate": 28.736477987421384,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691
+      },
+      "status": "success"
+    },
+    {
+      "id": "0ec74160-322b-47ff-ad5f-02c9934ffae2",
+      "timestamp": "2026-03-19T12:58:01.002Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1175,
+        "total": 1175
+      },
+      "throughput": {
+        "dataRate": 21.607659574468084,
+        "chunkCount": 1,
+        "avgChunkSize": 25389
+      },
+      "quality": {
+        "dataSize": 25389
+      },
+      "status": "success"
+    },
+    {
+      "id": "acf84c8e-0084-4d3e-810d-8c0ba9aa31af",
+      "timestamp": "2026-03-19T12:58:03.046Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1043,
+        "total": 1043
+      },
+      "throughput": {
+        "dataRate": 25.446788111217643,
+        "chunkCount": 1,
+        "avgChunkSize": 26541
+      },
+      "quality": {
+        "dataSize": 26541
+      },
+      "status": "success"
+    },
+    {
+      "id": "37b1df47-bddd-4de3-a030-8a2eaafeb52f",
+      "timestamp": "2026-03-19T12:58:05.159Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1113,
+        "total": 1113
+      },
+      "throughput": {
+        "dataRate": 24.36388140161725,
+        "chunkCount": 1,
+        "avgChunkSize": 27117
+      },
+      "quality": {
+        "dataSize": 27117
+      },
+      "status": "success"
+    },
+    {
+      "id": "2833b729-2f09-4ffa-bd90-54fb3f8fe3df",
+      "timestamp": "2026-03-19T12:58:07.190Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 860,
+        "total": 1029
+      },
+      "throughput": {
+        "dataRate": 29.151603498542276,
+        "chunkCount": 17,
+        "avgChunkSize": 1764.5294117647059
+      },
+      "quality": {
+        "dataSize": 29997
+      },
+      "status": "success"
+    },
+    {
+      "id": "4f5647c8-ce76-42d5-9d0c-bc402fce6aae",
+      "timestamp": "2026-03-19T12:58:09.352Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1116,
+        "total": 1160
+      },
+      "throughput": {
+        "dataRate": 21.88706896551724,
+        "chunkCount": 14,
+        "avgChunkSize": 1813.5
+      },
+      "quality": {
+        "dataSize": 25389
+      },
+      "status": "success"
+    },
+    {
+      "id": "02dfb5ea-778b-4702-a966-6e4c5dccfe78",
+      "timestamp": "2026-03-19T12:58:11.433Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1049,
+        "total": 1078
+      },
+      "throughput": {
+        "dataRate": 22.48330241187384,
+        "chunkCount": 14,
+        "avgChunkSize": 1731.2142857142858
+      },
+      "quality": {
+        "dataSize": 24237
+      },
+      "status": "success"
+    },
+    {
+      "id": "9cc1cfd4-a7cb-44ca-9fcb-eaa6a0495d5b",
+      "timestamp": "2026-03-19T12:58:13.310Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 349,
+        "total": 876
+      },
+      "throughput": {
+        "dataRate": 32.97945205479452,
+        "chunkCount": 17,
+        "avgChunkSize": 1699.4117647058824
+      },
+      "quality": {
+        "dataSize": 28890
+      },
+      "status": "success"
+    },
+    {
+      "id": "135a5c43-aefc-4925-9e65-afcc62bf288a",
+      "timestamp": "2026-03-19T12:58:16.157Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1296,
+        "total": 1845
+      },
+      "throughput": {
+        "dataRate": 15.658536585365853,
+        "chunkCount": 17,
+        "avgChunkSize": 1699.4117647058824
+      },
+      "quality": {
+        "dataSize": 28890
+      },
+      "status": "success"
+    },
+    {
+      "id": "7c9900c8-d474-468c-900b-2ae475675c80",
+      "timestamp": "2026-03-19T12:58:18.234Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 542,
+        "total": 1077
+      },
+      "throughput": {
+        "dataRate": 27.35933147632312,
+        "chunkCount": 17,
+        "avgChunkSize": 1733.2941176470588
+      },
+      "quality": {
+        "dataSize": 29466
+      },
+      "status": "success"
+    },
+    {
+      "id": "6fd10a25-304b-4721-a67d-b916e74d73a2",
+      "timestamp": "2026-03-19T12:58:20.792Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1557,
+        "total": 1557
+      },
+      "throughput": {
+        "dataRate": 16.30635838150289,
+        "chunkCount": 1,
+        "avgChunkSize": 25389
+      },
+      "quality": {
+        "dataSize": 25389
+      },
+      "status": "success"
+    },
+    {
+      "id": "20ec8d39-97ad-4588-83a4-476d291a427e",
+      "timestamp": "2026-03-19T12:58:22.730Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 937,
+        "total": 937
+      },
+      "throughput": {
+        "dataRate": 27.71077908217716,
+        "chunkCount": 1,
+        "avgChunkSize": 25965
+      },
+      "quality": {
+        "dataSize": 25965
+      },
+      "status": "success"
+    },
+    {
+      "id": "b0cfbc45-c693-4844-8cd4-2cb702b44476",
+      "timestamp": "2026-03-19T12:58:24.465Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 734,
+        "total": 734
+      },
+      "throughput": {
+        "dataRate": 38.513623978201636,
+        "chunkCount": 1,
+        "avgChunkSize": 28269
+      },
+      "quality": {
+        "dataSize": 28269
+      },
+      "status": "success"
+    },
+    {
+      "id": "096891a4-3037-4e0a-ba6f-deedd18acdaf",
+      "timestamp": "2026-03-19T12:58:26.316Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 449,
+        "total": 851
+      },
+      "throughput": {
+        "dataRate": 28.480611045828436,
+        "chunkCount": 14,
+        "avgChunkSize": 1731.2142857142858
+      },
+      "quality": {
+        "dataSize": 24237
+      },
+      "status": "success"
+    },
+    {
+      "id": "ced45d1c-0650-4fd4-b995-4943963ee952",
+      "timestamp": "2026-03-19T12:58:28.151Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 763,
+        "total": 835
+      },
+      "throughput": {
+        "dataRate": 29.026347305389223,
+        "chunkCount": 14,
+        "avgChunkSize": 1731.2142857142858
+      },
+      "quality": {
+        "dataSize": 24237
+      },
+      "status": "success"
+    },
+    {
+      "id": "4d33776a-d3d0-4b29-bbd8-b4a5bd847451",
+      "timestamp": "2026-03-19T12:58:30.171Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 867,
+        "total": 1017
+      },
+      "throughput": {
+        "dataRate": 30.061946902654867,
+        "chunkCount": 17,
+        "avgChunkSize": 1798.4117647058824
+      },
+      "quality": {
+        "dataSize": 30573
+      },
+      "status": "success"
+    },
+    {
+      "id": "36c0187e-1a25-4b30-b21e-2588a6a612bd",
+      "timestamp": "2026-03-19T12:58:32.673Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 723,
+        "total": 1500
+      },
+      "throughput": {
+        "dataRate": 22.716,
+        "chunkCount": 20,
+        "avgChunkSize": 1703.7
+      },
+      "quality": {
+        "dataSize": 34074
+      },
+      "status": "success"
+    },
+    {
+      "id": "903f1d0a-d498-4036-954e-3588496db698",
+      "timestamp": "2026-03-19T12:58:34.899Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 692,
+        "total": 1225
+      },
+      "throughput": {
+        "dataRate": 28.285714285714285,
+        "chunkCount": 21,
+        "avgChunkSize": 1650
+      },
+      "quality": {
+        "dataSize": 34650
+      },
+      "status": "success"
+    },
+    {
+      "id": "b38878ab-4e52-44f7-80ff-f3345402a28f",
+      "timestamp": "2026-03-19T12:58:36.865Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 386,
+        "total": 965
+      },
+      "throughput": {
+        "dataRate": 44.86010362694301,
+        "chunkCount": 25,
+        "avgChunkSize": 1731.6
+      },
+      "quality": {
+        "dataSize": 43290
+      },
+      "status": "success"
+    },
+    {
+      "id": "8740a785-901d-4f0b-bade-8c6dd687d1a8",
+      "timestamp": "2026-03-19T12:58:38.651Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 786,
+        "total": 786
+      },
+      "throughput": {
+        "dataRate": 38.896946564885496,
+        "chunkCount": 1,
+        "avgChunkSize": 30573
+      },
+      "quality": {
+        "dataSize": 30573
+      },
+      "status": "success"
+    },
+    {
+      "id": "15b8a48c-f1c6-4628-b81c-a5a631c6c1b9",
+      "timestamp": "2026-03-19T12:58:40.695Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1044,
+        "total": 1044
+      },
+      "throughput": {
+        "dataRate": 25.974137931034484,
+        "chunkCount": 1,
+        "avgChunkSize": 27117
+      },
+      "quality": {
+        "dataSize": 27117
+      },
+      "status": "success"
+    },
+    {
+      "id": "ad51bcd4-6f84-4eb2-b706-194172e8a400",
+      "timestamp": "2026-03-19T12:58:42.795Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1099,
+        "total": 1099
+      },
+      "throughput": {
+        "dataRate": 26.770700636942674,
+        "chunkCount": 1,
+        "avgChunkSize": 29421
+      },
+      "quality": {
+        "dataSize": 29421
+      },
+      "status": "success"
+    },
+    {
+      "id": "4a09d50f-18be-4ca2-b4af-2a17215e2130",
+      "timestamp": "2026-03-19T12:58:44.863Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 872,
+        "total": 1067
+      },
+      "throughput": {
+        "dataRate": 26.49390815370197,
+        "chunkCount": 16,
+        "avgChunkSize": 1766.8125
+      },
+      "quality": {
+        "dataSize": 28269
+      },
+      "status": "success"
+    },
+    {
+      "id": "57761835-a88a-49a5-b99b-5a7dbda17d6f",
+      "timestamp": "2026-03-19T12:58:46.924Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 892,
+        "total": 1060
+      },
+      "throughput": {
+        "dataRate": 26.668867924528303,
+        "chunkCount": 16,
+        "avgChunkSize": 1766.8125
+      },
+      "quality": {
+        "dataSize": 28269
+      },
+      "status": "success"
+    },
+    {
+      "id": "e07e9982-7d46-435c-8d4c-134fe9fc6993",
+      "timestamp": "2026-03-19T12:58:48.573Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 607,
+        "total": 648
+      },
+      "throughput": {
+        "dataRate": 49.84722222222222,
+        "chunkCount": 18,
+        "avgChunkSize": 1794.5
+      },
+      "quality": {
+        "dataSize": 32301
+      },
+      "status": "success"
+    },
+    {
+      "id": "47ecfd55-fc9d-4d8e-ae2e-208d693891c7",
+      "timestamp": "2026-03-19T12:58:50.683Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 526,
+        "total": 1110
+      },
+      "throughput": {
+        "dataRate": 35.36756756756757,
+        "chunkCount": 23,
+        "avgChunkSize": 1706.8695652173913
+      },
+      "quality": {
+        "dataSize": 39258
+      },
+      "status": "success"
+    },
+    {
+      "id": "144afb59-d5cc-4089-b641-df3eed87322e",
+      "timestamp": "2026-03-19T12:58:52.761Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 548,
+        "total": 1076
+      },
+      "throughput": {
+        "dataRate": 38.62639405204461,
+        "chunkCount": 25,
+        "avgChunkSize": 1662.48
+      },
+      "quality": {
+        "dataSize": 41562
+      },
+      "status": "success"
+    },
+    {
+      "id": "0fafc179-7f72-447f-a8f7-e6179333d50d",
+      "timestamp": "2026-03-19T12:58:54.825Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 435,
+        "total": 1063
+      },
+      "throughput": {
+        "dataRate": 37.473189087488244,
+        "chunkCount": 24,
+        "avgChunkSize": 1659.75
+      },
+      "quality": {
+        "dataSize": 39834
+      },
+      "status": "success"
+    },
+    {
+      "id": "e4e6bd76-9c86-44ab-9b2b-f416c5debcf1",
+      "timestamp": "2026-03-19T12:58:56.956Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1130,
+        "total": 1130
+      },
+      "throughput": {
+        "dataRate": 77.45132743362832,
+        "chunkCount": 1,
+        "avgChunkSize": 87520
+      },
+      "quality": {
+        "dataSize": 87520
+      },
+      "status": "success"
+    },
+    {
+      "id": "0ec7cc26-8fe0-46b6-ba4a-a5db9f998844",
+      "timestamp": "2026-03-19T12:58:59.056Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1098,
+        "total": 1098
+      },
+      "throughput": {
+        "dataRate": 90.20036429872495,
+        "chunkCount": 1,
+        "avgChunkSize": 99040
+      },
+      "quality": {
+        "dataSize": 99040
+      },
+      "status": "success"
+    },
+    {
+      "id": "0360f5f0-664b-4767-8683-fdde495d363c",
+      "timestamp": "2026-03-19T12:59:01.143Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1086,
+        "total": 1086
+      },
+      "throughput": {
+        "dataRate": 85.89318600368324,
+        "chunkCount": 1,
+        "avgChunkSize": 93280
+      },
+      "quality": {
+        "dataSize": 93280
+      },
+      "status": "success"
+    },
+    {
+      "id": "ead48914-6a20-4ff8-b761-36392b1a0952",
+      "timestamp": "2026-03-19T12:59:03.233Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 652,
+        "total": 1089
+      },
+      "throughput": {
+        "dataRate": 80.36730945821854,
+        "chunkCount": 2,
+        "avgChunkSize": 43760
+      },
+      "quality": {
+        "dataSize": 87520
+      },
+      "status": "success"
+    },
+    {
+      "id": "d26efaa7-c19c-474a-965e-3d959dc174c1",
+      "timestamp": "2026-03-19T12:59:05.144Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 894,
+        "total": 910
+      },
+      "throughput": {
+        "dataRate": 96.17582417582418,
+        "chunkCount": 2,
+        "avgChunkSize": 43760
+      },
+      "quality": {
+        "dataSize": 87520
+      },
+      "status": "success"
+    },
+    {
+      "id": "4509f34b-3e95-46f9-a097-77acf55bc7c2",
+      "timestamp": "2026-03-19T12:59:07.255Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 773,
+        "total": 1110
+      },
+      "throughput": {
+        "dataRate": 80.57657657657657,
+        "chunkCount": 2,
+        "avgChunkSize": 44720
+      },
+      "quality": {
+        "dataSize": 89440
+      },
+      "status": "success"
+    },
+    {
+      "id": "deaf33e4-653f-480a-95da-5f83986c2fb2",
+      "timestamp": "2026-03-19T12:59:09.037Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 781,
+        "total": 781
+      },
+      "throughput": {
+        "dataRate": 114.51984635083227,
+        "chunkCount": 1,
+        "avgChunkSize": 89440
+      },
+      "quality": {
+        "dataSize": 89440
+      },
+      "status": "success"
+    },
+    {
+      "id": "487fa07c-5a16-4225-9d1e-3a1ca442b36f",
+      "timestamp": "2026-03-19T12:59:11.138Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1099,
+        "total": 1099
+      },
+      "throughput": {
+        "dataRate": 132.04731574158325,
+        "chunkCount": 1,
+        "avgChunkSize": 145120
+      },
+      "quality": {
+        "dataSize": 145120
+      },
+      "status": "success"
+    },
+    {
+      "id": "c51c1109-b4df-4b89-b421-a408ce74a28e",
+      "timestamp": "2026-03-19T12:59:13.118Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 977,
+        "total": 977
+      },
+      "throughput": {
+        "dataRate": 146.5711361310133,
+        "chunkCount": 1,
+        "avgChunkSize": 143200
+      },
+      "quality": {
+        "dataSize": 143200
+      },
+      "status": "success"
+    },
+    {
+      "id": "d41d8de4-db6d-47f7-b02a-834df4913c0c",
+      "timestamp": "2026-03-19T12:59:14.911Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 657,
+        "total": 793
+      },
+      "throughput": {
+        "dataRate": 117.62925598991173,
+        "chunkCount": 2,
+        "avgChunkSize": 46640
+      },
+      "quality": {
+        "dataSize": 93280
+      },
+      "status": "success"
+    },
+    {
+      "id": "af316199-5dd6-41c9-a2c3-660e2441c251",
+      "timestamp": "2026-03-19T12:59:16.896Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 784,
+        "total": 984
+      },
+      "throughput": {
+        "dataRate": 145.52845528455285,
+        "chunkCount": 2,
+        "avgChunkSize": 71600
+      },
+      "quality": {
+        "dataSize": 143200
+      },
+      "status": "success"
+    },
+    {
+      "id": "2d3e9476-059d-4d7f-84b5-6e59c124eb2c",
+      "timestamp": "2026-03-19T12:59:18.769Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 738,
+        "total": 872
+      },
+      "throughput": {
+        "dataRate": 109.1743119266055,
+        "chunkCount": 2,
+        "avgChunkSize": 47600
+      },
+      "quality": {
+        "dataSize": 95200
+      },
+      "status": "success"
+    },
+    {
+      "id": "3973ed46-e98b-44e1-a370-dd1b76bd0cf9",
+      "timestamp": "2026-03-19T12:59:20.634Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 862,
+        "total": 862
+      },
+      "throughput": {
+        "dataRate": 114.89559164733178,
+        "chunkCount": 1,
+        "avgChunkSize": 99040
+      },
+      "quality": {
+        "dataSize": 99040
+      },
+      "status": "success"
+    },
+    {
+      "id": "650fe69e-141b-499b-a7ee-f51658426bd5",
+      "timestamp": "2026-03-19T12:59:23.686Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 2052,
+        "total": 2052
+      },
+      "throughput": {
+        "dataRate": 50.136452241715396,
+        "chunkCount": 1,
+        "avgChunkSize": 102880
+      },
+      "quality": {
+        "dataSize": 102880
+      },
+      "status": "success"
+    },
+    {
+      "id": "00db3143-03b5-4a69-8026-e42c1f01429e",
+      "timestamp": "2026-03-19T12:59:25.859Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1170,
+        "total": 1170
+      },
+      "throughput": {
+        "dataRate": 91.21367521367522,
+        "chunkCount": 1,
+        "avgChunkSize": 106720
+      },
+      "quality": {
+        "dataSize": 106720
+      },
+      "status": "success"
+    },
+    {
+      "id": "fd50a622-176a-4b82-8ac4-f2290c9272e2",
+      "timestamp": "2026-03-19T12:59:27.927Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1049,
+        "total": 1063
+      },
+      "throughput": {
+        "dataRate": 100.39510818438382,
+        "chunkCount": 2,
+        "avgChunkSize": 53360
+      },
+      "quality": {
+        "dataSize": 106720
+      },
+      "status": "success"
+    },
+    {
+      "id": "56c81e3f-6682-43cd-9d6b-58e16c18ccbb",
+      "timestamp": "2026-03-19T12:59:29.987Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1044,
+        "total": 1057
+      },
+      "throughput": {
+        "dataRate": 100.96499526963103,
+        "chunkCount": 2,
+        "avgChunkSize": 53360
+      },
+      "quality": {
+        "dataSize": 106720
+      },
+      "status": "success"
+    },
+    {
+      "id": "09cf576b-b3d4-43cb-94b5-19bdc5933961",
+      "timestamp": "2026-03-19T12:59:32.075Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1079,
+        "total": 1087
+      },
+      "throughput": {
+        "dataRate": 98.17847286108555,
+        "chunkCount": 2,
+        "avgChunkSize": 53360
+      },
+      "quality": {
+        "dataSize": 106720
+      },
+      "status": "success"
+    },
+    {
+      "id": "ea74790f-0618-48a8-a168-86070a88e62e",
+      "timestamp": "2026-03-19T12:59:34.696Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1125,
+        "total": 1563,
+        "perChar": 260.5,
+        "rtf": 1.563
+      },
+      "throughput": {
+        "dataRate": 0.019193857965451054,
+        "chunkCount": 4,
+        "avgChunkSize": 7.5
+      },
+      "quality": {
+        "dataSize": 30,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "cbb26ff8-ed97-4a80-a3a5-d72b3dade38b",
+      "timestamp": "2026-03-19T12:59:36.788Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1088,
+        "total": 1090,
+        "perChar": 181.66666666666666,
+        "rtf": 1.09
+      },
+      "throughput": {
+        "dataRate": 0.027522935779816515,
+        "chunkCount": 4,
+        "avgChunkSize": 7.5
+      },
+      "quality": {
+        "dataSize": 30,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "eaafdbbd-9870-4ea3-84a8-dfa6357141b9",
+      "timestamp": "2026-03-19T12:59:39.020Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1157,
+        "total": 1231,
+        "perChar": 205.16666666666666,
+        "rtf": 1.231
+      },
+      "throughput": {
+        "dataRate": 0.024370430544272948,
+        "chunkCount": 4,
+        "avgChunkSize": 7.5
+      },
+      "quality": {
+        "dataSize": 30,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "51889872-8d4c-4ab6-913f-9a55b030dca6",
+      "timestamp": "2026-03-19T12:59:41.524Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1503,
+        "total": 1503,
+        "perChar": 250.5,
+        "rtf": 1.503
+      },
+      "throughput": {
+        "dataRate": 0.011976047904191617,
+        "chunkCount": 1,
+        "avgChunkSize": 18
+      },
+      "quality": {
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "379d7a58-34b6-4ac1-86f7-3fc769ba98c2",
+      "timestamp": "2026-03-19T12:59:43.605Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1080,
+        "total": 1080,
+        "perChar": 180,
+        "rtf": 1.08
+      },
+      "throughput": {
+        "dataRate": 0.016666666666666666,
+        "chunkCount": 1,
+        "avgChunkSize": 18
+      },
+      "quality": {
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "ae86c924-c18b-4722-8594-eed39a91b2b9",
+      "timestamp": "2026-03-19T12:59:45.706Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1100,
+        "total": 1100,
+        "perChar": 183.33333333333334,
+        "rtf": 1.1
+      },
+      "throughput": {
+        "dataRate": 0.016363636363636365,
+        "chunkCount": 1,
+        "avgChunkSize": 18
+      },
+      "quality": {
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "status": "success"
+    },
+    {
+      "id": "23342ea0-34c6-4214-b6f4-598e74c9be7d",
+      "timestamp": "2026-03-19T12:59:50.480Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 679,
+        "total": 3771,
+        "perChar": 39.28125,
+        "rtf": 0.471375
+      },
+      "throughput": {
+        "dataRate": 1.3741713073455317,
+        "chunkCount": 38,
+        "avgChunkSize": 136.3684210526316
+      },
+      "quality": {
+        "dataSize": 5182,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "4b3ef66b-fec5-418f-8ca1-aeb07d8dc9e5",
+      "timestamp": "2026-03-19T12:59:55.204Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 1039,
+        "total": 3725,
+        "perChar": 38.802083333333336,
+        "rtf": 0.465625
+      },
+      "throughput": {
+        "dataRate": 1.3186577181208055,
+        "chunkCount": 37,
+        "avgChunkSize": 132.75675675675674
+      },
+      "quality": {
+        "dataSize": 4912,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "856096ec-ffbe-4c17-80df-cf6c6115fca6",
+      "timestamp": "2026-03-19T12:59:59.933Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 1038,
+        "total": 3727,
+        "perChar": 38.822916666666664,
+        "rtf": 0.465875
+      },
+      "throughput": {
+        "dataRate": 1.3179500939093105,
+        "chunkCount": 37,
+        "avgChunkSize": 132.75675675675674
+      },
+      "quality": {
+        "dataSize": 4912,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "3b171a1b-84c0-4027-a30c-5d8b54ed2534",
+      "timestamp": "2026-03-19T13:00:06.675Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 5742,
+        "total": 5742,
+        "perChar": 59.8125,
+        "rtf": 0.71775
+      },
+      "throughput": {
+        "dataRate": 0.050156739811912224,
+        "chunkCount": 1,
+        "avgChunkSize": 288
+      },
+      "quality": {
+        "dataSize": 288,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "82beaadd-908d-4c42-92c4-7a49e5334f83",
+      "timestamp": "2026-03-19T13:00:12.966Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 5290,
+        "total": 5290,
+        "perChar": 55.104166666666664,
+        "rtf": 0.66125
+      },
+      "throughput": {
+        "dataRate": 0.05444234404536862,
+        "chunkCount": 1,
+        "avgChunkSize": 288
+      },
+      "quality": {
+        "dataSize": 288,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "4863f88e-cf0b-49f5-96d8-41664c71e8de",
+      "timestamp": "2026-03-19T13:00:18.208Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 8
+      },
+      "latency": {
+        "firstChunk": 4241,
+        "total": 4241,
+        "perChar": 44.177083333333336,
+        "rtf": 0.530125
+      },
+      "throughput": {
+        "dataRate": 0.06790851214336241,
+        "chunkCount": 1,
+        "avgChunkSize": 288
+      },
+      "quality": {
+        "dataSize": 288,
+        "textLength": 96
+      },
+      "status": "success"
+    },
+    {
+      "id": "d4b44b8c-9f1b-4ac9-bcb2-6069a6972a91",
+      "timestamp": "2026-03-19T13:00:43.899Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 1131,
+        "total": 24689,
+        "perChar": 59.9247572815534,
+        "rtf": 0.7964193548387096
+      },
+      "throughput": {
+        "dataRate": 1.2555794078334481,
+        "chunkCount": 89,
+        "avgChunkSize": 348.30337078651684
+      },
+      "quality": {
+        "dataSize": 30999,
+        "textLength": 412
+      },
+      "status": "success"
+    },
+    {
+      "id": "4cca067f-4ba2-4d74-9f76-f971b6ec3db9",
+      "timestamp": "2026-03-19T13:01:05.921Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 642,
+        "total": 21021,
+        "perChar": 51.021844660194176,
+        "rtf": 0.6780967741935484
+      },
+      "throughput": {
+        "dataRate": 1.3109747395461682,
+        "chunkCount": 84,
+        "avgChunkSize": 328.07142857142856
+      },
+      "quality": {
+        "dataSize": 27558,
+        "textLength": 412
+      },
+      "status": "success"
+    },
+    {
+      "id": "abd3f3a8-81e9-473f-81f8-64d075155caf",
+      "timestamp": "2026-03-19T13:01:27.050Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 648,
+        "total": 20128,
+        "perChar": 48.85436893203884,
+        "rtf": 0.6492903225806451
+      },
+      "throughput": {
+        "dataRate": 1.4025238473767885,
+        "chunkCount": 85,
+        "avgChunkSize": 332.11764705882354
+      },
+      "quality": {
+        "dataSize": 28230,
+        "textLength": 412
+      },
+      "status": "success"
+    },
+    {
+      "id": "5d0e785a-4b79-47dc-b210-31440804b1c3",
+      "timestamp": "2026-03-19T13:01:29.523Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 1471,
+        "total": 1471,
+        "rtf": 0.04745161290322581
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 1,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "success"
+    },
+    {
+      "id": "9c18436a-3dd1-45bf-9970-bf119ecefb3d",
+      "timestamp": "2026-03-19T13:01:31.198Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 674,
+        "total": 674,
+        "rtf": 0.021741935483870968
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 1,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "success"
+    },
+    {
+      "id": "ac3dec50-0a98-47ae-a65d-9d87c7705e92",
+      "timestamp": "2026-03-19T13:01:33.679Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "audioDuration": 31
+      },
+      "latency": {
+        "firstChunk": 1482,
+        "total": 1482,
+        "rtf": 0.04780645161290323
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 1,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "success"
+    },
+    {
+      "id": "f403c200-38bb-48be-962a-9992a46ab86a",
+      "timestamp": "2026-03-19T13:01:34.988Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -40,13 +3333,13 @@
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 600,
-        "total": 600,
-        "perChar": 120,
-        "rtf": 0.6
+        "firstChunk": 302,
+        "total": 302,
+        "perChar": 60.4,
+        "rtf": 0.302
       },
       "throughput": {
-        "dataRate": 0.025,
+        "dataRate": 0.04966887417218543,
         "chunkCount": 1,
         "avgChunkSize": 15
       },
@@ -57,8 +3350,8 @@
       "status": "success"
     },
     {
-      "id": "38e6b49f-fef0-4700-bf03-61ecbd71a634",
-      "timestamp": "2026-03-19T10:59:13.589Z",
+      "id": "a7697572-a091-4bcc-ad63-b5d0ea237356",
+      "timestamp": "2026-03-19T13:01:36.243Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -70,13 +3363,13 @@
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 418,
-        "total": 418,
-        "perChar": 83.6,
-        "rtf": 0.418
+        "firstChunk": 255,
+        "total": 255,
+        "perChar": 51,
+        "rtf": 0.255
       },
       "throughput": {
-        "dataRate": 0.03588516746411483,
+        "dataRate": 0.058823529411764705,
         "chunkCount": 1,
         "avgChunkSize": 15
       },
@@ -87,8 +3380,8 @@
       "status": "success"
     },
     {
-      "id": "0a5f7e95-ccf7-42c4-ba9e-8dba5c44f674",
-      "timestamp": "2026-03-19T10:59:14.213Z",
+      "id": "642565f3-44ff-48c6-8302-ee74ffedfc10",
+      "timestamp": "2026-03-19T13:01:37.789Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -100,13 +3393,13 @@
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 623,
-        "total": 623,
-        "perChar": 124.6,
-        "rtf": 0.623
+        "firstChunk": 539,
+        "total": 539,
+        "perChar": 107.8,
+        "rtf": 0.539
       },
       "throughput": {
-        "dataRate": 0.024077046548956663,
+        "dataRate": 0.027829313543599257,
         "chunkCount": 1,
         "avgChunkSize": 15
       },
@@ -117,8 +3410,8 @@
       "status": "success"
     },
     {
-      "id": "720f0a11-06e1-4fbb-89c0-615d1777223b",
-      "timestamp": "2026-03-19T10:59:15.277Z",
+      "id": "3cf27184-f4ea-4591-9501-09c1f143ce10",
+      "timestamp": "2026-03-19T13:01:39.488Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -130,13 +3423,13 @@
         "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 1063,
-        "total": 1063,
-        "perChar": 11.554347826086957,
-        "rtf": 0.132875
+        "firstChunk": 694,
+        "total": 694,
+        "perChar": 7.543478260869565,
+        "rtf": 0.08675
       },
       "throughput": {
-        "dataRate": 0.2596425211665099,
+        "dataRate": 0.3976945244956772,
         "chunkCount": 1,
         "avgChunkSize": 276
       },
@@ -147,8 +3440,8 @@
       "status": "success"
     },
     {
-      "id": "8c8ec368-499e-4ded-882f-7494078c1f50",
-      "timestamp": "2026-03-19T10:59:15.891Z",
+      "id": "de24f6ea-f480-4c95-9abc-80db07701533",
+      "timestamp": "2026-03-19T13:01:41.110Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -160,13 +3453,13 @@
         "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 614,
-        "total": 614,
-        "perChar": 6.673913043478261,
-        "rtf": 0.07675
+        "firstChunk": 622,
+        "total": 622,
+        "perChar": 6.760869565217392,
+        "rtf": 0.07775
       },
       "throughput": {
-        "dataRate": 0.4495114006514658,
+        "dataRate": 0.4437299035369775,
         "chunkCount": 1,
         "avgChunkSize": 276
       },
@@ -177,8 +3470,8 @@
       "status": "success"
     },
     {
-      "id": "084b3556-3b3e-4951-8633-c48bcf03fa31",
-      "timestamp": "2026-03-19T10:59:16.941Z",
+      "id": "cc741c9e-39b7-4642-bce1-1f7c39763a87",
+      "timestamp": "2026-03-19T13:01:42.967Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -190,13 +3483,13 @@
         "audioDuration": 8
       },
       "latency": {
-        "firstChunk": 1050,
-        "total": 1050,
-        "perChar": 11.41304347826087,
-        "rtf": 0.13125
+        "firstChunk": 855,
+        "total": 855,
+        "perChar": 9.293478260869565,
+        "rtf": 0.106875
       },
       "throughput": {
-        "dataRate": 0.26285714285714284,
+        "dataRate": 0.32280701754385965,
         "chunkCount": 1,
         "avgChunkSize": 276
       },
@@ -207,8 +3500,8 @@
       "status": "success"
     },
     {
-      "id": "ff944872-a8d6-43fd-bb3b-a5cc75f8e95e",
-      "timestamp": "2026-03-19T10:59:17.926Z",
+      "id": "30b05afc-8120-467b-a91a-3637d0482e9c",
+      "timestamp": "2026-03-19T13:01:44.226Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -220,7 +3513,7 @@
       },
       "latency": {
         "firstChunk": 0,
-        "total": 979
+        "total": 257
       },
       "throughput": {
         "dataRate": 0,
@@ -234,8 +3527,8 @@
       "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
     },
     {
-      "id": "7f820db5-cec7-4983-b062-39e047adae0a",
-      "timestamp": "2026-03-19T10:59:18.622Z",
+      "id": "1de74ba7-b197-4812-a5c5-cd25f245161e",
+      "timestamp": "2026-03-19T13:01:45.599Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -247,7 +3540,7 @@
       },
       "latency": {
         "firstChunk": 0,
-        "total": 696
+        "total": 372
       },
       "throughput": {
         "dataRate": 0,
@@ -261,8 +3554,8 @@
       "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
     },
     {
-      "id": "e9b041ec-48f4-43d0-a335-23592ede13c9",
-      "timestamp": "2026-03-19T10:59:19.020Z",
+      "id": "68f5f469-5920-43d5-8740-5b7bcb95faac",
+      "timestamp": "2026-03-19T13:01:46.852Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -274,7 +3567,7 @@
       },
       "latency": {
         "firstChunk": 0,
-        "total": 397
+        "total": 253
       },
       "throughput": {
         "dataRate": 0,

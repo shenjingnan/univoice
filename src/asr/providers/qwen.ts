@@ -236,8 +236,26 @@ export class QwenASR extends BaseASR {
 
     ws.on('message', handleMessage);
 
+    // 处理连接关闭事件
+    const handleClose = (_code: number, _reason: Buffer) => {
+      // 如果队列还没有完成，说明连接意外关闭
+      if (!queue.getError()) {
+        queue.complete();
+      }
+    };
+
+    // 处理连接错误事件
+    const handleError = (err: Error) => {
+      queue.error(err);
+    };
+
+    ws.on('close', handleClose);
+    ws.on('error', handleError);
+
     return () => {
       ws.off('message', handleMessage);
+      ws.off('close', handleClose);
+      ws.off('error', handleError);
     };
   }
 
@@ -406,7 +424,7 @@ export class QwenASR extends BaseASR {
     if (options?.stream === true) {
       return this.createQwenStreamIterable(audio);
     }
-    return this.collectQwenResponse(this.adaptQwenAudioInput(audio));
+    return this.collectQwenResponse(this.adaptQwenAudioInput(audio), this.sampleRate);
   }
 
   /**
@@ -444,10 +462,14 @@ export class QwenASR extends BaseASR {
    * 创建流式迭代器（Qwen 专用）
    */
   private async *createQwenStreamIterable(audio: AudioStreamInput): AsyncIterable<ASRStreamChunk> {
+    // 对于文件路径，检测采样率
+    const sampleRate = this.isFilePath(audio)
+      ? (detectSampleRate(audio) ?? this.sampleRate)
+      : this.sampleRate;
     const audioStream = this.isFilePath(audio)
       ? this.fileToRawAudioStream(audio)
       : this.adaptQwenAudioInput(audio);
-    yield* this.listenStream(audioStream);
+    yield* this.listenStream(audioStream, sampleRate);
   }
 
   /**
