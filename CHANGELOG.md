@@ -2,6 +2,20 @@
 
 本文档记录项目的所有重要变更。
 
+# [0.6.0](https://github.com/shenjingnan/univoice/compare/v0.5.0...v0.6.0) (2026-03-19)
+
+
+### Bug Fixes
+
+* **deps:** 修复 tar 和 undici 安全漏洞 ([#153](https://github.com/shenjingnan/univoice/issues/153)) ([3ec2ec8](https://github.com/shenjingnan/univoice/commit/3ec2ec8f57b3d6bdb5acf5e938f428cc124b67f8))
+* **lint-staged:** 修复 pre-commit hook typecheck 问题 ([#158](https://github.com/shenjingnan/univoice/issues/158)) ([9f134b3](https://github.com/shenjingnan/univoice/commit/9f134b3a3ddcd4dc08cb7adb577b16fefe364c66))
+* **tts:** 修复 Minimax WebSocket 连接生命周期处理 ([#161](https://github.com/shenjingnan/univoice/issues/161)) ([764341b](https://github.com/shenjingnan/univoice/commit/764341b46bfe0eda5bc1c1efafb04fc1b95eb101))
+
+
+### Features
+
+* **tts:** 实现 Minimax TTS 提供商 ([#154](https://github.com/shenjingnan/univoice/issues/154)) ([8c6f26f](https://github.com/shenjingnan/univoice/commit/8c6f26f3c989a821fe5a3e3870e81fbdac42e01a))
+
 # [0.5.0](https://github.com/shenjingnan/univoice/compare/v0.4.1...v0.5.0) (2026-03-18)
 
 
