@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-19T07:18:11.968Z",
+  "generatedAt": "2026-03-19T07:38:18.215Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
@@ -16,10 +16,10 @@
         "protocol": "websocket"
       },
       "performance": {
-        "avgFirstChunkLatency": 0,
-        "p50FirstChunkLatency": 0,
-        "p95FirstChunkLatency": 0,
-        "successRate": 0,
+        "avgFirstChunkLatency": 1312.851851851852,
+        "p50FirstChunkLatency": 1424,
+        "p95FirstChunkLatency": 1613,
+        "successRate": 1,
         "sampleCount": 27
       }
     }
@@ -27,8 +27,8 @@
   "asrProviders": [],
   "results": [
     {
-      "id": "7f541e6a-a0b4-443f-8af0-f9f4192508df",
-      "timestamp": "2026-03-19T07:17:59.974Z",
+      "id": "ca320347-efca-4a39-839d-2a98790f3a23",
+      "timestamp": "2026-03-19T07:37:40.997Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -40,23 +40,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 466
+        "firstChunk": 1379,
+        "total": 1379
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.525743292240755,
+        "chunkCount": 1,
+        "avgChunkSize": 11757
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "a65126d7-c8eb-49e6-9ccc-e46c69081029",
-      "timestamp": "2026-03-19T07:18:00.472Z",
+      "id": "d9491b69-cbb3-4ba0-b398-d75c19d1ce55",
+      "timestamp": "2026-03-19T07:37:42.534Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -68,23 +67,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 497
+        "firstChunk": 1535,
+        "total": 1535
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.53485342019544,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "12cb12c8-eb49-455d-a193-569265b3c269",
-      "timestamp": "2026-03-19T07:18:00.997Z",
+      "id": "b65f81ba-4e88-4829-92f7-3e1d2db23443",
+      "timestamp": "2026-03-19T07:37:43.594Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -96,23 +94,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 525
+        "firstChunk": 1060,
+        "total": 1060
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 12.35943396226415,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "c30cb6b6-796a-495b-8ae8-e97436cdb9a0",
-      "timestamp": "2026-03-19T07:18:01.515Z",
+      "id": "704f62ce-ba7f-4390-8c26-6d3f53f716f0",
+      "timestamp": "2026-03-19T07:37:44.696Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -124,23 +121,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 517
+        "firstChunk": 979,
+        "total": 1102
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 13.630671506352087,
+        "chunkCount": 6,
+        "avgChunkSize": 2503.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 15021
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "96607ab5-bdfe-4551-a614-d9e995ddc1bc",
-      "timestamp": "2026-03-19T07:18:02.038Z",
+      "id": "4ee3627f-222c-419c-83b0-3201ca4b3020",
+      "timestamp": "2026-03-19T07:37:45.701Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -152,23 +148,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 522
+        "firstChunk": 921,
+        "total": 1005
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 13.035820895522388,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "aea75f5e-e44c-48d7-b484-3f419c6dbca9",
-      "timestamp": "2026-03-19T07:18:02.608Z",
+      "id": "6e547c44-a6e1-43da-9563-1c2be8664ad4",
+      "timestamp": "2026-03-19T07:37:46.807Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -180,23 +175,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 570
+        "firstChunk": 960,
+        "total": 1106
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 11.845388788426764,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "64aac20d-760a-4c54-8475-bb8b3000992c",
-      "timestamp": "2026-03-19T07:18:03.609Z",
+      "id": "c0f09cfd-b627-4a4f-95ef-c0dd1d80ef83",
+      "timestamp": "2026-03-19T07:37:48.284Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -208,23 +202,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 1000
+        "firstChunk": 1424,
+        "total": 1476
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 7.965447154471545,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "eb991576-5bd4-4714-8c3b-dbc5f32b3d31",
-      "timestamp": "2026-03-19T07:18:04.134Z",
+      "id": "e7688781-0b8b-4fe2-b127-c64baf14b578",
+      "timestamp": "2026-03-19T07:37:49.823Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -236,23 +229,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 525
+        "firstChunk": 1464,
+        "total": 1539
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 7.639376218323587,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "00ea16d0-f4c1-415b-86ee-2619ff2b8475",
-      "timestamp": "2026-03-19T07:18:04.660Z",
+      "id": "3894f7f1-0db0-4b6c-8654-53d45f60c704",
+      "timestamp": "2026-03-19T07:37:51.443Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -264,23 +256,22 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 526
+        "firstChunk": 1566,
+        "total": 1620
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 9.272222222222222,
+        "chunkCount": 6,
+        "avgChunkSize": 2503.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 15021
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "638e282f-4ee0-4325-a8d8-047a658cad49",
-      "timestamp": "2026-03-19T07:18:05.186Z",
+      "id": "de3f59d5-a8de-4ffb-a3b1-55b4d3ef4f6e",
+      "timestamp": "2026-03-19T07:37:52.507Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -292,23 +283,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 525
+        "firstChunk": 1064,
+        "total": 1064
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 12.31296992481203,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "e924b499-7502-4e64-aefa-366cc441a2f4",
-      "timestamp": "2026-03-19T07:18:05.719Z",
+      "id": "e799b070-816f-4450-88e2-964b6bf56a85",
+      "timestamp": "2026-03-19T07:37:54.073Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -320,23 +310,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 533
+        "firstChunk": 1563,
+        "total": 1563
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.381957773512475,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "3e53a3f6-05d6-4aa2-9bcf-32e987a10333",
-      "timestamp": "2026-03-19T07:18:06.244Z",
+      "id": "91617aa9-8d29-4666-83d4-6fb70c268818",
+      "timestamp": "2026-03-19T07:37:55.123Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -348,23 +337,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 523
+        "firstChunk": 1049,
+        "total": 1049
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 11.207816968541469,
+        "chunkCount": 1,
+        "avgChunkSize": 11757
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "b842a38a-5a2e-4de0-a5fa-88c9b02b5c01",
-      "timestamp": "2026-03-19T07:18:06.757Z",
+      "id": "3a3f30d4-55ac-4b4f-b96e-6114ea76921b",
+      "timestamp": "2026-03-19T07:37:56.231Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -376,23 +364,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 513
+        "firstChunk": 990,
+        "total": 1108
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 11.824007220216606,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "cee399bd-b674-4056-a320-a3fd7cb78d14",
-      "timestamp": "2026-03-19T07:18:07.285Z",
+      "id": "40ec817a-111b-4ed3-b5ae-bc98770eb378",
+      "timestamp": "2026-03-19T07:37:57.748Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -404,23 +391,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 528
+        "firstChunk": 1441,
+        "total": 1517
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.762689518787079,
+        "chunkCount": 5,
+        "avgChunkSize": 2658.6
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13293
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "c6dac9cc-7428-454c-a3e1-b97e18a2ff2b",
-      "timestamp": "2026-03-19T07:18:07.806Z",
+      "id": "cc35f5e6-3213-4083-b626-62bdef4039ac",
+      "timestamp": "2026-03-19T07:37:58.808Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -432,23 +418,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 521
+        "firstChunk": 973,
+        "total": 1060
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 11.091509433962264,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "d02feeab-9074-44a6-9c65-596c0d296a2b",
-      "timestamp": "2026-03-19T07:18:08.329Z",
+      "id": "9b422a95-f494-47e3-9b16-270e151d0eb1",
+      "timestamp": "2026-03-19T07:38:00.878Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -460,23 +445,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 522
+        "firstChunk": 2005,
+        "total": 2070
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 5.679710144927537,
+        "chunkCount": 5,
+        "avgChunkSize": 2351.4
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 11757
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "dda355d4-c905-4ff8-917f-deb3e15cf9bf",
-      "timestamp": "2026-03-19T07:18:08.865Z",
+      "id": "d3cd77eb-5d81-4631-b9b0-59c288d937e1",
+      "timestamp": "2026-03-19T07:38:02.918Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -488,23 +472,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 536
+        "firstChunk": 1512,
+        "total": 2040
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 6.422058823529412,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "11a688a4-8cb2-4763-b7f4-e898cd46d29a",
-      "timestamp": "2026-03-19T07:18:09.201Z",
+      "id": "dcec602b-565e-4b1c-957b-f008f7bb0785",
+      "timestamp": "2026-03-19T07:38:04.545Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -516,23 +499,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 336
+        "firstChunk": 1569,
+        "total": 1627
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.052243392747387,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "a22e1a9f-c0e2-4782-8847-552f65a41c8c",
-      "timestamp": "2026-03-19T07:18:09.402Z",
+      "id": "6ec6b5e3-062c-44c1-a379-d1cb5a585aa9",
+      "timestamp": "2026-03-19T07:38:05.614Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -544,23 +526,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 201
+        "firstChunk": 1069,
+        "total": 1069
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 12.255378858746493,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "455447f9-248a-40fb-b55b-252c074bfef8",
-      "timestamp": "2026-03-19T07:18:09.733Z",
+      "id": "7acb0c18-7efa-47e3-aee4-b79f82d8b301",
+      "timestamp": "2026-03-19T07:38:07.153Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -572,23 +553,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 331
+        "firstChunk": 1539,
+        "total": 1539
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 9.760233918128655,
+        "chunkCount": 1,
+        "avgChunkSize": 15021
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 15021
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "30c21968-6f18-445f-b6ab-fd575f494493",
-      "timestamp": "2026-03-19T07:18:09.923Z",
+      "id": "f86439a9-df5a-4e43-ac5b-6555571b3503",
+      "timestamp": "2026-03-19T07:38:08.766Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -600,23 +580,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 189
+        "firstChunk": 1613,
+        "total": 1613
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.122132672039678,
+        "chunkCount": 1,
+        "avgChunkSize": 13101
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "6a456a40-acf8-4c5c-90fa-3c241c9fe0e5",
-      "timestamp": "2026-03-19T07:18:10.077Z",
+      "id": "80365985-8f5c-45fc-a944-1c2dcc2c92c2",
+      "timestamp": "2026-03-19T07:38:10.321Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -628,23 +607,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 154
+        "firstChunk": 1494,
+        "total": 1554
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 8.430501930501931,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "871b566a-f476-4ec3-ac24-8b9e2313d0e8",
-      "timestamp": "2026-03-19T07:18:10.775Z",
+      "id": "1263a945-9b71-433b-a9fc-85952126c931",
+      "timestamp": "2026-03-19T07:38:11.883Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -656,23 +634,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 698
+        "firstChunk": 994,
+        "total": 1562
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 9.61651728553137,
+        "chunkCount": 6,
+        "avgChunkSize": 2503.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 15021
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "52936a39-b618-4e9f-a367-66c795c26be5",
-      "timestamp": "2026-03-19T07:18:10.956Z",
+      "id": "70cb7800-d8e4-46fe-b126-b2504e667665",
+      "timestamp": "2026-03-19T07:38:13.202Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -684,23 +661,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 181
+        "firstChunk": 999,
+        "total": 1319
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 11.242608036391205,
+        "chunkCount": 6,
+        "avgChunkSize": 2471.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 14829
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "da4e0755-6629-476c-a9f4-0c76a643e9ca",
-      "timestamp": "2026-03-19T07:18:11.312Z",
+      "id": "7612716a-ad46-49c6-bd34-c218c0be5f80",
+      "timestamp": "2026-03-19T07:38:14.503Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -712,23 +688,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 356
+        "firstChunk": 1245,
+        "total": 1301
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 10.069946195234435,
+        "chunkCount": 5,
+        "avgChunkSize": 2620.2
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 13101
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "78fbff0d-263e-4ceb-8c5f-6d960214acd8",
-      "timestamp": "2026-03-19T07:18:11.553Z",
+      "id": "ef695da2-1e1a-49d3-8fee-2f52e1b35e31",
+      "timestamp": "2026-03-19T07:38:16.588Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -740,23 +715,22 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 241
+        "firstChunk": 1516,
+        "total": 2085
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 7.1122302158273385,
+        "chunkCount": 6,
+        "avgChunkSize": 2471.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 14829
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     },
     {
-      "id": "d85a9cab-93cf-4f42-8e59-78b1ae2fc5eb",
-      "timestamp": "2026-03-19T07:18:11.939Z",
+      "id": "7e83b80b-45d1-49f1-8719-cf13fa96d3f1",
+      "timestamp": "2026-03-19T07:38:18.200Z",
       "provider": "doubao",
       "model": "seed-tts-2.0",
       "testType": "tts",
@@ -768,19 +742,18 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 0,
-        "total": 385
+        "firstChunk": 1524,
+        "total": 1612
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 0,
-        "avgChunkSize": 0
+        "dataRate": 9.199131513647643,
+        "chunkCount": 6,
+        "avgChunkSize": 2471.5
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 14829
       },
-      "status": "error",
-      "error": "Unexpected server response: 400"
+      "status": "success"
     }
   ]
 }
