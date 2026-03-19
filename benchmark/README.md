@@ -26,8 +26,8 @@ MINIMAX_GROUP_ID=your-group-id
 GLM_API_KEY=your-api-key
 
 # ASR 提供商
-ASR_BYTEDANCE_APP_KEY=your-app-key
-ASR_BYTEDANCE_ACCESS_KEY=your-access-key
+DOUBAO_APP_KEY=your-app-key
+DOUBAO_ACCESS_KEY=your-access-key
 ```
 
 ## 目录结构
