@@ -18,7 +18,7 @@ tsx benchmark/index.ts
 
 ```env
 # TTS 提供商
-DOUBAO_APP_ID=your-app-id
+DOUBAO_APP_KEY=your-app-id
 DOUBAO_ACCESS_TOKEN=your-access-token
 QWEN_API_KEY=your-api-key
 MINIMAX_API_KEY=your-api-key

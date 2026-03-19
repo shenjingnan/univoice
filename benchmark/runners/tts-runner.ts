@@ -35,7 +35,7 @@ export function getProviderConfigs(): ProviderConfig[] {
   const configs: ProviderConfig[] = [];
 
   // Doubao
-  if (process.env.DOUBAO_APP_ID && process.env.DOUBAO_ACCESS_TOKEN) {
+  if (process.env.DOUBAO_APP_KEY && process.env.DOUBAO_ACCESS_TOKEN) {
     configs.push({
       provider: 'doubao',
       displayName: '豆包',
@@ -44,7 +44,7 @@ export function getProviderConfigs(): ProviderConfig[] {
       streamInput: true,
       streamOutput: true,
       createConfig: {
-        appId: process.env.DOUBAO_APP_ID,
+        appId: process.env.DOUBAO_APP_KEY,
         accessToken: process.env.DOUBAO_ACCESS_TOKEN,
         resourceId: process.env.DOUBAO_RESOURCE_ID || 'volc.streaming_tts.v1.yjsjy4qz6',
         format: 'mp3',
