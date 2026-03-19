@@ -8,8 +8,8 @@
  *   npx tsx doubao-asr-stream-pcm-demo.ts
  *
  * 注意: app-key 和 access-key 可通过环境变量配置:
- *   ASR_BYTEDANCE_APP_KEY
- *   ASR_BYTEDANCE_ACCESS_KEY
+ *   DOUBAO_APP_KEY
+ *   DOUBAO_ACCESS_KEY
  */
 
 import 'univoice/asr/providers';

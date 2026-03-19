@@ -15,7 +15,7 @@
  *   npx tsx qwen-asr-stream-input-demo.ts
  *
  * 注意: API Key 可通过环境变量配置:
- *   QWEN_API_KEY 或 DASHSCOPE_API_KEY
+ *   QWEN_API_KEY 或 QWEN_API_KEY
  */
 import 'dotenv/config';
 import { readFile } from 'node:fs/promises';
@@ -99,10 +99,10 @@ async function* createSimulatedAudioStream(
 }
 
 async function main() {
-  const apiKey = process.env.QWEN_API_KEY || process.env.DASHSCOPE_API_KEY;
+  const apiKey = process.env.QWEN_API_KEY || process.env.QWEN_API_KEY;
 
   if (!apiKey) {
-    console.error('请设置环境变量 QWEN_API_KEY 或 DASHSCOPE_API_KEY');
+    console.error('请设置环境变量 QWEN_API_KEY 或 QWEN_API_KEY');
     process.exit(1);
   }
 
