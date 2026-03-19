@@ -237,26 +237,6 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
     lines.push('');
   }
 
-  // 场景推荐
-  lines.push('## 场景推荐');
-  lines.push('');
-
-  if (report.ttsProviders.length > 0) {
-    // 找出首包延迟最低的提供商
-    const sortedByLatency = [...report.ttsProviders]
-      .filter((p) => p.performance.sampleCount > 0)
-      .sort((a, b) => a.performance.avgFirstChunkLatency - b.performance.avgFirstChunkLatency);
-
-    if (sortedByLatency.length > 0) {
-      const fastest = sortedByLatency[0];
-      lines.push(`| 场景 | 推荐提供商 | 原因 |`);
-      lines.push('|------|-----------|------|');
-      lines.push(
-        `| LLM 实时对话 | ${fastest.capabilities.displayName} | 最低首包延迟 (${fastest.performance.avgFirstChunkLatency.toFixed(0)}ms) |`
-      );
-    }
-  }
-
   lines.push('');
   lines.push('---');
   lines.push('');
