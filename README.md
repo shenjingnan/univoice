@@ -353,7 +353,7 @@ const asr = createASR({
 | 通义千问 | `qwen` | ✅ | ✅ | ✅ | ✅ |
 | 智谱 GLM | `glm` | ❌ | ✅ | ✅ | ✅ |
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
-| MiniMax | `minimax` | 待实现 | 待实现 | 待实现 | 待实现 |
+| MiniMax | `minimax` | - | - | - | - |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
 
 #### TTS 能力矩阵
@@ -364,7 +364,7 @@ const asr = createASR({
 | 通义千问 | `qwen` | ✅ | ✅ | ✅ | ✅ |
 | 智谱 GLM | `glm` | ❌ | ✅ | ✅ | ✅ |
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
-| MiniMax | `minimax` | 待实现 | 待实现 | 待实现 | 待实现 |
+| MiniMax | `minimax` | ✅ | ✅ | ✅ | ✅ |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
 
 #### 能力说明
