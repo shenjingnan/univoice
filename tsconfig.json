@@ -28,9 +28,10 @@
       "univoice": ["src/index.ts"],
       "univoice/asr": ["src/asr/index.ts"],
       "univoice/asr/providers": ["src/asr/providers/index.ts"],
-      "univoice/tts": ["src/tts/index.ts"]
+      "univoice/tts": ["src/tts/index.ts"],
+      "univoice/tts/providers": ["src/tts/providers/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "examples/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts", "examples/**/*.ts", "benchmark/**/*.ts"],
   "exclude": ["node_modules", "dist", "vitest.config.ts"]
 }
