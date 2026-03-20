@@ -5,6 +5,7 @@
 
 import { textFixtures } from '../fixtures/texts';
 import type { BenchmarkResult, ScenarioConfig } from '../metrics/types';
+import type { ProviderConfig } from '../runners/tts-runner';
 import { getProviderConfigs, runTTSTest } from '../runners/tts-runner';
 
 /**

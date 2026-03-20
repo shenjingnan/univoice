@@ -4,9 +4,13 @@
 import 'dotenv/config';
 import type { BaseTTS } from '../../src/tts/base';
 import { createTTS } from '../../src/tts/factory';
-import type { TextFixture } from '../fixtures/texts';
 import { MetricsCollector } from '../metrics/collector';
-import type { BenchmarkConfig, BenchmarkResult, StreamInputConfig } from '../metrics/types';
+import type {
+  BenchmarkConfig,
+  BenchmarkResult,
+  StreamInputConfig,
+  TextFixture,
+} from '../metrics/types';
 
 /**
  * 提供商配置

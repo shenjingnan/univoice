@@ -183,7 +183,7 @@ function parseCliArgs(): {
 
   // 处理 provider 参数（支持逗号分隔）
   const providers = values.provider
-    ?.flatMap((p) => p.split(','))
+    ?.flatMap((p) => (typeof p === 'string' ? p.split(',') : []))
     .map((p) => p.trim())
     .filter(Boolean);
 

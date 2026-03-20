@@ -6,7 +6,8 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type BenchmarkReport, generateMarkdownReport } from './utils/report-generator';
+import type { BenchmarkReport, ProviderSummary } from './metrics/types';
+import { generateMarkdownReport } from './utils/report-generator';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -69,10 +70,10 @@ ${afterTable}`;
   console.log('✓ README.md 性能基准测试章节已更新');
   console.log(`  更新时间: ${new Date().toLocaleString('zh-CN')}`);
   console.log(
-    `  TTS 提供商: ${report.ttsProviders.map((p) => p.capabilities.displayName).join(', ') || '无'}`
+    `  TTS 提供商: ${report.ttsProviders.map((p: ProviderSummary) => p.capabilities.displayName).join(', ') || '无'}`
   );
   console.log(
-    `  ASR 提供商: ${report.asrProviders.map((p) => p.capabilities.displayName).join(', ') || '无'}`
+    `  ASR 提供商: ${report.asrProviders.map((p: ProviderSummary) => p.capabilities.displayName).join(', ') || '无'}`
   );
 }
 
