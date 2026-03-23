@@ -107,12 +107,9 @@ export function saveBatchResults(results: SingleTestResult[]): string[] {
  * 从 BenchmarkResult 转换为 SingleTestResult
  * 只保留原始准确率数据（expectedText, actualText）
  */
-export function toSingleTestResult(
-  result: BenchmarkResult,
-  iteration: number
-): SingleTestResult {
+export function toSingleTestResult(result: BenchmarkResult, iteration: number): SingleTestResult {
   // 提取原始准确率数据
-  let rawAccuracy: SingleTestResult['accuracy'] = undefined;
+  let rawAccuracy: SingleTestResult['accuracy'];
   if (result.accuracy) {
     rawAccuracy = {
       expectedText: result.accuracy.expectedText,

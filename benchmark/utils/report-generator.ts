@@ -5,8 +5,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { average, successRate } from '../metrics/collector';
 import { calculateNormalizedAccuracy } from '../metrics/accuracy';
+import { average, successRate } from '../metrics/collector';
 import type { BenchmarkReport, BenchmarkResult } from '../metrics/types';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -134,10 +134,7 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
         r.accuracy.expectedText !== undefined &&
         r.accuracy.actualText !== undefined
       ) {
-        const result = calculateNormalizedAccuracy(
-          r.accuracy.expectedText,
-          r.accuracy.actualText
-        );
+        const result = calculateNormalizedAccuracy(r.accuracy.expectedText, r.accuracy.actualText);
         accuracies.push(result.accuracy);
         cers.push(result.cer);
       }
@@ -188,9 +185,9 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
 }
 
 /**
- * 场景说明配置
+ * ASR 场景说明配置
  */
-const SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
+const ASR_SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
   'stream-input-stream-output': {
     label: '流式入/流式出',
     description: '实时音频流输入，实时识别结果输出',
@@ -202,7 +199,28 @@ const SCENARIO_CONFIG: Record<string, { label: string; description: string; note
   'non-stream-input-stream-output': {
     label: '非流式入/流式出',
     description: '完整音频输入，实时识别结果输出',
-    note: '*',
+  },
+};
+
+/**
+ * TTS 场景说明配置
+ */
+const TTS_SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
+  'stream-in-stream-out': {
+    label: '流式入/流式出',
+    description: '实时文本流输入，实时音频流输出',
+  },
+  'stream-in-stream-out-normal': {
+    label: '流式入/流式出（普通文本）',
+    description: '实时文本流输入（普通文本），实时音频流输出',
+  },
+  'non-stream-in-non-stream-out': {
+    label: '非流式入/非流式出',
+    description: '完整文本输入，完整音频返回',
+  },
+  'non-stream-in-stream-out': {
+    label: '非流式入/流式出',
+    description: '完整文本输入，实时音频流输出',
   },
 };
 
@@ -221,10 +239,14 @@ const PROVIDER_PROTOCOL: Record<string, string> = {
 /**
  * 格式化场景名称
  */
-function formatScenario(scenario: string): { label: string; note?: string } {
-  const config = SCENARIO_CONFIG[scenario];
-  if (config) {
-    return { label: config.label, note: config.note };
+function formatScenario(
+  scenario: string,
+  type: 'tts' | 'asr' = 'asr'
+): { label: string; note?: string } {
+  const config = type === 'tts' ? TTS_SCENARIO_CONFIG : ASR_SCENARIO_CONFIG;
+  const scenarioConfig = config[scenario];
+  if (scenarioConfig) {
+    return { label: scenarioConfig.label, note: scenarioConfig.note };
   }
   return { label: scenario };
 }
@@ -248,89 +270,94 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
   lines.push('## TTS 性能指标');
   lines.push('');
 
-  // 按提供商分组
-  const providerGroups = new Map<string, BenchmarkResult[]>();
+  // 场景说明表
+  lines.push('### 场景说明');
+  lines.push('');
+  lines.push('| 场景 | 说明 |');
+  lines.push('|------|------|');
+  for (const [, config] of Object.entries(TTS_SCENARIO_CONFIG)) {
+    lines.push(`| ${config.label}${config.note || ''} | ${config.description} |`);
+  }
+  lines.push('');
+
+  // 按提供商 + 场景分组
+  const scenarioGroups = new Map<string, BenchmarkResult[]>();
   for (const result of ttsResults) {
-    const group = providerGroups.get(result.provider) || [];
+    const key = `${result.provider}/${result.scenario}`;
+    const group = scenarioGroups.get(key) || [];
     group.push(result);
-    providerGroups.set(result.provider, group);
+    scenarioGroups.set(key, group);
   }
 
-  // 1. 首包延迟表格
-  lines.push('### 首包延迟（流式输出）');
+  // 计算统计
+  const scenarioStats = Array.from(scenarioGroups.entries()).map(([key, res]) => {
+    const [provider, scenario] = key.split('/');
+    return {
+      key,
+      provider,
+      scenario,
+      displayName: providers.get(provider) || provider,
+      ...calculateExtendedPerformance(res),
+    };
+  });
+
+  // 综合性能表格
+  lines.push('### 综合性能指标');
   lines.push('');
-  lines.push('| 提供商 | 平均延迟 | 成功率 |');
-  lines.push('|--------|---------|--------|');
+  lines.push('| TTS | 场景 | 协议 | 首次耗时 | 平均耗时 | 平均每字符延迟 | 成功率 |');
+  lines.push('|-----|------|------|---------|---------|---------------|--------|');
 
-  const providerStats = Array.from(providerGroups.entries()).map(([provider, res]) => ({
-    provider,
-    displayName: providers.get(provider) || provider,
-    ...calculateExtendedPerformance(res),
-  }));
+  // 计算各指标的 min/max 索引用于标记最佳值（只计算成功的）
+  const successStats = scenarioStats.filter((s) => !s.hasFailure);
+  const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
+  const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
+  const perCharValues = successStats
+    .filter((s) => s.avgPerChar !== undefined)
+    .map((s) => s.avgPerChar as number);
+  const rateValues = successStats.map((s) => s.successRate * 100);
 
-  const avgValues = providerStats
-    .map((s) => s.avgFirstChunk)
-    .filter((v): v is number => v !== undefined);
-  const rateValues = providerStats.map((s) => s.successRate * 100);
-
-  const avgMinMax = findMinMaxIndices(avgValues);
+  const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
+  const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
+  const perCharMinMax = findMinMaxIndices(perCharValues);
   const rateMinMax = findMinMaxIndices(rateValues);
 
-  let avgIdx = 0;
-  for (let i = 0; i < providerStats.length; i++) {
-    const s = providerStats[i];
-    if (s.avgFirstChunk === undefined) continue;
-    const avg = formatMetricValue(
-      s.avgFirstChunk,
-      avgIdx++,
-      avgMinMax.minIndex,
-      avgMinMax.maxIndex,
-      true,
-      'ms'
-    );
-    const rate = formatMetricValue(
-      s.successRate * 100,
-      i,
-      rateMinMax.minIndex,
-      rateMinMax.maxIndex,
-      false,
-      '%'
-    );
-    lines.push(`| ${s.displayName} | ${avg} | ${rate} |`);
-  }
-
-  lines.push('');
-
-  // 2. 总延迟表格
-  lines.push('### 总延迟');
-  lines.push('');
-  lines.push('| 提供商 | 平均总延迟 | 平均每字符延迟 |');
-  lines.push('|--------|------------|----------------|');
-
-  const totalValues = providerStats
-    .map((s) => s.avgTotal)
-    .filter((v): v is number => v !== undefined);
-  const perCharValues = providerStats
-    .map((s) => s.avgPerChar)
-    .filter((v): v is number => v !== undefined);
-  const totalMinMax = findMinMaxIndices(totalValues);
-  const perCharMinMax = findMinMaxIndices(perCharValues);
-
-  let totalIdx = 0;
   let perCharIdx = 0;
-  for (let i = 0; i < providerStats.length; i++) {
-    const s = providerStats[i];
-    const total =
-      s.avgTotal !== undefined
-        ? formatMetricValue(
-            s.avgTotal,
-            totalIdx++,
-            totalMinMax.minIndex,
-            totalMinMax.maxIndex,
-            true,
-            'ms'
-          )
-        : 'N/A';
+
+  for (let i = 0; i < scenarioStats.length; i++) {
+    const s = scenarioStats[i];
+    const scenarioInfo = formatScenario(s.scenario, 'tts');
+    const protocol = getProtocol(s.provider);
+
+    // 场景名称（带标记）
+    const scenarioLabel = `${scenarioInfo.label}${scenarioInfo.note || ''}`;
+
+    if (s.hasFailure) {
+      lines.push(`| ${s.displayName} | ${scenarioLabel} | ${protocol} | 测试失败 | - | - | - |`);
+      continue;
+    }
+
+    // 首次耗时
+    const successIndex = successStats.indexOf(s);
+    const firstLat = formatMetricValue(
+      s.firstLatency ?? 0,
+      successIndex,
+      firstLatencyMinMax.minIndex,
+      firstLatencyMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 平均耗时
+    const avgLat = formatMetricValue(
+      s.avgLatency ?? 0,
+      successIndex,
+      avgLatencyMinMax.minIndex,
+      avgLatencyMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 平均每字符延迟
     const perChar = s.avgPerChar
       ? formatMetricValue(
           s.avgPerChar,
@@ -342,44 +369,48 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
           1
         )
       : 'N/A';
-    lines.push(`| ${s.displayName} | ${total} | ${perChar} |`);
+
+    // 成功率
+    const rate = formatMetricValue(
+      s.successRate * 100,
+      successIndex,
+      rateMinMax.minIndex,
+      rateMinMax.maxIndex,
+      false,
+      '%'
+    );
+
+    lines.push(
+      `| ${s.displayName} | ${scenarioLabel} | ${protocol} | ${firstLat} | ${avgLat} | ${perChar} | ${rate} |`
+    );
   }
 
   lines.push('');
 
-  // 3. 音频质量表格
-  const withQuality = providerStats.filter((s) => s.avgBitrate);
-  if (withQuality.length > 0) {
-    lines.push('### 音频质量指标');
-    lines.push('');
-    lines.push('| 提供商 | 平均时长 | 平均码率 |');
-    lines.push('|--------|----------|----------|');
-
-    for (const s of withQuality) {
-      const duration = s.avgAudioDuration ? `${s.avgAudioDuration.toFixed(1)}s` : 'N/A';
-      const bitrate = s.avgBitrate ? `${Math.round(s.avgBitrate)} kbps` : 'N/A';
-      lines.push(`| ${s.displayName} | ${duration} | ${bitrate} |`);
-    }
-
-    lines.push('');
-  }
-
-  // 4. 能力矩阵
+  // 能力矩阵
   lines.push('### 能力矩阵');
   lines.push('');
-  lines.push('| 提供商 | 流式输入 | 流式输出 |');
-  lines.push('|--------|:--------:|:--------:|');
+  lines.push('| 提供商 | 协议 | 流式输入 | 流式输出 |');
+  lines.push('|--------|------|:--------:|:--------:|');
 
-  // 从结果推断能力
+  // 按提供商分组来生成能力矩阵
+  const providerGroups = new Map<string, BenchmarkResult[]>();
+  for (const result of ttsResults) {
+    const group = providerGroups.get(result.provider) || [];
+    group.push(result);
+    providerGroups.set(result.provider, group);
+  }
+
   for (const [provider, res] of providerGroups) {
     const displayName = providers.get(provider) || provider;
+    const protocol = getProtocol(provider);
     const hasStreamIn = res.some((r) => r.scenario.includes('stream-in') && r.status === 'success');
     const hasStreamOut = res.some(
       (r) => r.scenario.includes('stream-out') && r.status === 'success'
     );
     const streamIn = hasStreamIn ? '✅' : '❌';
     const streamOut = hasStreamOut ? '✅' : '❌';
-    lines.push(`| ${displayName} | ${streamIn} | ${streamOut} |`);
+    lines.push(`| ${displayName} | ${protocol} | ${streamIn} | ${streamOut} |`);
   }
 
   lines.push('');
@@ -404,7 +435,7 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
   lines.push('');
   lines.push('| 场景 | 说明 |');
   lines.push('|------|------|');
-  for (const [, config] of Object.entries(SCENARIO_CONFIG)) {
+  for (const [, config] of Object.entries(ASR_SCENARIO_CONFIG)) {
     lines.push(`| ${config.label}${config.note || ''} | ${config.description} |`);
   }
   lines.push('');
@@ -459,7 +490,7 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
 
   for (let i = 0; i < scenarioStats.length; i++) {
     const s = scenarioStats[i];
-    const scenarioInfo = formatScenario(s.scenario);
+    const scenarioInfo = formatScenario(s.scenario, 'asr');
     const protocol = getProtocol(s.provider);
 
     // 场景名称（带标记）

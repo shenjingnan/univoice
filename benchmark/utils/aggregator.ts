@@ -131,8 +131,8 @@ export function aggregateByScenario(results: SingleTestResult[]): Map<string, Sc
       .map((r) => calculateAccuracyFromResult(r))
       .filter((v): v is { accuracy: number; cer: number } => v !== null);
 
-    const accuracies = accuracyResults.map((r) => r!.accuracy);
-    const cers = accuracyResults.map((r) => r!.cer);
+    const accuracies = accuracyResults.map((r) => r?.accuracy);
+    const cers = accuracyResults.map((r) => r?.cer);
 
     // TTS 特有指标
     const perCharLatencies = successResults
