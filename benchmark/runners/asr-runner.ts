@@ -6,7 +6,13 @@ import type { BaseASR } from '../../src/asr/base';
 import { createASR } from '../../src/asr/factory';
 import type { AudioStream } from '../../src/types/asr';
 import { MetricsCollector } from '../metrics/collector';
-import type { BenchmarkConfig, BenchmarkResult } from '../metrics/types';
+import type {
+  AudioFixture,
+  BenchmarkConfig,
+  BenchmarkResult,
+  RawAccuracyData,
+} from '../metrics/types';
+import { saveSingleResult, toSingleTestResult } from '../utils/result-writer';
 
 /**
  * ASR 提供商配置
@@ -44,9 +50,9 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
         apiKey: process.env.QWEN_API_KEY,
         model: 'paraformer-realtime-v2',
         language: 'zh-CN',
-        format: 'mp3',
+        format: 'pcm',
         audioFormat: {
-          sampleRate: 24000,
+          sampleRate: 16000,
         },
       },
     });
@@ -65,6 +71,10 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
         accessKey: process.env.DOUBAO_ACCESS_KEY,
         resourceId: process.env.DOUBAO_RESOURCE_ID,
         language: 'zh-CN',
+        format: 'pcm',
+        audioFormat: {
+          sampleRate: 16000,
+        },
       },
     });
   }
@@ -81,25 +91,15 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
         apiKey: process.env.GLM_API_KEY,
         model: 'glm-asr-2512',
         language: 'zh-CN',
+        format: 'pcm',
+        audioFormat: {
+          sampleRate: 16000,
+        },
       },
     });
   }
 
   return configs;
-}
-
-/**
- * 音频测试数据
- */
-export interface AudioFixture {
-  /** 名称 */
-  name: string;
-  /** 文件路径 */
-  path: string;
-  /** 时长（秒） */
-  duration: number;
-  /** 格式 */
-  format: string;
 }
 
 /**
@@ -118,7 +118,8 @@ async function testStreamInput(
   asr: BaseASR,
   audioBuffer: Buffer,
   audioDuration: number,
-  config: BenchmarkConfig
+  config: BenchmarkConfig,
+  expectedText?: string
 ): Promise<BenchmarkResult> {
   const collector = new MetricsCollector();
   collector.startCollecting();
@@ -126,11 +127,13 @@ async function testStreamInput(
   try {
     const audioStream = createAudioStream(audioBuffer);
     let textLength = 0;
+    let recognizedText = '';
 
     for await (const chunk of asr.listen(audioStream, { stream: true })) {
       collector.addChunk(new Uint8Array(Buffer.from(chunk.text)));
       if (chunk.isFinal && chunk.text) {
         textLength += chunk.text.length;
+        recognizedText += chunk.text;
       }
     }
 
@@ -152,6 +155,14 @@ async function testStreamInput(
 
     // 添加 RTF
     result.latency.rtf = rtf;
+
+    // 存储原始准确率数据（不计算，由分析阶段处理）
+    if (expectedText || recognizedText) {
+      result.accuracy = {
+        expectedText,
+        actualText: recognizedText,
+      } as RawAccuracyData;
+    }
 
     return result;
   } catch (error) {
@@ -175,7 +186,8 @@ async function testNonStreamInput(
   asr: BaseASR,
   audioBuffer: Buffer,
   audioDuration: number,
-  config: BenchmarkConfig
+  config: BenchmarkConfig,
+  expectedText?: string
 ): Promise<BenchmarkResult> {
   const collector = new MetricsCollector();
   collector.startCollecting();
@@ -201,6 +213,14 @@ async function testNonStreamInput(
 
     result.latency.rtf = rtf;
 
+    // 存储原始准确率数据（不计算，由分析阶段处理）
+    if (expectedText || response.text) {
+      result.accuracy = {
+        expectedText,
+        actualText: response.text,
+      } as RawAccuracyData;
+    }
+
     return result;
   } catch (error) {
     collector.endCollecting();
@@ -225,6 +245,7 @@ export async function runASRTest(
   audioDuration: number,
   options: {
     inputMode: 'stream' | 'non-stream';
+    expectedText?: string;
   }
 ): Promise<BenchmarkResult> {
   // 创建 ASR 实例
@@ -237,14 +258,14 @@ export async function runASRTest(
   const config: BenchmarkConfig = {
     inputMode: options.inputMode,
     outputMode: 'stream',
-    format: 'mp3',
+    format: 'pcm',
   };
 
   if (options.inputMode === 'stream') {
-    return testStreamInput(asr, audioBuffer, audioDuration, config);
+    return testStreamInput(asr, audioBuffer, audioDuration, config, options.expectedText);
   }
 
-  return testNonStreamInput(asr, audioBuffer, audioDuration, config);
+  return testNonStreamInput(asr, audioBuffer, audioDuration, config, options.expectedText);
 }
 
 /**
@@ -254,8 +275,11 @@ export async function runASRSuite(options?: {
   providers?: string[];
   iterations?: number;
   audioFiles?: AudioFixture[];
+  /** 是否原子化保存每次测试结果 */
+  atomicSave?: boolean;
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
+  let globalIteration = 0;
 
   // 导入所有 provider 模块（自动注册）
   await import('../../src/asr/providers');
@@ -264,10 +288,12 @@ export async function runASRSuite(options?: {
     (p) => !options?.providers || options.providers.includes(p.provider)
   );
   const iterations = options?.iterations || 3;
+  const atomicSave = options?.atomicSave ?? true;
 
   console.log(`\n=== ASR 性能测试 ===\n`);
   console.log(`已配置的提供商: ${providerConfigs.map((p) => p.displayName).join(', ')}`);
-  console.log(`每项测试重复: ${iterations} 次\n`);
+  console.log(`每项测试重复: ${iterations} 次`);
+  console.log(`原子化保存: ${atomicSave ? '启用' : '禁用'}\n`);
 
   // 如果没有提供音频文件，使用默认的
   // 实际使用时应该提供真实的音频文件
@@ -291,14 +317,27 @@ export async function runASRSuite(options?: {
       // 测试流式输入
       if (providerConfig.streamInput) {
         for (let i = 0; i < iterations; i++) {
+          globalIteration++;
           try {
             const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
               inputMode: 'stream',
+              expectedText: audio.expectedText,
             });
+
+            // 原子化保存
+            if (atomicSave) {
+              const singleResult = toSingleTestResult(result, globalIteration);
+              saveSingleResult(singleResult);
+              console.log(
+                `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
+              );
+            } else {
+              console.log(
+                `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+              );
+            }
+
             results.push(result);
-            console.log(
-              `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
-            );
           } catch (error) {
             console.error(
               `    [${i + 1}/${iterations}] 流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`
@@ -311,14 +350,27 @@ export async function runASRSuite(options?: {
 
       // 测试非流式输入
       for (let i = 0; i < iterations; i++) {
+        globalIteration++;
         try {
           const result = await runASRTest(providerConfig, audioBuffer, audio.duration, {
             inputMode: 'non-stream',
+            expectedText: audio.expectedText,
           });
+
+          // 原子化保存
+          if (atomicSave) {
+            const singleResult = toSingleTestResult(result, globalIteration);
+            saveSingleResult(singleResult);
+            console.log(
+              `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
+            );
+          } else {
+            console.log(
+              `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+            );
+          }
+
           results.push(result);
-          console.log(
-            `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
-          );
         } catch (error) {
           console.error(
             `    [${i + 1}/${iterations}] 非流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`

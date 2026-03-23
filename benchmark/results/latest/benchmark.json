@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-20T02:20:57.270Z",
+  "generatedAt": "2026-03-23T02:35:17.447Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
@@ -16,11 +16,9 @@
         "protocol": "websocket"
       },
       "performance": {
-        "avgFirstChunkLatency": 1376.2666666666667,
-        "p50FirstChunkLatency": 1096,
-        "p95FirstChunkLatency": 4240,
+        "avgFirstChunkLatency": 1173.9259259259259,
         "successRate": 1,
-        "sampleCount": 45
+        "sampleCount": 27
       }
     },
     {
@@ -33,9 +31,7 @@
         "protocol": "websocket"
       },
       "performance": {
-        "avgFirstChunkLatency": 899.2592592592592,
-        "p50FirstChunkLatency": 1031,
-        "p95FirstChunkLatency": 1115,
+        "avgFirstChunkLatency": 877.074074074074,
         "successRate": 1,
         "sampleCount": 27
       }
@@ -45,16 +41,14 @@
       "capabilities": {
         "provider": "glm",
         "displayName": "智谱 GLM",
-        "streamInput": false,
+        "streamInput": true,
         "streamOutput": true,
         "protocol": "http"
       },
       "performance": {
-        "avgFirstChunkLatency": 1065.0833333333333,
-        "p50FirstChunkLatency": 1084,
-        "p95FirstChunkLatency": 1565,
-        "successRate": 0.8888888888888888,
-        "sampleCount": 27
+        "avgFirstChunkLatency": 1080.2777777777778,
+        "successRate": 1,
+        "sampleCount": 18
       }
     }
   ],
@@ -69,11 +63,9 @@
         "protocol": "websocket"
       },
       "performance": {
-        "avgFirstChunkLatency": 1376.2666666666667,
-        "p50FirstChunkLatency": 1096,
-        "p95FirstChunkLatency": 4240,
+        "avgFirstChunkLatency": 3554.777777777778,
         "successRate": 1,
-        "sampleCount": 45
+        "sampleCount": 18
       }
     },
     {
@@ -86,9 +78,7 @@
         "protocol": "websocket"
       },
       "performance": {
-        "avgFirstChunkLatency": 1637.9444444444443,
-        "p50FirstChunkLatency": 1096,
-        "p95FirstChunkLatency": 4627,
+        "avgFirstChunkLatency": 12772.722222222223,
         "successRate": 1,
         "sampleCount": 18
       }
@@ -98,23 +88,21 @@
       "capabilities": {
         "provider": "glm",
         "displayName": "智谱 GLM",
-        "streamInput": false,
+        "streamInput": true,
         "streamOutput": true,
         "protocol": "http"
       },
       "performance": {
-        "avgFirstChunkLatency": 1065.0833333333333,
-        "p50FirstChunkLatency": 1084,
-        "p95FirstChunkLatency": 1565,
-        "successRate": 0.8888888888888888,
-        "sampleCount": 27
+        "avgFirstChunkLatency": 0,
+        "successRate": 0,
+        "sampleCount": 9
       }
     }
   ],
   "results": [
     {
-      "id": "59970c0d-43b2-486f-915f-f0423f87a8cd",
-      "timestamp": "2026-03-20T02:15:03.862Z",
+      "id": "427037af-f00a-44e2-8053-1713cb691b65",
+      "timestamp": "2026-03-20T07:59:32.877Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -126,76 +114,82 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1202,
-        "total": 1202
+        "firstChunk": 1307,
+        "total": 1307
       },
       "throughput": {
-        "dataRate": 14.85108153078203,
-        "chunkCount": 1,
-        "avgChunkSize": 17851
-      },
-      "quality": {
-        "dataSize": 17851
-      },
-      "status": "success"
-    },
-    {
-      "id": "65afacb3-97cb-46cb-8ddc-50702da42024",
-      "timestamp": "2026-03-20T02:15:05.969Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1105,
-        "total": 1105
-      },
-      "throughput": {
-        "dataRate": 13.114027149321267,
-        "chunkCount": 1,
-        "avgChunkSize": 14491
-      },
-      "quality": {
-        "dataSize": 14491
-      },
-      "status": "success"
-    },
-    {
-      "id": "974d9250-4015-4b38-bd46-71471b7d4e11",
-      "timestamp": "2026-03-20T02:15:07.880Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 909,
-        "total": 909
-      },
-      "throughput": {
-        "dataRate": 12.245324532453246,
+        "dataRate": 8.516449885233358,
         "chunkCount": 1,
         "avgChunkSize": 11131
       },
       "quality": {
-        "dataSize": 11131
+        "dataSize": 11131,
+        "audioDuration": 0.7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "6e214e13-46ce-4758-ab30-07d6da8c4acf",
-      "timestamp": "2026-03-20T02:15:10.152Z",
+      "id": "9286d50f-fa1f-462c-8446-278c219e8093",
+      "timestamp": "2026-03-20T07:59:35.463Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1584,
+        "total": 1584
+      },
+      "throughput": {
+        "dataRate": 11.269570707070708,
+        "chunkCount": 1,
+        "avgChunkSize": 17851
+      },
+      "quality": {
+        "dataSize": 17851,
+        "audioDuration": 1.1,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "bf846b76-7dcd-41df-83ef-154f7b261654",
+      "timestamp": "2026-03-20T07:59:37.582Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1117,
+        "total": 1117
+      },
+      "throughput": {
+        "dataRate": 9.965085049239033,
+        "chunkCount": 1,
+        "avgChunkSize": 11131
+      },
+      "quality": {
+        "dataSize": 11131,
+        "audioDuration": 0.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "8e3ea9aa-7fbf-408d-897c-4686c658363b",
+      "timestamp": "2026-03-20T07:59:39.681Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -207,22 +201,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1236,
-        "total": 1270
+        "firstChunk": 1058,
+        "total": 1096
       },
       "throughput": {
-        "dataRate": 20.859055118110238,
+        "dataRate": 24.170620437956206,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "8e849fb7-945f-4d88-ae90-a7c7ece047fa",
-      "timestamp": "2026-03-20T02:15:12.067Z",
+      "id": "5266013c-b111-4619-a0b8-0ddf19d5ab6a",
+      "timestamp": "2026-03-20T07:59:41.832Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -234,22 +230,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 861,
-        "total": 914
+        "firstChunk": 1101,
+        "total": 1150
       },
       "throughput": {
-        "dataRate": 28.983588621444202,
+        "dataRate": 23.035652173913043,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "94d69a52-7c17-4d4d-83b9-b2c3736d8fd6",
-      "timestamp": "2026-03-20T02:15:14.197Z",
+      "id": "35f0c70c-0313-448f-80d5-b0f8d31fc015",
+      "timestamp": "2026-03-20T07:59:43.880Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -261,22 +259,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1093,
-        "total": 1129
+        "firstChunk": 1009,
+        "total": 1047
       },
       "throughput": {
-        "dataRate": 23.464127546501327,
+        "dataRate": 25.3018147086915,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "f1db6a01-f028-433a-a226-85d142ed03db",
-      "timestamp": "2026-03-20T02:15:16.258Z",
+      "id": "b2d96138-4a08-469c-9f98-a1e2fa09719a",
+      "timestamp": "2026-03-20T07:59:46.502Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -288,22 +288,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1008,
-        "total": 1060
+        "firstChunk": 1577,
+        "total": 1616
       },
       "throughput": {
-        "dataRate": 24.991509433962264,
+        "dataRate": 16.392945544554454,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "b9fa4283-78fd-4058-bf11-f176cbb27303",
-      "timestamp": "2026-03-20T02:15:18.545Z",
+      "id": "1ae2da12-c8c3-4a21-8434-c5bd8048299b",
+      "timestamp": "2026-03-20T07:59:49.124Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -315,22 +317,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1238,
-        "total": 1285
+        "firstChunk": 1589,
+        "total": 1619
       },
       "throughput": {
-        "dataRate": 20.61556420233463,
+        "dataRate": 16.36256948733786,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "9abf0080-3e89-4659-91ed-d527d1edcd9c",
-      "timestamp": "2026-03-20T02:15:21.158Z",
+      "id": "83cf8eb3-f3a5-44b5-a294-4a7add02d0cf",
+      "timestamp": "2026-03-20T07:59:51.738Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -342,22 +346,24 @@
         "textLength": 6
       },
       "latency": {
-        "firstChunk": 1579,
-        "total": 1612
+        "firstChunk": 1207,
+        "total": 1611
       },
       "throughput": {
-        "dataRate": 16.43362282878412,
+        "dataRate": 16.443823711980137,
         "chunkCount": 9,
         "avgChunkSize": 2943.4444444444443
       },
       "quality": {
-        "dataSize": 26491
+        "dataSize": 26491,
+        "audioDuration": 1.6,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "1c254633-528b-455b-9b2e-81a37f04394f",
-      "timestamp": "2026-03-20T02:15:23.281Z",
+      "id": "0e1713a9-665a-4e61-96df-d7157751f355",
+      "timestamp": "2026-03-20T07:59:53.840Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -369,22 +375,314 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 1121,
-        "total": 1121
+        "firstChunk": 1098,
+        "total": 1098
       },
       "throughput": {
-        "dataRate": 12.926851025869759,
+        "dataRate": 16.25774134790528,
         "chunkCount": 1,
-        "avgChunkSize": 14491
+        "avgChunkSize": 17851
       },
       "quality": {
-        "dataSize": 14491
+        "dataSize": 17851,
+        "audioDuration": 1.1,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "2b4c9c09-7388-4c7a-aaea-772f083ea1e0",
-      "timestamp": "2026-03-20T02:15:25.368Z",
+      "id": "f319f939-d469-475a-a87d-205b101e3528",
+      "timestamp": "2026-03-20T07:59:55.946Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1104,
+        "total": 1104
+      },
+      "throughput": {
+        "dataRate": 32.25634057971015,
+        "chunkCount": 1,
+        "avgChunkSize": 35611
+      },
+      "quality": {
+        "dataSize": 35611,
+        "audioDuration": 2.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3fb789a6-48f4-44f8-8662-505aac617b9a",
+      "timestamp": "2026-03-20T07:59:58.078Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1130,
+        "total": 1130
+      },
+      "throughput": {
+        "dataRate": 37.46106194690265,
+        "chunkCount": 1,
+        "avgChunkSize": 42331
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "7dd403d9-ce74-4db7-bc6a-dc752f7ab40c",
+      "timestamp": "2026-03-20T08:00:00.135Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1018,
+        "total": 1053
+      },
+      "throughput": {
+        "dataRate": 40.200379867046536,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "8cf626aa-da93-4643-b85c-2378a36f0702",
+      "timestamp": "2026-03-20T08:00:02.537Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 975,
+        "total": 1393
+      },
+      "throughput": {
+        "dataRate": 30.388370423546302,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "0b395e0e-2f10-4f2a-bb09-51dcb35cafbd",
+      "timestamp": "2026-03-20T08:00:04.852Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1268,
+        "total": 1305
+      },
+      "throughput": {
+        "dataRate": 32.4375478927203,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "61591548-0d44-4bf9-b3ad-aa3d1befbc22",
+      "timestamp": "2026-03-20T08:00:06.958Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1054,
+        "total": 1099
+      },
+      "throughput": {
+        "dataRate": 38.517743403093725,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "066517b5-76bf-4430-bc06-bd6efa41048f",
+      "timestamp": "2026-03-20T08:00:09.568Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1574,
+        "total": 1609
+      },
+      "throughput": {
+        "dataRate": 26.3088875077688,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "524e32ee-8b5d-49eb-bd03-fc3fc86b315a",
+      "timestamp": "2026-03-20T08:00:12.192Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1595,
+        "total": 1623
+      },
+      "throughput": {
+        "dataRate": 26.081947011706717,
+        "chunkCount": 15,
+        "avgChunkSize": 2822.0666666666666
+      },
+      "quality": {
+        "dataSize": 42331,
+        "audioDuration": 2.6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "75963b6d-23d4-4856-a20c-f1006cd87cc4",
+      "timestamp": "2026-03-20T08:00:14.302Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1103,
+        "total": 1103
+      },
+      "throughput": {
+        "dataRate": 17.054397098821397,
+        "chunkCount": 1,
+        "avgChunkSize": 18811
+      },
+      "quality": {
+        "dataSize": 18811,
+        "audioDuration": 1.1,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "2f934126-73d9-414d-98a1-173e4d9d927c",
+      "timestamp": "2026-03-20T08:00:16.402Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1097,
+        "total": 1097
+      },
+      "throughput": {
+        "dataRate": 13.209662716499544,
+        "chunkCount": 1,
+        "avgChunkSize": 14491
+      },
+      "quality": {
+        "dataSize": 14491,
+        "audioDuration": 0.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3c65b0e0-a99c-4f9e-a09d-fb7a3a08ec5b",
+      "timestamp": "2026-03-20T08:00:18.489Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
       "testType": "tts",
@@ -400,20 +698,1153 @@
         "total": 1086
       },
       "throughput": {
-        "dataRate": 38.978821362799266,
+        "dataRate": 10.249539594843462,
         "chunkCount": 1,
-        "avgChunkSize": 42331
+        "avgChunkSize": 11131
       },
       "quality": {
-        "dataSize": 42331
+        "dataSize": 11131,
+        "audioDuration": 0.7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "c2c7a01e-82a6-45e3-805a-07716946dcaf",
-      "timestamp": "2026-03-20T02:15:27.524Z",
+      "id": "0cb3959c-d727-40f6-821e-c7446bea38e0",
+      "timestamp": "2026-03-20T08:00:20.107Z",
       "provider": "qwen",
       "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 543,
+        "total": 613
+      },
+      "throughput": {
+        "dataRate": 74.53670473083197,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "112dea31-14d8-4f33-991d-7d8ee8536316",
+      "timestamp": "2026-03-20T08:00:21.981Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 811,
+        "total": 872
+      },
+      "throughput": {
+        "dataRate": 52.397935779816514,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "e9a0e25d-30b4-4c97-b083-1b4d55940b70",
+      "timestamp": "2026-03-20T08:00:24.093Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1036,
+        "total": 1110
+      },
+      "throughput": {
+        "dataRate": 41.16306306306306,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "51764ca4-0938-46c8-b358-1d75fce818c4",
+      "timestamp": "2026-03-20T08:00:26.315Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 842,
+        "total": 1221
+      },
+      "throughput": {
+        "dataRate": 37.42096642096642,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "b4e85cee-51f7-4fe5-91a0-ab86fe1deb60",
+      "timestamp": "2026-03-20T08:00:28.986Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1620,
+        "total": 1669
+      },
+      "throughput": {
+        "dataRate": 27.376273217495505,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "8086f520-7b24-4d4d-9c03-94eec58a5812",
+      "timestamp": "2026-03-20T08:00:31.592Z",
+      "provider": "qwen",
+      "model": "cosyvoice-v3-flash",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1193,
+        "total": 1605
+      },
+      "throughput": {
+        "dataRate": 28.46791277258567,
+        "chunkCount": 16,
+        "avgChunkSize": 2855.6875
+      },
+      "quality": {
+        "dataSize": 45691,
+        "audioDuration": 2.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "bc48743c-f078-4e22-b7e5-1ef92056606c",
+      "timestamp": "2026-03-20T08:00:33.680Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1069,
+        "total": 1069
+      },
+      "throughput": {
+        "dataRate": 28.599625818521982,
+        "chunkCount": 1,
+        "avgChunkSize": 30573
+      },
+      "quality": {
+        "dataSize": 30573,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "eb5525e2-bd20-4501-84eb-43155e235be8",
+      "timestamp": "2026-03-20T08:00:36.275Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1586,
+        "total": 1586
+      },
+      "throughput": {
+        "dataRate": 18.187263556116015,
+        "chunkCount": 1,
+        "avgChunkSize": 28845
+      },
+      "quality": {
+        "dataSize": 28845,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3403b7fe-8dad-4fda-b242-84c043873d94",
+      "timestamp": "2026-03-20T08:00:37.895Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 613,
+        "total": 613
+      },
+      "throughput": {
+        "dataRate": 47.05546492659054,
+        "chunkCount": 1,
+        "avgChunkSize": 28845
+      },
+      "quality": {
+        "dataSize": 28845,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "5191a479-80b0-4be6-b96d-1de20f9904bd",
+      "timestamp": "2026-03-20T08:00:39.933Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 851,
+        "total": 1037
+      },
+      "throughput": {
+        "dataRate": 38.369334619093536,
+        "chunkCount": 22,
+        "avgChunkSize": 1808.590909090909
+      },
+      "quality": {
+        "dataSize": 39789,
+        "audioDuration": 2.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "77fb688c-26ea-4b58-a3ad-1c6fe495198b",
+      "timestamp": "2026-03-20T08:00:41.841Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 633,
+        "total": 905
+      },
+      "throughput": {
+        "dataRate": 31.23646408839779,
+        "chunkCount": 16,
+        "avgChunkSize": 1766.8125
+      },
+      "quality": {
+        "dataSize": 28269,
+        "audioDuration": 1.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "0b627b80-bd3a-4b30-b294-3c6fa778f059",
+      "timestamp": "2026-03-20T08:00:43.701Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 570,
+        "total": 858
+      },
+      "throughput": {
+        "dataRate": 34.96153846153846,
+        "chunkCount": 17,
+        "avgChunkSize": 1764.5294117647059
+      },
+      "quality": {
+        "dataSize": 29997,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "d20bee81-7710-4df5-ab7b-f9a528b72101",
+      "timestamp": "2026-03-20T08:00:45.845Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 817,
+        "total": 1140
+      },
+      "throughput": {
+        "dataRate": 31.910526315789475,
+        "chunkCount": 21,
+        "avgChunkSize": 1732.2857142857142
+      },
+      "quality": {
+        "dataSize": 36378,
+        "audioDuration": 2.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "ddb4fd46-bff8-4ec6-b593-5c0ed94bfdc0",
+      "timestamp": "2026-03-20T08:00:48.138Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 960,
+        "total": 1290
+      },
+      "throughput": {
+        "dataRate": 24.18139534883721,
+        "chunkCount": 18,
+        "avgChunkSize": 1733
+      },
+      "quality": {
+        "dataSize": 31194,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "a108c428-6edb-4ae7-b980-f1aac79f17c9",
+      "timestamp": "2026-03-20T08:00:50.440Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 762,
+        "total": 1299
+      },
+      "throughput": {
+        "dataRate": 22.683602771362587,
+        "chunkCount": 17,
+        "avgChunkSize": 1733.2941176470588
+      },
+      "quality": {
+        "dataSize": 29466,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "6ec75a81-cdff-4a5e-bc4d-4a9857f9977c",
+      "timestamp": "2026-03-20T08:00:52.377Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 934,
+        "total": 934
+      },
+      "throughput": {
+        "dataRate": 24.099571734475376,
+        "chunkCount": 1,
+        "avgChunkSize": 22509
+      },
+      "quality": {
+        "dataSize": 22509,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f5c4967a-ebd5-432e-b4ab-35746348b088",
+      "timestamp": "2026-03-20T08:00:54.717Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1339,
+        "total": 1339
+      },
+      "throughput": {
+        "dataRate": 17.240477968633307,
+        "chunkCount": 1,
+        "avgChunkSize": 23085
+      },
+      "quality": {
+        "dataSize": 23085,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "0feb7c2a-41c5-4d31-8a23-fb3432fa4b37",
+      "timestamp": "2026-03-20T08:00:57.269Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1544,
+        "total": 1544
+      },
+      "throughput": {
+        "dataRate": 16.443652849740932,
+        "chunkCount": 1,
+        "avgChunkSize": 25389
+      },
+      "quality": {
+        "dataSize": 25389,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c4385f4b-b338-4981-9634-7812736fe9ec",
+      "timestamp": "2026-03-20T08:00:59.347Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 550,
+        "total": 1076
+      },
+      "throughput": {
+        "dataRate": 22.525092936802974,
+        "chunkCount": 14,
+        "avgChunkSize": 1731.2142857142858
+      },
+      "quality": {
+        "dataSize": 24237,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "1fbc207b-9a3b-40bb-b3c0-4cc62492d899",
+      "timestamp": "2026-03-20T08:01:01.440Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 566,
+        "total": 1090
+      },
+      "throughput": {
+        "dataRate": 23.292660550458717,
+        "chunkCount": 14,
+        "avgChunkSize": 1813.5
+      },
+      "quality": {
+        "dataSize": 25389,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "09c7ed07-58d9-42e4-93b4-b6d849da962f",
+      "timestamp": "2026-03-20T08:01:03.353Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 442,
+        "total": 902
+      },
+      "throughput": {
+        "dataRate": 33.89467849223947,
+        "chunkCount": 17,
+        "avgChunkSize": 1798.4117647058824
+      },
+      "quality": {
+        "dataSize": 30573,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "470d5ad5-1439-4a58-8137-fc1c4b8858e7",
+      "timestamp": "2026-03-20T08:01:05.645Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 757,
+        "total": 1291
+      },
+      "throughput": {
+        "dataRate": 37.101471727343146,
+        "chunkCount": 27,
+        "avgChunkSize": 1774
+      },
+      "quality": {
+        "dataSize": 47898,
+        "audioDuration": 2.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f3d0aeb7-701f-46de-a258-32d7457f0c08",
+      "timestamp": "2026-03-20T08:01:07.744Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 421,
+        "total": 1096
+      },
+      "throughput": {
+        "dataRate": 36.87043795620438,
+        "chunkCount": 23,
+        "avgChunkSize": 1756.9565217391305
+      },
+      "quality": {
+        "dataSize": 40410,
+        "audioDuration": 2.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "0205df8f-d2a9-4602-ade9-5758f70c881e",
+      "timestamp": "2026-03-20T08:01:10.217Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1088,
+        "total": 1471
+      },
+      "throughput": {
+        "dataRate": 23.946974847042828,
+        "chunkCount": 21,
+        "avgChunkSize": 1677.4285714285713
+      },
+      "quality": {
+        "dataSize": 35226,
+        "audioDuration": 2.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "d5f89fb5-eaa0-4e28-a3b1-fab15fa8072a",
+      "timestamp": "2026-03-20T08:01:12.508Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1286,
+        "total": 1286
+      },
+      "throughput": {
+        "dataRate": 23.77371695178849,
+        "chunkCount": 1,
+        "avgChunkSize": 30573
+      },
+      "quality": {
+        "dataSize": 30573,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c94b7dd3-28df-4a5b-8ba7-43bd49a1b220",
+      "timestamp": "2026-03-20T08:01:14.617Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1108,
+        "total": 1108
+      },
+      "throughput": {
+        "dataRate": 27.592960288808666,
+        "chunkCount": 1,
+        "avgChunkSize": 30573
+      },
+      "quality": {
+        "dataSize": 30573,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "7e69d269-157e-4b02-ac02-0ea9ccb39211",
+      "timestamp": "2026-03-20T08:01:16.737Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1117,
+        "total": 1117
+      },
+      "throughput": {
+        "dataRate": 26.85496866606983,
+        "chunkCount": 1,
+        "avgChunkSize": 29997
+      },
+      "quality": {
+        "dataSize": 29997,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "428ba72b-bdcc-41d7-8d61-667dd73214f5",
+      "timestamp": "2026-03-20T08:01:18.846Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 832,
+        "total": 1107
+      },
+      "throughput": {
+        "dataRate": 27.097560975609756,
+        "chunkCount": 17,
+        "avgChunkSize": 1764.5294117647059
+      },
+      "quality": {
+        "dataSize": 29997,
+        "audioDuration": 1.8,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "ec4813cf-861e-44f1-a6ab-3cacdd9d389f",
+      "timestamp": "2026-03-20T08:01:20.873Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 814,
+        "total": 1025
+      },
+      "throughput": {
+        "dataRate": 26.455609756097562,
+        "chunkCount": 15,
+        "avgChunkSize": 1807.8
+      },
+      "quality": {
+        "dataSize": 27117,
+        "audioDuration": 1.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "a7f333e0-2fa6-4138-844c-4a18d909a7e7",
+      "timestamp": "2026-03-20T08:01:22.748Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 572,
+        "total": 871
+      },
+      "throughput": {
+        "dataRate": 37.0849598163031,
+        "chunkCount": 18,
+        "avgChunkSize": 1794.5
+      },
+      "quality": {
+        "dataSize": 32301,
+        "audioDuration": 2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "d66e185c-26e7-4ccf-bc65-1184c4075091",
+      "timestamp": "2026-03-20T08:01:25.044Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 766,
+        "total": 1295
+      },
+      "throughput": {
+        "dataRate": 32.094208494208495,
+        "chunkCount": 25,
+        "avgChunkSize": 1662.48
+      },
+      "quality": {
+        "dataSize": 41562,
+        "audioDuration": 2.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "bb97667a-cb4e-4834-b5b6-850775bf4050",
+      "timestamp": "2026-03-20T08:01:27.664Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1101,
+        "total": 1617
+      },
+      "throughput": {
+        "dataRate": 24.634508348794064,
+        "chunkCount": 24,
+        "avgChunkSize": 1659.75
+      },
+      "quality": {
+        "dataSize": 39834,
+        "audioDuration": 2.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "8d9573c1-8b9b-45e5-b8df-d00f7b028940",
+      "timestamp": "2026-03-20T08:01:29.767Z",
+      "provider": "minimax",
+      "model": "speech-2.8-hd",
+      "testType": "tts",
+      "scenario": "stream-in-stream-out-normal",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 583,
+        "total": 1101
+      },
+      "throughput": {
+        "dataRate": 33.56403269754768,
+        "chunkCount": 21,
+        "avgChunkSize": 1759.7142857142858
+      },
+      "quality": {
+        "dataSize": 36954,
+        "audioDuration": 2.3,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "085909c8-476c-44e6-9be4-54387ea53cb6",
+      "timestamp": "2026-03-20T08:01:32.395Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1626,
+        "total": 1626
+      },
+      "throughput": {
+        "dataRate": 60.910209102091024,
+        "chunkCount": 1,
+        "avgChunkSize": 99040
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "08eb398a-0207-451f-916a-f3cb8b97e7f8",
+      "timestamp": "2026-03-20T08:01:34.314Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 918,
+        "total": 918
+      },
+      "throughput": {
+        "dataRate": 107.88671023965142,
+        "chunkCount": 1,
+        "avgChunkSize": 99040
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "9c3f0bf9-c25b-4e71-a675-b501c491ef31",
+      "timestamp": "2026-03-20T08:01:36.113Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-non-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "non-stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 795,
+        "total": 795
+      },
+      "throughput": {
+        "dataRate": 124.57861635220125,
+        "chunkCount": 1,
+        "avgChunkSize": 99040
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "400061ea-8b47-4fc6-b1ec-7a7e0215cc74",
+      "timestamp": "2026-03-20T08:01:38.003Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 847,
+        "total": 887
+      },
+      "throughput": {
+        "dataRate": 111.65727170236754,
+        "chunkCount": 2,
+        "avgChunkSize": 49520
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3c09f185-35ac-49f0-aaac-30ecbe071af3",
+      "timestamp": "2026-03-20T08:01:40.289Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1244,
+        "total": 1284
+      },
+      "throughput": {
+        "dataRate": 77.13395638629284,
+        "chunkCount": 2,
+        "avgChunkSize": 49520
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "2e467113-24a2-49e7-8503-b415073acafa",
+      "timestamp": "2026-03-20T08:01:42.365Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 6
+      },
+      "latency": {
+        "firstChunk": 1057,
+        "total": 1073
+      },
+      "throughput": {
+        "dataRate": 92.30195712954334,
+        "chunkCount": 2,
+        "avgChunkSize": 49520
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 6,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "a359d35c-f7ec-4191-8d9e-09121b1f846d",
+      "timestamp": "2026-03-20T08:01:44.518Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
@@ -427,182 +1858,22 @@
         "total": 1151
       },
       "throughput": {
-        "dataRate": 35.5264986967854,
+        "dataRate": 126.08166811468288,
         "chunkCount": 1,
-        "avgChunkSize": 40891
+        "avgChunkSize": 145120
       },
       "quality": {
-        "dataSize": 40891
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "48b16661-f6c6-4048-9413-0c019093083f",
-      "timestamp": "2026-03-20T02:15:29.575Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1007,
-        "total": 1050
-      },
-      "throughput": {
-        "dataRate": 40.315238095238094,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "0bdd83a8-f20d-4447-b678-7ba435faf4ff",
-      "timestamp": "2026-03-20T02:15:31.701Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1049,
-        "total": 1125
-      },
-      "throughput": {
-        "dataRate": 37.62755555555555,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "16138f67-4901-47de-9774-89dcd8ac7e9e",
-      "timestamp": "2026-03-20T02:15:33.722Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 525,
-        "total": 1020
-      },
-      "throughput": {
-        "dataRate": 41.50098039215686,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "0c10431f-cb48-49be-9d8d-151d7d95b20f",
-      "timestamp": "2026-03-20T02:15:35.853Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1100,
-        "total": 1130
-      },
-      "throughput": {
-        "dataRate": 37.46106194690265,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "fb637595-9e01-4864-a11e-9cbb4bd7e039",
-      "timestamp": "2026-03-20T02:15:37.979Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1067,
-        "total": 1124
-      },
-      "throughput": {
-        "dataRate": 37.66103202846975,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "20b94292-9343-4b0a-a103-f698b0d6d1aa",
-      "timestamp": "2026-03-20T02:15:40.540Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1191,
-        "total": 1561
-      },
-      "throughput": {
-        "dataRate": 27.1178731582319,
-        "chunkCount": 15,
-        "avgChunkSize": 2822.0666666666666
-      },
-      "quality": {
-        "dataSize": 42331
-      },
-      "status": "success"
-    },
-    {
-      "id": "f2009166-8e2a-47bc-9524-7d093436ae48",
-      "timestamp": "2026-03-20T02:15:42.495Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
+      "id": "088eb85b-90e4-4826-8d85-b772d2efd26b",
+      "timestamp": "2026-03-20T08:01:46.669Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
@@ -612,24 +1883,26 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 953,
-        "total": 953
+        "firstChunk": 1146,
+        "total": 1146
       },
       "throughput": {
-        "dataRate": 15.20566631689402,
+        "dataRate": 126.63176265270506,
         "chunkCount": 1,
-        "avgChunkSize": 14491
+        "avgChunkSize": 145120
       },
       "quality": {
-        "dataSize": 14491
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "a6f5b69e-37ee-4d01-9935-afff9501adeb",
-      "timestamp": "2026-03-20T02:15:45.264Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
+      "id": "f34d486a-2dfd-45c8-818d-2caefcf4c1df",
+      "timestamp": "2026-03-20T08:01:48.638Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
@@ -639,24 +1912,113 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 1767,
-        "total": 1767
+        "firstChunk": 962,
+        "total": 962
       },
       "throughput": {
-        "dataRate": 12.547255234861346,
+        "dataRate": 150.85239085239084,
         "chunkCount": 1,
-        "avgChunkSize": 22171
+        "avgChunkSize": 145120
       },
       "quality": {
-        "dataSize": 22171
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "322cc8af-f7e4-44fc-84f6-0f15403598b2",
-      "timestamp": "2026-03-20T02:15:47.883Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
+      "id": "0b4f390d-9cf7-437e-9049-97204ba3d072",
+      "timestamp": "2026-03-20T08:01:50.766Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1102,
+        "total": 1126
+      },
+      "throughput": {
+        "dataRate": 128.8809946714032,
+        "chunkCount": 2,
+        "avgChunkSize": 72560
+      },
+      "quality": {
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "addfac9e-7e54-4848-8c44-8efe2fe6a6c4",
+      "timestamp": "2026-03-20T08:01:52.750Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 861,
+        "total": 982
+      },
+      "throughput": {
+        "dataRate": 147.78004073319755,
+        "chunkCount": 2,
+        "avgChunkSize": 72560
+      },
+      "quality": {
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "4ccf3214-1d36-481f-89c8-9aab6c71dd64",
+      "timestamp": "2026-03-20T08:01:54.961Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1175,
+        "total": 1209
+      },
+      "throughput": {
+        "dataRate": 120.03308519437552,
+        "chunkCount": 2,
+        "avgChunkSize": 72560
+      },
+      "quality": {
+        "dataSize": 145120,
+        "audioDuration": 8.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "02bb5af2-e386-4173-8e53-e21d585c9260",
+      "timestamp": "2026-03-20T08:01:57.032Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
@@ -666,994 +2028,82 @@
         "textLength": 8
       },
       "latency": {
-        "firstChunk": 1618,
-        "total": 1618
+        "firstChunk": 1070,
+        "total": 1070
       },
       "throughput": {
-        "dataRate": 15.779357231149568,
+        "dataRate": 106.91588785046729,
         "chunkCount": 1,
-        "avgChunkSize": 25531
+        "avgChunkSize": 114400
       },
       "quality": {
-        "dataSize": 25531
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "726936e4-dfc3-4598-adc5-993a14db71f8",
-      "timestamp": "2026-03-20T02:15:50.029Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1096,
-        "total": 1143
-      },
-      "throughput": {
-        "dataRate": 39.974628171478564,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "2c49a041-c356-40a6-87e7-9fb0a404709c",
-      "timestamp": "2026-03-20T02:15:52.130Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1052,
-        "total": 1100
-      },
-      "throughput": {
-        "dataRate": 41.53727272727273,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "312bd51b-1b4a-4d4a-9d03-5c58f21b43b0",
-      "timestamp": "2026-03-20T02:15:54.225Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1052,
-        "total": 1094
-      },
-      "throughput": {
-        "dataRate": 41.76508226691042,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "1d72941d-ada6-48b0-b977-b9bd404bd802",
-      "timestamp": "2026-03-20T02:15:56.838Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1576,
-        "total": 1611
-      },
-      "throughput": {
-        "dataRate": 28.361887026691495,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "c2689962-ee0e-4b31-bbec-d58cd49e0040",
-      "timestamp": "2026-03-20T02:15:58.954Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1059,
-        "total": 1115
-      },
-      "throughput": {
-        "dataRate": 40.97847533632287,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "c93343b5-7f05-4424-9376-243e35af7cf7",
-      "timestamp": "2026-03-20T02:16:01.575Z",
-      "provider": "qwen",
-      "model": "cosyvoice-v3-flash",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1571,
-        "total": 1620
-      },
-      "throughput": {
-        "dataRate": 28.20432098765432,
-        "chunkCount": 16,
-        "avgChunkSize": 2855.6875
-      },
-      "quality": {
-        "dataSize": 45691
-      },
-      "status": "success"
-    },
-    {
-      "id": "373a146d-ea10-49d9-9a0d-3657b5924af4",
-      "timestamp": "2026-03-20T02:16:03.672Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
+      "id": "9c938822-e4f2-46a9-a356-51c6b97698f2",
+      "timestamp": "2026-03-20T08:01:59.147Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "non-stream",
         "format": "mp3",
-        "textLength": 6
+        "textLength": 8
       },
       "latency": {
-        "firstChunk": 1095,
-        "total": 1095
+        "firstChunk": 1114,
+        "total": 1114
       },
       "throughput": {
-        "dataRate": 25.816438356164383,
+        "dataRate": 102.69299820466786,
         "chunkCount": 1,
-        "avgChunkSize": 28269
+        "avgChunkSize": 114400
       },
       "quality": {
-        "dataSize": 28269
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "2ab86096-1b6d-43dd-81e4-193de3ad9cc6",
-      "timestamp": "2026-03-20T02:16:05.747Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
+      "id": "99872809-2018-47e5-be87-d4842b83fb51",
+      "timestamp": "2026-03-20T08:02:01.254Z",
+      "provider": "glm",
+      "model": "glm-tts",
       "testType": "tts",
       "scenario": "non-stream-in-non-stream-out",
       "config": {
         "inputMode": "non-stream",
         "outputMode": "non-stream",
         "format": "mp3",
-        "textLength": 6
+        "textLength": 8
       },
       "latency": {
-        "firstChunk": 1068,
-        "total": 1068
-      },
-      "throughput": {
-        "dataRate": 26.469101123595507,
-        "chunkCount": 1,
-        "avgChunkSize": 28269
-      },
-      "quality": {
-        "dataSize": 28269
-      },
-      "status": "success"
-    },
-    {
-      "id": "404085ff-4628-4afe-9ce5-792410fba15f",
-      "timestamp": "2026-03-20T02:16:07.857Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1109,
-        "total": 1109
-      },
-      "throughput": {
-        "dataRate": 24.45175834084761,
-        "chunkCount": 1,
-        "avgChunkSize": 27117
-      },
-      "quality": {
-        "dataSize": 27117
-      },
-      "status": "success"
-    },
-    {
-      "id": "e376af8a-222a-4ea9-8563-0073a65e8ffc",
-      "timestamp": "2026-03-20T02:16:09.947Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1049,
-        "total": 1089
-      },
-      "throughput": {
-        "dataRate": 25.958677685950413,
-        "chunkCount": 16,
-        "avgChunkSize": 1766.8125
-      },
-      "quality": {
-        "dataSize": 28269
-      },
-      "status": "success"
-    },
-    {
-      "id": "3a61582a-a278-4cee-976e-9ffc8a7ae183",
-      "timestamp": "2026-03-20T02:16:12.045Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1076,
-        "total": 1098
-      },
-      "throughput": {
-        "dataRate": 23.647540983606557,
-        "chunkCount": 15,
-        "avgChunkSize": 1731
-      },
-      "quality": {
-        "dataSize": 25965
-      },
-      "status": "success"
-    },
-    {
-      "id": "caf1c1c8-0aaa-495d-8944-b848a8d6f6b0",
-      "timestamp": "2026-03-20T02:16:14.176Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1054,
-        "total": 1129
-      },
-      "throughput": {
-        "dataRate": 26.059344552701507,
-        "chunkCount": 17,
-        "avgChunkSize": 1730.6470588235295
-      },
-      "quality": {
-        "dataSize": 29421
-      },
-      "status": "success"
-    },
-    {
-      "id": "7fd7cece-e0af-4ae2-9218-c72b51d433f8",
-      "timestamp": "2026-03-20T02:16:16.283Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1024,
-        "total": 1107
-      },
-      "throughput": {
-        "dataRate": 25.056910569105693,
-        "chunkCount": 16,
-        "avgChunkSize": 1733.625
-      },
-      "quality": {
-        "dataSize": 27738
-      },
-      "status": "success"
-    },
-    {
-      "id": "0fecea70-3f40-4005-a0fc-b4bcb85dd622",
-      "timestamp": "2026-03-20T02:16:18.825Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1028,
-        "total": 1540
-      },
-      "throughput": {
-        "dataRate": 19.507792207792207,
-        "chunkCount": 18,
-        "avgChunkSize": 1669
-      },
-      "quality": {
-        "dataSize": 30042
-      },
-      "status": "success"
-    },
-    {
-      "id": "30cc1b05-c907-44e2-85c9-14be5844c3e3",
-      "timestamp": "2026-03-20T02:16:20.931Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 574,
+        "firstChunk": 1104,
         "total": 1104
       },
       "throughput": {
-        "dataRate": 26.690217391304348,
-        "chunkCount": 17,
-        "avgChunkSize": 1733.2941176470588
-      },
-      "quality": {
-        "dataSize": 29466
-      },
-      "status": "success"
-    },
-    {
-      "id": "64f15bb0-673e-44ad-85b7-f5962f9c1c06",
-      "timestamp": "2026-03-20T02:16:22.543Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 611,
-        "total": 611
-      },
-      "throughput": {
-        "dataRate": 36.83960720130933,
+        "dataRate": 103.6231884057971,
         "chunkCount": 1,
-        "avgChunkSize": 22509
+        "avgChunkSize": 114400
       },
       "quality": {
-        "dataSize": 22509
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "f889f9b8-52bb-42e2-aad3-f1f0651d4cf3",
-      "timestamp": "2026-03-20T02:16:24.638Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1093,
-        "total": 1093
-      },
-      "throughput": {
-        "dataRate": 24.809698078682526,
-        "chunkCount": 1,
-        "avgChunkSize": 27117
-      },
-      "quality": {
-        "dataSize": 27117
-      },
-      "status": "success"
-    },
-    {
-      "id": "49a7061f-3aab-4511-afb4-89bc81993cc3",
-      "timestamp": "2026-03-20T02:16:26.771Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1133,
-        "total": 1133
-      },
-      "throughput": {
-        "dataRate": 22.40864960282436,
-        "chunkCount": 1,
-        "avgChunkSize": 25389
-      },
-      "quality": {
-        "dataSize": 25389
-      },
-      "status": "success"
-    },
-    {
-      "id": "064ba2cd-40f0-47e4-ba80-9541843ea28b",
-      "timestamp": "2026-03-20T02:16:28.857Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1031,
-        "total": 1084
-      },
-      "throughput": {
-        "dataRate": 22.358856088560884,
-        "chunkCount": 14,
-        "avgChunkSize": 1731.2142857142858
-      },
-      "quality": {
-        "dataSize": 24237
-      },
-      "status": "success"
-    },
-    {
-      "id": "dfe9fce0-162d-4360-9026-7f33f9f07e59",
-      "timestamp": "2026-03-20T02:16:31.426Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1038,
-        "total": 1568
-      },
-      "throughput": {
-        "dataRate": 20.96747448979592,
-        "chunkCount": 18,
-        "avgChunkSize": 1826.5
-      },
-      "quality": {
-        "dataSize": 32877
-      },
-      "status": "success"
-    },
-    {
-      "id": "ac73dfc3-ec05-4727-aae7-151601dd14bf",
-      "timestamp": "2026-03-20T02:16:33.060Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 558,
-        "total": 632
-      },
-      "throughput": {
-        "dataRate": 38.3496835443038,
-        "chunkCount": 14,
-        "avgChunkSize": 1731.2142857142858
-      },
-      "quality": {
-        "dataSize": 24237
-      },
-      "status": "success"
-    },
-    {
-      "id": "56a95019-d20f-49dc-8f2b-efd7efdc15d1",
-      "timestamp": "2026-03-20T02:16:35.622Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1032,
-        "total": 1561
-      },
-      "throughput": {
-        "dataRate": 24.411274823830876,
-        "chunkCount": 22,
-        "avgChunkSize": 1732.090909090909
-      },
-      "quality": {
-        "dataSize": 38106
-      },
-      "status": "success"
-    },
-    {
-      "id": "38ea76f0-1aa9-4e73-9b1e-8e64be4131bb",
-      "timestamp": "2026-03-20T02:16:37.725Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 565,
-        "total": 1102
-      },
-      "throughput": {
-        "dataRate": 30.920145190562614,
-        "chunkCount": 20,
-        "avgChunkSize": 1703.7
-      },
-      "quality": {
-        "dataSize": 34074
-      },
-      "status": "success"
-    },
-    {
-      "id": "08736a8a-bff3-4c1b-90e1-e851f18ec645",
-      "timestamp": "2026-03-20T02:16:39.852Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 568,
-        "total": 1125
-      },
-      "throughput": {
-        "dataRate": 44.112,
-        "chunkCount": 28,
-        "avgChunkSize": 1772.357142857143
-      },
-      "quality": {
-        "dataSize": 49626
-      },
-      "status": "success"
-    },
-    {
-      "id": "c0942621-2c27-4850-a4c0-fa6d1287c908",
-      "timestamp": "2026-03-20T02:16:41.464Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 611,
-        "total": 611
-      },
-      "throughput": {
-        "dataRate": 50.03764320785597,
-        "chunkCount": 1,
-        "avgChunkSize": 30573
-      },
-      "quality": {
-        "dataSize": 30573
-      },
-      "status": "success"
-    },
-    {
-      "id": "0153989c-559c-43a6-b1b9-33e4d005b78e",
-      "timestamp": "2026-03-20T02:16:43.540Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1073,
-        "total": 1073
-      },
-      "throughput": {
-        "dataRate": 27.419384902143523,
-        "chunkCount": 1,
-        "avgChunkSize": 29421
-      },
-      "quality": {
-        "dataSize": 29421
-      },
-      "status": "success"
-    },
-    {
-      "id": "569fb3b6-486f-415a-bc91-9b37556621f4",
-      "timestamp": "2026-03-20T02:16:45.657Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1115,
-        "total": 1115
-      },
-      "throughput": {
-        "dataRate": 27.419730941704035,
-        "chunkCount": 1,
-        "avgChunkSize": 30573
-      },
-      "quality": {
-        "dataSize": 30573
-      },
-      "status": "success"
-    },
-    {
-      "id": "7d4468ce-d73a-41af-b155-a33c249d91f9",
-      "timestamp": "2026-03-20T02:16:47.760Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1020,
-        "total": 1101
-      },
-      "throughput": {
-        "dataRate": 27.245231607629428,
-        "chunkCount": 17,
-        "avgChunkSize": 1764.5294117647059
-      },
-      "quality": {
-        "dataSize": 29997
-      },
-      "status": "success"
-    },
-    {
-      "id": "9a00b686-9e77-4876-a8c2-876528759901",
-      "timestamp": "2026-03-20T02:16:50.295Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1017,
-        "total": 1535
-      },
-      "throughput": {
-        "dataRate": 18.791530944625407,
-        "chunkCount": 16,
-        "avgChunkSize": 1802.8125
-      },
-      "quality": {
-        "dataSize": 28845
-      },
-      "status": "success"
-    },
-    {
-      "id": "e29569df-64b5-4924-86d9-be30528843a2",
-      "timestamp": "2026-03-20T02:16:51.919Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 585,
-        "total": 619
-      },
-      "throughput": {
-        "dataRate": 48.460420032310175,
-        "chunkCount": 17,
-        "avgChunkSize": 1764.5294117647059
-      },
-      "quality": {
-        "dataSize": 29997
-      },
-      "status": "success"
-    },
-    {
-      "id": "25e65aa8-b8f9-432a-b97a-fea2306a4654",
-      "timestamp": "2026-03-20T02:16:54.506Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1046,
-        "total": 1585
-      },
-      "throughput": {
-        "dataRate": 24.768454258675078,
-        "chunkCount": 23,
-        "avgChunkSize": 1706.8695652173913
-      },
-      "quality": {
-        "dataSize": 39258
-      },
-      "status": "success"
-    },
-    {
-      "id": "b39ee78a-d3e9-49b2-a1af-fd2351843c85",
-      "timestamp": "2026-03-20T02:16:56.609Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 557,
-        "total": 1103
-      },
-      "throughput": {
-        "dataRate": 34.54759746146872,
-        "chunkCount": 23,
-        "avgChunkSize": 1656.7826086956522
-      },
-      "quality": {
-        "dataSize": 38106
-      },
-      "status": "success"
-    },
-    {
-      "id": "596cc366-374f-4375-945a-6a8c8d5d2312",
-      "timestamp": "2026-03-20T02:16:58.757Z",
-      "provider": "minimax",
-      "model": "speech-2.8-hd",
-      "testType": "tts",
-      "scenario": "stream-in-stream-out-normal",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 550,
-        "total": 1140
-      },
-      "throughput": {
-        "dataRate": 35.44736842105263,
-        "chunkCount": 23,
-        "avgChunkSize": 1756.9565217391305
-      },
-      "quality": {
-        "dataSize": 40410
-      },
-      "status": "success"
-    },
-    {
-      "id": "72433bb5-b026-4dc1-a0fc-c33542b5c071",
-      "timestamp": "2026-03-20T02:17:01.328Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1565,
-        "total": 1565
-      },
-      "throughput": {
-        "dataRate": 63.284345047923324,
-        "chunkCount": 1,
-        "avgChunkSize": 99040
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "737ce493-956b-4a23-866a-d9abb328bef0",
-      "timestamp": "2026-03-20T02:17:03.464Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1131,
-        "total": 1131
-      },
-      "throughput": {
-        "dataRate": 87.56852343059239,
-        "chunkCount": 1,
-        "avgChunkSize": 99040
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "d5e7d798-010c-447f-91e5-74e33199de27",
-      "timestamp": "2026-03-20T02:17:05.541Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1075,
-        "total": 1075
-      },
-      "throughput": {
-        "dataRate": 92.13023255813954,
-        "chunkCount": 1,
-        "avgChunkSize": 99040
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "ba775d20-6dbe-4162-acd7-0a718fa12875",
-      "timestamp": "2026-03-20T02:17:07.628Z",
+      "id": "155b372d-cad2-4a68-a1cf-a98bbffb3df4",
+      "timestamp": "2026-03-20T08:02:03.349Z",
       "provider": "glm",
       "model": "glm-tts",
       "testType": "tts",
@@ -1661,323 +2111,28 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1065,
-        "total": 1087
-      },
-      "throughput": {
-        "dataRate": 91.11315547378105,
-        "chunkCount": 2,
-        "avgChunkSize": 49520
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "24d61264-d07d-4fec-976c-0b99ba8a58cd",
-      "timestamp": "2026-03-20T02:17:09.532Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 886,
-        "total": 902
-      },
-      "throughput": {
-        "dataRate": 109.80044345898004,
-        "chunkCount": 2,
-        "avgChunkSize": 49520
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "1b2923e4-0954-46d2-b43f-33559b9d0301",
-      "timestamp": "2026-03-20T02:17:11.826Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 6
-      },
-      "latency": {
-        "firstChunk": 1273,
-        "total": 1293
-      },
-      "throughput": {
-        "dataRate": 76.59706109822119,
-        "chunkCount": 2,
-        "avgChunkSize": 49520
-      },
-      "quality": {
-        "dataSize": 99040
-      },
-      "status": "success"
-    },
-    {
-      "id": "1d6e127f-b4cd-4fc7-a21e-5d67ad5fc452",
-      "timestamp": "2026-03-20T02:17:14.447Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1620,
-        "total": 1620
-      },
-      "throughput": {
-        "dataRate": 89.58024691358025,
-        "chunkCount": 1,
-        "avgChunkSize": 145120
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "8d8c4b9f-e566-4c60-8252-51c7e018eb41",
-      "timestamp": "2026-03-20T02:17:16.547Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1098,
-        "total": 1098
-      },
-      "throughput": {
-        "dataRate": 132.16757741347905,
-        "chunkCount": 1,
-        "avgChunkSize": 145120
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "16c8807d-2c58-45c0-8957-f89f84fd18d6",
-      "timestamp": "2026-03-20T02:17:18.643Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1095,
-        "total": 1095
-      },
-      "throughput": {
-        "dataRate": 132.5296803652968,
-        "chunkCount": 1,
-        "avgChunkSize": 145120
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "02d5f4f0-0837-4bda-bcc8-d12a7f5142f6",
-      "timestamp": "2026-03-20T02:17:20.750Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1069,
-        "total": 1106
-      },
-      "throughput": {
-        "dataRate": 131.2115732368897,
-        "chunkCount": 2,
-        "avgChunkSize": 72560
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "8b879e16-b776-4731-a195-92e6704ec6d0",
-      "timestamp": "2026-03-20T02:17:22.841Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1066,
-        "total": 1090
-      },
-      "throughput": {
-        "dataRate": 133.13761467889907,
-        "chunkCount": 2,
-        "avgChunkSize": 72560
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "350f0048-82b3-462b-997a-e5c3ab1eb8da",
-      "timestamp": "2026-03-20T02:17:24.939Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1087,
-        "total": 1097
-      },
-      "throughput": {
-        "dataRate": 132.2880583409298,
-        "chunkCount": 2,
-        "avgChunkSize": 72560
-      },
-      "quality": {
-        "dataSize": 145120
-      },
-      "status": "success"
-    },
-    {
-      "id": "70233065-e698-4fa4-b371-cc9f19c4d26e",
-      "timestamp": "2026-03-20T02:17:27.025Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
         "format": "mp3",
         "textLength": 8
       },
       "latency": {
         "firstChunk": 1078,
-        "total": 1078
+        "total": 1088
       },
       "throughput": {
-        "dataRate": 106.12244897959184,
-        "chunkCount": 1,
-        "avgChunkSize": 114400
+        "dataRate": 105.1470588235294,
+        "chunkCount": 2,
+        "avgChunkSize": 57200
       },
       "quality": {
-        "dataSize": 114400
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
       },
       "status": "success"
     },
     {
-      "id": "5511be25-b1e0-45a3-80f5-f08771965990",
-      "timestamp": "2026-03-20T02:17:29.119Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1094,
-        "total": 1094
-      },
-      "throughput": {
-        "dataRate": 104.57038391224863,
-        "chunkCount": 1,
-        "avgChunkSize": 114400
-      },
-      "quality": {
-        "dataSize": 114400
-      },
-      "status": "success"
-    },
-    {
-      "id": "7917b26e-a6fa-4597-9837-d88381692902",
-      "timestamp": "2026-03-20T02:17:31.221Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-non-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "non-stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1101,
-        "total": 1101
-      },
-      "throughput": {
-        "dataRate": 103.905540417802,
-        "chunkCount": 1,
-        "avgChunkSize": 114400
-      },
-      "quality": {
-        "dataSize": 114400
-      },
-      "status": "success"
-    },
-    {
-      "id": "1996b834-277a-4a18-98c0-97cc7d7d5c25",
-      "timestamp": "2026-03-20T02:17:33.313Z",
+      "id": "0822c1fb-b656-422d-b8e3-828ad2036cb5",
+      "timestamp": "2026-03-20T08:02:05.433Z",
       "provider": "glm",
       "model": "glm-tts",
       "testType": "tts",
@@ -1987,96 +2142,145 @@
         "outputMode": "stream",
         "format": "mp3",
         "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1068,
+        "total": 1082
+      },
+      "throughput": {
+        "dataRate": 105.73012939001849,
+        "chunkCount": 2,
+        "avgChunkSize": 57200
+      },
+      "quality": {
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c272e834-6c4e-428f-8c37-3ac0ec0ce7ea",
+      "timestamp": "2026-03-20T08:02:07.579Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "non-stream-in-stream-out",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "mp3",
+        "textLength": 8
+      },
+      "latency": {
+        "firstChunk": 1127,
+        "total": 1145
+      },
+      "throughput": {
+        "dataRate": 99.91266375545851,
+        "chunkCount": 2,
+        "avgChunkSize": 57200
+      },
+      "quality": {
+        "dataSize": 114400,
+        "audioDuration": 7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "caf09206-ca68-4aba-b5fb-eeb5278e2ff8",
+      "timestamp": "2026-03-20T08:02:09.615Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 999,
+        "total": 1000,
+        "perChar": 166.66666666666666,
+        "rtf": 1
+      },
+      "throughput": {
+        "dataRate": 0.03,
+        "chunkCount": 4,
+        "avgChunkSize": 7.5
+      },
+      "quality": {
+        "dataSize": 30,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "a60782e5-7717-4e08-95b2-0031b961716f",
+      "timestamp": "2026-03-20T08:02:11.710Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 638,
+        "total": 1093,
+        "perChar": 182.16666666666666,
+        "rtf": 1.093
+      },
+      "throughput": {
+        "dataRate": 0.027447392497712716,
+        "chunkCount": 4,
+        "avgChunkSize": 7.5
+      },
+      "quality": {
+        "dataSize": 30,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "454da52b-c21d-4e0a-8539-f851fb8550b7",
+      "timestamp": "2026-03-20T08:02:13.800Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
       },
       "latency": {
         "firstChunk": 1084,
-        "total": 1090
+        "total": 1085,
+        "perChar": 180.83333333333334,
+        "rtf": 1.085
       },
       "throughput": {
-        "dataRate": 104.95412844036697,
-        "chunkCount": 2,
-        "avgChunkSize": 57200
-      },
-      "quality": {
-        "dataSize": 114400
-      },
-      "status": "success"
-    },
-    {
-      "id": "82a45e1b-f809-4413-a56d-da07dd88598b",
-      "timestamp": "2026-03-20T02:17:35.420Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1092,
-        "total": 1105
-      },
-      "throughput": {
-        "dataRate": 103.52941176470588,
-        "chunkCount": 2,
-        "avgChunkSize": 57200
-      },
-      "quality": {
-        "dataSize": 114400
-      },
-      "status": "success"
-    },
-    {
-      "id": "a3caacda-a0a6-4dc7-8eb0-6eec1e364525",
-      "timestamp": "2026-03-20T02:17:37.518Z",
-      "provider": "glm",
-      "model": "glm-tts",
-      "testType": "tts",
-      "scenario": "non-stream-in-stream-out",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "textLength": 8
-      },
-      "latency": {
-        "firstChunk": 1076,
-        "total": 1096
-      },
-      "throughput": {
-        "dataRate": 104.37956204379562,
-        "chunkCount": 2,
-        "avgChunkSize": 57200
-      },
-      "quality": {
-        "dataSize": 114400
-      },
-      "status": "success"
-    },
-    {
-      "id": "4a6f126e-bec6-42a8-ab67-c0e29174f153",
-      "timestamp": "2026-03-20T02:17:39.604Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 584,
-        "total": 1047,
-        "perChar": 174.5,
-        "rtf": 1.047
-      },
-      "throughput": {
-        "dataRate": 0.02865329512893983,
+        "dataRate": 0.027649769585253458,
         "chunkCount": 4,
         "avgChunkSize": 7.5
       },
@@ -2084,71 +2288,17 @@
         "dataSize": 30,
         "textLength": 6
       },
-      "status": "success"
-    },
-    {
-      "id": "589dbe0a-235e-4184-9698-20337881bba7",
-      "timestamp": "2026-03-20T02:17:41.717Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 639,
-        "total": 1111,
-        "perChar": 185.16666666666666,
-        "rtf": 1.111
-      },
-      "throughput": {
-        "dataRate": 0.027002700270027002,
-        "chunkCount": 4,
-        "avgChunkSize": 7.5
-      },
-      "quality": {
-        "dataSize": 30,
-        "textLength": 6
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
       },
       "status": "success"
     },
     {
-      "id": "007795af-5a68-4838-bdf0-2b31563f9d7e",
-      "timestamp": "2026-03-20T02:17:43.799Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 641,
-        "total": 1080,
-        "perChar": 180,
-        "rtf": 1.08
-      },
-      "throughput": {
-        "dataRate": 0.027777777777777776,
-        "chunkCount": 4,
-        "avgChunkSize": 7.5
-      },
-      "quality": {
-        "dataSize": 30,
-        "textLength": 6
-      },
-      "status": "success"
-    },
-    {
-      "id": "a00f0edf-4be9-4596-9eeb-9a990e24f210",
-      "timestamp": "2026-03-20T02:17:45.891Z",
+      "id": "5c44d6c1-6759-4f01-ba90-a61e1d5cafdf",
+      "timestamp": "2026-03-20T08:02:15.895Z",
       "provider": "qwen",
       "model": "paraformer-realtime-v2",
       "testType": "asr",
@@ -2156,17 +2306,17 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
+        "format": "pcm",
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1088,
-        "total": 1088,
-        "perChar": 181.33333333333334,
-        "rtf": 1.088
+        "firstChunk": 1086,
+        "total": 1086,
+        "perChar": 181,
+        "rtf": 1.086
       },
       "throughput": {
-        "dataRate": 0.016544117647058824,
+        "dataRate": 0.016574585635359115,
         "chunkCount": 1,
         "avgChunkSize": 18
       },
@@ -2174,11 +2324,17 @@
         "dataSize": 18,
         "textLength": 6
       },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
       "status": "success"
     },
     {
-      "id": "dbe78bde-76d1-4ad4-9be9-c9aa9698c7ce",
-      "timestamp": "2026-03-20T02:17:47.987Z",
+      "id": "3d96627f-e774-430e-9c2e-14130bdc6416",
+      "timestamp": "2026-03-20T08:02:18.523Z",
       "provider": "qwen",
       "model": "paraformer-realtime-v2",
       "testType": "asr",
@@ -2186,17 +2342,17 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
+        "format": "pcm",
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1094,
-        "total": 1094,
-        "perChar": 182.33333333333334,
-        "rtf": 1.094
+        "firstChunk": 1627,
+        "total": 1627,
+        "perChar": 271.1666666666667,
+        "rtf": 1.627
       },
       "throughput": {
-        "dataRate": 0.016453382084095063,
+        "dataRate": 0.011063306699446834,
         "chunkCount": 1,
         "avgChunkSize": 18
       },
@@ -2204,11 +2360,17 @@
         "dataSize": 18,
         "textLength": 6
       },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
       "status": "success"
     },
     {
-      "id": "104f73cc-1d32-4b4b-be81-cd51ec24df3a",
-      "timestamp": "2026-03-20T02:17:50.085Z",
+      "id": "1b71dee1-ca68-4aaa-bc1c-ff0e087458b1",
+      "timestamp": "2026-03-20T08:02:20.616Z",
       "provider": "qwen",
       "model": "paraformer-realtime-v2",
       "testType": "asr",
@@ -2216,17 +2378,593 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
+        "format": "pcm",
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1097,
+        "firstChunk": 1090,
+        "total": 1090,
+        "perChar": 181.66666666666666,
+        "rtf": 1.09
+      },
+      "throughput": {
+        "dataRate": 0.01651376146788991,
+        "chunkCount": 1,
+        "avgChunkSize": 18
+      },
+      "quality": {
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "9d2bcd39-92b8-4000-88e7-fb2a0059817a",
+      "timestamp": "2026-03-20T08:02:25.882Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 536,
+        "total": 4262,
+        "perChar": 47.8876404494382,
+        "rtf": 0.20295238095238094
+      },
+      "throughput": {
+        "dataRate": 0.1661191928671985,
+        "chunkCount": 46,
+        "avgChunkSize": 15.391304347826088
+      },
+      "quality": {
+        "dataSize": 708,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "3f787a69-5c58-4943-8906-25eace7d0bb8",
+      "timestamp": "2026-03-20T08:02:31.629Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 886,
+        "total": 4746,
+        "perChar": 53.325842696629216,
+        "rtf": 0.22600000000000003
+      },
+      "throughput": {
+        "dataRate": 0.14917825537294563,
+        "chunkCount": 46,
+        "avgChunkSize": 15.391304347826088
+      },
+      "quality": {
+        "dataSize": 708,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "93379266-ef53-4eae-976b-29fa878bbd05",
+      "timestamp": "2026-03-20T08:02:35.831Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 640,
+        "total": 3200,
+        "perChar": 35.95505617977528,
+        "rtf": 0.1523809523809524
+      },
+      "throughput": {
+        "dataRate": 0.22125,
+        "chunkCount": 46,
+        "avgChunkSize": 15.391304347826088
+      },
+      "quality": {
+        "dataSize": 708,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "4aba8c24-1464-4649-a049-42b73acb658c",
+      "timestamp": "2026-03-20T08:02:40.354Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 3520,
+        "total": 3520,
+        "perChar": 39.550561797752806,
+        "rtf": 0.1676190476190476
+      },
+      "throughput": {
+        "dataRate": 0.07585227272727273,
+        "chunkCount": 1,
+        "avgChunkSize": 267
+      },
+      "quality": {
+        "dataSize": 267,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "70557587-8d5b-4d11-a654-b478e7d2666c",
+      "timestamp": "2026-03-20T08:02:45.275Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 3909,
+        "total": 3909,
+        "perChar": 43.92134831460674,
+        "rtf": 0.18614285714285714
+      },
+      "throughput": {
+        "dataRate": 0.06830391404451266,
+        "chunkCount": 1,
+        "avgChunkSize": 267
+      },
+      "quality": {
+        "dataSize": 267,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "c1280a81-f2f0-4ca3-9b80-2ff9a6d9d8a1",
+      "timestamp": "2026-03-20T08:02:51.559Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 5283,
+        "total": 5283,
+        "perChar": 59.359550561797754,
+        "rtf": 0.2515714285714286
+      },
+      "throughput": {
+        "dataRate": 0.05053946621237933,
+        "chunkCount": 1,
+        "avgChunkSize": 267
+      },
+      "quality": {
+        "dataSize": 267,
+        "textLength": 89
+      },
+      "accuracy": {
+        "accuracy": 0.8941176470588236,
+        "cer": 0.10588235294117647,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游。杭州是一座有着两千多年历史。曾是南宋都城。如今是现代与古典完美交融的东方名城。西湖林隐寺。警察员。处皆是风景。让我们一起开启这段美妙的杭州之旅吧。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "9dfb76b5-a109-496b-bf8d-939c0714c897",
+      "timestamp": "2026-03-20T08:03:01.516Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 620,
+        "total": 8947,
+        "perChar": 23.922459893048128,
+        "rtf": 0.10779518072289156
+      },
+      "throughput": {
+        "dataRate": 0.33743154129875935,
+        "chunkCount": 192,
+        "avgChunkSize": 15.723958333333334
+      },
+      "quality": {
+        "dataSize": 3019,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "9e7ab8de-f21b-4187-85d8-49d76144d4e6",
+      "timestamp": "2026-03-20T08:03:14.650Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 1093,
+        "total": 12132,
+        "perChar": 32.43850267379679,
+        "rtf": 0.1461686746987952
+      },
+      "throughput": {
+        "dataRate": 0.24884602703593803,
+        "chunkCount": 192,
+        "avgChunkSize": 15.723958333333334
+      },
+      "quality": {
+        "dataSize": 3019,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "56e3aabb-732b-4bbd-a776-0f517eb0387a",
+      "timestamp": "2026-03-20T08:03:30.892Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 460,
+        "total": 15241,
+        "perChar": 40.75133689839572,
+        "rtf": 0.1836265060240964
+      },
+      "throughput": {
+        "dataRate": 0.19808411521553704,
+        "chunkCount": 192,
+        "avgChunkSize": 15.723958333333334
+      },
+      "quality": {
+        "dataSize": 3019,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "cb313be2-20bb-49a7-b617-d0436eaff2a6",
+      "timestamp": "2026-03-20T08:03:43.888Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 11993,
+        "total": 11993,
+        "perChar": 32.0668449197861,
+        "rtf": 0.14449397590361446
+      },
+      "throughput": {
+        "dataRate": 0.0918869340448595,
+        "chunkCount": 1,
+        "avgChunkSize": 1102
+      },
+      "quality": {
+        "dataSize": 1102,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "608b2b69-a490-4cd3-9c58-30c77f483866",
+      "timestamp": "2026-03-20T08:04:00.056Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 15165,
+        "total": 15165,
+        "perChar": 40.54812834224599,
+        "rtf": 0.18271084337349397
+      },
+      "throughput": {
+        "dataRate": 0.07266732607978899,
+        "chunkCount": 1,
+        "avgChunkSize": 1102
+      },
+      "quality": {
+        "dataSize": 1102,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "7275991e-7bb1-4dd3-b406-a263141d79f3",
+      "timestamp": "2026-03-20T08:04:14.414Z",
+      "provider": "qwen",
+      "model": "paraformer-realtime-v2",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 13357,
+        "total": 13357,
+        "perChar": 35.713903743315505,
+        "rtf": 0.16092771084337348
+      },
+      "throughput": {
+        "dataRate": 0.08250355618776671,
+        "chunkCount": 1,
+        "avgChunkSize": 1102
+      },
+      "quality": {
+        "dataSize": 1102,
+        "textLength": 374
+      },
+      "accuracy": {
+        "accuracy": 0.8511749347258486,
+        "cer": 0.14882506527415143,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展力。可以追溯到20。50年代。当时科学家们开。是否能够创造一种可以模拟人类智能的机？这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低。从早期的服。到后来的连接主。再到今天的深度学。每一次。革新都推动着这个领域向前迈进。进入21世纪。计算能力的。提升和大数据时代的到来。深度学习技术取得了突。神经网络模型在图像识别。自然语言处理等领域。展。出惊人的能。特别是近年来。大型语言模型的出现，更是引发了新一轮的。这些模型通过在海量数据上的训练，获得了强大的。和生成。可以完成文本创作，代码生成。知识问答等多种任。展望未来，人工智能进。将继续深入我们。的方方面面。从智能家居到自动驾驶。从医疗诊断到金融分。AI将成为推动社会进步的重要力量。同时我们也需要认真思考AI发展带来的伦理问题。确保技术发展造福人。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "5747eee3-b4f6-46fa-b460-ef4c2fa04f54",
+      "timestamp": "2026-03-20T08:04:16.506Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 570,
+        "total": 1090,
+        "perChar": 181.66666666666666,
+        "rtf": 1.09
+      },
+      "throughput": {
+        "dataRate": 0.046788990825688076,
+        "chunkCount": 9,
+        "avgChunkSize": 5.666666666666667
+      },
+      "quality": {
+        "dataSize": 51,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "53ca626e-f29b-4b4d-92cc-cef15f55a245",
+      "timestamp": "2026-03-20T08:04:18.605Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 574,
         "total": 1097,
         "perChar": 182.83333333333334,
         "rtf": 1.097
       },
       "throughput": {
-        "dataRate": 0.016408386508659983,
+        "dataRate": 0.04649042844120328,
+        "chunkCount": 9,
+        "avgChunkSize": 5.666666666666667
+      },
+      "quality": {
+        "dataSize": 51,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "d9021f75-02c7-4f09-8c74-877a78a01af8",
+      "timestamp": "2026-03-20T08:04:20.709Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 514,
+        "total": 1102,
+        "perChar": 183.66666666666666,
+        "rtf": 1.102
+      },
+      "throughput": {
+        "dataRate": 0.04627949183303085,
+        "chunkCount": 9,
+        "avgChunkSize": 5.666666666666667
+      },
+      "quality": {
+        "dataSize": 51,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "f91866fc-63ef-47af-96bd-aa0582d70c7b",
+      "timestamp": "2026-03-20T08:04:22.920Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 1206,
+        "total": 1206,
+        "perChar": 201,
+        "rtf": 1.206
+      },
+      "throughput": {
+        "dataRate": 0.014925373134328358,
         "chunkCount": 1,
         "avgChunkSize": 18
       },
@@ -2234,449 +2972,17 @@
         "dataSize": 18,
         "textLength": 6
       },
-      "status": "success"
-    },
-    {
-      "id": "efac6dfa-8c71-44e7-9ea0-f1cd80d9dbf5",
-      "timestamp": "2026-03-20T02:17:55.858Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 633,
-        "total": 4765,
-        "perChar": 49.635416666666664,
-        "rtf": 0.595625
-      },
-      "throughput": {
-        "dataRate": 1.0875131164742917,
-        "chunkCount": 38,
-        "avgChunkSize": 136.3684210526316
-      },
-      "quality": {
-        "dataSize": 5182,
-        "textLength": 96
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
       },
       "status": "success"
     },
     {
-      "id": "0a682f91-03e7-4263-9003-144c9a680763",
-      "timestamp": "2026-03-20T02:18:01.106Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 1097,
-        "total": 4247,
-        "perChar": 44.239583333333336,
-        "rtf": 0.530875
-      },
-      "throughput": {
-        "dataRate": 1.2201554038144573,
-        "chunkCount": 38,
-        "avgChunkSize": 136.3684210526316
-      },
-      "quality": {
-        "dataSize": 5182,
-        "textLength": 96
-      },
-      "status": "success"
-    },
-    {
-      "id": "3590ac6c-854c-4184-8ac9-1977f01af4fb",
-      "timestamp": "2026-03-20T02:18:06.872Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 694,
-        "total": 4765,
-        "perChar": 49.635416666666664,
-        "rtf": 0.595625
-      },
-      "throughput": {
-        "dataRate": 1.0875131164742917,
-        "chunkCount": 38,
-        "avgChunkSize": 136.3684210526316
-      },
-      "quality": {
-        "dataSize": 5182,
-        "textLength": 96
-      },
-      "status": "success"
-    },
-    {
-      "id": "6ee71371-d7ea-48e7-b143-8b9431ef509c",
-      "timestamp": "2026-03-20T02:18:12.641Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 4767,
-        "total": 4767,
-        "perChar": 49.65625,
-        "rtf": 0.595875
-      },
-      "throughput": {
-        "dataRate": 0.06041535556954059,
-        "chunkCount": 1,
-        "avgChunkSize": 288
-      },
-      "quality": {
-        "dataSize": 288,
-        "textLength": 96
-      },
-      "status": "success"
-    },
-    {
-      "id": "f7526f55-b1e4-4b26-9df8-a365ae6cd7fe",
-      "timestamp": "2026-03-20T02:18:18.934Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 5291,
-        "total": 5291,
-        "perChar": 55.114583333333336,
-        "rtf": 0.661375
-      },
-      "throughput": {
-        "dataRate": 0.054432054432054434,
-        "chunkCount": 1,
-        "avgChunkSize": 288
-      },
-      "quality": {
-        "dataSize": 288,
-        "textLength": 96
-      },
-      "status": "success"
-    },
-    {
-      "id": "1153842d-d3fc-457c-821b-35699ed89170",
-      "timestamp": "2026-03-20T02:18:24.176Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 4240,
-        "total": 4240,
-        "perChar": 44.166666666666664,
-        "rtf": 0.53
-      },
-      "throughput": {
-        "dataRate": 0.06792452830188679,
-        "chunkCount": 1,
-        "avgChunkSize": 288
-      },
-      "quality": {
-        "dataSize": 288,
-        "textLength": 96
-      },
-      "status": "success"
-    },
-    {
-      "id": "6974e876-eef5-497e-88ec-75a323132c43",
-      "timestamp": "2026-03-20T02:18:46.729Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 1620,
-        "total": 21551,
-        "perChar": 52.30825242718446,
-        "rtf": 0.6951935483870967
-      },
-      "throughput": {
-        "dataRate": 1.2787341654679598,
-        "chunkCount": 84,
-        "avgChunkSize": 328.07142857142856
-      },
-      "quality": {
-        "dataSize": 27558,
-        "textLength": 412
-      },
-      "status": "success"
-    },
-    {
-      "id": "456c4d27-516a-446b-8b6b-0d24beaa2a8a",
-      "timestamp": "2026-03-20T02:19:08.225Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 651,
-        "total": 20495,
-        "perChar": 49.74514563106796,
-        "rtf": 0.6611290322580645
-      },
-      "throughput": {
-        "dataRate": 1.344620639180288,
-        "chunkCount": 84,
-        "avgChunkSize": 328.07142857142856
-      },
-      "quality": {
-        "dataSize": 27558,
-        "textLength": 412
-      },
-      "status": "success"
-    },
-    {
-      "id": "1c1c5114-2f17-4a10-8072-c57514858119",
-      "timestamp": "2026-03-20T02:19:30.251Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 1091,
-        "total": 21021,
-        "perChar": 51.021844660194176,
-        "rtf": 0.6780967741935484
-      },
-      "throughput": {
-        "dataRate": 1.3429427715142002,
-        "chunkCount": 85,
-        "avgChunkSize": 332.11764705882354
-      },
-      "quality": {
-        "dataSize": 28230,
-        "textLength": 412
-      },
-      "status": "success"
-    },
-    {
-      "id": "d7a929cc-368a-474c-9b6f-bbd4e5a029ff",
-      "timestamp": "2026-03-20T02:19:33.019Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 1766,
-        "total": 1766,
-        "rtf": 0.05696774193548387
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "a51d0427-21c3-42af-9785-ea875e1d2b44",
-      "timestamp": "2026-03-20T02:19:36.060Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 2040,
-        "total": 2040,
-        "rtf": 0.06580645161290323
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "3b201911-6450-41d7-bcf2-39f8d5599ff7",
-      "timestamp": "2026-03-20T02:19:38.688Z",
-      "provider": "qwen",
-      "model": "paraformer-realtime-v2",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 1627,
-        "total": 1627,
-        "rtf": 0.05248387096774194
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "7f415990-df02-42e5-91cb-76d09202c0d0",
-      "timestamp": "2026-03-20T02:19:40.757Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 626,
-        "total": 1067,
-        "rtf": 1.067
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 5,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "7390e88b-3f7f-443b-8b2e-3a51b2fcbc25",
-      "timestamp": "2026-03-20T02:19:42.852Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 647,
-        "total": 1094,
-        "rtf": 1.094
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 5,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "aba2d468-0233-4e03-bac3-8b140c7afb08",
-      "timestamp": "2026-03-20T02:19:44.945Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 679,
-        "total": 1089,
-        "rtf": 1.089
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 5,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "84b4c643-5bac-4cf3-a2d3-9628c874f457",
-      "timestamp": "2026-03-20T02:19:47.062Z",
+      "id": "f887419e-f758-4777-8d11-bd3a78263cd5",
+      "timestamp": "2026-03-20T08:04:24.894Z",
       "provider": "doubao",
       "model": "bigmodel",
       "testType": "asr",
@@ -2684,27 +2990,35 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
+        "format": "pcm",
         "audioDuration": 1
       },
       "latency": {
-        "firstChunk": 1116,
-        "total": 1116,
-        "rtf": 1.116
+        "firstChunk": 972,
+        "total": 972,
+        "perChar": 162,
+        "rtf": 0.972
       },
       "throughput": {
-        "dataRate": 0,
+        "dataRate": 0.018518518518518517,
         "chunkCount": 1,
-        "avgChunkSize": 0
+        "avgChunkSize": 18
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
       },
       "status": "success"
     },
     {
-      "id": "bea1d060-cb25-42da-bf1c-9d563663e734",
-      "timestamp": "2026-03-20T02:19:49.200Z",
+      "id": "0db11490-07e0-4d98-8745-1b8a7d4523d4",
+      "timestamp": "2026-03-20T08:04:26.825Z",
       "provider": "doubao",
       "model": "bigmodel",
       "testType": "asr",
@@ -2712,27 +3026,359 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
+        "format": "pcm",
         "audioDuration": 1
+      },
+      "latency": {
+        "firstChunk": 930,
+        "total": 930,
+        "perChar": 155,
+        "rtf": 0.93
+      },
+      "throughput": {
+        "dataRate": 0.01935483870967742,
+        "chunkCount": 1,
+        "avgChunkSize": 18
+      },
+      "quality": {
+        "dataSize": 18,
+        "textLength": 6
+      },
+      "accuracy": {
+        "accuracy": 1,
+        "cer": 0,
+        "expectedText": "你好，欢迎！",
+        "actualText": "你好，欢迎。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "215a882a-4b79-448c-ba5c-8c268e44050b",
+      "timestamp": "2026-03-20T08:04:40.624Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 293,
+        "total": 12785,
+        "perChar": 131.8041237113402,
+        "rtf": 0.6088095238095238
+      },
+      "throughput": {
+        "dataRate": 1.8355885803676184,
+        "chunkCount": 165,
+        "avgChunkSize": 142.23030303030302
+      },
+      "quality": {
+        "dataSize": 23468,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "459ce4ae-1065-48f7-affb-f1313e1a9a18",
+      "timestamp": "2026-03-20T08:04:56.887Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 657,
+        "total": 15261,
+        "perChar": 157.3298969072165,
+        "rtf": 0.7267142857142856
+      },
+      "throughput": {
+        "dataRate": 1.5377760304042984,
+        "chunkCount": 165,
+        "avgChunkSize": 142.23030303030302
+      },
+      "quality": {
+        "dataSize": 23468,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "caed54bc-68ca-40f3-a7a3-cddbbe1a04a9",
+      "timestamp": "2026-03-20T08:05:10.507Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 646,
+        "total": 12618,
+        "perChar": 130.08247422680412,
+        "rtf": 0.6008571428571429
+      },
+      "throughput": {
+        "dataRate": 1.8598827072436201,
+        "chunkCount": 165,
+        "avgChunkSize": 142.23030303030302
+      },
+      "quality": {
+        "dataSize": 23468,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "b1c7e00e-cac4-4725-8075-0268ca84a0f5",
+      "timestamp": "2026-03-20T08:05:27.287Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 15777,
+        "total": 15777,
+        "perChar": 162.64948453608247,
+        "rtf": 0.7512857142857142
+      },
+      "throughput": {
+        "dataRate": 0.017810737149014388,
+        "chunkCount": 1,
+        "avgChunkSize": 281
+      },
+      "quality": {
+        "dataSize": 281,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "3628bb97-f771-42a1-adf8-d6e7d3f8b2fc",
+      "timestamp": "2026-03-20T08:05:42.055Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 13766,
+        "total": 13766,
+        "perChar": 141.91752577319588,
+        "rtf": 0.6555238095238095
+      },
+      "throughput": {
+        "dataRate": 0.020412610780183058,
+        "chunkCount": 1,
+        "avgChunkSize": 281
+      },
+      "quality": {
+        "dataSize": 281,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "9f02702b-73dd-4189-bfa7-ae9d30b8c2ac",
+      "timestamp": "2026-03-20T08:05:59.847Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 21
+      },
+      "latency": {
+        "firstChunk": 16791,
+        "total": 16791,
+        "perChar": 173.10309278350516,
+        "rtf": 0.7995714285714286
+      },
+      "throughput": {
+        "dataRate": 0.01673515573819308,
+        "chunkCount": 1,
+        "avgChunkSize": 281
+      },
+      "quality": {
+        "dataSize": 281,
+        "textLength": 97
+      },
+      "accuracy": {
+        "accuracy": 0.9529411764705882,
+        "cer": 0.047058823529411764,
+        "expectedText": "欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！",
+        "actualText": "欢迎来到杭州，我是您的智能导游，杭州是一座有着2,000多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖灵隐寺、龙井茶园，处处皆是风景，让我们一起开启这段美妙的杭州之旅吧！"
+      },
+      "status": "success"
+    },
+    {
+      "id": "71f72ec4-0c51-4b29-abfa-d72db12e69ae",
+      "timestamp": "2026-03-20T08:06:53.639Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 607,
+        "total": 52786,
+        "perChar": 127.81113801452784,
+        "rtf": 0.6359759036144579
+      },
+      "throughput": {
+        "dataRate": 7.403478194975941,
+        "chunkCount": 652,
+        "avgChunkSize": 599.3865030674847
+      },
+      "quality": {
+        "dataSize": 390800,
+        "textLength": 413
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "738678c7-fa37-4da3-8a77-6cc0b4655326",
+      "timestamp": "2026-03-20T08:07:44.480Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
+      },
+      "latency": {
+        "firstChunk": 326,
+        "total": 49836,
+        "perChar": 120.3768115942029,
+        "rtf": 0.600433734939759
+      },
+      "throughput": {
+        "dataRate": 7.843185648928485,
+        "chunkCount": 652,
+        "avgChunkSize": 599.4984662576687
+      },
+      "quality": {
+        "dataSize": 390873,
+        "textLength": 414
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
+      },
+      "status": "success"
+    },
+    {
+      "id": "8d86b752-cced-480b-8757-ef6c7292dd30",
+      "timestamp": "2026-03-20T08:08:39.299Z",
+      "provider": "doubao",
+      "model": "bigmodel",
+      "testType": "asr",
+      "scenario": "stream-input-stream-output",
+      "config": {
+        "inputMode": "stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "audioDuration": 83
       },
       "latency": {
         "firstChunk": 1137,
-        "total": 1137,
-        "rtf": 1.137
+        "total": 53815,
+        "perChar": 130.30266343825667,
+        "rtf": 0.6483734939759036
       },
       "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
+        "dataRate": 7.261915822726006,
+        "chunkCount": 652,
+        "avgChunkSize": 599.3865030674847
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 390800,
+        "textLength": 413
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
       },
       "status": "success"
     },
     {
-      "id": "fd4dbe17-0eb9-411f-8454-602bc08ba167",
-      "timestamp": "2026-03-20T02:19:54.388Z",
+      "id": "249bb4b3-681e-4311-baa1-6797be8a4b4b",
+      "timestamp": "2026-03-20T08:09:32.716Z",
       "provider": "doubao",
       "model": "bigmodel",
       "testType": "asr",
@@ -2740,111 +3386,35 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
+        "format": "pcm",
+        "audioDuration": 83
       },
       "latency": {
-        "firstChunk": 4186,
-        "total": 4186,
-        "rtf": 4.186
+        "firstChunk": 52414,
+        "total": 52414,
+        "perChar": 126.91041162227603,
+        "rtf": 0.6314939759036144
       },
       "throughput": {
-        "dataRate": 0,
+        "dataRate": 0.023142671805242872,
         "chunkCount": 1,
-        "avgChunkSize": 0
+        "avgChunkSize": 1213
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 1213,
+        "textLength": 413
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
       },
       "status": "success"
     },
     {
-      "id": "8b92e87d-d2f3-40bb-9b9f-4942d01676f2",
-      "timestamp": "2026-03-20T02:19:57.009Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 649,
-        "total": 1616,
-        "rtf": 0.202
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 40,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "b96863b4-4dca-4a45-8a69-d1f12b538cf5",
-      "timestamp": "2026-03-20T02:19:59.109Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 573,
-        "total": 1098,
-        "rtf": 0.13725
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 40,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "979ecd71-ec2b-4be3-b883-c6216309556b",
-      "timestamp": "2026-03-20T02:20:01.291Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 576,
-        "total": 1179,
-        "rtf": 0.147375
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 40,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "23d26772-8d3c-4994-9119-73a854f7e89c",
-      "timestamp": "2026-03-20T02:20:04.350Z",
+      "id": "e6acc41f-1564-41aa-865e-f1b33517e918",
+      "timestamp": "2026-03-20T08:10:35.389Z",
       "provider": "doubao",
       "model": "bigmodel",
       "testType": "asr",
@@ -2852,27 +3422,35 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
+        "format": "pcm",
+        "audioDuration": 83
       },
       "latency": {
-        "firstChunk": 2056,
-        "total": 2056,
-        "rtf": 0.257
+        "firstChunk": 61669,
+        "total": 61669,
+        "perChar": 149.31961259079904,
+        "rtf": 0.743
       },
       "throughput": {
-        "dataRate": 0,
+        "dataRate": 0.019669526017934456,
         "chunkCount": 1,
-        "avgChunkSize": 0
+        "avgChunkSize": 1213
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 1213,
+        "textLength": 413
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
       },
       "status": "success"
     },
     {
-      "id": "0b39350a-557b-42ed-bfad-e16988794aa5",
-      "timestamp": "2026-03-20T02:20:06.971Z",
+      "id": "40a31b6e-3c5c-4c06-8e33-0acfa7fc1f80",
+      "timestamp": "2026-03-20T08:11:37.452Z",
       "provider": "doubao",
       "model": "bigmodel",
       "testType": "asr",
@@ -2880,223 +3458,35 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
+        "format": "pcm",
+        "audioDuration": 83
       },
       "latency": {
-        "firstChunk": 1619,
-        "total": 1619,
-        "rtf": 0.202375
+        "firstChunk": 61060,
+        "total": 61060,
+        "perChar": 147.48792270531402,
+        "rtf": 0.7356626506024097
       },
       "throughput": {
-        "dataRate": 0,
+        "dataRate": 0.019914837864395678,
         "chunkCount": 1,
-        "avgChunkSize": 0
+        "avgChunkSize": 1216
       },
       "quality": {
-        "dataSize": 0
+        "dataSize": 1216,
+        "textLength": 414
+      },
+      "accuracy": {
+        "accuracy": 0.9817232375979112,
+        "cer": 0.018276762402088774,
+        "expectedText": "人工智能技术的发展历程可以追溯到二十世纪五十年代。当时，科学家们开始思考是否能够创造一种可以模拟人类智能的机器。这一想法催生了人工智能这一学科的诞生。\n\n经过几十年的发展，人工智能经历了多次高潮与低谷。从早期的符号主义，到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。\n\n进入二十一世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力。\n\n特别是近年来，大型语言模型的出现更是引发了新一轮的人工智能热潮。这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。\n\n展望未来，人工智能技术将继续深入我们生活的方方面面。从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。",
+        "actualText": "人工智能技术的发展历程可以追溯到20世纪50年代，当时科学家们开始思考是否能够创造一种可以模拟人类智能的机器，这一想法催生了人工智能这一学科的诞生。经过几十年的发展，人工智能经历了多次高潮与低谷，从早期的符号主义到后来的连接主义，再到今天的深度学习，每一次技术革新都推动着这个领域向前迈进。进入21世纪，随着计算能力的飞速提升和大数据时代的到来，深度学习技术取得了突破性进展。神经网络模型在图像识别、语音识别、自然语言处理等领域展现出惊人的能力，特别是近年来大型语言模型的出现，更是引发了新一轮的人工智能热潮，这些模型通过在海量数据上的训练，获得了强大的语言理解和生成能力，可以完成文本创作、代码生成、知识问答等多种任务。展望未来，人工智能技术将继续深入我们生活的方方面面，从智能家居到自动驾驶，从医疗诊断到金融分析，AI 将成为推动社会进步的重要力量。同时，我们也需要认真思考 AI 发展带来的伦理问题，确保技术发展造福人类。"
       },
       "status": "success"
     },
     {
-      "id": "173b301f-8629-4d59-8702-c88fe7ec0d97",
-      "timestamp": "2026-03-20T02:20:09.590Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 1618,
-        "total": 1618,
-        "rtf": 0.20225
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "944b407e-fa6c-4542-8f96-e315dcfcdf19",
-      "timestamp": "2026-03-20T02:20:14.836Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 1096,
-        "total": 4241,
-        "rtf": 0.13680645161290322
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 157,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "bda1ee93-1d7c-4cf3-8d49-a04c7cbdfaa5",
-      "timestamp": "2026-03-20T02:20:20.081Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 669,
-        "total": 4243,
-        "rtf": 0.1368709677419355
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 157,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "d7acf010-355d-4b08-a53e-9ecaf4dbe050",
-      "timestamp": "2026-03-20T02:20:24.808Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "stream-input-stream-output",
-      "config": {
-        "inputMode": "stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 568,
-        "total": 3723,
-        "rtf": 0.12009677419354839
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 157,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "6cebbac2-e40e-4afd-96f1-91191b24fc95",
-      "timestamp": "2026-03-20T02:20:29.658Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 3848,
-        "total": 3848,
-        "rtf": 0.12412903225806451
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "3ff68c60-f9a4-4f2a-86d0-ffb1911f9f3e",
-      "timestamp": "2026-03-20T02:20:35.288Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 4627,
-        "total": 4627,
-        "rtf": 0.14925806451612902
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "776bf91f-2ef9-48fa-8287-ed04c97c5240",
-      "timestamp": "2026-03-20T02:20:39.483Z",
-      "provider": "doubao",
-      "model": "bigmodel",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 31
-      },
-      "latency": {
-        "firstChunk": 3193,
-        "total": 3193,
-        "rtf": 0.10300000000000001
-      },
-      "throughput": {
-        "dataRate": 0,
-        "chunkCount": 1,
-        "avgChunkSize": 0
-      },
-      "quality": {
-        "dataSize": 0
-      },
-      "status": "success"
-    },
-    {
-      "id": "a63e4bd3-a892-4632-87c2-ea39b1fe0fd6",
-      "timestamp": "2026-03-20T02:20:41.078Z",
+      "id": "85abad52-9a7f-40f1-ad11-31c93f236926",
+      "timestamp": "2026-03-20T08:11:39.031Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -3104,187 +3494,7 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 593,
-        "total": 593,
-        "perChar": 118.6,
-        "rtf": 0.593
-      },
-      "throughput": {
-        "dataRate": 0.025295109612141653,
-        "chunkCount": 1,
-        "avgChunkSize": 15
-      },
-      "quality": {
-        "dataSize": 15,
-        "textLength": 5
-      },
-      "status": "success"
-    },
-    {
-      "id": "05104b4c-3f4b-46a3-aa69-a51385107c8c",
-      "timestamp": "2026-03-20T02:20:42.626Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 548,
-        "total": 548,
-        "perChar": 109.6,
-        "rtf": 0.548
-      },
-      "throughput": {
-        "dataRate": 0.02737226277372263,
-        "chunkCount": 1,
-        "avgChunkSize": 15
-      },
-      "quality": {
-        "dataSize": 15,
-        "textLength": 5
-      },
-      "status": "success"
-    },
-    {
-      "id": "07d43a37-eb27-4059-a709-70cb7f54581c",
-      "timestamp": "2026-03-20T02:20:44.198Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 1
-      },
-      "latency": {
-        "firstChunk": 571,
-        "total": 571,
-        "perChar": 114.2,
-        "rtf": 0.571
-      },
-      "throughput": {
-        "dataRate": 0.02626970227670753,
-        "chunkCount": 1,
-        "avgChunkSize": 15
-      },
-      "quality": {
-        "dataSize": 15,
-        "textLength": 5
-      },
-      "status": "success"
-    },
-    {
-      "id": "89bb078f-3ba8-43d7-bca8-52f2317cb054",
-      "timestamp": "2026-03-20T02:20:46.341Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 1140,
-        "total": 1140,
-        "perChar": 12.391304347826088,
-        "rtf": 0.1425
-      },
-      "throughput": {
-        "dataRate": 0.24210526315789474,
-        "chunkCount": 1,
-        "avgChunkSize": 276
-      },
-      "quality": {
-        "dataSize": 276,
-        "textLength": 92
-      },
-      "status": "success"
-    },
-    {
-      "id": "8eff3b3a-e3cc-4e50-bc6c-e8eadef60a24",
-      "timestamp": "2026-03-20T02:20:48.398Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 1056,
-        "total": 1056,
-        "perChar": 11.478260869565217,
-        "rtf": 0.132
-      },
-      "throughput": {
-        "dataRate": 0.26136363636363635,
-        "chunkCount": 1,
-        "avgChunkSize": 276
-      },
-      "quality": {
-        "dataSize": 276,
-        "textLength": 92
-      },
-      "status": "success"
-    },
-    {
-      "id": "3fb467d5-5985-4dec-912c-120722900a39",
-      "timestamp": "2026-03-20T02:20:50.498Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3",
-        "audioDuration": 8
-      },
-      "latency": {
-        "firstChunk": 1099,
-        "total": 1099,
-        "perChar": 11.945652173913043,
-        "rtf": 0.137375
-      },
-      "throughput": {
-        "dataRate": 0.25113739763421294,
-        "chunkCount": 1,
-        "avgChunkSize": 276
-      },
-      "quality": {
-        "dataSize": 276,
-        "textLength": 92
-      },
-      "status": "success"
-    },
-    {
-      "id": "93e5733f-d911-41b4-8735-10b41967d560",
-      "timestamp": "2026-03-20T02:20:52.066Z",
-      "provider": "glm",
-      "model": "glm-asr-2512",
-      "testType": "asr",
-      "scenario": "non-stream-input-non-stream-output",
-      "config": {
-        "inputMode": "non-stream",
-        "outputMode": "stream",
-        "format": "mp3"
+        "format": "pcm"
       },
       "latency": {
         "firstChunk": 0,
@@ -3299,11 +3509,11 @@
         "dataSize": 0
       },
       "status": "error",
-      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
     },
     {
-      "id": "ea8f67fb-fe17-49b5-a55a-4bcc0d26ac93",
-      "timestamp": "2026-03-20T02:20:54.162Z",
+      "id": "ba46c0ee-0d35-405b-b223-385f57a68718",
+      "timestamp": "2026-03-20T08:11:40.237Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -3311,11 +3521,11 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3"
+        "format": "pcm"
       },
       "latency": {
         "firstChunk": 0,
-        "total": 1095
+        "total": 204
       },
       "throughput": {
         "dataRate": 0,
@@ -3326,11 +3536,11 @@
         "dataSize": 0
       },
       "status": "error",
-      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
     },
     {
-      "id": "4a3f171b-239d-4f42-8e21-e950a5389781",
-      "timestamp": "2026-03-20T02:20:56.268Z",
+      "id": "cd043adf-1dd5-4954-ad6f-28322d165a6b",
+      "timestamp": "2026-03-20T08:11:41.456Z",
       "provider": "glm",
       "model": "glm-asr-2512",
       "testType": "asr",
@@ -3338,11 +3548,11 @@
       "config": {
         "inputMode": "non-stream",
         "outputMode": "stream",
-        "format": "mp3"
+        "format": "pcm"
       },
       "latency": {
         "firstChunk": 0,
-        "total": 1104
+        "total": 217
       },
       "throughput": {
         "dataRate": 0,
@@ -3353,7 +3563,169 @@
         "dataSize": 0
       },
       "status": "error",
-      "error": "GLM ASR 请求失败: transcriptions文件时长限制为0-30秒"
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "247fa9cb-9f87-428d-9093-8de2f5b88e02",
+      "timestamp": "2026-03-20T08:11:43.026Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 563
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "629392ab-81aa-46cc-a867-b9c6fb23a146",
+      "timestamp": "2026-03-20T08:11:44.605Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 576
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "762cc368-a881-4839-b392-ff995036d70a",
+      "timestamp": "2026-03-20T08:11:46.180Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 572
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "179a6771-2ca4-4158-b4c4-aea8238c9e30",
+      "timestamp": "2026-03-20T08:11:48.159Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 968
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "0bbd66e4-bf14-4f47-b4bf-fe5624d2a100",
+      "timestamp": "2026-03-20T08:11:51.087Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 1924
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
+    },
+    {
+      "id": "3c2b7e82-37d3-41c2-a945-79f65a9d15ab",
+      "timestamp": "2026-03-20T08:11:54.104Z",
+      "provider": "glm",
+      "model": "glm-asr-2512",
+      "testType": "asr",
+      "scenario": "non-stream-input-non-stream-output",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm"
+      },
+      "latency": {
+        "firstChunk": 0,
+        "total": 2014
+      },
+      "throughput": {
+        "dataRate": 0,
+        "chunkCount": 0,
+        "avgChunkSize": 0
+      },
+      "quality": {
+        "dataSize": 0
+      },
+      "status": "error",
+      "error": "GLM ASR 请求失败: transcriptions不支持当前文件格式"
     }
   ]
 }

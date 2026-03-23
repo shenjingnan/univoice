@@ -64,6 +64,8 @@
     "format": "biome format --write .",
     "spellcheck": "cspell lint .",
     "benchmark": "tsx benchmark/index.ts",
+    "benchmark:run": "tsx benchmark/run.ts",
+    "benchmark:analyze": "tsx benchmark/analyze.ts",
     "benchmark:sync": "tsx benchmark/sync-readme.ts",
     "release": "release-it",
     "release:beta": "release-it --preRelease=beta --ci",

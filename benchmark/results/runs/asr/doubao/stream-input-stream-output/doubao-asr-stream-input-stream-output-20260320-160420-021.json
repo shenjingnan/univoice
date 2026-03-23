@@ -1,0 +1,35 @@
+{
+  "id": "d9021f75-02c7-4f09-8c74-877a78a01af8",
+  "timestamp": "2026-03-20T08:04:20.709Z",
+  "provider": "doubao",
+  "model": "bigmodel",
+  "testType": "asr",
+  "scenario": "stream-input-stream-output",
+  "config": {
+    "inputMode": "stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "audioDuration": 1
+  },
+  "latency": {
+    "firstChunk": 514,
+    "total": 1102,
+    "perChar": 183.66666666666666,
+    "rtf": 1.102
+  },
+  "throughput": {
+    "dataRate": 0.04627949183303085,
+    "chunkCount": 9,
+    "avgChunkSize": 5.666666666666667
+  },
+  "quality": {
+    "dataSize": 51,
+    "textLength": 6
+  },
+  "status": "success",
+  "accuracy": {
+    "expectedText": "你好，欢迎！",
+    "actualText": "你好，欢迎。"
+  },
+  "iteration": 21
+}

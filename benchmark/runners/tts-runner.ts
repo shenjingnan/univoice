@@ -11,6 +11,7 @@ import type {
   StreamInputConfig,
   TextFixture,
 } from '../metrics/types';
+import { saveSingleResult, toSingleTestResult } from '../utils/result-writer';
 
 /**
  * 提供商配置
@@ -136,6 +137,52 @@ function createTextStream(
 }
 
 /**
+ * 估算音频时长（秒）
+ * 基于 MP3 文件大小和平均比特率估算
+ * @param audioSize 音频大小（字节）
+ * @param format 音频格式
+ * @returns 估算时长（秒）
+ */
+function estimateAudioDuration(audioSize: number, format: string): number {
+  if (audioSize === 0) return 0;
+
+  // 不同格式的平均比特率估算
+  const bitrateKbps: Record<string, number> = {
+    mp3: 128, // MP3 平均比特率
+    wav: 256, // WAV 无压缩，较高
+    pcm: 256, // PCM 原始
+    ogg: 112, // OGG Vorbis
+  };
+
+  const kbps = bitrateKbps[format] || 128;
+  // 时长 = 大小(KB) * 8 / 比特率(kbps)
+  return ((audioSize / 1024) * 8) / kbps;
+}
+
+/**
+ * 计算音频码率（kbps）
+ * @param audioSize 音频大小（字节）
+ * @param duration 时长（秒）
+ * @returns 码率（kbps）
+ */
+function calculateBitrate(audioSize: number, duration: number): number {
+  if (duration === 0) return 0;
+  // 码率 = 大小(bytes) * 8 / 时长(s) / 1000
+  return (audioSize * 8) / duration / 1000;
+}
+
+/**
+ * 更新结果的质量指标
+ */
+function updateQualityMetrics(result: BenchmarkResult, audioSize: number, format: string): void {
+  const duration = estimateAudioDuration(audioSize, format);
+  const bitrate = calculateBitrate(audioSize, duration);
+
+  result.quality.audioDuration = Math.round(duration * 10) / 10; // 保留一位小数
+  result.quality.bitrate = Math.round(bitrate);
+}
+
+/**
  * 测试非流式输入、非流式输出
  */
 async function testNonStreamInOut(
@@ -152,7 +199,7 @@ async function testNonStreamInOut(
     collector.addChunk(new Uint8Array(response.audio));
     collector.endCollecting();
 
-    return collector.buildResult(
+    const result = collector.buildResult(
       tts.name,
       tts.model,
       'tts',
@@ -160,6 +207,11 @@ async function testNonStreamInOut(
       config,
       'success'
     );
+
+    // 更新质量指标
+    updateQualityMetrics(result, response.audio.length, config.format);
+
+    return result;
   } catch (error) {
     collector.endCollecting();
     return collector.buildResult(
@@ -187,12 +239,14 @@ async function testNonStreamInStreamOut(
   collector.startCollecting();
 
   try {
+    let totalAudioSize = 0;
     for await (const { audioChunk } of tts.speak(text, { stream: true })) {
       collector.addChunk(audioChunk);
+      totalAudioSize += audioChunk.length;
     }
     collector.endCollecting();
 
-    return collector.buildResult(
+    const result = collector.buildResult(
       tts.name,
       tts.model,
       'tts',
@@ -200,6 +254,11 @@ async function testNonStreamInStreamOut(
       config,
       'success'
     );
+
+    // 更新质量指标
+    updateQualityMetrics(result, totalAudioSize, config.format);
+
+    return result;
   } catch (error) {
     collector.endCollecting();
     return collector.buildResult(
@@ -231,12 +290,14 @@ async function testStreamInOut(
     // 创建文本流（每次发送 5 个字符）
     const textStream = createTextStream(text, 5, streamConfig.interval);
 
+    let totalAudioSize = 0;
     for await (const { audioChunk } of tts.speak(textStream, { stream: true })) {
       collector.addChunk(audioChunk);
+      totalAudioSize += audioChunk.length;
     }
     collector.endCollecting();
 
-    return collector.buildResult(
+    const result = collector.buildResult(
       tts.name,
       tts.model,
       'tts',
@@ -244,6 +305,11 @@ async function testStreamInOut(
       config,
       'success'
     );
+
+    // 更新质量指标
+    updateQualityMetrics(result, totalAudioSize, config.format);
+
+    return result;
   } catch (error) {
     collector.endCollecting();
     return collector.buildResult(
@@ -343,8 +409,11 @@ export async function runTTSTest(
 export async function runTTSSuite(options?: {
   providers?: string[];
   iterations?: number;
+  /** 是否原子化保存每次测试结果 */
+  atomicSave?: boolean;
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
+  let globalIteration = 0;
 
   // 导入所有 provider 模块（自动注册）
   await import('../../src/tts/providers');
@@ -353,6 +422,7 @@ export async function runTTSSuite(options?: {
     (p) => !options?.providers || options.providers.includes(p.provider)
   );
   const iterations = options?.iterations || 3;
+  const atomicSave = options?.atomicSave ?? true;
 
   // 流式输入配置
   const streamConfigs: StreamInputConfig[] = [
@@ -363,7 +433,8 @@ export async function runTTSSuite(options?: {
 
   console.log(`\n=== TTS 性能测试 ===\n`);
   console.log(`已配置的提供商: ${providerConfigs.map((p) => p.displayName).join(', ')}`);
-  console.log(`每项测试重复: ${iterations} 次\n`);
+  console.log(`每项测试重复: ${iterations} 次`);
+  console.log(`原子化保存: ${atomicSave ? '启用' : '禁用'}\n`);
 
   for (const providerConfig of providerConfigs) {
     console.log(`\n--- 测试提供商: ${providerConfig.displayName} ---\n`);
@@ -377,14 +448,26 @@ export async function runTTSSuite(options?: {
 
       // 1. 非流式输入 + 非流式输出
       for (let i = 0; i < iterations; i++) {
+        globalIteration++;
         const result = await runTTSTest(providerConfig, text, {
           inputMode: 'non-stream',
           outputMode: 'non-stream',
         });
         results.push(result);
-        console.log(
-          `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
-        );
+
+        // 原子化保存
+        if (atomicSave) {
+          const singleResult = toSingleTestResult(result, globalIteration);
+          saveSingleResult(singleResult);
+          console.log(
+            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+          );
+        } else {
+          console.log(
+            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+          );
+        }
+
         // 每次测试后等待 1 秒，避免连接复用问题
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
@@ -392,14 +475,26 @@ export async function runTTSSuite(options?: {
       // 2. 非流式输入 + 流式输出
       if (providerConfig.streamOutput) {
         for (let i = 0; i < iterations; i++) {
+          globalIteration++;
           const result = await runTTSTest(providerConfig, text, {
             inputMode: 'non-stream',
             outputMode: 'stream',
           });
           results.push(result);
-          console.log(
-            `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
-          );
+
+          // 原子化保存
+          if (atomicSave) {
+            const singleResult = toSingleTestResult(result, globalIteration);
+            saveSingleResult(singleResult);
+            console.log(
+              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+            );
+          } else {
+            console.log(
+              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+            );
+          }
+
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
@@ -408,15 +503,27 @@ export async function runTTSSuite(options?: {
       if (providerConfig.streamInput && providerConfig.streamOutput) {
         const streamConfig = streamConfigs[1]; // normal
         for (let i = 0; i < iterations; i++) {
+          globalIteration++;
           const result = await runTTSTest(providerConfig, text, {
             inputMode: 'stream',
             outputMode: 'stream',
             streamConfig,
           });
           results.push(result);
-          console.log(
-            `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
-          );
+
+          // 原子化保存
+          if (atomicSave) {
+            const singleResult = toSingleTestResult(result, globalIteration);
+            saveSingleResult(singleResult);
+            console.log(
+              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+            );
+          } else {
+            console.log(
+              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+            );
+          }
+
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }

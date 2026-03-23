@@ -1,0 +1,30 @@
+{
+  "id": "e9a0e25d-30b4-4c97-b083-1b4d55940b70",
+  "timestamp": "2026-03-20T08:00:24.093Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-flash",
+  "testType": "tts",
+  "scenario": "non-stream-in-stream-out",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "mp3",
+    "textLength": 8
+  },
+  "latency": {
+    "firstChunk": 1036,
+    "total": 1110
+  },
+  "throughput": {
+    "dataRate": 41.16306306306306,
+    "chunkCount": 16,
+    "avgChunkSize": 2855.6875
+  },
+  "quality": {
+    "dataSize": 45691,
+    "audioDuration": 2.8,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 24
+}

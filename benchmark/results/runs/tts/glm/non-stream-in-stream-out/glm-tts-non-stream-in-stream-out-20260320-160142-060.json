@@ -1,0 +1,30 @@
+{
+  "id": "2e467113-24a2-49e7-8503-b415073acafa",
+  "timestamp": "2026-03-20T08:01:42.365Z",
+  "provider": "glm",
+  "model": "glm-tts",
+  "testType": "tts",
+  "scenario": "non-stream-in-stream-out",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "mp3",
+    "textLength": 6
+  },
+  "latency": {
+    "firstChunk": 1057,
+    "total": 1073
+  },
+  "throughput": {
+    "dataRate": 92.30195712954334,
+    "chunkCount": 2,
+    "avgChunkSize": 49520
+  },
+  "quality": {
+    "dataSize": 99040,
+    "audioDuration": 6,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 60
+}

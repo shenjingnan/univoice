@@ -2,15 +2,39 @@
  * 音频测试数据管理
  * 用于 ASR 性能测试
  */
+import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { AudioFixture } from '../runners/asr-runner';
+import type { AudioFixture } from '../metrics/types';
 import { textFixtures } from './texts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..'); // benchmark/fixtures/
+
+/**
+ * 标准音频格式配置
+ * 用于 ASR 测试的统一格式
+ */
+export const STANDARD_AUDIO_FORMAT = {
+  /** 采样率 16kHz */
+  sampleRate: 16000,
+  /** 单声道 */
+  channels: 1,
+  /** 16-bit PCM */
+  bitDepth: 16,
+  /** 格式标识 */
+  format: 'pcm' as const,
+} as const;
+
+/**
+ * 获取 PCM 文件扩展名
+ */
+export function getPCMFilename(originalFilename: string): string {
+  const baseName = originalFilename.replace(/\.[^.]+$/, '');
+  return `${baseName}.pcm`;
+}
 
 /**
  * 音频文件配置
@@ -56,39 +80,125 @@ export function hasAudioFixtures(): boolean {
     return false;
   }
 
-  // 检查至少有一个音频文件存在
-  return audioConfigs.some((config) => existsSync(join(audioDir, config.filename)));
+  // 检查至少有一个 PCM 文件存在
+  return audioConfigs.some((config) => {
+    const pcmFilename = getPCMFilename(config.filename);
+    return existsSync(join(audioDir, pcmFilename));
+  });
+}
+
+/**
+ * 使用 ffmpeg 将音频文件转换为标准 PCM 格式
+ * @param inputPath 输入文件路径
+ * @param outputPath 输出文件路径
+ */
+export function convertToPCM(inputPath: string, outputPath: string): void {
+  const cmd = [
+    'ffmpeg',
+    '-y', // 覆盖输出文件
+    '-i',
+    inputPath,
+    '-f',
+    's16le', // 16-bit little-endian PCM
+    '-acodec',
+    'pcm_s16le',
+    '-ar',
+    String(STANDARD_AUDIO_FORMAT.sampleRate),
+    '-ac',
+    String(STANDARD_AUDIO_FORMAT.channels),
+    outputPath,
+  ].join(' ');
+
+  try {
+    execSync(cmd, { stdio: 'pipe' });
+  } catch (error) {
+    throw new Error(`音频转换失败: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+/**
+ * 批量转换所有音频文件为 PCM 格式
+ * @returns 转换后的文件路径列表
+ */
+export function convertAllToPCM(): string[] {
+  const audioDir = getAudioDir();
+  const convertedFiles: string[] = [];
+
+  for (const config of audioConfigs) {
+    const inputPath = join(audioDir, config.filename);
+    const pcmFilename = getPCMFilename(config.filename);
+    const outputPath = join(audioDir, pcmFilename);
+
+    if (existsSync(inputPath) && !existsSync(outputPath)) {
+      console.log(`  转换: ${config.filename} -> ${pcmFilename}`);
+      convertToPCM(inputPath, outputPath);
+      convertedFiles.push(outputPath);
+    }
+  }
+
+  return convertedFiles;
 }
 
 /**
  * 获取音频 fixture 列表
+ * 优先返回 PCM 格式文件
  */
 export async function getAudioFixtures(): Promise<AudioFixture[]> {
   const audioDir = getAudioDir();
   const fixtures: AudioFixture[] = [];
 
   for (const config of audioConfigs) {
-    const filePath = join(audioDir, config.filename);
+    // 优先使用 PCM 文件
+    const pcmFilename = getPCMFilename(config.filename);
+    const pcmPath = join(audioDir, pcmFilename);
+    const mp3Path = join(audioDir, config.filename);
+
+    // 确定 PCM 文件路径和格式
+    const filePath = existsSync(pcmPath) ? pcmPath : mp3Path;
+    const fileFormat = existsSync(pcmPath) ? 'pcm' : config.format;
+
     if (existsSync(filePath)) {
       // 尝试获取实际文件大小来估算时长
       let duration = config.estimatedDuration;
       try {
         const stats = await stat(filePath);
-        // MP3 文件大小估算：128kbps ≈ 16KB/s
-        // 使用文件大小估算时长（秒）
-        const estimatedFromSize = Math.round((stats.size / 1024 / 16) * 0.8);
-        if (estimatedFromSize > 0) {
-          duration = estimatedFromSize;
+        if (fileFormat === 'pcm') {
+          // PCM 文件大小计算时长: sampleRate * channels * bitDepth/8
+          // 16kHz * 1 * 2 = 32000 bytes/s
+          const bytesPerSecond =
+            STANDARD_AUDIO_FORMAT.sampleRate *
+            STANDARD_AUDIO_FORMAT.channels *
+            (STANDARD_AUDIO_FORMAT.bitDepth / 8);
+          duration = Math.round(stats.size / bytesPerSecond);
+        } else {
+          // MP3 文件大小估算：128kbps ≈ 16KB/s
+          const estimatedFromSize = Math.round((stats.size / 1024 / 16) * 0.8);
+          if (estimatedFromSize > 0) {
+            duration = estimatedFromSize;
+          }
         }
       } catch {
         // 使用预估时长
       }
 
+      // 获取对应的预期文本（用于准确率计算）
+      const textFixture = textFixtures.find((t) => t.name === config.textFixture);
+
       fixtures.push({
         name: config.name,
         path: filePath,
         duration,
-        format: config.format,
+        format: fileFormat,
+        textFixture: config.textFixture,
+        expectedText: textFixture?.text,
+        // 添加 PCM 格式的详细信息
+        audioFormat: existsSync(pcmPath)
+          ? {
+              sampleRate: STANDARD_AUDIO_FORMAT.sampleRate,
+              channels: STANDARD_AUDIO_FORMAT.channels,
+              bitDepth: STANDARD_AUDIO_FORMAT.bitDepth,
+            }
+          : undefined,
       });
     }
   }
@@ -98,6 +208,7 @@ export async function getAudioFixtures(): Promise<AudioFixture[]> {
 
 /**
  * 使用 TTS 服务生成音频文件
+ * 生成 MP3 后自动转换为 PCM 格式
  */
 export async function generateAudioFixtures(options?: { provider?: string }): Promise<void> {
   // 动态导入 TTS 相关模块
@@ -147,16 +258,22 @@ export async function generateAudioFixtures(options?: { provider?: string }): Pr
       continue;
     }
 
-    const outputPath = join(audioDir, config.filename);
+    const mp3Path = join(audioDir, config.filename);
+    const pcmFilename = getPCMFilename(config.filename);
+    const pcmPath = join(audioDir, pcmFilename);
     console.log(`生成音频: ${config.name} (${textFixture.text.length} 字符)...`);
 
     try {
       // 使用非流式合成获取完整音频
       const response = await tts.synthesize({ text: textFixture.text });
 
-      // 保存音频文件
-      writeFileSync(outputPath, response.audio);
-      console.log(`  ✓ 已保存: ${outputPath}`);
+      // 保存 MP3 文件
+      writeFileSync(mp3Path, response.audio);
+      console.log(`  ✓ 已保存 MP3: ${mp3Path}`);
+
+      // 转换为 PCM 格式
+      convertToPCM(mp3Path, pcmPath);
+      console.log(`  ✓ 已转换 PCM: ${pcmPath}`);
     } catch (error) {
       console.error(`  ✗ 生成失败: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -175,9 +292,17 @@ export function clearAudioFixtures(): void {
   }
 
   for (const config of audioConfigs) {
-    const filePath = join(audioDir, config.filename);
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
+    // 清理 MP3 文件
+    const mp3Path = join(audioDir, config.filename);
+    if (existsSync(mp3Path)) {
+      unlinkSync(mp3Path);
+    }
+
+    // 清理 PCM 文件
+    const pcmFilename = getPCMFilename(config.filename);
+    const pcmPath = join(audioDir, pcmFilename);
+    if (existsSync(pcmPath)) {
+      unlinkSync(pcmPath);
     }
   }
 }

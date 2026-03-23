@@ -452,9 +452,13 @@ export class QwenASR extends BaseASR {
       // 因为 isFilePath 应该已经匹配了所有文件路径
       throw new Error('Invalid audio input: expected file path or audio stream');
     }
-    // Buffer 或 Uint8Array：转换为单块流
+    // Buffer 或 Uint8Array：分块发送，每块约 4KB
+    const buffer = Buffer.isBuffer(audio) ? audio : Buffer.from(audio);
+    const chunkSize = 4096;
     return (async function* () {
-      yield Buffer.isBuffer(audio) ? audio : Buffer.from(audio);
+      for (let i = 0; i < buffer.length; i += chunkSize) {
+        yield buffer.subarray(i, Math.min(i + chunkSize, buffer.length));
+      }
     })();
   }
 
