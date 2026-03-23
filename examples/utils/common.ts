@@ -44,12 +44,12 @@ export interface TTSConfig {
  * @throws 如果环境变量未设置则退出进程
  */
 export function getTTSConfig(): TTSConfig {
-  const appId = process.env.TTS_BYTEDANCE_APPID;
-  const accessToken = process.env.TTS_BYTEDANCE_TOKEN;
-  const voice = process.env.TTS_BYTEDANCE_VOICE_TYPE || 'zh_female_tianmeixiaoyuan_moon_bigtts';
+  const appId = process.env.DOUBAO_APP_KEY;
+  const accessToken = process.env.DOUBAO_ACCESS_TOKEN;
+  const voice = process.env.DOUBAO_VOICE_TYPE || 'zh_female_tianmeixiaoyuan_moon_bigtts';
 
   if (!appId || !accessToken) {
-    console.error('请设置环境变量 TTS_BYTEDANCE_APPID 和 TTS_BYTEDANCE_TOKEN');
+    console.error('请设置环境变量 DOUBAO_APP_KEY 和 DOUBAO_ACCESS_TOKEN');
     process.exit(1);
   }
 
@@ -70,11 +70,11 @@ export interface ASRConfig {
  * @throws 如果环境变量未设置则退出进程
  */
 export function getASRConfig(): ASRConfig {
-  const appKey = process.env.ASR_BYTEDANCE_APP_KEY;
-  const accessKey = process.env.ASR_BYTEDANCE_ACCESS_KEY;
+  const appKey = process.env.DOUBAO_APP_KEY;
+  const accessKey = process.env.DOUBAO_ACCESS_KEY;
 
   if (!appKey || !accessKey) {
-    console.error('请设置环境变量 ASR_BYTEDANCE_APP_KEY 和 ASR_BYTEDANCE_ACCESS_KEY');
+    console.error('请设置环境变量 DOUBAO_APP_KEY 和 DOUBAO_ACCESS_KEY');
     process.exit(1);
   }
 

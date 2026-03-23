@@ -1,0 +1,35 @@
+{
+  "id": "1b71dee1-ca68-4aaa-bc1c-ff0e087458b1",
+  "timestamp": "2026-03-20T08:02:20.616Z",
+  "provider": "qwen",
+  "model": "paraformer-realtime-v2",
+  "testType": "asr",
+  "scenario": "non-stream-input-non-stream-output",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "audioDuration": 1
+  },
+  "latency": {
+    "firstChunk": 1090,
+    "total": 1090,
+    "perChar": 181.66666666666666,
+    "rtf": 1.09
+  },
+  "throughput": {
+    "dataRate": 0.01651376146788991,
+    "chunkCount": 1,
+    "avgChunkSize": 18
+  },
+  "quality": {
+    "dataSize": 18,
+    "textLength": 6
+  },
+  "status": "success",
+  "accuracy": {
+    "expectedText": "你好，欢迎！",
+    "actualText": "你好，欢迎。"
+  },
+  "iteration": 6
+}

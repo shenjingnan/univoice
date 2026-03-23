@@ -3,7 +3,7 @@
  * 演示如何使用 univoice SDK 调用阿里云 DashScope CosyVoice TTS 服务
  *
  * 环境变量:
- * - QWEN_API_KEY 或 DASHSCOPE_API_KEY: 阿里云 DashScope API Key
+ * - QWEN_API_KEY 或 QWEN_API_KEY: 阿里云 DashScope API Key
  */
 import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
@@ -16,9 +16,9 @@ const { __dirname, basename } = getScriptMeta(import.meta.url);
  * 获取 Qwen API Key
  */
 function getQwenApiKey(): string {
-  const apiKey = process.env.QWEN_API_KEY || process.env.DASHSCOPE_API_KEY;
+  const apiKey = process.env.QWEN_API_KEY || process.env.QWEN_API_KEY;
   if (!apiKey) {
-    console.error('请设置环境变量 QWEN_API_KEY 或 DASHSCOPE_API_KEY');
+    console.error('请设置环境变量 QWEN_API_KEY 或 QWEN_API_KEY');
     process.exit(1);
   }
   return apiKey;

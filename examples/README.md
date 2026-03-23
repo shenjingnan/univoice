@@ -8,9 +8,9 @@
 
 ```bash
 # 火山引擎 Doubao TTS 配置
-TTS_BYTEDANCE_APPID=your_app_id
-TTS_BYTEDANCE_TOKEN=your_access_token
-TTS_BYTEDANCE_VOICE_TYPE=zh_female_tianmeixiaoyuan_moon_bigtts
+DOUBAO_APP_KEY=your_app_id
+DOUBAO_ACCESS_TOKEN=your_access_token
+DOUBAO_VOICE_TYPE=zh_female_tianmeixiaoyuan_moon_bigtts
 
 # Minimax TTS 配置
 MINIMAX_API_KEY=your_api_key

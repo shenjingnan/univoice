@@ -177,7 +177,8 @@ export class DoubaoTTS extends BaseTTS {
         const sessionId = randomUUID();
         const sessionPayload = this.buildSessionPayload();
         await startSession(ws, sessionPayload, sessionId);
-        console.log(`[双向流] 会话已创建 (sessionId: ${sessionId.slice(0, 8)}...)`);
+        await waitForEvent(ws, MsgType.FullServerResponse, EventType.SessionStarted);
+        console.log('[双向流] 会话已启动 (SessionStarted)');
 
         console.log('[双向流] 启动发送和接收并发流程...');
 

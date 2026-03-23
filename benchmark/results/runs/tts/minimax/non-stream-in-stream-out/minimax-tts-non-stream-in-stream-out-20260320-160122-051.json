@@ -1,0 +1,30 @@
+{
+  "id": "a7f333e0-2fa6-4138-844c-4a18d909a7e7",
+  "timestamp": "2026-03-20T08:01:22.748Z",
+  "provider": "minimax",
+  "model": "speech-2.8-hd",
+  "testType": "tts",
+  "scenario": "non-stream-in-stream-out",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "mp3",
+    "textLength": 8
+  },
+  "latency": {
+    "firstChunk": 572,
+    "total": 871
+  },
+  "throughput": {
+    "dataRate": 37.0849598163031,
+    "chunkCount": 18,
+    "avgChunkSize": 1794.5
+  },
+  "quality": {
+    "dataSize": 32301,
+    "audioDuration": 2,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 51
+}
