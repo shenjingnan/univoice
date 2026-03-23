@@ -1,0 +1,33 @@
+{
+  "id": "b1b4272a-7279-40f3-a623-4eb7cc03e9de",
+  "timestamp": "2026-03-23T13:01:48.815Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-plus",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v3-plus/longanyang/opus-22050",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "opus",
+    "textLength": 6,
+    "voice": "longanyang",
+    "sampleRate": 22050
+  },
+  "latency": {
+    "firstChunk": 0,
+    "total": 1391
+  },
+  "throughput": {
+    "dataRate": 0,
+    "chunkCount": 0,
+    "avgChunkSize": 0,
+    "chunks": []
+  },
+  "quality": {
+    "dataSize": 0,
+    "audioDuration": 0,
+    "bitrate": 0
+  },
+  "status": "success",
+  "iteration": 1
+}

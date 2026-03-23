@@ -1,0 +1,110 @@
+{
+  "id": "6b41c4a7-b1b8-428b-991d-6df08e0b124b",
+  "timestamp": "2026-03-23T13:02:58.242Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v1",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v1/longwan/pcm-44100",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longwan",
+    "sampleRate": 44100
+  },
+  "latency": {
+    "firstChunk": 1120,
+    "total": 1624
+  },
+  "throughput": {
+    "dataRate": 87.83743842364532,
+    "chunkCount": 19,
+    "avgChunkSize": 7507.789473684211,
+    "chunks": [
+      {
+        "relativeTime": 1120,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1121,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1122,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1152,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1579,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1581,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1582,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1582,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1583,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1584,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1584,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1608,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1612,
+        "size": 3600
+      },
+      {
+        "relativeTime": 1621,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1623,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1623,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1624,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1624,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1624,
+        "size": 3048
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 142648,
+    "audioDuration": 4.4,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}
