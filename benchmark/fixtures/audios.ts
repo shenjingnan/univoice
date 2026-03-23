@@ -2,7 +2,7 @@
  * 音频测试数据管理
  * 用于 ASR 性能测试
  */
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -93,8 +93,7 @@ export function hasAudioFixtures(): boolean {
  * @param outputPath 输出文件路径
  */
 export function convertToPCM(inputPath: string, outputPath: string): void {
-  const cmd = [
-    'ffmpeg',
+  const args = [
     '-y', // 覆盖输出文件
     '-i',
     inputPath,
@@ -107,10 +106,10 @@ export function convertToPCM(inputPath: string, outputPath: string): void {
     '-ac',
     String(STANDARD_AUDIO_FORMAT.channels),
     outputPath,
-  ].join(' ');
+  ];
 
   try {
-    execSync(cmd, { stdio: 'pipe' });
+    execFileSync('ffmpeg', args, { stdio: 'pipe' });
   } catch (error) {
     throw new Error(`音频转换失败: ${error instanceof Error ? error.message : String(error)}`);
   }
