@@ -33,6 +33,7 @@ export function parseRunArgs(): {
   iterations: number;
   dryRun: boolean;
   atomicSave: boolean;
+  scenario: string | undefined;
 } {
   // 过滤掉 pnpm 传递的开头 '--'
   const args = process.argv.slice(2).filter((arg, index) => !(index === 0 && arg === '--'));
@@ -45,6 +46,7 @@ export function parseRunArgs(): {
       iterations: { type: 'string', default: '3', short: 'i' },
       'dry-run': { type: 'boolean', short: 'd' },
       'no-atomic': { type: 'boolean' },
+      scenario: { type: 'string', short: 's' },
       help: { type: 'boolean', short: 'h' },
     },
     strict: false,
@@ -61,9 +63,13 @@ export function parseRunArgs(): {
                           ASR: doubao, qwen, glm
   -t, --type <type>       测试类型 (tts | asr | all)，默认 all
   -i, --iterations <n>    迭代次数，默认 3
+  -s, --scenario <name>   测试场景 (qwen-matrix)，默认常规测试
   -d, --dry-run           生成模拟数据预览报告，不实际运行测试
   --no-atomic             禁用原子化保存（不推荐）
   -h, --help              显示帮助信息
+
+场景说明:
+  qwen-matrix             Qwen TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
 
 示例:
   pnpm benchmark run --                         # 测试所有服务商
@@ -74,6 +80,8 @@ export function parseRunArgs(): {
   pnpm benchmark run -- -t tts -p qwen          # 只测试 qwen 的 TTS
   pnpm benchmark run -- -i 5                    # 每个测试迭代 5 次
   pnpm benchmark run -- --dry-run               # 预览模拟报告
+  pnpm benchmark run -- -s qwen-matrix          # 运行 Qwen TTS 矩阵测试
+  pnpm benchmark run -- -s qwen-matrix -i 3     # 矩阵测试，每组合 3 次迭代
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -106,6 +114,7 @@ export function parseRunArgs(): {
     iterations,
     dryRun: Boolean(values['dry-run']),
     atomicSave: !values['no-atomic'],
+    scenario: values.scenario as string | undefined,
   };
 }
 
@@ -118,6 +127,7 @@ export async function run(options?: {
   iterations?: number;
   dryRun?: boolean;
   atomicSave?: boolean;
+  scenario?: string;
 }): Promise<BenchmarkResult[]> {
   // 如果没有提供选项，从命令行解析
   const args = options
@@ -127,6 +137,7 @@ export async function run(options?: {
         iterations: options.iterations || 3,
         dryRun: options.dryRun || false,
         atomicSave: options.atomicSave ?? true,
+        scenario: options.scenario,
       }
     : parseRunArgs();
 
@@ -134,6 +145,9 @@ export async function run(options?: {
   console.log('================================');
   if (args.dryRun) {
     console.log('📋 模式: 模拟预览 (dry-run)');
+  }
+  if (args.scenario) {
+    console.log(`📋 测试场景: ${args.scenario}`);
   }
   if (args.providers) {
     console.log(`📋 指定服务商: ${args.providers.join(', ')}`);
@@ -190,6 +204,22 @@ export async function run(options?: {
   }
 
   allResults = [];
+
+  // 矩阵测试场景
+  if (args.scenario === 'qwen-matrix') {
+    console.log('📊 运行 Qwen TTS 矩阵测试场景...\n');
+    const { runQwenMatrixScenario } = await import('./scenarios/qwen-matrix');
+    const matrixResults = await runQwenMatrixScenario({
+      iterations: args.iterations,
+    });
+    allResults.push(...matrixResults);
+
+    const totalTime = Date.now() - startTime;
+    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
+    console.log(`   - 总测试次数: ${allResults.length}`);
+
+    return allResults;
+  }
 
   // TTS 测试
   if (args.type === 'tts' || args.type === 'all') {

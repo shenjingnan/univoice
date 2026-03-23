@@ -50,7 +50,9 @@ export function generateResultFilename(
   const seconds = String(timestamp.getSeconds()).padStart(2, '0');
   const iterStr = String(iteration).padStart(3, '0');
 
-  return `${provider}-${testType}-${scenario}-${year}${month}${day}-${hours}${minutes}${seconds}-${iterStr}.json`;
+  // 将斜杠替换为下划线，避免路径重复展开
+  const safeScenario = scenario.replace(/\//g, '_');
+  return `${provider}-${testType}-${safeScenario}-${year}${month}${day}-${hours}${minutes}${seconds}-${iterStr}.json`;
 }
 
 /**

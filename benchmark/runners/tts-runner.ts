@@ -8,6 +8,7 @@ import { MetricsCollector } from '../metrics/collector';
 import type {
   BenchmarkConfig,
   BenchmarkResult,
+  QwenMatrixConfig,
   StreamInputConfig,
   TextFixture,
 } from '../metrics/types';
@@ -31,6 +32,10 @@ export interface ProviderConfig {
   streamOutput: boolean;
   /** 创建实例的配置 */
   createConfig: Record<string, unknown>;
+  /** 音频格式 */
+  format?: 'mp3' | 'pcm' | 'opus' | 'wav' | 'ogg' | 'flac';
+  /** 采样率 */
+  sampleRate?: 16000 | 24000 | 48000;
 }
 
 /**
@@ -72,6 +77,7 @@ export function getProviderConfigs(): ProviderConfig[] {
         model: 'cosyvoice-v3-flash',
         voice: 'longxiaochun_v3',
         format: 'mp3',
+        sampleRate: 24000,
       },
     });
   }
@@ -91,6 +97,7 @@ export function getProviderConfigs(): ProviderConfig[] {
         model: 'speech-2.8-hd',
         voice: 'male-qn-qingse',
         format: 'mp3',
+        sampleRate: 24000,
       },
     });
   }
@@ -109,6 +116,7 @@ export function getProviderConfigs(): ProviderConfig[] {
         model: 'glm-tts',
         voice: 'tongtong',
         format: 'pcm',
+        sampleRate: 16000,
       },
     });
   }
@@ -336,6 +344,9 @@ export async function runTTSTest(
     streamConfig?: StreamInputConfig;
   }
 ): Promise<BenchmarkResult> {
+  // 从 createConfig 中提取采样率
+  const sampleRate = providerConfig.createConfig.sampleRate as number | undefined;
+
   // 创建 TTS 实例
   const tts = createTTS({
     provider: providerConfig.provider,
@@ -350,6 +361,8 @@ export async function runTTSTest(
     outputMode: options.outputMode,
     format: 'mp3',
     textLength: text.text.length,
+    voice: providerConfig.voice,
+    sampleRate,
   };
 
   // 根据输入输出模式选择测试方法
@@ -531,4 +544,87 @@ export async function runTTSSuite(options?: {
   }
 
   return results;
+}
+
+/**
+ * 运行矩阵测试
+ * 专门用于 Qwen TTS 矩阵测试，支持 format 和 sampleRate 参数
+ */
+export async function runTTSTestForMatrix(
+  matrixConfig: QwenMatrixConfig,
+  text: TextFixture,
+  scenarioName: string
+): Promise<BenchmarkResult> {
+  // 导入 provider 模块（导入 index 自动注册所有 provider）
+  await import('univoice/tts/providers');
+
+  // 创建 TTS 实例
+  const tts = createTTS({
+    provider: 'qwen',
+    apiKey: process.env.QWEN_API_KEY || '',
+    model: matrixConfig.model,
+    voice: matrixConfig.voice,
+    format: matrixConfig.format,
+    sampleRate: matrixConfig.sampleRate,
+  } as Parameters<typeof createTTS>[0]);
+
+  const config: BenchmarkConfig = {
+    inputMode: 'non-stream',
+    outputMode: 'stream',
+    format: matrixConfig.format,
+    textLength: text.text.length,
+    voice: matrixConfig.voice,
+    sampleRate: matrixConfig.sampleRate,
+  };
+
+  const collector = new MetricsCollector();
+  collector.setTextLength(text.text.length);
+  collector.startCollecting();
+
+  try {
+    let totalAudioSize = 0;
+    for await (const { audioChunk } of tts.speak(text.text, { stream: true })) {
+      collector.addChunk(audioChunk);
+      totalAudioSize += audioChunk.length;
+    }
+    collector.endCollecting();
+
+    const result = collector.buildResult(
+      tts.name,
+      tts.model,
+      'tts',
+      scenarioName,
+      config,
+      'success'
+    );
+
+    // 更新质量指标
+    const duration = estimateAudioDuration(totalAudioSize, matrixConfig.format);
+    const bitrate = calculateBitrate(totalAudioSize, duration);
+    result.quality.audioDuration = Math.round(duration * 10) / 10;
+    result.quality.bitrate = Math.round(bitrate);
+
+    // 原子化保存
+    const singleResult = toSingleTestResult(result, 1);
+    saveSingleResult(singleResult);
+
+    return result;
+  } catch (error) {
+    collector.endCollecting();
+    const result = collector.buildResult(
+      'qwen',
+      matrixConfig.model,
+      'tts',
+      scenarioName,
+      config,
+      'error',
+      error instanceof Error ? error.message : String(error)
+    );
+
+    // 保存失败结果
+    const singleResult = toSingleTestResult(result, 1);
+    saveSingleResult(singleResult);
+
+    return result;
+  }
 }

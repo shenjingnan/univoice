@@ -1,0 +1,118 @@
+{
+  "id": "3ac4e4c3-eeb8-4305-b26e-4dc3b2185ecd",
+  "timestamp": "2026-03-23T07:36:52.522Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v2",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v2/longyingxiao/pcm-48000/short",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longyingxiao",
+    "sampleRate": 48000
+  },
+  "latency": {
+    "firstChunk": 2522,
+    "total": 3054
+  },
+  "throughput": {
+    "dataRate": 51.8664047151277,
+    "chunkCount": 21,
+    "avgChunkSize": 7542.857142857143,
+    "chunks": [
+      {
+        "relativeTime": 2522,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2522,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2524,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2556,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2566,
+        "size": 7840
+      },
+      {
+        "relativeTime": 2572,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2590,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2591,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2592,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2594,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2601,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2603,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2613,
+        "size": 440
+      },
+      {
+        "relativeTime": 3048,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3048,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3050,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3051,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3051,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3052,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3053,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3054,
+        "size": 6120
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 158400,
+    "audioDuration": 4.8,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}
