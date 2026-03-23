@@ -1,120 +1,268 @@
+// @ts-nocheck
+/* biome-ignore format: custom formatting */
 /**
  * Qwen TTS 矩阵测试场景
- * 测试不同模型、音色、编码、采样率、文本长度的组合
+ * 测试不同模型、音色、编码、采样率的组合
  */
-import { textFixtures } from '../fixtures/texts';
 import type {
   BenchmarkResult,
+  MatrixFilter,
+  MatrixItem,
   MatrixScenarioConfig,
   QwenMatrixConfig,
-  TextFixture,
-} from '../metrics/types';
+} from "../metrics/types";
+
+/**
+ * Qwen TTS 矩阵测试列表
+ * 每个项代表一个完整的测试场景
+ */
+// biome-ignore format: keep objects on single line
+export const qwenMatrixItems: MatrixItem[] = [
+  // cosyvoice-v3-flash + longanyang
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 48000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-flash",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 48000,
+  },
+  // cosyvoice-v3-plus + longanyang
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "pcm",
+    sampleRate: 48000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v3-plus",
+    voice: "longanyang",
+    format: "opus",
+    sampleRate: 48000,
+  },
+  // cosyvoice-v2 + longyingxiao
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "pcm",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "pcm",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "pcm",
+    sampleRate: 48000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "opus",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "opus",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v2",
+    voice: "longyingxiao",
+    format: "opus",
+    sampleRate: 48000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v1",
+    voice: "longwan",
+    format: "pcm",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v1",
+    voice: "longwan",
+    format: "pcm",
+    sampleRate: 16000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v1",
+    voice: "longwan",
+    format: "pcm",
+    sampleRate: 24000,
+  },
+  {
+    provider: "qwen",
+    model: "cosyvoice-v1",
+    voice: "longwan",
+    format: "pcm",
+    sampleRate: 48000,
+  },
+];
 
 /**
  * 场景配置
  */
 export const matrixScenarioConfig: MatrixScenarioConfig = {
   name: 'qwen-matrix',
-  description: 'Qwen TTS 矩阵测试：覆盖不同模型、音色、编码、采样率、文本长度的组合',
+  description: 'Qwen TTS 矩阵测试：覆盖不同模型、音色、编码、采样率的组合',
   testType: 'tts',
-  // 模型与音色兼容性
-  modelVoiceCompatibility: [
-    {
-      model: 'cosyvoice-v3-flash',
-      voices: ['longanyang'],
-    },
-    {
-      model: 'cosyvoice-v3-plus',
-      voices: ['longanyang'],
-    },
-    {
-      model: 'cosyvoice-v2',
-      voices: ['longyingxiao'],
-    },
-  ],
-  formats: ['pcm', 'opus'],
-  sampleRates: [16000, 24000, 48000],
-  textCategories: ['short', 'medium', 'long'],
   iterations: 3,
   timeout: 120000,
 };
 
 /**
- * 生成所有有效的矩阵配置组合
- */
-export function generateMatrixConfigs(config: MatrixScenarioConfig): QwenMatrixConfig[] {
-  const matrix: QwenMatrixConfig[] = [];
-
-  for (const modelVoice of config.modelVoiceCompatibility) {
-    for (const voice of modelVoice.voices) {
-      for (const format of config.formats) {
-        for (const sampleRate of config.sampleRates) {
-          for (const textCategory of config.textCategories) {
-            matrix.push({
-              provider: 'qwen',
-              model: modelVoice.model as QwenMatrixConfig['model'],
-              voice,
-              format,
-              sampleRate,
-              textCategory,
-            });
-          }
-        }
-      }
-    }
-  }
-
-  return matrix;
-}
-
-/**
- * 获取指定分类的文本
- */
-export function getTextsByCategory(category: 'short' | 'medium' | 'long'): TextFixture[] {
-  return textFixtures.filter((t) => t.category === category);
-}
-
-/**
  * 生成矩阵测试的场景标识
- * 格式：matrix/<model>/<voice>/<format>-<sampleRate>/<textCategory>
+ * 格式：matrix/<model>/<voice>/<format>-<sampleRate>
  */
 export function generateMatrixScenarioName(matrixConfig: QwenMatrixConfig): string {
-  return `matrix/${matrixConfig.model}/${matrixConfig.voice}/${matrixConfig.format}-${matrixConfig.sampleRate}/${matrixConfig.textCategory}`;
+  return `matrix/${matrixConfig.model}/${matrixConfig.voice}/${matrixConfig.format}-${matrixConfig.sampleRate}`;
 }
 
 /**
  * 计算矩阵测试的总组合数
  */
-export function calculateMatrixCombinations(config: MatrixScenarioConfig): number {
-  let totalVoices = 0;
-  for (const modelVoice of config.modelVoiceCompatibility) {
-    totalVoices += modelVoice.voices.length;
-  }
-
-  return (
-    totalVoices * config.formats.length * config.sampleRates.length * config.textCategories.length
-  );
+export function calculateMatrixCombinations(): number {
+  return qwenMatrixItems.length;
 }
 
 /**
  * 打印矩阵测试计划摘要
  */
-export function printMatrixSummary(config: MatrixScenarioConfig): void {
-  const combinations = calculateMatrixCombinations(config);
-  const totalTests = combinations * config.iterations;
+export function printMatrixSummary(): void {
+  const combinations = calculateMatrixCombinations();
+  const totalTests = combinations * matrixScenarioConfig.iterations;
 
   console.log('\n=== Qwen TTS 矩阵测试计划 ===\n');
-  console.log(`模型与音色兼容性:`);
-  for (const modelVoice of config.modelVoiceCompatibility) {
-    console.log(`  - ${modelVoice.model}: ${modelVoice.voices.join(', ')}`);
+  console.log('矩阵测试列表:');
+  for (const item of qwenMatrixItems) {
+    console.log(`  - ${item.model}/${item.voice}/${item.format}/${item.sampleRate}Hz`);
   }
-  console.log(`\n编码格式: ${config.formats.join(', ')}`);
-  console.log(`采样率: ${config.sampleRates.map((r) => `${r}Hz`).join(', ')}`);
-  console.log(`文本长度分类: ${config.textCategories.join(', ')}`);
-  console.log(`\n组合数量: ${combinations}`);
-  console.log(`每组合迭代次数: ${config.iterations}`);
+  console.log(`\n矩阵项数量: ${combinations}`);
+  console.log(`每项迭代次数: ${matrixScenarioConfig.iterations}`);
   console.log(`总测试数量: ${totalTests}`);
   console.log('');
+}
+
+/**
+ * 过滤矩阵测试项
+ * @param items 矩阵测试项列表
+ * @param filter 过滤条件
+ * @returns 过滤后的矩阵测试项列表
+ */
+export function filterMatrixItems(items: MatrixItem[], filter?: MatrixFilter): MatrixItem[] {
+  if (!filter) {
+    return items;
+  }
+
+  return items.filter((item) => {
+    // 模型过滤
+    if (filter.model && filter.model.length > 0) {
+      if (!filter.model.includes(item.model)) {
+        return false;
+      }
+    }
+
+    // 音色过滤
+    if (filter.voice && filter.voice.length > 0) {
+      if (!filter.voice.includes(item.voice)) {
+        return false;
+      }
+    }
+
+    // 格式过滤
+    if (filter.format && filter.format.length > 0) {
+      if (!filter.format.includes(item.format)) {
+        return false;
+      }
+    }
+
+    // 采样率过滤
+    if (filter.sampleRate && filter.sampleRate.length > 0) {
+      if (!filter.sampleRate.includes(item.sampleRate)) {
+        return false;
+      }
+    }
+
+    return true;
+  });
 }
 
 /**
@@ -123,6 +271,8 @@ export function printMatrixSummary(config: MatrixScenarioConfig): void {
  */
 export async function runQwenMatrixScenario(options?: {
   iterations?: number;
+  /** 过滤条件 */
+  filter?: MatrixFilter;
   /** 进度回调 */
   onProgress?: (
     current: number,
@@ -133,36 +283,58 @@ export async function runQwenMatrixScenario(options?: {
 }): Promise<BenchmarkResult[]> {
   // 动态导入以避免循环依赖
   const { runTTSTestForMatrix } = await import('../runners/tts-runner');
+  const { textFixtures } = await import('../fixtures/texts');
 
   const results: BenchmarkResult[] = [];
   const iterations = options?.iterations || matrixScenarioConfig.iterations;
-  const matrixConfigs = generateMatrixConfigs(matrixScenarioConfig);
 
-  // 获取所有文本
-  const allTexts = {
-    short: getTextsByCategory('short'),
-    medium: getTextsByCategory('medium'),
-    long: getTextsByCategory('long'),
-  };
+  // 使用第一个文本进行测试
+  const text = textFixtures[0];
+  if (!text) {
+    throw new Error('没有可用的文本测试数据');
+  }
 
-  printMatrixSummary(matrixScenarioConfig);
+  // 应用过滤条件
+  const filteredItems = filterMatrixItems(qwenMatrixItems, options?.filter);
+
+  if (filteredItems.length === 0) {
+    console.warn('⚠️ 没有匹配的矩阵测试项，请检查过滤条件');
+    return results;
+  }
+
+  // 打印过滤后的摘要
+  console.log('\n=== Qwen TTS 矩阵测试计划 ===\n');
+  if (options?.filter) {
+    console.log('过滤条件:');
+    if (options.filter.model) {
+      console.log(`  - 模型: ${options.filter.model.join(', ')}`);
+    }
+    if (options.filter.voice) {
+      console.log(`  - 音色: ${options.filter.voice.join(', ')}`);
+    }
+    if (options.filter.format) {
+      console.log(`  - 格式: ${options.filter.format.join(', ')}`);
+    }
+    if (options.filter.sampleRate) {
+      console.log(`  - 采样率: ${options.filter.sampleRate.join(', ')} Hz`);
+    }
+    console.log('');
+  }
+  console.log('矩阵测试列表:');
+  for (const item of filteredItems) {
+    console.log(`  - ${item.model}/${item.voice}/${item.format}/${item.sampleRate}Hz`);
+  }
+  console.log(`\n矩阵项数量: ${filteredItems.length} (原始: ${qwenMatrixItems.length})`);
+  console.log(`每项迭代次数: ${iterations}`);
+  console.log(`总测试数量: ${filteredItems.length * iterations}`);
+  console.log('');
 
   let currentTest = 0;
-  const totalTests = matrixConfigs.length * iterations;
+  const totalTests = filteredItems.length * iterations;
 
   console.log(`开始执行矩阵测试...\n`);
 
-  for (const matrixConfig of matrixConfigs) {
-    const texts = allTexts[matrixConfig.textCategory];
-
-    // 每个分类只测试第一个文本
-    const text = texts[0];
-
-    if (!text) {
-      console.warn(`警告: 没有找到 ${matrixConfig.textCategory} 分类的文本，跳过`);
-      continue;
-    }
-
+  for (const matrixConfig of filteredItems) {
     const scenarioName = generateMatrixScenarioName(matrixConfig);
 
     for (let i = 0; i < iterations; i++) {

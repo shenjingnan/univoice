@@ -1,0 +1,66 @@
+{
+  "id": "ac43eebe-6eb0-4ed6-8535-7fe4188fe673",
+  "timestamp": "2026-03-23T12:19:35.613Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v1",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v1/longwan/pcm-16000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longwan",
+    "sampleRate": 16000
+  },
+  "latency": {
+    "firstChunk": 1162,
+    "total": 1694
+  },
+  "throughput": {
+    "dataRate": 30.551357733175916,
+    "chunkCount": 8,
+    "avgChunkSize": 6469.25,
+    "chunks": [
+      {
+        "relativeTime": 1162,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1163,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1163,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1195,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1204,
+        "size": 3626
+      },
+      {
+        "relativeTime": 1692,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1693,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1693,
+        "size": 128
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 51754,
+    "audioDuration": 1.6,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

@@ -192,25 +192,24 @@ interface MatrixScenarioInfo {
   voice: string;
   format: string;
   sampleRate: number;
-  textCategory: string;
 }
 
 /**
  * 解析矩阵场景名称
- * 格式: matrix/<model>/<voice>/<format>-<sampleRate>/<textCategory>
- * 示例: matrix/cosyvoice-v3-flash/longanyang/pcm-16000/short
+ * 格式: matrix/<model>/<voice>/<format>-<sampleRate>
+ * 示例: matrix/cosyvoice-v3-flash/longanyang/pcm-16000
  */
 function parseMatrixScenario(scenario: string): MatrixScenarioInfo | null {
   if (!scenario.startsWith('matrix/')) return null;
   const parts = scenario.split('/');
-  if (parts.length !== 5) return null;
+  if (parts.length !== 4) return null;
 
-  const [_, model, voice, formatSampleRate, textCategory] = parts;
+  const [_, model, voice, formatSampleRate] = parts;
   const [format, sampleRateStr] = formatSampleRate.split('-');
   const sampleRate = parseInt(sampleRateStr, 10);
   if (Number.isNaN(sampleRate)) return null;
 
-  return { model, voice, format, sampleRate, textCategory };
+  return { model, voice, format, sampleRate };
 }
 
 /**
