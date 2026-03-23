@@ -142,3 +142,5 @@ vite.config.ts.timestamp-*
 
 # Examples
 examples/output
+
+worktrees
