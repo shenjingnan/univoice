@@ -92,7 +92,7 @@ importers:
         version: 1.98.0
       tailwindcss:
         specifier: ^4.1.15
-        version: 4.2.1
+        version: 4.2.2
     devDependencies:
       '@types/react':
         specifier: 19.2.14
