@@ -3,6 +3,17 @@
  */
 
 /**
+ * 单个数据块的详细信息
+ * 用于分析流式输出的实时性能
+ */
+export interface ChunkDetail {
+  /** 接收时间戳（相对于测试开始，毫秒） */
+  relativeTime: number;
+  /** 块大小（字节） */
+  size: number;
+}
+
+/**
  * 准确性指标（ASR 专用）
  * 用于最终报告展示
  */
@@ -81,6 +92,10 @@ export interface BenchmarkConfig {
   textLength?: number;
   /** 音频时长（ASR 专用，秒） */
   audioDuration?: number;
+  /** 音色 */
+  voice?: string;
+  /** 采样率 (Hz) */
+  sampleRate?: number;
 }
 
 /**
@@ -107,6 +122,8 @@ export interface ThroughputMetrics {
   chunkCount: number;
   /** 平均块大小（bytes） */
   avgChunkSize: number;
+  /** 每个 chunk 的详细信息 */
+  chunks?: ChunkDetail[];
 }
 
 /**
@@ -432,4 +449,57 @@ export interface ScenarioSummary {
   avgCER?: number;
   /** 平均每字符延迟（TTS） */
   avgPerCharLatency?: number;
+}
+
+/**
+ * Qwen TTS 矩阵测试配置
+ * 用于测试不同模型、音色、编码、采样率、文本长度的组合
+ */
+export interface QwenMatrixConfig {
+  /** 提供商标识 */
+  provider: 'qwen';
+  /** 模型名称 */
+  model: 'cosyvoice-v3-flash' | 'cosyvoice-v3-plus' | 'cosyvoice-v2';
+  /** 音色名称 */
+  voice: string;
+  /** 音频编码格式 */
+  format: 'pcm' | 'opus';
+  /** 采样率 (Hz) */
+  sampleRate: 16000 | 24000 | 48000;
+  /** 文本长度分类 */
+  textCategory: 'short' | 'medium' | 'long';
+}
+
+/**
+ * 模型与音色的兼容性映射
+ */
+export interface ModelVoiceCompatibility {
+  /** 模型名称 */
+  model: string;
+  /** 兼容的音色列表 */
+  voices: string[];
+}
+
+/**
+ * 矩阵测试场景配置
+ */
+export interface MatrixScenarioConfig {
+  /** 场景名称 */
+  name: string;
+  /** 场景描述 */
+  description: string;
+  /** 测试类型 */
+  testType: 'tts';
+  /** 模型与音色兼容性 */
+  modelVoiceCompatibility: ModelVoiceCompatibility[];
+  /** 音频编码格式列表 */
+  formats: ('pcm' | 'opus')[];
+  /** 采样率列表 */
+  sampleRates: (16000 | 24000 | 48000)[];
+  /** 文本长度分类列表 */
+  textCategories: ('short' | 'medium' | 'long')[];
+  /** 每个组合的迭代次数 */
+  iterations: number;
+  /** 超时时间（ms） */
+  timeout: number;
 }

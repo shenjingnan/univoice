@@ -185,6 +185,65 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
 }
 
 /**
+ * 矩阵场景信息
+ */
+interface MatrixScenarioInfo {
+  model: string;
+  voice: string;
+  format: string;
+  sampleRate: number;
+  textCategory: string;
+}
+
+/**
+ * 解析矩阵场景名称
+ * 格式: matrix/<model>/<voice>/<format>-<sampleRate>/<textCategory>
+ * 示例: matrix/cosyvoice-v3-flash/longanyang/pcm-16000/short
+ */
+function parseMatrixScenario(scenario: string): MatrixScenarioInfo | null {
+  if (!scenario.startsWith('matrix/')) return null;
+  const parts = scenario.split('/');
+  if (parts.length !== 5) return null;
+
+  const [_, model, voice, formatSampleRate, textCategory] = parts;
+  const [format, sampleRateStr] = formatSampleRate.split('-');
+  const sampleRate = parseInt(sampleRateStr, 10);
+  if (Number.isNaN(sampleRate)) return null;
+
+  return { model, voice, format, sampleRate, textCategory };
+}
+
+/**
+ * 提取场景详细配置
+ * 从 BenchmarkResult 提取模型、音色、格式等信息，优先使用矩阵场景名称解析
+ */
+function extractScenarioDetail(result: BenchmarkResult): {
+  model: string;
+  voice: string;
+  format: string;
+  sampleRate: string;
+} {
+  // 优先从矩阵场景名称解析
+  const matrixInfo = parseMatrixScenario(result.scenario);
+  if (matrixInfo) {
+    return {
+      model: matrixInfo.model,
+      voice: matrixInfo.voice,
+      format: matrixInfo.format,
+      sampleRate: `${matrixInfo.sampleRate}`,
+    };
+  }
+
+  // 从 result 中获取
+  return {
+    model: result.model || 'default',
+    voice: result.config.voice || 'default',
+    format: result.config.format || 'unknown',
+    sampleRate: result.config.sampleRate ? `${result.config.sampleRate}` : 'unknown',
+  };
+}
+
+/**
  * ASR 场景说明配置
  */
 const ASR_SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
@@ -206,21 +265,13 @@ const ASR_SCENARIO_CONFIG: Record<string, { label: string; description: string; 
  * TTS 场景说明配置
  */
 const TTS_SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
-  'stream-in-stream-out': {
-    label: '流式入/流式出',
-    description: '实时文本流输入，实时音频流输出',
-  },
-  'stream-in-stream-out-normal': {
-    label: '流式入/流式出（普通文本）',
-    description: '实时文本流输入（普通文本），实时音频流输出',
+  'non-stream-in-stream-out': {
+    label: '非流式入/流式出',
+    description: '完整文本输入，实时音频流输出',
   },
   'non-stream-in-non-stream-out': {
     label: '非流式入/非流式出',
     description: '完整文本输入，完整音频返回',
-  },
-  'non-stream-in-stream-out': {
-    label: '非流式入/流式出',
-    description: '完整文本输入，实时音频流输出',
   },
 };
 
@@ -276,116 +327,174 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
   lines.push('| 场景 | 说明 |');
   lines.push('|------|------|');
   for (const [, config] of Object.entries(TTS_SCENARIO_CONFIG)) {
-    lines.push(`| ${config.label}${config.note || ''} | ${config.description} |`);
+    lines.push(`| ${config.label} | ${config.description} |`);
   }
   lines.push('');
 
-  // 按提供商 + 场景分组
-  const scenarioGroups = new Map<string, BenchmarkResult[]>();
-  for (const result of ttsResults) {
-    const key = `${result.provider}/${result.scenario}`;
-    const group = scenarioGroups.get(key) || [];
-    group.push(result);
-    scenarioGroups.set(key, group);
-  }
+  // 按 outputMode 分组
+  const streamOutResults = ttsResults.filter((r) => r.config.outputMode === 'stream');
+  const nonStreamOutResults = ttsResults.filter((r) => r.config.outputMode === 'non-stream');
 
-  // 计算统计
-  const scenarioStats = Array.from(scenarioGroups.entries()).map(([key, res]) => {
-    const [provider, scenario] = key.split('/');
-    return {
-      key,
-      provider,
-      scenario,
-      displayName: providers.get(provider) || provider,
-      ...calculateExtendedPerformance(res),
-    };
-  });
+  // 非流式入/流式出表格
+  if (streamOutResults.length > 0) {
+    lines.push('### 非流式入/流式出');
+    lines.push('');
+    lines.push(
+      '| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首次耗时 (ms) | 平均耗时 (ms) | 总耗时 (ms) |'
+    );
+    lines.push(
+      '|--------|------|------|----------|-------------|----------|---------------|---------------|------------|'
+    );
 
-  // 综合性能表格
-  lines.push('### 综合性能指标');
-  lines.push('');
-  lines.push('| TTS | 场景 | 协议 | 首次耗时 | 平均耗时 | 平均每字符延迟 | 成功率 |');
-  lines.push('|-----|------|------|---------|---------|---------------|--------|');
-
-  // 计算各指标的 min/max 索引用于标记最佳值（只计算成功的）
-  const successStats = scenarioStats.filter((s) => !s.hasFailure);
-  const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
-  const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
-  const perCharValues = successStats
-    .filter((s) => s.avgPerChar !== undefined)
-    .map((s) => s.avgPerChar as number);
-  const rateValues = successStats.map((s) => s.successRate * 100);
-
-  const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
-  const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
-  const perCharMinMax = findMinMaxIndices(perCharValues);
-  const rateMinMax = findMinMaxIndices(rateValues);
-
-  let perCharIdx = 0;
-
-  for (let i = 0; i < scenarioStats.length; i++) {
-    const s = scenarioStats[i];
-    const scenarioInfo = formatScenario(s.scenario, 'tts');
-    const protocol = getProtocol(s.provider);
-
-    // 场景名称（带标记）
-    const scenarioLabel = `${scenarioInfo.label}${scenarioInfo.note || ''}`;
-
-    if (s.hasFailure) {
-      lines.push(`| ${s.displayName} | ${scenarioLabel} | ${protocol} | 测试失败 | - | - | - |`);
-      continue;
+    // 按配置分组（忽略 textCategory），聚合同一配置的测试记录
+    const groups = new Map<string, BenchmarkResult[]>();
+    for (const result of streamOutResults) {
+      const detail = extractScenarioDetail(result);
+      const key = `${result.provider}/${detail.model}/${detail.voice}/${detail.format}/${detail.sampleRate}`;
+      const group = groups.get(key) || [];
+      group.push(result);
+      groups.set(key, group);
     }
 
-    // 首次耗时
-    const successIndex = successStats.indexOf(s);
-    const firstLat = formatMetricValue(
-      s.firstLatency ?? 0,
-      successIndex,
-      firstLatencyMinMax.minIndex,
-      firstLatencyMinMax.maxIndex,
-      true,
-      ''
-    );
+    const stats = Array.from(groups.entries()).map(([key, res]) => {
+      const [provider, model, voice, format, sampleRate] = key.split('/');
+      return {
+        key,
+        provider,
+        model,
+        voice,
+        format,
+        sampleRate,
+        displayName: providers.get(provider) || provider,
+        ...calculateExtendedPerformance(res),
+      };
+    });
 
-    // 平均耗时
-    const avgLat = formatMetricValue(
-      s.avgLatency ?? 0,
-      successIndex,
-      avgLatencyMinMax.minIndex,
-      avgLatencyMinMax.maxIndex,
-      true,
-      ''
-    );
+    // 计算各指标的 min/max 索引用于标记最佳值
+    const successStats = stats.filter((s) => !s.hasFailure);
+    const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
+    const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
+    const totalLatencyValues = successStats.map((s) => s.avgTotal ?? 0);
 
-    // 平均每字符延迟
-    const perChar = s.avgPerChar
-      ? formatMetricValue(
-          s.avgPerChar,
-          perCharIdx++,
-          perCharMinMax.minIndex,
-          perCharMinMax.maxIndex,
-          true,
-          'ms',
-          1
-        )
-      : 'N/A';
+    const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
+    const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
+    const totalLatencyMinMax = findMinMaxIndices(totalLatencyValues);
 
-    // 成功率
-    const rate = formatMetricValue(
-      s.successRate * 100,
-      successIndex,
-      rateMinMax.minIndex,
-      rateMinMax.maxIndex,
-      false,
-      '%'
-    );
+    for (let i = 0; i < stats.length; i++) {
+      const s = stats[i];
 
-    lines.push(
-      `| ${s.displayName} | ${scenarioLabel} | ${protocol} | ${firstLat} | ${avgLat} | ${perChar} | ${rate} |`
-    );
+      if (s.hasFailure) {
+        lines.push(
+          `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 | - | - |`
+        );
+        continue;
+      }
+
+      const successIndex = successStats.indexOf(s);
+
+      // 首次耗时
+      const firstLat = formatMetricValue(
+        s.firstLatency ?? 0,
+        successIndex,
+        firstLatencyMinMax.minIndex,
+        firstLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 平均耗时
+      const avgLat = formatMetricValue(
+        s.avgLatency ?? 0,
+        successIndex,
+        avgLatencyMinMax.minIndex,
+        avgLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 总耗时
+      const totalLat = formatMetricValue(
+        s.avgTotal ?? 0,
+        successIndex,
+        totalLatencyMinMax.minIndex,
+        totalLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      lines.push(
+        `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${totalLat} |`
+      );
+    }
+
+    lines.push('');
   }
 
-  lines.push('');
+  // 非流式入/非流式出表格
+  if (nonStreamOutResults.length > 0) {
+    lines.push('### 非流式入/非流式出');
+    lines.push('');
+    lines.push('| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 总耗时 (ms) |');
+    lines.push('|--------|------|------|----------|-------------|----------|------------|');
+
+    // 按配置分组（忽略 textCategory），聚合同一配置的测试记录
+    const groups = new Map<string, BenchmarkResult[]>();
+    for (const result of nonStreamOutResults) {
+      const detail = extractScenarioDetail(result);
+      const key = `${result.provider}/${detail.model}/${detail.voice}/${detail.format}/${detail.sampleRate}`;
+      const group = groups.get(key) || [];
+      group.push(result);
+      groups.set(key, group);
+    }
+
+    const stats = Array.from(groups.entries()).map(([key, res]) => {
+      const [provider, model, voice, format, sampleRate] = key.split('/');
+      return {
+        key,
+        provider,
+        model,
+        voice,
+        format,
+        sampleRate,
+        displayName: providers.get(provider) || provider,
+        ...calculateExtendedPerformance(res),
+      };
+    });
+
+    // 计算总耗时的 min/max 索引
+    const successStats = stats.filter((s) => !s.hasFailure);
+    const totalLatencyValues = successStats.map((s) => s.avgTotal ?? 0);
+    const totalLatencyMinMax = findMinMaxIndices(totalLatencyValues);
+
+    for (let i = 0; i < stats.length; i++) {
+      const s = stats[i];
+
+      if (s.hasFailure) {
+        lines.push(
+          `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 |`
+        );
+        continue;
+      }
+
+      const successIndex = successStats.indexOf(s);
+
+      // 总耗时
+      const totalLat = formatMetricValue(
+        s.avgTotal ?? 0,
+        successIndex,
+        totalLatencyMinMax.minIndex,
+        totalLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      lines.push(
+        `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${totalLat} |`
+      );
+    }
+
+    lines.push('');
+  }
 
   // 能力矩阵
   lines.push('### 能力矩阵');
@@ -404,9 +513,10 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
   for (const [provider, res] of providerGroups) {
     const displayName = providers.get(provider) || provider;
     const protocol = getProtocol(provider);
-    const hasStreamIn = res.some((r) => r.scenario.includes('stream-in') && r.status === 'success');
+    // 根据 config.inputMode 和 config.outputMode 判断流式能力
+    const hasStreamIn = res.some((r) => r.config.inputMode === 'stream' && r.status === 'success');
     const hasStreamOut = res.some(
-      (r) => r.scenario.includes('stream-out') && r.status === 'success'
+      (r) => r.config.outputMode === 'stream' && r.status === 'success'
     );
     const streamIn = hasStreamIn ? '✅' : '❌';
     const streamOut = hasStreamOut ? '✅' : '❌';
@@ -466,8 +576,8 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
   // 综合性能表格
   lines.push('### 综合性能指标');
   lines.push('');
-  lines.push('| ASR | 场景 | 协议 | 首次耗时 | 平均耗时 | RTF | 准确率 | CER |');
-  lines.push('|-----|------|------|---------|---------|-----|--------|-----|');
+  lines.push('| ASR | 场景 | 协议 | 首次耗时 (ms) | 平均耗时 (ms) | RTF | 准确率 | CER |');
+  lines.push('|-----|------|------|---------------|---------------|-----|--------|-----|');
 
   // 计算各指标的 min/max 索引用于标记最佳值（只计算成功的）
   const successStats = scenarioStats.filter((s) => !s.hasFailure);
@@ -603,6 +713,20 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
 
   // 标题
   lines.push('# Univoice 性能基准测试报告');
+  lines.push('');
+  lines.push('> ⚠️ **重要说明**');
+  lines.push('>');
+  lines.push(
+    '> 本报告仅反映在使用 **univoice** 时不同服务商和模型之间的**相对性能差异**，仅供参考，不代表服务商和模型的绝对性能。'
+  );
+  lines.push('>');
+  lines.push('> 实际测试结果受多种因素影响，包括但不限于：');
+  lines.push('> - 网络波动与延迟');
+  lines.push('> - 测试环境与地理位置');
+  lines.push('> - univoice 的实现方式');
+  lines.push('> - 服务商当前的负载情况');
+  lines.push('>');
+  lines.push('> 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。');
   lines.push('');
   lines.push(`> 生成时间: ${new Date(report.generatedAt).toLocaleString('zh-CN')}`);
   lines.push('');

@@ -1,0 +1,1786 @@
+{
+  "id": "d90c4ef3-8438-4656-bc10-05eb8ae0d471",
+  "timestamp": "2026-03-23T07:18:15.122Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-plus",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v3-plus/longanyang/pcm-16000/long",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 425,
+    "voice": "longanyang",
+    "sampleRate": 16000
+  },
+  "latency": {
+    "firstChunk": 1058,
+    "total": 42019
+  },
+  "throughput": {
+    "dataRate": 67.86263357052762,
+    "chunkCount": 438,
+    "avgChunkSize": 6510.319634703196,
+    "chunks": [
+      {
+        "relativeTime": 1058,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1068,
+        "size": 5702
+      },
+      {
+        "relativeTime": 1583,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1595,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1603,
+        "size": 2594
+      },
+      {
+        "relativeTime": 1616,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1620,
+        "size": 8000
+      },
+      {
+        "relativeTime": 1642,
+        "size": 3200
+      },
+      {
+        "relativeTime": 2106,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2130,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2131,
+        "size": 3200
+      },
+      {
+        "relativeTime": 2137,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2140,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2149,
+        "size": 3200
+      },
+      {
+        "relativeTime": 2151,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2164,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2175,
+        "size": 3200
+      },
+      {
+        "relativeTime": 2648,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2649,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2654,
+        "size": 3110
+      },
+      {
+        "relativeTime": 2666,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2667,
+        "size": 8000
+      },
+      {
+        "relativeTime": 2677,
+        "size": 3200
+      },
+      {
+        "relativeTime": 3164,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3165,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3192,
+        "size": 3200
+      },
+      {
+        "relativeTime": 3193,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3194,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3204,
+        "size": 3200
+      },
+      {
+        "relativeTime": 3685,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3687,
+        "size": 8000
+      },
+      {
+        "relativeTime": 3699,
+        "size": 3200
+      },
+      {
+        "relativeTime": 4212,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4219,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4220,
+        "size": 3110
+      },
+      {
+        "relativeTime": 4230,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4231,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4242,
+        "size": 3200
+      },
+      {
+        "relativeTime": 4733,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4752,
+        "size": 8000
+      },
+      {
+        "relativeTime": 4763,
+        "size": 3200
+      },
+      {
+        "relativeTime": 5254,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5255,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5265,
+        "size": 3200
+      },
+      {
+        "relativeTime": 5279,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5283,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5293,
+        "size": 3200
+      },
+      {
+        "relativeTime": 5666,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5671,
+        "size": 8000
+      },
+      {
+        "relativeTime": 5680,
+        "size": 3200
+      },
+      {
+        "relativeTime": 6309,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6309,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6321,
+        "size": 3200
+      },
+      {
+        "relativeTime": 6463,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6464,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6477,
+        "size": 3200
+      },
+      {
+        "relativeTime": 6833,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6837,
+        "size": 8000
+      },
+      {
+        "relativeTime": 6847,
+        "size": 3200
+      },
+      {
+        "relativeTime": 7352,
+        "size": 8000
+      },
+      {
+        "relativeTime": 7352,
+        "size": 8000
+      },
+      {
+        "relativeTime": 7363,
+        "size": 3200
+      },
+      {
+        "relativeTime": 7870,
+        "size": 8000
+      },
+      {
+        "relativeTime": 7873,
+        "size": 8000
+      },
+      {
+        "relativeTime": 7883,
+        "size": 3200
+      },
+      {
+        "relativeTime": 8399,
+        "size": 8000
+      },
+      {
+        "relativeTime": 8400,
+        "size": 8000
+      },
+      {
+        "relativeTime": 8410,
+        "size": 3200
+      },
+      {
+        "relativeTime": 8925,
+        "size": 8000
+      },
+      {
+        "relativeTime": 8925,
+        "size": 8000
+      },
+      {
+        "relativeTime": 8936,
+        "size": 3200
+      },
+      {
+        "relativeTime": 9447,
+        "size": 8000
+      },
+      {
+        "relativeTime": 9448,
+        "size": 8000
+      },
+      {
+        "relativeTime": 9448,
+        "size": 8000
+      },
+      {
+        "relativeTime": 9448,
+        "size": 8000
+      },
+      {
+        "relativeTime": 9448,
+        "size": 2764
+      },
+      {
+        "relativeTime": 9989,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10000,
+        "size": 5702
+      },
+      {
+        "relativeTime": 10044,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10045,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10056,
+        "size": 2594
+      },
+      {
+        "relativeTime": 10499,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10500,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10510,
+        "size": 3200
+      },
+      {
+        "relativeTime": 10654,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10655,
+        "size": 8000
+      },
+      {
+        "relativeTime": 10664,
+        "size": 3200
+      },
+      {
+        "relativeTime": 11022,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11022,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11033,
+        "size": 3200
+      },
+      {
+        "relativeTime": 11547,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11549,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11558,
+        "size": 3200
+      },
+      {
+        "relativeTime": 11618,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11618,
+        "size": 8000
+      },
+      {
+        "relativeTime": 11628,
+        "size": 3110
+      },
+      {
+        "relativeTime": 12069,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12070,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12080,
+        "size": 3200
+      },
+      {
+        "relativeTime": 12588,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12589,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12599,
+        "size": 3200
+      },
+      {
+        "relativeTime": 12627,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12629,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12638,
+        "size": 3200
+      },
+      {
+        "relativeTime": 12998,
+        "size": 8000
+      },
+      {
+        "relativeTime": 12999,
+        "size": 8000
+      },
+      {
+        "relativeTime": 13010,
+        "size": 3200
+      },
+      {
+        "relativeTime": 13642,
+        "size": 8000
+      },
+      {
+        "relativeTime": 13645,
+        "size": 8000
+      },
+      {
+        "relativeTime": 13655,
+        "size": 3110
+      },
+      {
+        "relativeTime": 13753,
+        "size": 8000
+      },
+      {
+        "relativeTime": 13755,
+        "size": 8000
+      },
+      {
+        "relativeTime": 13765,
+        "size": 3200
+      },
+      {
+        "relativeTime": 14163,
+        "size": 8000
+      },
+      {
+        "relativeTime": 14165,
+        "size": 8000
+      },
+      {
+        "relativeTime": 14175,
+        "size": 3200
+      },
+      {
+        "relativeTime": 14687,
+        "size": 8000
+      },
+      {
+        "relativeTime": 14687,
+        "size": 8000
+      },
+      {
+        "relativeTime": 14698,
+        "size": 3200
+      },
+      {
+        "relativeTime": 15211,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15213,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15223,
+        "size": 3200
+      },
+      {
+        "relativeTime": 15297,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15297,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15308,
+        "size": 3200
+      },
+      {
+        "relativeTime": 15738,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15738,
+        "size": 8000
+      },
+      {
+        "relativeTime": 15749,
+        "size": 3200
+      },
+      {
+        "relativeTime": 16263,
+        "size": 8000
+      },
+      {
+        "relativeTime": 16263,
+        "size": 8000
+      },
+      {
+        "relativeTime": 16274,
+        "size": 3200
+      },
+      {
+        "relativeTime": 16790,
+        "size": 8000
+      },
+      {
+        "relativeTime": 16790,
+        "size": 8000
+      },
+      {
+        "relativeTime": 16791,
+        "size": 3840
+      },
+      {
+        "relativeTime": 16791,
+        "size": 8000
+      },
+      {
+        "relativeTime": 16801,
+        "size": 6080
+      },
+      {
+        "relativeTime": 16956,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17314,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17314,
+        "size": 3200
+      },
+      {
+        "relativeTime": 17314,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17315,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17325,
+        "size": 3200
+      },
+      {
+        "relativeTime": 17368,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17369,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17380,
+        "size": 3200
+      },
+      {
+        "relativeTime": 17837,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17837,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17837,
+        "size": 3200
+      },
+      {
+        "relativeTime": 17837,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17838,
+        "size": 8000
+      },
+      {
+        "relativeTime": 17848,
+        "size": 3200
+      },
+      {
+        "relativeTime": 18185,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18185,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18195,
+        "size": 3200
+      },
+      {
+        "relativeTime": 18273,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18274,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18283,
+        "size": 3200
+      },
+      {
+        "relativeTime": 18690,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18690,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18700,
+        "size": 3200
+      },
+      {
+        "relativeTime": 18775,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18775,
+        "size": 8000
+      },
+      {
+        "relativeTime": 18788,
+        "size": 3200
+      },
+      {
+        "relativeTime": 19030,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19032,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19045,
+        "size": 3200
+      },
+      {
+        "relativeTime": 19290,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19293,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19303,
+        "size": 3200
+      },
+      {
+        "relativeTime": 19931,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19932,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19933,
+        "size": 3200
+      },
+      {
+        "relativeTime": 19933,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19933,
+        "size": 8000
+      },
+      {
+        "relativeTime": 19944,
+        "size": 3200
+      },
+      {
+        "relativeTime": 20460,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20461,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20473,
+        "size": 3200
+      },
+      {
+        "relativeTime": 20981,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20982,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20987,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20987,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20988,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20988,
+        "size": 8000
+      },
+      {
+        "relativeTime": 20988,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21000,
+        "size": 6080
+      },
+      {
+        "relativeTime": 21308,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21308,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21320,
+        "size": 3200
+      },
+      {
+        "relativeTime": 21369,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21370,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21381,
+        "size": 3200
+      },
+      {
+        "relativeTime": 21591,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21591,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21602,
+        "size": 3200
+      },
+      {
+        "relativeTime": 21832,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21832,
+        "size": 8000
+      },
+      {
+        "relativeTime": 21843,
+        "size": 3200
+      },
+      {
+        "relativeTime": 21999,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22002,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22012,
+        "size": 3200
+      },
+      {
+        "relativeTime": 22359,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22361,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22372,
+        "size": 3200
+      },
+      {
+        "relativeTime": 22500,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22513,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22523,
+        "size": 3200
+      },
+      {
+        "relativeTime": 22879,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22880,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22891,
+        "size": 3200
+      },
+      {
+        "relativeTime": 22979,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22980,
+        "size": 8000
+      },
+      {
+        "relativeTime": 22990,
+        "size": 3200
+      },
+      {
+        "relativeTime": 23239,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23250,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23262,
+        "size": 3200
+      },
+      {
+        "relativeTime": 23543,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23543,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23554,
+        "size": 3200
+      },
+      {
+        "relativeTime": 23942,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23942,
+        "size": 8000
+      },
+      {
+        "relativeTime": 23952,
+        "size": 3200
+      },
+      {
+        "relativeTime": 24076,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24078,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24093,
+        "size": 3200
+      },
+      {
+        "relativeTime": 24462,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24463,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24474,
+        "size": 3200
+      },
+      {
+        "relativeTime": 24673,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24684,
+        "size": 8000
+      },
+      {
+        "relativeTime": 24695,
+        "size": 3200
+      },
+      {
+        "relativeTime": 25179,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25180,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25190,
+        "size": 3200
+      },
+      {
+        "relativeTime": 25287,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25298,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25309,
+        "size": 3200
+      },
+      {
+        "relativeTime": 25712,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25713,
+        "size": 8000
+      },
+      {
+        "relativeTime": 25723,
+        "size": 3200
+      },
+      {
+        "relativeTime": 26225,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26225,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26226,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26226,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26226,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26237,
+        "size": 4160
+      },
+      {
+        "relativeTime": 26356,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26368,
+        "size": 6080
+      },
+      {
+        "relativeTime": 26752,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26753,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26753,
+        "size": 3200
+      },
+      {
+        "relativeTime": 26780,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26780,
+        "size": 8000
+      },
+      {
+        "relativeTime": 26792,
+        "size": 3200
+      },
+      {
+        "relativeTime": 27293,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27293,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27294,
+        "size": 3200
+      },
+      {
+        "relativeTime": 27294,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27295,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27306,
+        "size": 3200
+      },
+      {
+        "relativeTime": 27411,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27412,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27422,
+        "size": 3200
+      },
+      {
+        "relativeTime": 27797,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27800,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27811,
+        "size": 3200
+      },
+      {
+        "relativeTime": 27879,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27880,
+        "size": 8000
+      },
+      {
+        "relativeTime": 27891,
+        "size": 3200
+      },
+      {
+        "relativeTime": 28326,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28326,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28337,
+        "size": 3200
+      },
+      {
+        "relativeTime": 28363,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28367,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28378,
+        "size": 3200
+      },
+      {
+        "relativeTime": 28851,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28851,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28862,
+        "size": 3200
+      },
+      {
+        "relativeTime": 28942,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28953,
+        "size": 8000
+      },
+      {
+        "relativeTime": 28964,
+        "size": 3200
+      },
+      {
+        "relativeTime": 29373,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29377,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29388,
+        "size": 3200
+      },
+      {
+        "relativeTime": 29488,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29491,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29501,
+        "size": 3200
+      },
+      {
+        "relativeTime": 29895,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29900,
+        "size": 8000
+      },
+      {
+        "relativeTime": 29910,
+        "size": 3200
+      },
+      {
+        "relativeTime": 30421,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30421,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30422,
+        "size": 3196
+      },
+      {
+        "relativeTime": 30422,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30423,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30432,
+        "size": 3200
+      },
+      {
+        "relativeTime": 30940,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30942,
+        "size": 8000
+      },
+      {
+        "relativeTime": 30952,
+        "size": 3200
+      },
+      {
+        "relativeTime": 31468,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31468,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31468,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31469,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31469,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31479,
+        "size": 1600
+      },
+      {
+        "relativeTime": 31480,
+        "size": 8000
+      },
+      {
+        "relativeTime": 31490,
+        "size": 6080
+      },
+      {
+        "relativeTime": 31995,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32005,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32006,
+        "size": 3200
+      },
+      {
+        "relativeTime": 32006,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32006,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32018,
+        "size": 3200
+      },
+      {
+        "relativeTime": 32093,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32093,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32105,
+        "size": 3200
+      },
+      {
+        "relativeTime": 32524,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32524,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32528,
+        "size": 3200
+      },
+      {
+        "relativeTime": 32528,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32529,
+        "size": 8000
+      },
+      {
+        "relativeTime": 32539,
+        "size": 3200
+      },
+      {
+        "relativeTime": 33038,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33038,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33039,
+        "size": 3200
+      },
+      {
+        "relativeTime": 33039,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33042,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33052,
+        "size": 3200
+      },
+      {
+        "relativeTime": 33563,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33563,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33571,
+        "size": 3200
+      },
+      {
+        "relativeTime": 33571,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33572,
+        "size": 8000
+      },
+      {
+        "relativeTime": 33582,
+        "size": 3200
+      },
+      {
+        "relativeTime": 34095,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34095,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34095,
+        "size": 3200
+      },
+      {
+        "relativeTime": 34096,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34114,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34125,
+        "size": 3200
+      },
+      {
+        "relativeTime": 34629,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34630,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34631,
+        "size": 3200
+      },
+      {
+        "relativeTime": 34631,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34632,
+        "size": 8000
+      },
+      {
+        "relativeTime": 34642,
+        "size": 3200
+      },
+      {
+        "relativeTime": 35143,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35143,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35154,
+        "size": 3200
+      },
+      {
+        "relativeTime": 35187,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35204,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35214,
+        "size": 3200
+      },
+      {
+        "relativeTime": 35674,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35675,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35675,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35685,
+        "size": 4160
+      },
+      {
+        "relativeTime": 35803,
+        "size": 8000
+      },
+      {
+        "relativeTime": 35814,
+        "size": 6080
+      },
+      {
+        "relativeTime": 36196,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36197,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36208,
+        "size": 3200
+      },
+      {
+        "relativeTime": 36246,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36246,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36257,
+        "size": 3200
+      },
+      {
+        "relativeTime": 36734,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36735,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36735,
+        "size": 3200
+      },
+      {
+        "relativeTime": 36735,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36735,
+        "size": 8000
+      },
+      {
+        "relativeTime": 36745,
+        "size": 3200
+      },
+      {
+        "relativeTime": 37242,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37243,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37243,
+        "size": 3200
+      },
+      {
+        "relativeTime": 37244,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37245,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37255,
+        "size": 3200
+      },
+      {
+        "relativeTime": 37763,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37763,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37763,
+        "size": 3200
+      },
+      {
+        "relativeTime": 37764,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37764,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37774,
+        "size": 3200
+      },
+      {
+        "relativeTime": 37850,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37852,
+        "size": 8000
+      },
+      {
+        "relativeTime": 37862,
+        "size": 3200
+      },
+      {
+        "relativeTime": 38279,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38280,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38290,
+        "size": 3200
+      },
+      {
+        "relativeTime": 38385,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38806,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38806,
+        "size": 3200
+      },
+      {
+        "relativeTime": 38806,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38806,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38816,
+        "size": 3200
+      },
+      {
+        "relativeTime": 38936,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38938,
+        "size": 8000
+      },
+      {
+        "relativeTime": 38948,
+        "size": 3200
+      },
+      {
+        "relativeTime": 39339,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39339,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39339,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39340,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39340,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39350,
+        "size": 6720
+      },
+      {
+        "relativeTime": 39856,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39856,
+        "size": 6080
+      },
+      {
+        "relativeTime": 39858,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39859,
+        "size": 8000
+      },
+      {
+        "relativeTime": 39869,
+        "size": 3200
+      },
+      {
+        "relativeTime": 40379,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40379,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40380,
+        "size": 3200
+      },
+      {
+        "relativeTime": 40380,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40380,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40390,
+        "size": 3200
+      },
+      {
+        "relativeTime": 40912,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40912,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40913,
+        "size": 3200
+      },
+      {
+        "relativeTime": 40913,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40913,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40924,
+        "size": 3200
+      },
+      {
+        "relativeTime": 40942,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40945,
+        "size": 8000
+      },
+      {
+        "relativeTime": 40955,
+        "size": 3200
+      },
+      {
+        "relativeTime": 41431,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41433,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41434,
+        "size": 3200
+      },
+      {
+        "relativeTime": 41437,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41437,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41448,
+        "size": 3200
+      },
+      {
+        "relativeTime": 41948,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41949,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41960,
+        "size": 3200
+      },
+      {
+        "relativeTime": 41978,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41982,
+        "size": 8000
+      },
+      {
+        "relativeTime": 41982,
+        "size": 8000
+      },
+      {
+        "relativeTime": 42019,
+        "size": 8000
+      },
+      {
+        "relativeTime": 42019,
+        "size": 7568
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 2851520,
+    "audioDuration": 87,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

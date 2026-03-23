@@ -6,6 +6,7 @@ import { randomUUID } from 'node:crypto';
 import type {
   BenchmarkConfig,
   BenchmarkResult,
+  ChunkDetail,
   LatencyMetrics,
   QualityMetrics,
   ThroughputMetrics,
@@ -57,6 +58,13 @@ export class Timer {
   getTotalLatency(): number {
     return this.endTime - this.startTime;
   }
+
+  /**
+   * 获取开始时间
+   */
+  getStartTime(): number {
+    return this.startTime;
+  }
 }
 
 /**
@@ -65,6 +73,7 @@ export class Timer {
 export class MetricsCollector {
   private timer = new Timer();
   private chunks: Uint8Array[] = [];
+  private chunkDetails: ChunkDetail[] = [];
   private textLength = 0;
 
   /**
@@ -73,6 +82,7 @@ export class MetricsCollector {
   startCollecting(): void {
     this.timer.start();
     this.chunks = [];
+    this.chunkDetails = [];
     this.textLength = 0;
   }
 
@@ -80,6 +90,15 @@ export class MetricsCollector {
    * 添加数据块
    */
   addChunk(chunk: Uint8Array): void {
+    // 记录当前时间（相对于开始时间）
+    const relativeTime = Date.now() - this.timer.getStartTime();
+
+    // 记录 chunk 详情
+    this.chunkDetails.push({
+      relativeTime,
+      size: chunk.length,
+    });
+
     this.chunks.push(chunk);
     this.timer.recordFirstChunk();
   }
@@ -130,6 +149,7 @@ export class MetricsCollector {
       dataRate: total > 0 ? totalSize / total : 0,
       chunkCount,
       avgChunkSize: chunkCount > 0 ? totalSize / chunkCount : 0,
+      chunks: this.chunkDetails,
     };
   }
 
