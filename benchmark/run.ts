@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { generateAudioFixtures, getAudioFixtures, hasAudioFixtures } from './fixtures/audios';
-import type { BenchmarkResult } from './metrics/types';
+import type { BenchmarkResult, MatrixFilter } from './metrics/types';
 import { runASRSuite } from './runners/asr-runner';
 import { runTTSSuite } from './runners/tts-runner';
 import { generateMockReport } from './utils/mock-generator';
@@ -34,6 +34,7 @@ export function parseRunArgs(): {
   dryRun: boolean;
   atomicSave: boolean;
   scenario: string | undefined;
+  matrixFilter: MatrixFilter | undefined;
 } {
   // 过滤掉 pnpm 传递的开头 '--'
   const args = process.argv.slice(2).filter((arg, index) => !(index === 0 && arg === '--'));
@@ -47,6 +48,10 @@ export function parseRunArgs(): {
       'dry-run': { type: 'boolean', short: 'd' },
       'no-atomic': { type: 'boolean' },
       scenario: { type: 'string', short: 's' },
+      model: { type: 'string' },
+      voice: { type: 'string' },
+      format: { type: 'string' },
+      'sample-rate': { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
     strict: false,
@@ -68,6 +73,16 @@ export function parseRunArgs(): {
   --no-atomic             禁用原子化保存（不推荐）
   -h, --help              显示帮助信息
 
+矩阵测试过滤选项 (仅用于 qwen-matrix 场景):
+  --model <models>        按模型过滤（支持逗号分隔多个）
+                          例如: --model cosyvoice-v3-flash,cosyvoice-v2
+  --voice <voices>        按音色过滤（支持逗号分隔多个）
+                          例如: --voice longanyang,longyingxiao
+  --format <formats>      按编码格式过滤（支持逗号分隔多个）
+                          例如: --format pcm,opus
+  --sample-rate <rates>   按采样率过滤（支持逗号分隔多个）
+                          例如: --sample-rate 16000,24000
+
 场景说明:
   qwen-matrix             Qwen TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
 
@@ -82,6 +97,8 @@ export function parseRunArgs(): {
   pnpm benchmark run -- --dry-run               # 预览模拟报告
   pnpm benchmark run -- -s qwen-matrix          # 运行 Qwen TTS 矩阵测试
   pnpm benchmark run -- -s qwen-matrix -i 3     # 矩阵测试，每组合 3 次迭代
+  pnpm benchmark run -- -s qwen-matrix --model cosyvoice-v1  # 只测试 cosyvoice-v1 模型
+  pnpm benchmark run -- -s qwen-matrix --format pcm --sample-rate 16000  # 只测试 PCM 16kHz
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -108,6 +125,43 @@ export function parseRunArgs(): {
     process.exit(1);
   }
 
+  // 解析矩阵测试过滤参数
+  let matrixFilter: MatrixFilter | undefined;
+  if (values.model || values.voice || values.format || values['sample-rate']) {
+    matrixFilter = {};
+
+    if (values.model) {
+      matrixFilter.model = String(values.model)
+        .split(',')
+        .map((m) => m.trim())
+        .filter(Boolean);
+    }
+
+    if (values.voice) {
+      matrixFilter.voice = String(values.voice)
+        .split(',')
+        .map((v) => v.trim())
+        .filter(Boolean);
+    }
+
+    if (values.format) {
+      matrixFilter.format = String(values.format)
+        .split(',')
+        .map((f) => f.trim())
+        .filter(Boolean);
+    }
+
+    if (values['sample-rate']) {
+      const rates = String(values['sample-rate'])
+        .split(',')
+        .map((r) => Number.parseInt(r.trim(), 10))
+        .filter((r) => !Number.isNaN(r));
+      if (rates.length > 0) {
+        matrixFilter.sampleRate = rates;
+      }
+    }
+  }
+
   return {
     providers,
     type,
@@ -115,6 +169,7 @@ export function parseRunArgs(): {
     dryRun: Boolean(values['dry-run']),
     atomicSave: !values['no-atomic'],
     scenario: values.scenario as string | undefined,
+    matrixFilter,
   };
 }
 
@@ -128,6 +183,7 @@ export async function run(options?: {
   dryRun?: boolean;
   atomicSave?: boolean;
   scenario?: string;
+  matrixFilter?: MatrixFilter;
 }): Promise<BenchmarkResult[]> {
   // 如果没有提供选项，从命令行解析
   const args = options
@@ -138,6 +194,7 @@ export async function run(options?: {
         dryRun: options.dryRun || false,
         atomicSave: options.atomicSave ?? true,
         scenario: options.scenario,
+        matrixFilter: options.matrixFilter,
       }
     : parseRunArgs();
 
@@ -208,9 +265,26 @@ export async function run(options?: {
   // 矩阵测试场景
   if (args.scenario === 'qwen-matrix') {
     console.log('📊 运行 Qwen TTS 矩阵测试场景...\n');
+    if (args.matrixFilter) {
+      console.log('📋 猟阵过滤条件:');
+      if (args.matrixFilter.model) {
+        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
+      }
+      if (args.matrixFilter.voice) {
+        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
+      }
+      if (args.matrixFilter.format) {
+        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
+      }
+      if (args.matrixFilter.sampleRate) {
+        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
+      }
+      console.log('');
+    }
     const { runQwenMatrixScenario } = await import('./scenarios/qwen-matrix');
     const matrixResults = await runQwenMatrixScenario({
       iterations: args.iterations,
+      filter: args.matrixFilter,
     });
     allResults.push(...matrixResults);
 

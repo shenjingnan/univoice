@@ -452,33 +452,42 @@ export interface ScenarioSummary {
 }
 
 /**
- * Qwen TTS 矩阵测试配置
- * 用于测试不同模型、音色、编码、采样率、文本长度的组合
+ * 矩阵测试项
+ * 每个项代表一个完整的测试场景配置
  */
-export interface QwenMatrixConfig {
+export interface MatrixItem {
   /** 提供商标识 */
   provider: 'qwen';
   /** 模型名称 */
-  model: 'cosyvoice-v3-flash' | 'cosyvoice-v3-plus' | 'cosyvoice-v2';
+  model: 'cosyvoice-v3-flash' | 'cosyvoice-v3-plus' | 'cosyvoice-v2' | 'cosyvoice-v1';
   /** 音色名称 */
   voice: string;
   /** 音频编码格式 */
   format: 'pcm' | 'opus';
   /** 采样率 (Hz) */
   sampleRate: 16000 | 24000 | 48000;
-  /** 文本长度分类 */
-  textCategory: 'short' | 'medium' | 'long';
 }
 
 /**
- * 模型与音色的兼容性映射
+ * 矩阵测试过滤器
+ * 用于筛选特定的矩阵测试项
  */
-export interface ModelVoiceCompatibility {
-  /** 模型名称 */
-  model: string;
-  /** 兼容的音色列表 */
-  voices: string[];
+export interface MatrixFilter {
+  /** 模型名称过滤（支持逗号分隔多个） */
+  model?: string[];
+  /** 音色名称过滤（支持逗号分隔多个） */
+  voice?: string[];
+  /** 音频编码格式过滤（支持逗号分隔多个） */
+  format?: string[];
+  /** 采样率过滤（支持逗号分隔多个） */
+  sampleRate?: number[];
 }
+
+/**
+ * Qwen TTS 矩阵测试配置
+ * 用于测试不同模型、音色、编码、采样率的组合
+ */
+export type QwenMatrixConfig = MatrixItem;
 
 /**
  * 矩阵测试场景配置
@@ -490,14 +499,6 @@ export interface MatrixScenarioConfig {
   description: string;
   /** 测试类型 */
   testType: 'tts';
-  /** 模型与音色兼容性 */
-  modelVoiceCompatibility: ModelVoiceCompatibility[];
-  /** 音频编码格式列表 */
-  formats: ('pcm' | 'opus')[];
-  /** 采样率列表 */
-  sampleRates: (16000 | 24000 | 48000)[];
-  /** 文本长度分类列表 */
-  textCategories: ('short' | 'medium' | 'long')[];
   /** 每个组合的迭代次数 */
   iterations: number;
   /** 超时时间（ms） */
