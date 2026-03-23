@@ -465,7 +465,7 @@ export interface MatrixItem {
   /** 音频编码格式 */
   format: 'pcm' | 'opus';
   /** 采样率 (Hz) */
-  sampleRate: 16000 | 24000 | 48000;
+  sampleRate: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
 }
 
 /**

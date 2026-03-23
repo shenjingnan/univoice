@@ -492,7 +492,7 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/23 20:20:09
+> 生成时间: 2026/3/23 21:03:13
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -528,8 +528,29 @@ const asr = createASR({
 | 通义千问 | cosyvoice-v2 | longyingxiao | opus | 24000 | 9 | 2654 | 16996 | 15402 |
 | 通义千问 | cosyvoice-v2 | longyingxiao | opus | 48000 | 9 | 2597 | 19006 | 17183 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 16000 | 6 | 1694 | 1383 | 1435 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 24000 | 3 | **1114 🏆** | **1346 🏆** | **1269 🏆** |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 24000 | 3 | 1114 | 1346 | 1269 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 48000 | 3 | 1598 | 1575 | 1583 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 8000 | 3 | 1772 | 1331 | 1478 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | 3 | 1080 | 1581 | 1414 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | 3 | 1593 | 1599 | 1597 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 3 | 1609 | 1588 | 1595 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 3 | **544 🏆** | **1068 🏆** | **893 🏆** |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | 3 | 1070 | 1105 | 1093 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | 3 | 2054 | 1853 | 1920 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | 3 | 2127 | 1871 | 1956 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 44100 | 3 | 2083 | 1860 | 1934 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 8000 | 3 | 2117 | 1592 | 1767 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 22050 | 3 | 1125 | 1082 | 1096 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 44100 | 3 | 1477 | 1609 | 1565 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 8000 | 3 | 2672 | 2791 | 2751 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 22050 | 3 | 1795 | 1863 | 1840 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 44100 | 3 | 2605 | 2138 | 2294 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 8000 | 3 | 1591 | 2645 | 2293 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 22050 | 3 | 2077 | 1593 | 1754 |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 44100 | 3 | 2122 | 2124 | 2123 |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 8000 | 3 | 1579 | 1596 | 1590 |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 22050 | 3 | 1070 | 1335 | 1246 |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 44100 | 3 | 1624 | 1350 | 1441 |
 
 ### 能力矩阵
 
