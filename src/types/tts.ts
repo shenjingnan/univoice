@@ -1,5 +1,25 @@
 import type { OpenAIStream } from './llm-stream';
 
+/**
+ * Qwen Realtime TTS 专用选项
+ */
+export interface QwenRealtimeOptions {
+  /** 交互模式: server_commit (服务端自动判断，推荐) | commit (客户端手动触发) */
+  mode?: 'server_commit' | 'commit';
+  /** 语言类型 */
+  languageType?: 'Auto' | 'Chinese' | 'English' | 'Japanese' | 'Korean';
+  /** 指令文本（用于情感控制，仅 qwen3-tts-instruct-flash-realtime 支持） */
+  instructions?: string;
+  /** 是否启用指令优化 */
+  optimizeInstructions?: boolean;
+  /** 语速倍率 (0.5~2.0) */
+  speechRate?: number;
+  /** 音调倍率 (0.5~2.0) */
+  pitchRate?: number;
+  /** 比特率 */
+  bitrate?: number;
+}
+
 export interface TTSOptions {
   provider: string;
   apiKey?: string;
@@ -26,6 +46,8 @@ export interface TTSOptions {
   enableTimestamp?: boolean;
   /** Qwen 专用：指令文本（用于情感控制，如"请用温柔的语调朗读"） */
   instruction?: string;
+  /** Qwen Realtime 专用选项 */
+  realtime?: QwenRealtimeOptions;
 }
 
 export interface TTSRequest {
