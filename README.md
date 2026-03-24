@@ -489,10 +489,11 @@ const asr = createASR({
 > - 测试环境与地理位置
 > - univoice 的实现方式
 > - 服务商当前的负载情况
+> - 服务商对模型的迭代
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/24 13:22:19
+> 生成时间: 2026/3/24 14:58:00
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -568,6 +569,22 @@ const asr = createASR({
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 16000 | 3 | 1517 | 999 | 1172 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 24000 | 3 | 752 | 1082 | 972 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 48000 | 3 | 1006 | **966 🏆** | 979 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 8000 | 3 | 1970 | 1354 | 1559 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 16000 | 3 | 2028 | 1853 | 1911 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 24000 | 3 | 1125 | 1513 | 1384 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 48000 | 3 | 1685 | 1593 | 1624 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 8000 | 3 | 1615 | 1293 | 1400 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 16000 | 3 | 1524 | 1103 | 1243 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 24000 | 3 | 856 | 1160 | 1059 |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 48000 | 3 | 906 | 1422 | 1250 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 1082 | 1516 | 1371 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 16000 | 3 | 1656 | 1562 | 1593 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 24000 | 3 | 1601 | 1368 | 1446 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 48000 | 3 | 1569 | 1352 | 1424 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 8000 | 3 | 933 | 1353 | 1213 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 16000 | 3 | 1065 | 1216 | 1165 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | 3 | 1283 | 1081 | 1148 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | 3 | 994 | 1411 | 1272 |
 
 ### 能力矩阵
 
@@ -575,6 +592,7 @@ const asr = createASR({
 |--------|------|:--------:|:--------:|
 | 通义千问 | WebSocket | ❌ | ✅ |
 | qwen-realtime | Unknown | ❌ | ✅ |
+| 豆包 | WebSocket | ❌ | ✅ |
 
 ---
 

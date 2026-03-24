@@ -457,20 +457,13 @@ export interface ScenarioSummary {
  */
 export interface MatrixItem {
   /** 提供商标识 */
-  provider: 'qwen' | 'qwen-realtime';
+  provider: 'qwen' | 'qwen-realtime' | 'doubao';
   /** 模型名称 */
-  model:
-    | 'cosyvoice-v3-flash'
-    | 'cosyvoice-v3-plus'
-    | 'cosyvoice-v2'
-    | 'cosyvoice-v1'
-    | 'qwen3-tts-flash-realtime'
-    | 'qwen-tts-realtime'
-    | 'qwen3-tts-instruct-flash-realtime';
+  model: string;
   /** 音色名称 */
   voice: string;
   /** 音频编码格式 */
-  format: 'pcm' | 'opus';
+  format: 'pcm' | 'opus' | 'ogg_opus';
   /** 采样率 (Hz) */
   sampleRate: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
 }
@@ -495,6 +488,12 @@ export interface MatrixFilter {
  * 用于测试不同模型、音色、编码、采样率的组合
  */
 export type QwenMatrixConfig = MatrixItem;
+
+/**
+ * Doubao TTS 矩阵测试配置
+ * 用于测试不同模型、音色、编码、采样率的组合
+ */
+export type DoubaoMatrixConfig = MatrixItem;
 
 /**
  * 矩阵测试场景配置

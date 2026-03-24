@@ -19,7 +19,7 @@ export abstract class BaseTTS implements TTSProvider {
   public speed: number;
   public volume: number;
   public pitch: number;
-  public format: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm';
+  public format: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm' | 'ogg_opus';
   public language: string;
 
   constructor(options: TTSOptions) {

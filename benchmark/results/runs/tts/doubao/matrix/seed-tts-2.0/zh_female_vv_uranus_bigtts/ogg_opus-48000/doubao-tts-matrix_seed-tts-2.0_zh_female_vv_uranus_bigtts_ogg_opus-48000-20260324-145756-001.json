@@ -1,0 +1,54 @@
+{
+  "id": "f28b61da-27f4-469e-9443-3e86f040431c",
+  "timestamp": "2026-03-24T06:57:56.472Z",
+  "provider": "doubao",
+  "model": "seed-tts-2.0",
+  "testType": "tts",
+  "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-48000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "ogg_opus",
+    "textLength": 6,
+    "voice": "zh_female_vv_uranus_bigtts",
+    "sampleRate": 48000
+  },
+  "latency": {
+    "firstChunk": 1059,
+    "total": 1221
+  },
+  "throughput": {
+    "dataRate": 2.7854217854217853,
+    "chunkCount": 5,
+    "avgChunkSize": 680.2,
+    "chunks": [
+      {
+        "relativeTime": 1059,
+        "size": 900
+      },
+      {
+        "relativeTime": 1059,
+        "size": 918
+      },
+      {
+        "relativeTime": 1088,
+        "size": 982
+      },
+      {
+        "relativeTime": 1166,
+        "size": 481
+      },
+      {
+        "relativeTime": 1168,
+        "size": 120
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 3401,
+    "audioDuration": 0.2,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 1
+}

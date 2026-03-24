@@ -85,6 +85,7 @@ export function parseRunArgs(): {
 
 场景说明:
   qwen-matrix             Qwen TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
+  doubao-matrix           Doubao TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
 
 示例:
   pnpm benchmark run --                         # 测试所有服务商
@@ -283,6 +284,39 @@ export async function run(options?: {
     }
     const { runQwenMatrixScenario } = await import('./scenarios/qwen-matrix');
     const matrixResults = await runQwenMatrixScenario({
+      iterations: args.iterations,
+      filter: args.matrixFilter,
+    });
+    allResults.push(...matrixResults);
+
+    const totalTime = Date.now() - startTime;
+    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
+    console.log(`   - 总测试次数: ${allResults.length}`);
+
+    return allResults;
+  }
+
+  // 豆包矩阵测试场景
+  if (args.scenario === 'doubao-matrix') {
+    console.log('📊 运行 Doubao TTS 矩阵测试场景...\n');
+    if (args.matrixFilter) {
+      console.log('📋 矩阵过滤条件:');
+      if (args.matrixFilter.model) {
+        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
+      }
+      if (args.matrixFilter.voice) {
+        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
+      }
+      if (args.matrixFilter.format) {
+        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
+      }
+      if (args.matrixFilter.sampleRate) {
+        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
+      }
+      console.log('');
+    }
+    const { runDoubaoMatrixScenario } = await import('./scenarios/doubao-matrix');
+    const matrixResults = await runDoubaoMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
     });
