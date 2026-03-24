@@ -100,13 +100,13 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
       inputFormat: results.length > 0 ? results[0].config.format : 'unknown',
       inputMode: results.length > 0 ? results[0].config.inputMode : 'non-stream',
       outputMode: results.length > 0 ? results[0].config.outputMode : 'non-stream',
+      // 新增：P50、P95、标准差、吞吐量
+      p50: undefined,
+      p95: undefined,
+      stdDev: undefined,
+      throughput: undefined,
     };
   }
-
-  // 按时间戳排序，计算首次耗时和平均耗时
-  const sortedResults = [...successResults].sort(
-    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-  );
 
   // 延迟统计
   const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
@@ -149,10 +149,18 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
     .map((r) => r.quality.bitrate)
     .filter((v): v is number => v !== undefined);
 
-  // 计算首次耗时和平均耗时
-  const firstLatency = sortedResults.length > 0 ? sortedResults[0].latency.total : 0;
-  const remainingLatencies = sortedResults.slice(1).map((r) => r.latency.total);
-  const avgLatency = remainingLatencies.length > 0 ? average(remainingLatencies) : firstLatency;
+  // 首次耗时 = 所有测试的 latency.firstChunk 的平均值
+  const firstLatency = average(firstChunkLatencies);
+
+  // 平均耗时 = 排除首包后，平均每个 chunk 的间隔时间
+  const avgLatencies = successResults
+    .map((r) => {
+      const chunkCount = r.throughput.chunkCount;
+      if (chunkCount <= 1) return 0;
+      return (r.latency.total - r.latency.firstChunk) / (chunkCount - 1);
+    })
+    .filter((v) => v > 0);
+  const avgLatency = avgLatencies.length > 0 ? average(avgLatencies) : undefined;
 
   // 获取输入格式
   const inputFormat = successResults.length > 0 ? successResults[0].config.format : 'unknown';
@@ -161,9 +169,38 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
   const inputMode = successResults.length > 0 ? successResults[0].config.inputMode : 'non-stream';
   const outputMode = successResults.length > 0 ? successResults[0].config.outputMode : 'non-stream';
 
+  // 计算 P50、P95、标准差
+  const sortedLatencies = [...totalLatencies].sort((a, b) => a - b);
+  const avgTotal = average(totalLatencies);
+
+  // P50 (中位数)
+  const mid = Math.floor(sortedLatencies.length / 2);
+  const p50 =
+    sortedLatencies.length % 2 !== 0
+      ? sortedLatencies[mid]
+      : (sortedLatencies[mid - 1] + sortedLatencies[mid]) / 2;
+
+  // P95
+  const p95Index = Math.ceil(sortedLatencies.length * 0.95) - 1;
+  const p95 = sortedLatencies[Math.max(0, Math.min(p95Index, sortedLatencies.length - 1))];
+
+  // 标准差
+  const stdDev = Math.sqrt(
+    totalLatencies.reduce((sum, v) => sum + (v - avgTotal) ** 2, 0) / totalLatencies.length
+  );
+
+  // 吞吐量（TTS: chars/s）= 文本长度 / 总耗时(秒)
+  const textLengths = successResults
+    .map((r) => r.config.textLength)
+    .filter((v): v is number => v !== undefined);
+  const throughput =
+    textLengths.length > 0
+      ? textLengths.reduce((sum, len) => sum + len, 0) / (avgTotal / 1000)
+      : undefined;
+
   return {
     avgFirstChunk: average(firstChunkLatencies),
-    avgTotal: average(totalLatencies),
+    avgTotal,
     successRate: successRate(results),
     sampleCount: results.length,
     hasFailure: false,
@@ -181,6 +218,11 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
     inputFormat,
     inputMode,
     outputMode,
+    // 新增：P50、P95、标准差、吞吐量
+    p50,
+    p95,
+    stdDev,
+    throughput,
   };
 }
 
@@ -330,6 +372,27 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
   }
   lines.push('');
 
+  // 指标说明
+  lines.push('### 指标说明');
+  lines.push('');
+  lines.push('| 指标 | 含义 | 计算方法 | 作用 |');
+  lines.push('|------|------|----------|------|');
+  lines.push(
+    '| 首包延迟 | 从发送请求到收到第一个音频块的时间 | 所有测试首包延迟的平均值 | 反映 TTS 服务的响应速度 |'
+  );
+  lines.push(
+    '| 平均间隔 | 稳定状态下平均每个 chunk 的间隔时间 | (总耗时 - 首包延迟) / (chunk数 - 1) 的平均值 | 反映 TTS 服务吐数据块的节奏 |'
+  );
+  lines.push('| P50 | 中位数，50% 请求低于此值 | 所有耗时排序后取中位数 | 反映典型请求的性能 |');
+  lines.push(
+    '| P95 | 95% 请求低于此值 | 所有耗时排序后取第95百分位 | 评估尾部延迟，了解最坏情况 |'
+  );
+  lines.push(
+    '| 标准差 | 延迟的离散程度 | 各耗时与平均值差值的平方的均值的平方根 | 值越小性能越稳定 |'
+  );
+  lines.push('| 吞吐量 | 每秒处理的字符数 | 文本长度 / 平均耗时(秒) | 值越大处理效率越高 |');
+  lines.push('');
+
   // 按 outputMode 分组
   const streamOutResults = ttsResults.filter((r) => r.config.outputMode === 'stream');
   const nonStreamOutResults = ttsResults.filter((r) => r.config.outputMode === 'non-stream');
@@ -339,10 +402,10 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
     lines.push('### 非流式入/流式出');
     lines.push('');
     lines.push(
-      '| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首次耗时 (ms) | 平均耗时 (ms) | 总耗时 (ms) |'
+      '| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | 吞吐量 (chars/s) |'
     );
     lines.push(
-      '|--------|------|------|----------|-------------|----------|---------------|---------------|------------|'
+      '|--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----------------|'
     );
 
     // 按配置分组（忽略 textCategory），聚合同一配置的测试记录
@@ -373,18 +436,28 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
     const successStats = stats.filter((s) => !s.hasFailure);
     const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
     const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
-    const totalLatencyValues = successStats.map((s) => s.avgTotal ?? 0);
+    const p50Values = successStats.map((s) => s.p50 ?? 0);
+    const p95Values = successStats.map((s) => s.p95 ?? 0);
+    const stdDevValues = successStats.map((s) => s.stdDev ?? 0);
+    const throughputValues = successStats
+      .filter((s) => s.throughput !== undefined)
+      .map((s) => s.throughput as number);
 
     const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
     const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
-    const totalLatencyMinMax = findMinMaxIndices(totalLatencyValues);
+    const p50MinMax = findMinMaxIndices(p50Values);
+    const p95MinMax = findMinMaxIndices(p95Values);
+    const stdDevMinMax = findMinMaxIndices(stdDevValues);
+    const throughputMinMax = findMinMaxIndices(throughputValues);
+
+    let throughputIdx = 0;
 
     for (let i = 0; i < stats.length; i++) {
       const s = stats[i];
 
       if (s.hasFailure) {
         lines.push(
-          `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 | - | - |`
+          `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 | - | - | - | - | - |`
         );
         continue;
       }
@@ -411,18 +484,51 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
         ''
       );
 
-      // 总耗时
-      const totalLat = formatMetricValue(
-        s.avgTotal ?? 0,
+      // P50
+      const p50 = formatMetricValue(
+        s.p50 ?? 0,
         successIndex,
-        totalLatencyMinMax.minIndex,
-        totalLatencyMinMax.maxIndex,
+        p50MinMax.minIndex,
+        p50MinMax.maxIndex,
         true,
         ''
       );
 
+      // P95
+      const p95 = formatMetricValue(
+        s.p95 ?? 0,
+        successIndex,
+        p95MinMax.minIndex,
+        p95MinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 标准差
+      const stdDev = formatMetricValue(
+        s.stdDev ?? 0,
+        successIndex,
+        stdDevMinMax.minIndex,
+        stdDevMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 吞吐量
+      const throughput = s.throughput
+        ? formatMetricValue(
+            s.throughput,
+            throughputIdx++,
+            throughputMinMax.minIndex,
+            throughputMinMax.maxIndex,
+            false, // 越大越好
+            '',
+            1
+          )
+        : 'N/A';
+
       lines.push(
-        `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${totalLat} |`
+        `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${throughput} |`
       );
     }
 
@@ -551,6 +657,33 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
   lines.push('> **注意**：标记 `*` 的场景使用 WebSocket 流式传输后聚合结果，并非原生非流式。');
   lines.push('');
 
+  // 指标说明
+  lines.push('### 指标说明');
+  lines.push('');
+  lines.push('| 指标 | 含义 | 计算方法 | 作用 |');
+  lines.push('|------|------|----------|------|');
+  lines.push(
+    '| 首包延迟 | 从发送请求到收到第一个识别结果的时间 | 所有测试首包延迟的平均值 | 反映 ASR 服务的响应速度 |'
+  );
+  lines.push(
+    '| 平均间隔 | 稳定状态下平均每个 chunk 的间隔时间 | (总耗时 - 首包延迟) / (chunk数 - 1) 的平均值 | 反映 ASR 服务吐识别结果的节奏 |'
+  );
+  lines.push('| P50 | 中位数，50% 请求低于此值 | 所有耗时排序后取中位数 | 反映典型请求的性能 |');
+  lines.push(
+    '| P95 | 95% 请求低于此值 | 所有耗时排序后取第95百分位 | 评估尾部延迟，了解最坏情况 |'
+  );
+  lines.push(
+    '| 标准差 | 延迟的离散程度 | 各耗时与平均值差值的平方的均值的平方根 | 值越小性能越稳定 |'
+  );
+  lines.push(
+    '| RTF | 实时因子，处理时间与音频时长的比值 | 处理耗时 / 音频时长 | 值越小效率越高，<1 表示快于实时 |'
+  );
+  lines.push('| 准确率 | 识别正确的字符比例 | 正确字符数 / 总字符数 | 值越高识别越准确 |');
+  lines.push(
+    '| CER | 字符错误率，需编辑操作的字符比例 | (替换+删除+插入) / 总字符数 | 值越低识别越准确 |'
+  );
+  lines.push('');
+
   // 按提供商 + 场景分组
   const scenarioGroups = new Map<string, BenchmarkResult[]>();
   for (const result of asrResults) {
@@ -575,13 +708,20 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
   // 综合性能表格
   lines.push('### 综合性能指标');
   lines.push('');
-  lines.push('| ASR | 场景 | 协议 | 首次耗时 (ms) | 平均耗时 (ms) | RTF | 准确率 | CER |');
-  lines.push('|-----|------|------|---------------|---------------|-----|--------|-----|');
+  lines.push(
+    '| ASR | 场景 | 协议 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | RTF | 准确率 | CER |'
+  );
+  lines.push(
+    '|-----|------|------|---------------|---------------|----------|----------|-------------|-----|--------|-----|'
+  );
 
   // 计算各指标的 min/max 索引用于标记最佳值（只计算成功的）
   const successStats = scenarioStats.filter((s) => !s.hasFailure);
   const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
   const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
+  const p50Values = successStats.map((s) => s.p50 ?? 0);
+  const p95Values = successStats.map((s) => s.p95 ?? 0);
+  const stdDevValues = successStats.map((s) => s.stdDev ?? 0);
   const rtfValues = successStats
     .filter((s) => s.avgRTF !== undefined)
     .map((s) => s.avgRTF as number);
@@ -591,6 +731,9 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
 
   const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
   const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
+  const p50MinMax = findMinMaxIndices(p50Values);
+  const p95MinMax = findMinMaxIndices(p95Values);
+  const stdDevMinMax = findMinMaxIndices(stdDevValues);
   const rtfMinMax = findMinMaxIndices(rtfValues);
   const cerMinMax = findMinMaxIndices(cerValues);
 
@@ -607,7 +750,7 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
 
     if (s.hasFailure) {
       lines.push(
-        `| ${s.displayName} | ${scenarioLabel} | ${protocol} | 测试失败 | - | - | - | - |`
+        `| ${s.displayName} | ${scenarioLabel} | ${protocol} | 测试失败 | - | - | - | - | - | - | - |`
       );
       continue;
     }
@@ -629,6 +772,36 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
       successIndex,
       avgLatencyMinMax.minIndex,
       avgLatencyMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // P50
+    const p50 = formatMetricValue(
+      s.p50 ?? 0,
+      successIndex,
+      p50MinMax.minIndex,
+      p50MinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // P95
+    const p95 = formatMetricValue(
+      s.p95 ?? 0,
+      successIndex,
+      p95MinMax.minIndex,
+      p95MinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 标准差
+    const stdDev = formatMetricValue(
+      s.stdDev ?? 0,
+      successIndex,
+      stdDevMinMax.minIndex,
+      stdDevMinMax.maxIndex,
       true,
       ''
     );
@@ -655,7 +828,7 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
       : 'N/A';
 
     lines.push(
-      `| ${s.displayName} | ${scenarioLabel} | ${protocol} | ${firstLat} | ${avgLat} | ${rtf} | ${accuracy} | ${cer} |`
+      `| ${s.displayName} | ${scenarioLabel} | ${protocol} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${rtf} | ${accuracy} | ${cer} |`
     );
   }
 

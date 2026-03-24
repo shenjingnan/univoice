@@ -437,10 +437,18 @@ export interface ScenarioSummary {
   avgTotalLatency: number;
   /** 中位数总延迟（ms） */
   medianTotalLatency: number;
+  /** P50 总延迟（ms） */
+  p50TotalLatency: number;
+  /** P95 总延迟（ms） */
+  p95TotalLatency: number;
+  /** 总延迟标准差（ms） */
+  stdDevTotalLatency: number;
   /** 最小总延迟（ms） */
   minTotalLatency: number;
   /** 最大总延迟（ms） */
   maxTotalLatency: number;
+  /** 吞吐量（TTS: chars/s） */
+  throughput?: number;
   /** 平均准确率（ASR） */
   avgAccuracy?: number;
   /** 平均 RTF（ASR） */
