@@ -1,0 +1,114 @@
+{
+  "id": "fc788a51-6a05-425f-be86-efd62a7311da",
+  "timestamp": "2026-03-24T05:20:24.258Z",
+  "provider": "qwen-realtime",
+  "model": "qwen3-tts-flash-realtime",
+  "testType": "tts",
+  "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-16000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "opus",
+    "textLength": 6,
+    "voice": "Cherry",
+    "sampleRate": 16000
+  },
+  "latency": {
+    "firstChunk": 1066,
+    "total": 1106
+  },
+  "throughput": {
+    "dataRate": 18.27757685352622,
+    "chunkCount": 20,
+    "avgChunkSize": 1010.75,
+    "chunks": [
+      {
+        "relativeTime": 1066,
+        "size": 210
+      },
+      {
+        "relativeTime": 1067,
+        "size": 1384
+      },
+      {
+        "relativeTime": 1069,
+        "size": 980
+      },
+      {
+        "relativeTime": 1071,
+        "size": 954
+      },
+      {
+        "relativeTime": 1072,
+        "size": 951
+      },
+      {
+        "relativeTime": 1072,
+        "size": 945
+      },
+      {
+        "relativeTime": 1073,
+        "size": 970
+      },
+      {
+        "relativeTime": 1074,
+        "size": 968
+      },
+      {
+        "relativeTime": 1103,
+        "size": 1263
+      },
+      {
+        "relativeTime": 1104,
+        "size": 1363
+      },
+      {
+        "relativeTime": 1104,
+        "size": 943
+      },
+      {
+        "relativeTime": 1104,
+        "size": 965
+      },
+      {
+        "relativeTime": 1104,
+        "size": 1220
+      },
+      {
+        "relativeTime": 1104,
+        "size": 1228
+      },
+      {
+        "relativeTime": 1104,
+        "size": 998
+      },
+      {
+        "relativeTime": 1104,
+        "size": 976
+      },
+      {
+        "relativeTime": 1104,
+        "size": 977
+      },
+      {
+        "relativeTime": 1105,
+        "size": 986
+      },
+      {
+        "relativeTime": 1105,
+        "size": 1028
+      },
+      {
+        "relativeTime": 1105,
+        "size": 906
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 20215,
+    "audioDuration": 1.2,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 1
+}

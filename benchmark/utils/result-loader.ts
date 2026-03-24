@@ -19,7 +19,9 @@ export function parseResultFilename(filename: string): {
   time: string;
   iteration: number;
 } | null {
-  const match = filename.match(/^([a-z]+)-(tts|asr)-([a-z0-9_-]+)-(\d{8})-(\d{6})-(\d{3})\.json$/);
+  const match = filename.match(
+    /^([a-z][a-z0-9-]*)-(tts|asr)-([a-zA-Z0-9_-]+)-(\d{8})-(\d{6})-(\d{3})\.json$/
+  );
 
   if (!match) {
     return null;

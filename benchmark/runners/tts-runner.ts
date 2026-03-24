@@ -558,9 +558,9 @@ export async function runTTSTestForMatrix(
   // 导入 provider 模块（导入 index 自动注册所有 provider）
   await import('univoice/tts/providers');
 
-  // 创建 TTS 实例
+  // 创建 TTS 实例，使用配置中的 provider
   const tts = createTTS({
-    provider: 'qwen',
+    provider: matrixConfig.provider,
     apiKey: process.env.QWEN_API_KEY || '',
     model: matrixConfig.model,
     voice: matrixConfig.voice,

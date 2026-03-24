@@ -457,9 +457,16 @@ export interface ScenarioSummary {
  */
 export interface MatrixItem {
   /** 提供商标识 */
-  provider: 'qwen';
+  provider: 'qwen' | 'qwen-realtime';
   /** 模型名称 */
-  model: 'cosyvoice-v3-flash' | 'cosyvoice-v3-plus' | 'cosyvoice-v2' | 'cosyvoice-v1';
+  model:
+    | 'cosyvoice-v3-flash'
+    | 'cosyvoice-v3-plus'
+    | 'cosyvoice-v2'
+    | 'cosyvoice-v1'
+    | 'qwen3-tts-flash-realtime'
+    | 'qwen-tts-realtime'
+    | 'qwen3-tts-instruct-flash-realtime';
   /** 音色名称 */
   voice: string;
   /** 音频编码格式 */

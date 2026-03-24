@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-23T13:03:13.755Z",
+  "generatedAt": "2026-03-24T05:22:19.157Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
@@ -19,6 +19,21 @@
         "avgFirstChunkLatency": 1347.0168776371308,
         "successRate": 1,
         "sampleCount": 237
+      }
+    },
+    {
+      "provider": "qwen-realtime",
+      "capabilities": {
+        "provider": "qwen-realtime",
+        "displayName": "qwen-realtime",
+        "streamInput": false,
+        "streamOutput": false,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1029.8292682926829,
+        "successRate": 1,
+        "sampleCount": 41
       }
     }
   ],
@@ -313459,6 +313474,3971 @@
       "quality": {
         "dataSize": 142648,
         "audioDuration": 4.4,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "5d739f0a-3ba6-4de2-b3e2-d083788ae75f",
+      "timestamp": "2026-03-24T03:05:35.369Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1277,
+        "total": 1799
+      },
+      "throughput": {
+        "dataRate": 15.02390216787104,
+        "chunkCount": 6,
+        "avgChunkSize": 4504.666666666667,
+        "chunks": [
+          {
+            "relativeTime": 1277,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1278,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1312,
+            "size": 4892
+          },
+          {
+            "relativeTime": 1338,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1429,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1444,
+            "size": 2560
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 27028,
+        "audioDuration": 0.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "3a8d4f0a-3b30-4446-af27-0753a55e2f38",
+      "timestamp": "2026-03-24T03:06:53.626Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 730,
+        "total": 990
+      },
+      "throughput": {
+        "dataRate": 19.77171717171717,
+        "chunkCount": 4,
+        "avgChunkSize": 4893.5,
+        "chunks": [
+          {
+            "relativeTime": 730,
+            "size": 4894
+          },
+          {
+            "relativeTime": 820,
+            "size": 4894
+          },
+          {
+            "relativeTime": 917,
+            "size": 4892
+          },
+          {
+            "relativeTime": 981,
+            "size": 4894
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 19574,
+        "audioDuration": 0.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "427b5ddc-6449-410a-bece-751198c413ea",
+      "timestamp": "2026-03-24T03:06:55.427Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 840,
+        "total": 1295
+      },
+      "throughput": {
+        "dataRate": 19.882625482625482,
+        "chunkCount": 6,
+        "avgChunkSize": 4291.333333333333,
+        "chunks": [
+          {
+            "relativeTime": 840,
+            "size": 4894
+          },
+          {
+            "relativeTime": 909,
+            "size": 4894
+          },
+          {
+            "relativeTime": 995,
+            "size": 4892
+          },
+          {
+            "relativeTime": 1293,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1294,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1294,
+            "size": 1280
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 25748,
+        "audioDuration": 0.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "448b4f0f-0ad6-4ca7-9142-ee8b728e982e",
+      "timestamp": "2026-03-24T03:06:57.374Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1054,
+        "total": 1443
+      },
+      "throughput": {
+        "dataRate": 17.84338184338184,
+        "chunkCount": 6,
+        "avgChunkSize": 4291.333333333333,
+        "chunks": [
+          {
+            "relativeTime": 1054,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1108,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1182,
+            "size": 4892
+          },
+          {
+            "relativeTime": 1266,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1339,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1341,
+            "size": 1280
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 25748,
+        "audioDuration": 0.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "0ba80804-a65e-4dbd-b3ad-7acb3a4574fd",
+      "timestamp": "2026-03-24T03:08:08.836Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1368,
+        "total": 1787
+      },
+      "throughput": {
+        "dataRate": 11.669837716843872,
+        "chunkCount": 5,
+        "avgChunkSize": 4170.8,
+        "chunks": [
+          {
+            "relativeTime": 1368,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1467,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1784,
+            "size": 4892
+          },
+          {
+            "relativeTime": 1785,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1786,
+            "size": 1280
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 20854,
+        "audioDuration": 0.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "ef2a5ce7-81cd-4913-98ef-77c587890781",
+      "timestamp": "2026-03-24T03:08:10.502Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 895,
+        "total": 1159
+      },
+      "throughput": {
+        "dataRate": 30.141501294219154,
+        "chunkCount": 4,
+        "avgChunkSize": 8733.5,
+        "chunks": [
+          {
+            "relativeTime": 895,
+            "size": 9788
+          },
+          {
+            "relativeTime": 1077,
+            "size": 9786
+          },
+          {
+            "relativeTime": 1077,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1112,
+            "size": 5120
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 34934,
+        "audioDuration": 1.1,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "a48fcd0e-19ac-4005-bf6a-f7f0ff986e86",
+      "timestamp": "2026-03-24T03:08:12.502Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1168,
+        "total": 1497
+      },
+      "throughput": {
+        "dataRate": 51.30260521042084,
+        "chunkCount": 5,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 1168,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1200,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1201,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1298,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1496,
+            "size": 15360
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76800,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "2864d46a-12c4-48a9-a154-a932e5297ff4",
+      "timestamp": "2026-03-24T03:08:14.312Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 713,
+        "total": 1307
+      },
+      "throughput": {
+        "dataRate": 103.1981637337414,
+        "chunkCount": 5,
+        "avgChunkSize": 26976,
+        "chunks": [
+          {
+            "relativeTime": 713,
+            "size": 29880
+          },
+          {
+            "relativeTime": 731,
+            "size": 29880
+          },
+          {
+            "relativeTime": 814,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1304,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1305,
+            "size": 15360
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 134880,
+        "audioDuration": 4.1,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "144cdbda-c1cc-41ef-92c9-5350277858a2",
+      "timestamp": "2026-03-24T05:06:53.274Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1406,
+        "total": 1444
+      },
+      "throughput": {
+        "dataRate": 14.441828254847646,
+        "chunkCount": 5,
+        "avgChunkSize": 4170.8,
+        "chunks": [
+          {
+            "relativeTime": 1406,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1406,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1407,
+            "size": 4892
+          },
+          {
+            "relativeTime": 1409,
+            "size": 4894
+          },
+          {
+            "relativeTime": 1443,
+            "size": 1280
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 20854,
+        "audioDuration": 0.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "044e29d2-7111-4fde-bd75-48c0737bbbe2",
+      "timestamp": "2026-03-24T05:06:54.863Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1033,
+        "total": 1084
+      },
+      "throughput": {
+        "dataRate": 39.31180811808118,
+        "chunkCount": 5,
+        "avgChunkSize": 8522.8,
+        "chunks": [
+          {
+            "relativeTime": 1033,
+            "size": 9788
+          },
+          {
+            "relativeTime": 1033,
+            "size": 9786
+          },
+          {
+            "relativeTime": 1064,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1083,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1084,
+            "size": 2560
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 42614,
+        "audioDuration": 1.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "65883a76-7d0f-4e72-9ae6-cfeaa50c6547",
+      "timestamp": "2026-03-24T05:06:56.912Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 923,
+        "total": 1546
+      },
+      "throughput": {
+        "dataRate": 44.70892626131953,
+        "chunkCount": 5,
+        "avgChunkSize": 13824,
+        "chunks": [
+          {
+            "relativeTime": 923,
+            "size": 15360
+          },
+          {
+            "relativeTime": 992,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1039,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1543,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1545,
+            "size": 7680
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 69120,
+        "audioDuration": 2.1,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "1b99ca94-07ec-42aa-82a9-f6c37348ddf4",
+      "timestamp": "2026-03-24T05:06:59.008Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1099,
+        "total": 1591
+      },
+      "throughput": {
+        "dataRate": 84.77686989314897,
+        "chunkCount": 5,
+        "avgChunkSize": 26976,
+        "chunks": [
+          {
+            "relativeTime": 1099,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1139,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1142,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1161,
+            "size": 29880
+          },
+          {
+            "relativeTime": 1590,
+            "size": 15360
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 134880,
+        "audioDuration": 4.1,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "46c90e76-e67e-4773-a81d-4d1c7c672221",
+      "timestamp": "2026-03-24T05:07:21.102Z",
+      "provider": "qwen-realtime",
+      "model": "qwen-tts-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen-tts-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1153,
+        "total": 1227
+      },
+      "throughput": {
+        "dataRate": 62.59168704156479,
+        "chunkCount": 5,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 1153,
+            "size": 9120
+          },
+          {
+            "relativeTime": 1153,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1186,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1187,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1226,
+            "size": 21600
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76800,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "d04bff67-108e-4a66-8e1a-a7d3a5c020bf",
+      "timestamp": "2026-03-24T05:17:11.530Z",
+      "provider": "qwen-realtime",
+      "model": "qwen-tts-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen-tts-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1160,
+        "total": 1324
+      },
+      "throughput": {
+        "dataRate": 46.404833836858,
+        "chunkCount": 4,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 1160,
+            "size": 9120
+          },
+          {
+            "relativeTime": 1160,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1178,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1320,
+            "size": 21600
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 61440,
+        "audioDuration": 1.9,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "5cb2a0a9-1df9-4d6e-a2fe-ce2156e65ee1",
+      "timestamp": "2026-03-24T05:19:47.587Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1329,
+        "total": 2014
+      },
+      "throughput": {
+        "dataRate": 11.544190665342601,
+        "chunkCount": 25,
+        "avgChunkSize": 930,
+        "chunks": [
+          {
+            "relativeTime": 1329,
+            "size": 210
+          },
+          {
+            "relativeTime": 1329,
+            "size": 960
+          },
+          {
+            "relativeTime": 1334,
+            "size": 960
+          },
+          {
+            "relativeTime": 1334,
+            "size": 960
+          },
+          {
+            "relativeTime": 1334,
+            "size": 960
+          },
+          {
+            "relativeTime": 1431,
+            "size": 960
+          },
+          {
+            "relativeTime": 1431,
+            "size": 960
+          },
+          {
+            "relativeTime": 1431,
+            "size": 960
+          },
+          {
+            "relativeTime": 1431,
+            "size": 960
+          },
+          {
+            "relativeTime": 1431,
+            "size": 960
+          },
+          {
+            "relativeTime": 1502,
+            "size": 960
+          },
+          {
+            "relativeTime": 1503,
+            "size": 960
+          },
+          {
+            "relativeTime": 1503,
+            "size": 960
+          },
+          {
+            "relativeTime": 1503,
+            "size": 960
+          },
+          {
+            "relativeTime": 1507,
+            "size": 960
+          },
+          {
+            "relativeTime": 1583,
+            "size": 960
+          },
+          {
+            "relativeTime": 1583,
+            "size": 960
+          },
+          {
+            "relativeTime": 1583,
+            "size": 960
+          },
+          {
+            "relativeTime": 1583,
+            "size": 960
+          },
+          {
+            "relativeTime": 1583,
+            "size": 960
+          },
+          {
+            "relativeTime": 2013,
+            "size": 960
+          },
+          {
+            "relativeTime": 2013,
+            "size": 960
+          },
+          {
+            "relativeTime": 2013,
+            "size": 960
+          },
+          {
+            "relativeTime": 2013,
+            "size": 960
+          },
+          {
+            "relativeTime": 2013,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 23250,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "721798c5-191c-4c4a-b171-a4d75b2bd884",
+      "timestamp": "2026-03-24T05:19:49.695Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1068,
+        "total": 1602
+      },
+      "throughput": {
+        "dataRate": 14.240948813982522,
+        "chunkCount": 25,
+        "avgChunkSize": 912.56,
+        "chunks": [
+          {
+            "relativeTime": 1068,
+            "size": 210
+          },
+          {
+            "relativeTime": 1069,
+            "size": 960
+          },
+          {
+            "relativeTime": 1069,
+            "size": 960
+          },
+          {
+            "relativeTime": 1070,
+            "size": 960
+          },
+          {
+            "relativeTime": 1070,
+            "size": 960
+          },
+          {
+            "relativeTime": 1153,
+            "size": 960
+          },
+          {
+            "relativeTime": 1154,
+            "size": 960
+          },
+          {
+            "relativeTime": 1154,
+            "size": 960
+          },
+          {
+            "relativeTime": 1154,
+            "size": 960
+          },
+          {
+            "relativeTime": 1154,
+            "size": 960
+          },
+          {
+            "relativeTime": 1592,
+            "size": 960
+          },
+          {
+            "relativeTime": 1599,
+            "size": 960
+          },
+          {
+            "relativeTime": 1600,
+            "size": 960
+          },
+          {
+            "relativeTime": 1600,
+            "size": 893
+          },
+          {
+            "relativeTime": 1600,
+            "size": 591
+          },
+          {
+            "relativeTime": 1600,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1601,
+            "size": 960
+          },
+          {
+            "relativeTime": 1602,
+            "size": 960
+          },
+          {
+            "relativeTime": 1602,
+            "size": 960
+          },
+          {
+            "relativeTime": 1602,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22814,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f59015a5-e28b-4d38-98d8-58bf83293cb2",
+      "timestamp": "2026-03-24T05:19:51.784Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1062,
+        "total": 1586
+      },
+      "throughput": {
+        "dataRate": 15.870113493064313,
+        "chunkCount": 27,
+        "avgChunkSize": 932.2222222222222,
+        "chunks": [
+          {
+            "relativeTime": 1062,
+            "size": 210
+          },
+          {
+            "relativeTime": 1062,
+            "size": 960
+          },
+          {
+            "relativeTime": 1064,
+            "size": 960
+          },
+          {
+            "relativeTime": 1066,
+            "size": 960
+          },
+          {
+            "relativeTime": 1066,
+            "size": 960
+          },
+          {
+            "relativeTime": 1072,
+            "size": 960
+          },
+          {
+            "relativeTime": 1072,
+            "size": 960
+          },
+          {
+            "relativeTime": 1073,
+            "size": 960
+          },
+          {
+            "relativeTime": 1092,
+            "size": 960
+          },
+          {
+            "relativeTime": 1092,
+            "size": 960
+          },
+          {
+            "relativeTime": 1157,
+            "size": 960
+          },
+          {
+            "relativeTime": 1157,
+            "size": 960
+          },
+          {
+            "relativeTime": 1158,
+            "size": 960
+          },
+          {
+            "relativeTime": 1159,
+            "size": 960
+          },
+          {
+            "relativeTime": 1159,
+            "size": 960
+          },
+          {
+            "relativeTime": 1580,
+            "size": 960
+          },
+          {
+            "relativeTime": 1580,
+            "size": 960
+          },
+          {
+            "relativeTime": 1581,
+            "size": 960
+          },
+          {
+            "relativeTime": 1584,
+            "size": 960
+          },
+          {
+            "relativeTime": 1584,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          },
+          {
+            "relativeTime": 1585,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 25170,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "a68ca76c-706c-4fb1-b388-b5521d4df3a8",
+      "timestamp": "2026-03-24T05:19:53.878Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 938,
+        "total": 1592
+      },
+      "throughput": {
+        "dataRate": 15.691582914572864,
+        "chunkCount": 24,
+        "avgChunkSize": 1040.875,
+        "chunks": [
+          {
+            "relativeTime": 938,
+            "size": 210
+          },
+          {
+            "relativeTime": 938,
+            "size": 1107
+          },
+          {
+            "relativeTime": 938,
+            "size": 1116
+          },
+          {
+            "relativeTime": 938,
+            "size": 978
+          },
+          {
+            "relativeTime": 939,
+            "size": 962
+          },
+          {
+            "relativeTime": 1041,
+            "size": 940
+          },
+          {
+            "relativeTime": 1043,
+            "size": 938
+          },
+          {
+            "relativeTime": 1043,
+            "size": 990
+          },
+          {
+            "relativeTime": 1044,
+            "size": 1188
+          },
+          {
+            "relativeTime": 1044,
+            "size": 1116
+          },
+          {
+            "relativeTime": 1589,
+            "size": 990
+          },
+          {
+            "relativeTime": 1589,
+            "size": 1274
+          },
+          {
+            "relativeTime": 1589,
+            "size": 1130
+          },
+          {
+            "relativeTime": 1590,
+            "size": 916
+          },
+          {
+            "relativeTime": 1590,
+            "size": 1510
+          },
+          {
+            "relativeTime": 1590,
+            "size": 1339
+          },
+          {
+            "relativeTime": 1590,
+            "size": 963
+          },
+          {
+            "relativeTime": 1590,
+            "size": 953
+          },
+          {
+            "relativeTime": 1590,
+            "size": 992
+          },
+          {
+            "relativeTime": 1591,
+            "size": 978
+          },
+          {
+            "relativeTime": 1591,
+            "size": 975
+          },
+          {
+            "relativeTime": 1591,
+            "size": 992
+          },
+          {
+            "relativeTime": 1591,
+            "size": 1056
+          },
+          {
+            "relativeTime": 1591,
+            "size": 1368
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 24981,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f87e472b-0c23-4dc1-93fb-c191d603c952",
+      "timestamp": "2026-03-24T05:19:55.783Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 951,
+        "total": 1403
+      },
+      "throughput": {
+        "dataRate": 16.32858161083393,
+        "chunkCount": 23,
+        "avgChunkSize": 996.0434782608696,
+        "chunks": [
+          {
+            "relativeTime": 951,
+            "size": 210
+          },
+          {
+            "relativeTime": 951,
+            "size": 1236
+          },
+          {
+            "relativeTime": 951,
+            "size": 959
+          },
+          {
+            "relativeTime": 951,
+            "size": 963
+          },
+          {
+            "relativeTime": 952,
+            "size": 948
+          },
+          {
+            "relativeTime": 1043,
+            "size": 949
+          },
+          {
+            "relativeTime": 1043,
+            "size": 951
+          },
+          {
+            "relativeTime": 1044,
+            "size": 971
+          },
+          {
+            "relativeTime": 1044,
+            "size": 1042
+          },
+          {
+            "relativeTime": 1044,
+            "size": 1481
+          },
+          {
+            "relativeTime": 1125,
+            "size": 974
+          },
+          {
+            "relativeTime": 1125,
+            "size": 961
+          },
+          {
+            "relativeTime": 1126,
+            "size": 1267
+          },
+          {
+            "relativeTime": 1126,
+            "size": 930
+          },
+          {
+            "relativeTime": 1126,
+            "size": 1115
+          },
+          {
+            "relativeTime": 1400,
+            "size": 960
+          },
+          {
+            "relativeTime": 1401,
+            "size": 994
+          },
+          {
+            "relativeTime": 1401,
+            "size": 977
+          },
+          {
+            "relativeTime": 1401,
+            "size": 961
+          },
+          {
+            "relativeTime": 1401,
+            "size": 1022
+          },
+          {
+            "relativeTime": 1401,
+            "size": 1085
+          },
+          {
+            "relativeTime": 1402,
+            "size": 965
+          },
+          {
+            "relativeTime": 1402,
+            "size": 988
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22909,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "fddac5d2-a7c0-44d0-8f8c-bb4ae042db9c",
+      "timestamp": "2026-03-24T05:19:57.162Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 739,
+        "total": 873
+      },
+      "throughput": {
+        "dataRate": 27.411225658648338,
+        "chunkCount": 24,
+        "avgChunkSize": 997.0833333333334,
+        "chunks": [
+          {
+            "relativeTime": 739,
+            "size": 210
+          },
+          {
+            "relativeTime": 739,
+            "size": 1317
+          },
+          {
+            "relativeTime": 739,
+            "size": 977
+          },
+          {
+            "relativeTime": 740,
+            "size": 962
+          },
+          {
+            "relativeTime": 740,
+            "size": 942
+          },
+          {
+            "relativeTime": 740,
+            "size": 958
+          },
+          {
+            "relativeTime": 740,
+            "size": 947
+          },
+          {
+            "relativeTime": 740,
+            "size": 983
+          },
+          {
+            "relativeTime": 740,
+            "size": 975
+          },
+          {
+            "relativeTime": 741,
+            "size": 1154
+          },
+          {
+            "relativeTime": 742,
+            "size": 1092
+          },
+          {
+            "relativeTime": 742,
+            "size": 822
+          },
+          {
+            "relativeTime": 742,
+            "size": 718
+          },
+          {
+            "relativeTime": 742,
+            "size": 1386
+          },
+          {
+            "relativeTime": 742,
+            "size": 1371
+          },
+          {
+            "relativeTime": 805,
+            "size": 987
+          },
+          {
+            "relativeTime": 805,
+            "size": 984
+          },
+          {
+            "relativeTime": 806,
+            "size": 1013
+          },
+          {
+            "relativeTime": 809,
+            "size": 1002
+          },
+          {
+            "relativeTime": 810,
+            "size": 969
+          },
+          {
+            "relativeTime": 857,
+            "size": 963
+          },
+          {
+            "relativeTime": 857,
+            "size": 975
+          },
+          {
+            "relativeTime": 857,
+            "size": 960
+          },
+          {
+            "relativeTime": 871,
+            "size": 1263
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 23930,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "978a8b49-a645-4267-b3b8-187cb9d7e8e4",
+      "timestamp": "2026-03-24T05:19:59.174Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1457,
+        "total": 1507
+      },
+      "throughput": {
+        "dataRate": 15.280026542800265,
+        "chunkCount": 23,
+        "avgChunkSize": 1001.1739130434783,
+        "chunks": [
+          {
+            "relativeTime": 1457,
+            "size": 210
+          },
+          {
+            "relativeTime": 1458,
+            "size": 1251
+          },
+          {
+            "relativeTime": 1460,
+            "size": 979
+          },
+          {
+            "relativeTime": 1461,
+            "size": 962
+          },
+          {
+            "relativeTime": 1461,
+            "size": 944
+          },
+          {
+            "relativeTime": 1461,
+            "size": 967
+          },
+          {
+            "relativeTime": 1461,
+            "size": 974
+          },
+          {
+            "relativeTime": 1461,
+            "size": 1003
+          },
+          {
+            "relativeTime": 1461,
+            "size": 993
+          },
+          {
+            "relativeTime": 1462,
+            "size": 1487
+          },
+          {
+            "relativeTime": 1462,
+            "size": 909
+          },
+          {
+            "relativeTime": 1462,
+            "size": 908
+          },
+          {
+            "relativeTime": 1462,
+            "size": 1193
+          },
+          {
+            "relativeTime": 1462,
+            "size": 1234
+          },
+          {
+            "relativeTime": 1467,
+            "size": 962
+          },
+          {
+            "relativeTime": 1484,
+            "size": 970
+          },
+          {
+            "relativeTime": 1498,
+            "size": 966
+          },
+          {
+            "relativeTime": 1498,
+            "size": 962
+          },
+          {
+            "relativeTime": 1498,
+            "size": 954
+          },
+          {
+            "relativeTime": 1498,
+            "size": 1043
+          },
+          {
+            "relativeTime": 1499,
+            "size": 1026
+          },
+          {
+            "relativeTime": 1499,
+            "size": 978
+          },
+          {
+            "relativeTime": 1506,
+            "size": 1152
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 23027,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "fdd3caa1-c472-4700-bc0f-a56a3f9738de",
+      "timestamp": "2026-03-24T05:20:01.282Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1537,
+        "total": 1605
+      },
+      "throughput": {
+        "dataRate": 14.742679127725857,
+        "chunkCount": 24,
+        "avgChunkSize": 985.9166666666666,
+        "chunks": [
+          {
+            "relativeTime": 1537,
+            "size": 210
+          },
+          {
+            "relativeTime": 1537,
+            "size": 1390
+          },
+          {
+            "relativeTime": 1537,
+            "size": 962
+          },
+          {
+            "relativeTime": 1537,
+            "size": 960
+          },
+          {
+            "relativeTime": 1538,
+            "size": 942
+          },
+          {
+            "relativeTime": 1538,
+            "size": 1002
+          },
+          {
+            "relativeTime": 1538,
+            "size": 937
+          },
+          {
+            "relativeTime": 1538,
+            "size": 997
+          },
+          {
+            "relativeTime": 1538,
+            "size": 1012
+          },
+          {
+            "relativeTime": 1538,
+            "size": 996
+          },
+          {
+            "relativeTime": 1538,
+            "size": 996
+          },
+          {
+            "relativeTime": 1538,
+            "size": 1042
+          },
+          {
+            "relativeTime": 1539,
+            "size": 1021
+          },
+          {
+            "relativeTime": 1539,
+            "size": 1031
+          },
+          {
+            "relativeTime": 1539,
+            "size": 1179
+          },
+          {
+            "relativeTime": 1571,
+            "size": 971
+          },
+          {
+            "relativeTime": 1576,
+            "size": 1027
+          },
+          {
+            "relativeTime": 1576,
+            "size": 986
+          },
+          {
+            "relativeTime": 1579,
+            "size": 966
+          },
+          {
+            "relativeTime": 1579,
+            "size": 1003
+          },
+          {
+            "relativeTime": 1586,
+            "size": 1019
+          },
+          {
+            "relativeTime": 1596,
+            "size": 994
+          },
+          {
+            "relativeTime": 1597,
+            "size": 1109
+          },
+          {
+            "relativeTime": 1600,
+            "size": 910
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 23662,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "b416dd4a-8d49-4648-af4f-66ea65d357e1",
+      "timestamp": "2026-03-24T05:20:03.156Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 932,
+        "total": 1369
+      },
+      "throughput": {
+        "dataRate": 20.504017531044557,
+        "chunkCount": 28,
+        "avgChunkSize": 1002.5,
+        "chunks": [
+          {
+            "relativeTime": 932,
+            "size": 210
+          },
+          {
+            "relativeTime": 935,
+            "size": 1367
+          },
+          {
+            "relativeTime": 941,
+            "size": 1044
+          },
+          {
+            "relativeTime": 942,
+            "size": 965
+          },
+          {
+            "relativeTime": 942,
+            "size": 965
+          },
+          {
+            "relativeTime": 1024,
+            "size": 952
+          },
+          {
+            "relativeTime": 1024,
+            "size": 940
+          },
+          {
+            "relativeTime": 1024,
+            "size": 948
+          },
+          {
+            "relativeTime": 1024,
+            "size": 1011
+          },
+          {
+            "relativeTime": 1024,
+            "size": 1056
+          },
+          {
+            "relativeTime": 1357,
+            "size": 995
+          },
+          {
+            "relativeTime": 1361,
+            "size": 972
+          },
+          {
+            "relativeTime": 1361,
+            "size": 1268
+          },
+          {
+            "relativeTime": 1362,
+            "size": 1189
+          },
+          {
+            "relativeTime": 1362,
+            "size": 864
+          },
+          {
+            "relativeTime": 1363,
+            "size": 1108
+          },
+          {
+            "relativeTime": 1363,
+            "size": 935
+          },
+          {
+            "relativeTime": 1363,
+            "size": 1195
+          },
+          {
+            "relativeTime": 1366,
+            "size": 972
+          },
+          {
+            "relativeTime": 1367,
+            "size": 1026
+          },
+          {
+            "relativeTime": 1367,
+            "size": 1013
+          },
+          {
+            "relativeTime": 1367,
+            "size": 969
+          },
+          {
+            "relativeTime": 1368,
+            "size": 945
+          },
+          {
+            "relativeTime": 1368,
+            "size": 979
+          },
+          {
+            "relativeTime": 1368,
+            "size": 1096
+          },
+          {
+            "relativeTime": 1368,
+            "size": 971
+          },
+          {
+            "relativeTime": 1368,
+            "size": 953
+          },
+          {
+            "relativeTime": 1368,
+            "size": 1162
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 28070,
+        "audioDuration": 1.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "680ab054-8fc6-4585-af0f-56a6be3bb46c",
+      "timestamp": "2026-03-24T05:20:04.925Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1224,
+        "total": 1264
+      },
+      "throughput": {
+        "dataRate": 15.849683544303797,
+        "chunkCount": 20,
+        "avgChunkSize": 1001.7,
+        "chunks": [
+          {
+            "relativeTime": 1224,
+            "size": 210
+          },
+          {
+            "relativeTime": 1224,
+            "size": 1273
+          },
+          {
+            "relativeTime": 1224,
+            "size": 1040
+          },
+          {
+            "relativeTime": 1224,
+            "size": 1014
+          },
+          {
+            "relativeTime": 1225,
+            "size": 1039
+          },
+          {
+            "relativeTime": 1225,
+            "size": 1073
+          },
+          {
+            "relativeTime": 1225,
+            "size": 1061
+          },
+          {
+            "relativeTime": 1225,
+            "size": 1052
+          },
+          {
+            "relativeTime": 1225,
+            "size": 1022
+          },
+          {
+            "relativeTime": 1225,
+            "size": 976
+          },
+          {
+            "relativeTime": 1226,
+            "size": 995
+          },
+          {
+            "relativeTime": 1226,
+            "size": 1087
+          },
+          {
+            "relativeTime": 1226,
+            "size": 1064
+          },
+          {
+            "relativeTime": 1226,
+            "size": 1048
+          },
+          {
+            "relativeTime": 1226,
+            "size": 1016
+          },
+          {
+            "relativeTime": 1259,
+            "size": 1068
+          },
+          {
+            "relativeTime": 1259,
+            "size": 1034
+          },
+          {
+            "relativeTime": 1263,
+            "size": 1010
+          },
+          {
+            "relativeTime": 1263,
+            "size": 1213
+          },
+          {
+            "relativeTime": 1263,
+            "size": 739
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 20034,
+        "audioDuration": 1.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c56ddda7-4f01-4bd1-90d6-b884cb9ffef7",
+      "timestamp": "2026-03-24T05:20:07.244Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1340,
+        "total": 1814
+      },
+      "throughput": {
+        "dataRate": 14.995038588754134,
+        "chunkCount": 27,
+        "avgChunkSize": 1007.4444444444445,
+        "chunks": [
+          {
+            "relativeTime": 1340,
+            "size": 210
+          },
+          {
+            "relativeTime": 1340,
+            "size": 1232
+          },
+          {
+            "relativeTime": 1340,
+            "size": 1023
+          },
+          {
+            "relativeTime": 1340,
+            "size": 1123
+          },
+          {
+            "relativeTime": 1340,
+            "size": 1041
+          },
+          {
+            "relativeTime": 1340,
+            "size": 1017
+          },
+          {
+            "relativeTime": 1341,
+            "size": 1010
+          },
+          {
+            "relativeTime": 1342,
+            "size": 989
+          },
+          {
+            "relativeTime": 1342,
+            "size": 1114
+          },
+          {
+            "relativeTime": 1342,
+            "size": 1095
+          },
+          {
+            "relativeTime": 1413,
+            "size": 1129
+          },
+          {
+            "relativeTime": 1413,
+            "size": 1095
+          },
+          {
+            "relativeTime": 1414,
+            "size": 856
+          },
+          {
+            "relativeTime": 1414,
+            "size": 819
+          },
+          {
+            "relativeTime": 1416,
+            "size": 807
+          },
+          {
+            "relativeTime": 1523,
+            "size": 1255
+          },
+          {
+            "relativeTime": 1524,
+            "size": 1109
+          },
+          {
+            "relativeTime": 1524,
+            "size": 1071
+          },
+          {
+            "relativeTime": 1524,
+            "size": 1137
+          },
+          {
+            "relativeTime": 1525,
+            "size": 1062
+          },
+          {
+            "relativeTime": 1813,
+            "size": 1042
+          },
+          {
+            "relativeTime": 1813,
+            "size": 1155
+          },
+          {
+            "relativeTime": 1814,
+            "size": 1129
+          },
+          {
+            "relativeTime": 1814,
+            "size": 1069
+          },
+          {
+            "relativeTime": 1814,
+            "size": 1054
+          },
+          {
+            "relativeTime": 1814,
+            "size": 1239
+          },
+          {
+            "relativeTime": 1814,
+            "size": 319
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 27201,
+        "audioDuration": 1.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "1e7f2d86-b0ca-4a55-a926-4cd809dea3d1",
+      "timestamp": "2026-03-24T05:20:08.594Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-instruct-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 613,
+        "total": 847
+      },
+      "throughput": {
+        "dataRate": 26.23258559622196,
+        "chunkCount": 21,
+        "avgChunkSize": 1058.047619047619,
+        "chunks": [
+          {
+            "relativeTime": 613,
+            "size": 210
+          },
+          {
+            "relativeTime": 613,
+            "size": 1494
+          },
+          {
+            "relativeTime": 613,
+            "size": 1244
+          },
+          {
+            "relativeTime": 613,
+            "size": 1038
+          },
+          {
+            "relativeTime": 613,
+            "size": 1008
+          },
+          {
+            "relativeTime": 667,
+            "size": 1053
+          },
+          {
+            "relativeTime": 667,
+            "size": 1032
+          },
+          {
+            "relativeTime": 667,
+            "size": 1074
+          },
+          {
+            "relativeTime": 667,
+            "size": 1152
+          },
+          {
+            "relativeTime": 667,
+            "size": 741
+          },
+          {
+            "relativeTime": 777,
+            "size": 1034
+          },
+          {
+            "relativeTime": 778,
+            "size": 1103
+          },
+          {
+            "relativeTime": 778,
+            "size": 1162
+          },
+          {
+            "relativeTime": 778,
+            "size": 1055
+          },
+          {
+            "relativeTime": 778,
+            "size": 1106
+          },
+          {
+            "relativeTime": 845,
+            "size": 1048
+          },
+          {
+            "relativeTime": 845,
+            "size": 1019
+          },
+          {
+            "relativeTime": 845,
+            "size": 1012
+          },
+          {
+            "relativeTime": 845,
+            "size": 1154
+          },
+          {
+            "relativeTime": 845,
+            "size": 1218
+          },
+          {
+            "relativeTime": 845,
+            "size": 1262
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22219,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "7c8e7ca4-637d-4bd2-a211-57ca1c21ccad",
+      "timestamp": "2026-03-24T05:20:17.248Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 948,
+        "total": 1238
+      },
+      "throughput": {
+        "dataRate": 16.45395799676898,
+        "chunkCount": 22,
+        "avgChunkSize": 925.9090909090909,
+        "chunks": [
+          {
+            "relativeTime": 948,
+            "size": 210
+          },
+          {
+            "relativeTime": 948,
+            "size": 960
+          },
+          {
+            "relativeTime": 948,
+            "size": 960
+          },
+          {
+            "relativeTime": 948,
+            "size": 960
+          },
+          {
+            "relativeTime": 948,
+            "size": 960
+          },
+          {
+            "relativeTime": 1014,
+            "size": 960
+          },
+          {
+            "relativeTime": 1014,
+            "size": 960
+          },
+          {
+            "relativeTime": 1014,
+            "size": 960
+          },
+          {
+            "relativeTime": 1014,
+            "size": 960
+          },
+          {
+            "relativeTime": 1014,
+            "size": 960
+          },
+          {
+            "relativeTime": 1198,
+            "size": 960
+          },
+          {
+            "relativeTime": 1199,
+            "size": 960
+          },
+          {
+            "relativeTime": 1199,
+            "size": 960
+          },
+          {
+            "relativeTime": 1199,
+            "size": 960
+          },
+          {
+            "relativeTime": 1199,
+            "size": 960
+          },
+          {
+            "relativeTime": 1200,
+            "size": 960
+          },
+          {
+            "relativeTime": 1200,
+            "size": 960
+          },
+          {
+            "relativeTime": 1200,
+            "size": 960
+          },
+          {
+            "relativeTime": 1200,
+            "size": 960
+          },
+          {
+            "relativeTime": 1201,
+            "size": 960
+          },
+          {
+            "relativeTime": 1201,
+            "size": 960
+          },
+          {
+            "relativeTime": 1201,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 20370,
+        "audioDuration": 1.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "5b95196a-d834-42d7-a79c-3b34b59fc35a",
+      "timestamp": "2026-03-24T05:20:19.016Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1219,
+        "total": 1262
+      },
+      "throughput": {
+        "dataRate": 15.380348652931854,
+        "chunkCount": 21,
+        "avgChunkSize": 924.2857142857143,
+        "chunks": [
+          {
+            "relativeTime": 1219,
+            "size": 210
+          },
+          {
+            "relativeTime": 1220,
+            "size": 960
+          },
+          {
+            "relativeTime": 1220,
+            "size": 960
+          },
+          {
+            "relativeTime": 1220,
+            "size": 960
+          },
+          {
+            "relativeTime": 1220,
+            "size": 960
+          },
+          {
+            "relativeTime": 1220,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1221,
+            "size": 960
+          },
+          {
+            "relativeTime": 1222,
+            "size": 960
+          },
+          {
+            "relativeTime": 1222,
+            "size": 960
+          },
+          {
+            "relativeTime": 1222,
+            "size": 960
+          },
+          {
+            "relativeTime": 1261,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 19410,
+        "audioDuration": 1.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "4321cc6e-7054-4aea-aa36-adf21d065831",
+      "timestamp": "2026-03-24T05:20:20.630Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1026,
+        "total": 1112
+      },
+      "throughput": {
+        "dataRate": 20.044964028776977,
+        "chunkCount": 24,
+        "avgChunkSize": 928.75,
+        "chunks": [
+          {
+            "relativeTime": 1026,
+            "size": 210
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1026,
+            "size": 960
+          },
+          {
+            "relativeTime": 1027,
+            "size": 960
+          },
+          {
+            "relativeTime": 1027,
+            "size": 960
+          },
+          {
+            "relativeTime": 1058,
+            "size": 960
+          },
+          {
+            "relativeTime": 1058,
+            "size": 960
+          },
+          {
+            "relativeTime": 1058,
+            "size": 960
+          },
+          {
+            "relativeTime": 1058,
+            "size": 960
+          },
+          {
+            "relativeTime": 1083,
+            "size": 960
+          },
+          {
+            "relativeTime": 1083,
+            "size": 960
+          },
+          {
+            "relativeTime": 1083,
+            "size": 960
+          },
+          {
+            "relativeTime": 1083,
+            "size": 960
+          },
+          {
+            "relativeTime": 1083,
+            "size": 960
+          },
+          {
+            "relativeTime": 1098,
+            "size": 960
+          },
+          {
+            "relativeTime": 1098,
+            "size": 960
+          },
+          {
+            "relativeTime": 1099,
+            "size": 960
+          },
+          {
+            "relativeTime": 1110,
+            "size": 960
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22290,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "10b21e6e-882a-4e81-bfeb-e2ba061b8237",
+      "timestamp": "2026-03-24T05:20:22.648Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1340,
+        "total": 1517
+      },
+      "throughput": {
+        "dataRate": 20.924192485168096,
+        "chunkCount": 32,
+        "avgChunkSize": 991.9375,
+        "chunks": [
+          {
+            "relativeTime": 1340,
+            "size": 210
+          },
+          {
+            "relativeTime": 1342,
+            "size": 1276
+          },
+          {
+            "relativeTime": 1343,
+            "size": 969
+          },
+          {
+            "relativeTime": 1343,
+            "size": 986
+          },
+          {
+            "relativeTime": 1344,
+            "size": 980
+          },
+          {
+            "relativeTime": 1347,
+            "size": 979
+          },
+          {
+            "relativeTime": 1349,
+            "size": 939
+          },
+          {
+            "relativeTime": 1350,
+            "size": 933
+          },
+          {
+            "relativeTime": 1350,
+            "size": 944
+          },
+          {
+            "relativeTime": 1351,
+            "size": 955
+          },
+          {
+            "relativeTime": 1351,
+            "size": 1039
+          },
+          {
+            "relativeTime": 1352,
+            "size": 987
+          },
+          {
+            "relativeTime": 1352,
+            "size": 980
+          },
+          {
+            "relativeTime": 1353,
+            "size": 1257
+          },
+          {
+            "relativeTime": 1353,
+            "size": 1042
+          },
+          {
+            "relativeTime": 1383,
+            "size": 929
+          },
+          {
+            "relativeTime": 1383,
+            "size": 958
+          },
+          {
+            "relativeTime": 1386,
+            "size": 905
+          },
+          {
+            "relativeTime": 1387,
+            "size": 1107
+          },
+          {
+            "relativeTime": 1388,
+            "size": 975
+          },
+          {
+            "relativeTime": 1442,
+            "size": 1318
+          },
+          {
+            "relativeTime": 1442,
+            "size": 976
+          },
+          {
+            "relativeTime": 1443,
+            "size": 970
+          },
+          {
+            "relativeTime": 1444,
+            "size": 993
+          },
+          {
+            "relativeTime": 1446,
+            "size": 998
+          },
+          {
+            "relativeTime": 1446,
+            "size": 965
+          },
+          {
+            "relativeTime": 1494,
+            "size": 964
+          },
+          {
+            "relativeTime": 1495,
+            "size": 955
+          },
+          {
+            "relativeTime": 1496,
+            "size": 1011
+          },
+          {
+            "relativeTime": 1502,
+            "size": 1052
+          },
+          {
+            "relativeTime": 1504,
+            "size": 1028
+          },
+          {
+            "relativeTime": 1515,
+            "size": 1162
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 31742,
+        "audioDuration": 1.9,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "fc788a51-6a05-425f-be86-efd62a7311da",
+      "timestamp": "2026-03-24T05:20:24.258Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1066,
+        "total": 1106
+      },
+      "throughput": {
+        "dataRate": 18.27757685352622,
+        "chunkCount": 20,
+        "avgChunkSize": 1010.75,
+        "chunks": [
+          {
+            "relativeTime": 1066,
+            "size": 210
+          },
+          {
+            "relativeTime": 1067,
+            "size": 1384
+          },
+          {
+            "relativeTime": 1069,
+            "size": 980
+          },
+          {
+            "relativeTime": 1071,
+            "size": 954
+          },
+          {
+            "relativeTime": 1072,
+            "size": 951
+          },
+          {
+            "relativeTime": 1072,
+            "size": 945
+          },
+          {
+            "relativeTime": 1073,
+            "size": 970
+          },
+          {
+            "relativeTime": 1074,
+            "size": 968
+          },
+          {
+            "relativeTime": 1103,
+            "size": 1263
+          },
+          {
+            "relativeTime": 1104,
+            "size": 1363
+          },
+          {
+            "relativeTime": 1104,
+            "size": 943
+          },
+          {
+            "relativeTime": 1104,
+            "size": 965
+          },
+          {
+            "relativeTime": 1104,
+            "size": 1220
+          },
+          {
+            "relativeTime": 1104,
+            "size": 1228
+          },
+          {
+            "relativeTime": 1104,
+            "size": 998
+          },
+          {
+            "relativeTime": 1104,
+            "size": 976
+          },
+          {
+            "relativeTime": 1104,
+            "size": 977
+          },
+          {
+            "relativeTime": 1105,
+            "size": 986
+          },
+          {
+            "relativeTime": 1105,
+            "size": 1028
+          },
+          {
+            "relativeTime": 1105,
+            "size": 906
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 20215,
+        "audioDuration": 1.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "706ec55a-6419-4ee9-a787-87cda7064203",
+      "timestamp": "2026-03-24T05:20:25.653Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 666,
+        "total": 892
+      },
+      "throughput": {
+        "dataRate": 23.736547085201792,
+        "chunkCount": 21,
+        "avgChunkSize": 1008.2380952380952,
+        "chunks": [
+          {
+            "relativeTime": 666,
+            "size": 210
+          },
+          {
+            "relativeTime": 666,
+            "size": 1243
+          },
+          {
+            "relativeTime": 666,
+            "size": 980
+          },
+          {
+            "relativeTime": 667,
+            "size": 966
+          },
+          {
+            "relativeTime": 668,
+            "size": 943
+          },
+          {
+            "relativeTime": 833,
+            "size": 952
+          },
+          {
+            "relativeTime": 833,
+            "size": 948
+          },
+          {
+            "relativeTime": 833,
+            "size": 942
+          },
+          {
+            "relativeTime": 833,
+            "size": 985
+          },
+          {
+            "relativeTime": 833,
+            "size": 1016
+          },
+          {
+            "relativeTime": 833,
+            "size": 1457
+          },
+          {
+            "relativeTime": 833,
+            "size": 926
+          },
+          {
+            "relativeTime": 833,
+            "size": 1036
+          },
+          {
+            "relativeTime": 834,
+            "size": 1328
+          },
+          {
+            "relativeTime": 834,
+            "size": 1185
+          },
+          {
+            "relativeTime": 834,
+            "size": 986
+          },
+          {
+            "relativeTime": 834,
+            "size": 965
+          },
+          {
+            "relativeTime": 835,
+            "size": 962
+          },
+          {
+            "relativeTime": 835,
+            "size": 979
+          },
+          {
+            "relativeTime": 835,
+            "size": 970
+          },
+          {
+            "relativeTime": 868,
+            "size": 1194
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 21173,
+        "audioDuration": 1.3,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "3add1a36-ac50-4cf9-96ee-f7927b76e32f",
+      "timestamp": "2026-03-24T05:20:26.907Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 495,
+        "total": 752
+      },
+      "throughput": {
+        "dataRate": 38.017287234042556,
+        "chunkCount": 28,
+        "avgChunkSize": 1021.0357142857143,
+        "chunks": [
+          {
+            "relativeTime": 495,
+            "size": 210
+          },
+          {
+            "relativeTime": 495,
+            "size": 1247
+          },
+          {
+            "relativeTime": 496,
+            "size": 984
+          },
+          {
+            "relativeTime": 496,
+            "size": 965
+          },
+          {
+            "relativeTime": 499,
+            "size": 941
+          },
+          {
+            "relativeTime": 550,
+            "size": 976
+          },
+          {
+            "relativeTime": 550,
+            "size": 1114
+          },
+          {
+            "relativeTime": 550,
+            "size": 1238
+          },
+          {
+            "relativeTime": 581,
+            "size": 1024
+          },
+          {
+            "relativeTime": 581,
+            "size": 1037
+          },
+          {
+            "relativeTime": 606,
+            "size": 1410
+          },
+          {
+            "relativeTime": 606,
+            "size": 1260
+          },
+          {
+            "relativeTime": 608,
+            "size": 907
+          },
+          {
+            "relativeTime": 608,
+            "size": 894
+          },
+          {
+            "relativeTime": 610,
+            "size": 782
+          },
+          {
+            "relativeTime": 610,
+            "size": 1339
+          },
+          {
+            "relativeTime": 659,
+            "size": 1209
+          },
+          {
+            "relativeTime": 659,
+            "size": 981
+          },
+          {
+            "relativeTime": 659,
+            "size": 1008
+          },
+          {
+            "relativeTime": 660,
+            "size": 1025
+          },
+          {
+            "relativeTime": 661,
+            "size": 981
+          },
+          {
+            "relativeTime": 712,
+            "size": 976
+          },
+          {
+            "relativeTime": 712,
+            "size": 1029
+          },
+          {
+            "relativeTime": 713,
+            "size": 996
+          },
+          {
+            "relativeTime": 713,
+            "size": 977
+          },
+          {
+            "relativeTime": 715,
+            "size": 970
+          },
+          {
+            "relativeTime": 750,
+            "size": 993
+          },
+          {
+            "relativeTime": 751,
+            "size": 1116
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 28589,
+        "audioDuration": 1.7,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "422a82ef-4e18-4bfb-bf7d-ea2eeceba4ca",
+      "timestamp": "2026-03-24T05:20:28.443Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1004,
+        "total": 1030
+      },
+      "throughput": {
+        "dataRate": 16.69126213592233,
+        "chunkCount": 18,
+        "avgChunkSize": 955.1111111111111,
+        "chunks": [
+          {
+            "relativeTime": 1004,
+            "size": 210
+          },
+          {
+            "relativeTime": 1004,
+            "size": 1281
+          },
+          {
+            "relativeTime": 1005,
+            "size": 966
+          },
+          {
+            "relativeTime": 1005,
+            "size": 958
+          },
+          {
+            "relativeTime": 1005,
+            "size": 954
+          },
+          {
+            "relativeTime": 1005,
+            "size": 970
+          },
+          {
+            "relativeTime": 1005,
+            "size": 972
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1022
+          },
+          {
+            "relativeTime": 1006,
+            "size": 990
+          },
+          {
+            "relativeTime": 1028,
+            "size": 1068
+          },
+          {
+            "relativeTime": 1029,
+            "size": 1004
+          },
+          {
+            "relativeTime": 1029,
+            "size": 1027
+          },
+          {
+            "relativeTime": 1029,
+            "size": 1027
+          },
+          {
+            "relativeTime": 1030,
+            "size": 980
+          },
+          {
+            "relativeTime": 1030,
+            "size": 1020
+          },
+          {
+            "relativeTime": 1030,
+            "size": 975
+          },
+          {
+            "relativeTime": 1030,
+            "size": 1319
+          },
+          {
+            "relativeTime": 1030,
+            "size": 449
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 17192,
+        "audioDuration": 1,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c6e21bcd-751e-402c-863b-3b01b55422f7",
+      "timestamp": "2026-03-24T05:20:30.081Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 926,
+        "total": 1134
+      },
+      "throughput": {
+        "dataRate": 20.72222222222222,
+        "chunkCount": 23,
+        "avgChunkSize": 1021.695652173913,
+        "chunks": [
+          {
+            "relativeTime": 926,
+            "size": 210
+          },
+          {
+            "relativeTime": 926,
+            "size": 1311
+          },
+          {
+            "relativeTime": 926,
+            "size": 986
+          },
+          {
+            "relativeTime": 926,
+            "size": 964
+          },
+          {
+            "relativeTime": 926,
+            "size": 950
+          },
+          {
+            "relativeTime": 981,
+            "size": 952
+          },
+          {
+            "relativeTime": 983,
+            "size": 947
+          },
+          {
+            "relativeTime": 984,
+            "size": 1003
+          },
+          {
+            "relativeTime": 984,
+            "size": 997
+          },
+          {
+            "relativeTime": 984,
+            "size": 973
+          },
+          {
+            "relativeTime": 1072,
+            "size": 1388
+          },
+          {
+            "relativeTime": 1072,
+            "size": 1143
+          },
+          {
+            "relativeTime": 1073,
+            "size": 899
+          },
+          {
+            "relativeTime": 1073,
+            "size": 1006
+          },
+          {
+            "relativeTime": 1073,
+            "size": 1292
+          },
+          {
+            "relativeTime": 1073,
+            "size": 1197
+          },
+          {
+            "relativeTime": 1103,
+            "size": 961
+          },
+          {
+            "relativeTime": 1103,
+            "size": 992
+          },
+          {
+            "relativeTime": 1103,
+            "size": 969
+          },
+          {
+            "relativeTime": 1104,
+            "size": 964
+          },
+          {
+            "relativeTime": 1104,
+            "size": 1018
+          },
+          {
+            "relativeTime": 1104,
+            "size": 981
+          },
+          {
+            "relativeTime": 1133,
+            "size": 1396
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 23499,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "27f684ec-8388-4d92-bd93-e5e00ab841c9",
+      "timestamp": "2026-03-24T05:20:31.589Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 971,
+        "total": 1006
+      },
+      "throughput": {
+        "dataRate": 22.280318091451292,
+        "chunkCount": 23,
+        "avgChunkSize": 974.5217391304348,
+        "chunks": [
+          {
+            "relativeTime": 971,
+            "size": 210
+          },
+          {
+            "relativeTime": 971,
+            "size": 1330
+          },
+          {
+            "relativeTime": 971,
+            "size": 1032
+          },
+          {
+            "relativeTime": 971,
+            "size": 1108
+          },
+          {
+            "relativeTime": 971,
+            "size": 1013
+          },
+          {
+            "relativeTime": 972,
+            "size": 1043
+          },
+          {
+            "relativeTime": 972,
+            "size": 1015
+          },
+          {
+            "relativeTime": 972,
+            "size": 1113
+          },
+          {
+            "relativeTime": 1003,
+            "size": 1095
+          },
+          {
+            "relativeTime": 1003,
+            "size": 996
+          },
+          {
+            "relativeTime": 1004,
+            "size": 855
+          },
+          {
+            "relativeTime": 1004,
+            "size": 841
+          },
+          {
+            "relativeTime": 1004,
+            "size": 805
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1115
+          },
+          {
+            "relativeTime": 1005,
+            "size": 981
+          },
+          {
+            "relativeTime": 1005,
+            "size": 994
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1026
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1018
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1028
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1077
+          },
+          {
+            "relativeTime": 1005,
+            "size": 1036
+          },
+          {
+            "relativeTime": 1005,
+            "size": 979
+          },
+          {
+            "relativeTime": 1005,
+            "size": 704
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22414,
+        "audioDuration": 1.4,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "65365c48-4037-4939-a124-44e86e0a1b4a",
+      "timestamp": "2026-03-24T05:20:33.173Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1047,
+        "total": 1081
+      },
+      "throughput": {
+        "dataRate": 19.70212765957447,
+        "chunkCount": 21,
+        "avgChunkSize": 1014.1904761904761,
+        "chunks": [
+          {
+            "relativeTime": 1047,
+            "size": 210
+          },
+          {
+            "relativeTime": 1047,
+            "size": 1450
+          },
+          {
+            "relativeTime": 1047,
+            "size": 1043
+          },
+          {
+            "relativeTime": 1048,
+            "size": 981
+          },
+          {
+            "relativeTime": 1048,
+            "size": 1011
+          },
+          {
+            "relativeTime": 1048,
+            "size": 1017
+          },
+          {
+            "relativeTime": 1048,
+            "size": 1033
+          },
+          {
+            "relativeTime": 1048,
+            "size": 1035
+          },
+          {
+            "relativeTime": 1080,
+            "size": 1031
+          },
+          {
+            "relativeTime": 1080,
+            "size": 1247
+          },
+          {
+            "relativeTime": 1080,
+            "size": 713
+          },
+          {
+            "relativeTime": 1080,
+            "size": 834
+          },
+          {
+            "relativeTime": 1080,
+            "size": 803
+          },
+          {
+            "relativeTime": 1080,
+            "size": 806
+          },
+          {
+            "relativeTime": 1080,
+            "size": 1178
+          },
+          {
+            "relativeTime": 1080,
+            "size": 1215
+          },
+          {
+            "relativeTime": 1080,
+            "size": 1040
+          },
+          {
+            "relativeTime": 1081,
+            "size": 1025
+          },
+          {
+            "relativeTime": 1081,
+            "size": 1002
+          },
+          {
+            "relativeTime": 1081,
+            "size": 1100
+          },
+          {
+            "relativeTime": 1081,
+            "size": 1524
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 21298,
+        "audioDuration": 1.3,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "25c8bdc4-e1a8-4f8c-b251-d67616e9e4c1",
+      "timestamp": "2026-03-24T05:20:34.526Z",
+      "provider": "qwen-realtime",
+      "model": "qwen3-tts-flash-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "opus",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 504,
+        "total": 850
+      },
+      "throughput": {
+        "dataRate": 28.776470588235295,
+        "chunkCount": 24,
+        "avgChunkSize": 1019.1666666666666,
+        "chunks": [
+          {
+            "relativeTime": 504,
+            "size": 210
+          },
+          {
+            "relativeTime": 504,
+            "size": 1498
+          },
+          {
+            "relativeTime": 504,
+            "size": 1059
+          },
+          {
+            "relativeTime": 504,
+            "size": 1057
+          },
+          {
+            "relativeTime": 505,
+            "size": 1003
+          },
+          {
+            "relativeTime": 553,
+            "size": 1027
+          },
+          {
+            "relativeTime": 554,
+            "size": 1008
+          },
+          {
+            "relativeTime": 555,
+            "size": 1047
+          },
+          {
+            "relativeTime": 556,
+            "size": 1041
+          },
+          {
+            "relativeTime": 556,
+            "size": 1364
+          },
+          {
+            "relativeTime": 845,
+            "size": 1096
+          },
+          {
+            "relativeTime": 847,
+            "size": 894
+          },
+          {
+            "relativeTime": 847,
+            "size": 863
+          },
+          {
+            "relativeTime": 848,
+            "size": 809
+          },
+          {
+            "relativeTime": 848,
+            "size": 1184
+          },
+          {
+            "relativeTime": 848,
+            "size": 1171
+          },
+          {
+            "relativeTime": 848,
+            "size": 1030
+          },
+          {
+            "relativeTime": 848,
+            "size": 1010
+          },
+          {
+            "relativeTime": 848,
+            "size": 1007
+          },
+          {
+            "relativeTime": 848,
+            "size": 1002
+          },
+          {
+            "relativeTime": 849,
+            "size": 1061
+          },
+          {
+            "relativeTime": 849,
+            "size": 1033
+          },
+          {
+            "relativeTime": 849,
+            "size": 1232
+          },
+          {
+            "relativeTime": 850,
+            "size": 754
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 24460,
+        "audioDuration": 1.5,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c495cd77-ad1a-4bf0-b10b-fdcab6c6f722",
+      "timestamp": "2026-03-24T05:22:09.122Z",
+      "provider": "qwen-realtime",
+      "model": "qwen-tts-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen-tts-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 845,
+        "total": 1433
+      },
+      "throughput": {
+        "dataRate": 53.59385903698534,
+        "chunkCount": 5,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 845,
+            "size": 9120
+          },
+          {
+            "relativeTime": 917,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1381,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1381,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1432,
+            "size": 21600
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76800,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "eea5f599-8740-4fe5-9622-6b5f9c7acd05",
+      "timestamp": "2026-03-24T05:22:11.206Z",
+      "provider": "qwen-realtime",
+      "model": "qwen-tts-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen-tts-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1081,
+        "total": 1581
+      },
+      "throughput": {
+        "dataRate": 48.57685009487666,
+        "chunkCount": 5,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 1081,
+            "size": 9120
+          },
+          {
+            "relativeTime": 1542,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1542,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1572,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1581,
+            "size": 21600
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76800,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "4a5d1d58-1821-48ce-9388-3d7e20e6788d",
+      "timestamp": "2026-03-24T05:22:13.322Z",
+      "provider": "qwen-realtime",
+      "model": "qwen-tts-realtime",
+      "testType": "tts",
+      "scenario": "matrix/qwen-tts-realtime/Cherry/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "Cherry",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1076,
+        "total": 1611
+      },
+      "throughput": {
+        "dataRate": 47.67225325884544,
+        "chunkCount": 5,
+        "avgChunkSize": 15360,
+        "chunks": [
+          {
+            "relativeTime": 1076,
+            "size": 9120
+          },
+          {
+            "relativeTime": 1551,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1582,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1583,
+            "size": 15360
+          },
+          {
+            "relativeTime": 1609,
+            "size": 21600
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76800,
+        "audioDuration": 2.3,
         "bitrate": 262
       },
       "status": "success"

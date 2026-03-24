@@ -55,4 +55,37 @@ export const qwenMatrixItems: MatrixItem[] = [
   { provider: 'qwen', model: 'cosyvoice-v1', voice: 'longwan', format: 'pcm', sampleRate: 24000 },
   { provider: 'qwen', model: 'cosyvoice-v1', voice: 'longwan', format: 'pcm', sampleRate: 44100 },
   { provider: 'qwen', model: 'cosyvoice-v1', voice: 'longwan', format: 'pcm', sampleRate: 48000 },
+
+  // qwen3-tts-instruct-flash-realtime + Cherry (Realtime API 专用)
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 8000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 16000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 24000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 48000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 8000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 16000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 24000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-instruct-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 48000 },
+
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vd-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 8000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vd-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 16000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vd-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 24000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vd-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 48000 },
+
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vc-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 8000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vc-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 16000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vc-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 24000 },
+  // { provider: 'qwen-realtime', model: 'qwen3-tts-vc-realtime-2026-01-15', voice: 'Cherry', format: 'pcm', sampleRate: 48000 },
+
+  // qwen3-tts-flash-realtime + Cherry
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 8000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 16000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 24000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 48000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 8000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 16000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 24000 },
+  { provider: 'qwen-realtime', model: 'qwen3-tts-flash-realtime', voice: 'Cherry', format: 'opus', sampleRate: 48000 },
+
+  // qwen3-tts-realtime + Cherry
+  { provider: 'qwen-realtime', model: 'qwen-tts-realtime', voice: 'Cherry', format: 'pcm', sampleRate: 24000 },
 ];
