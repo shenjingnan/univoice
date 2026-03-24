@@ -1,0 +1,298 @@
+{
+  "id": "42ba3f81-c9b6-4e33-942c-3b63c244eede",
+  "timestamp": "2026-03-24T09:26:02.200Z",
+  "provider": "minimax",
+  "model": "speech-01-hd",
+  "testType": "tts",
+  "scenario": "matrix/speech-01-hd/male-qn-qingse/pcm-44100",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 44100
+  },
+  "latency": {
+    "firstChunk": 1016,
+    "total": 1607
+  },
+  "throughput": {
+    "dataRate": 84.11200995644057,
+    "chunkCount": 66,
+    "avgChunkSize": 2048,
+    "chunks": [
+      {
+        "relativeTime": 1016,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1020,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1020,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1022,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1022,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1039,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1039,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1042,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1058,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1058,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1058,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1058,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1060,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1060,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1082,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1082,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1082,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1082,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1092,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1101,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1101,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1101,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1101,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1111,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1111,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1111,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1534,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1534,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1534,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1534,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1540,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1583,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1583,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1583,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1583,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1588,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1588,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1588,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1595,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1606,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1606,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1606,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1606,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1607,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1607,
+        "size": 2048
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 135168,
+    "audioDuration": 4.1,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

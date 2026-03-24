@@ -493,7 +493,7 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/24 15:39:33
+> 生成时间: 2026/3/24 17:30:32
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -535,7 +535,7 @@ const asr = createASR({
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | 3 | 1080 | 1581 | 1414 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | 3 | 1593 | 1599 | 1597 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 3 | 1609 | 1588 | 1595 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 3 | **544 🏆** | 1068 | **893 🏆** |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 3 | **544 🏆** | 1068 | 893 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | 3 | 1070 | 1105 | 1093 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | 3 | 2054 | 1853 | 1920 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | 3 | 2127 | 1871 | 1956 |
@@ -568,7 +568,7 @@ const asr = createASR({
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 8000 | 3 | 1238 | 1187 | 1204 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 16000 | 3 | 1517 | 999 | 1172 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 24000 | 3 | 752 | 1082 | 972 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 48000 | 3 | 1006 | **966 🏆** | 979 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 48000 | 3 | 1006 | 966 | 979 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 8000 | 3 | 1970 | 1354 | 1559 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 16000 | 3 | 2028 | 1853 | 1911 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 24000 | 3 | 1125 | 1513 | 1384 |
@@ -586,6 +586,54 @@ const asr = createASR({
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | 3 | 1283 | 1081 | 1148 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | 3 | 994 | 1411 | 1272 |
 | 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 1650 | 1065 | 1260 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 8000 | 3 | 1349 | 782 | 971 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 16000 | 3 | 1120 | 1570 | 1420 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 22050 | 3 | 1144 | 1340 | 1274 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 24000 | 3 | 1525 | 1083 | 1230 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 32000 | 3 | 1600 | 2109 | 1939 |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 44100 | 3 | 2035 | 2403 | 2280 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 8000 | 3 | 1658 | 1151 | 1320 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 16000 | 3 | 1413 | 805 | 1007 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 22050 | 3 | 1074 | 1593 | 1420 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 24000 | 3 | 1549 | 1078 | 1235 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 32000 | 3 | 1075 | 1087 | 1083 |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 44100 | 3 | 1124 | 1627 | 1459 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 8000 | 3 | 1414 | 1083 | 1193 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 16000 | 3 | 976 | 853 | 894 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 22050 | 3 | 1092 | 1285 | 1220 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 24000 | 3 | 1585 | 1600 | 1595 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 32000 | 3 | 1618 | 1609 | 1612 |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 44100 | 3 | 1588 | 1579 | 1582 |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 8000 | 3 | 1072 | **538 🏆** | **716 🏆** |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 16000 | 3 | 590 | 806 | 734 |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 22050 | 3 | 1100 | 1286 | 1224 |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 24000 | 3 | 1152 | 2358 | 1956 |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 32000 | 3 | 2638 | 1105 | 1616 |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 44100 | 3 | 1637 | 2354 | 2115 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 8000 | 3 | 1052 | 1054 | 1053 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 16000 | 3 | 1669 | 1075 | 1273 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 22050 | 3 | 991 | 1081 | 1051 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 24000 | 3 | 1066 | 1292 | 1216 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 32000 | 3 | 2175 | 1094 | 1454 |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 44100 | 3 | 1549 | 1594 | 1579 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 8000 | 3 | 1066 | 542 | 716 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 16000 | 3 | 556 | 821 | 733 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 22050 | 3 | 1096 | 1073 | 1081 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 24000 | 3 | 1057 | 1554 | 1388 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 32000 | 3 | 1656 | 1083 | 1274 |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 44100 | 3 | 1622 | 1602 | 1608 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 8000 | 3 | 1468 | 1101 | 1223 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 16000 | 3 | 1567 | 1085 | 1246 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 22050 | 3 | 1078 | 1066 | 1070 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 24000 | 3 | 1083 | 1105 | 1098 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 32000 | 3 | 2015 | 1328 | 1557 |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 44100 | 3 | 1607 | 2362 | 2110 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 8000 | 3 | 1062 | 1103 | 1089 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 16000 | 3 | 1500 | 1359 | 1406 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 22050 | 3 | 1086 | 1071 | 1076 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 24000 | 3 | 1062 | 1294 | 1216 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | 3 | 1591 | 1376 | 1448 |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | 3 | 1081 | 786 | 884 |
 
 ### 能力矩阵
 
@@ -595,6 +643,7 @@ const asr = createASR({
 | qwen-realtime | Unknown | ❌ | ✅ |
 | 豆包 | WebSocket | ❌ | ✅ |
 | 智谱 GLM | HTTP | ❌ | ✅ |
+| MiniMax | WebSocket | ❌ | ✅ |
 
 ---
 

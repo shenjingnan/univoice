@@ -1,0 +1,138 @@
+{
+  "id": "e9728ee4-6f4b-40aa-a1d4-3ec1f5b6a5d0",
+  "timestamp": "2026-03-24T09:24:05.742Z",
+  "provider": "minimax",
+  "model": "speech-2.6-turbo",
+  "testType": "tts",
+  "scenario": "matrix/speech-2.6-turbo/male-qn-qingse/pcm-16000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 16000
+  },
+  "latency": {
+    "firstChunk": 977,
+    "total": 1038
+  },
+  "throughput": {
+    "dataRate": 46.88824662813102,
+    "chunkCount": 26,
+    "avgChunkSize": 1871.923076923077,
+    "chunks": [
+      {
+        "relativeTime": 977,
+        "size": 2048
+      },
+      {
+        "relativeTime": 977,
+        "size": 2048
+      },
+      {
+        "relativeTime": 977,
+        "size": 2048
+      },
+      {
+        "relativeTime": 978,
+        "size": 2048
+      },
+      {
+        "relativeTime": 978,
+        "size": 692
+      },
+      {
+        "relativeTime": 978,
+        "size": 2048
+      },
+      {
+        "relativeTime": 994,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1003,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1003,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1013,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1013,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1013,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1013,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1022,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1022,
+        "size": 2002
+      },
+      {
+        "relativeTime": 1030,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1030,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1030,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1030,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1036,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1036,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1036,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1036,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1038,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1038,
+        "size": 886
+      },
+      {
+        "relativeTime": 1038,
+        "size": 34
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 48670,
+    "audioDuration": 1.5,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}
