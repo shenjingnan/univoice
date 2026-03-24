@@ -1,0 +1,106 @@
+{
+  "id": "422a82ef-4e18-4bfb-bf7d-ea2eeceba4ca",
+  "timestamp": "2026-03-24T05:20:28.443Z",
+  "provider": "qwen-realtime",
+  "model": "qwen3-tts-flash-realtime",
+  "testType": "tts",
+  "scenario": "matrix/qwen3-tts-flash-realtime/Cherry/opus-24000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "opus",
+    "textLength": 6,
+    "voice": "Cherry",
+    "sampleRate": 24000
+  },
+  "latency": {
+    "firstChunk": 1004,
+    "total": 1030
+  },
+  "throughput": {
+    "dataRate": 16.69126213592233,
+    "chunkCount": 18,
+    "avgChunkSize": 955.1111111111111,
+    "chunks": [
+      {
+        "relativeTime": 1004,
+        "size": 210
+      },
+      {
+        "relativeTime": 1004,
+        "size": 1281
+      },
+      {
+        "relativeTime": 1005,
+        "size": 966
+      },
+      {
+        "relativeTime": 1005,
+        "size": 958
+      },
+      {
+        "relativeTime": 1005,
+        "size": 954
+      },
+      {
+        "relativeTime": 1005,
+        "size": 970
+      },
+      {
+        "relativeTime": 1005,
+        "size": 972
+      },
+      {
+        "relativeTime": 1005,
+        "size": 1022
+      },
+      {
+        "relativeTime": 1006,
+        "size": 990
+      },
+      {
+        "relativeTime": 1028,
+        "size": 1068
+      },
+      {
+        "relativeTime": 1029,
+        "size": 1004
+      },
+      {
+        "relativeTime": 1029,
+        "size": 1027
+      },
+      {
+        "relativeTime": 1029,
+        "size": 1027
+      },
+      {
+        "relativeTime": 1030,
+        "size": 980
+      },
+      {
+        "relativeTime": 1030,
+        "size": 1020
+      },
+      {
+        "relativeTime": 1030,
+        "size": 975
+      },
+      {
+        "relativeTime": 1030,
+        "size": 1319
+      },
+      {
+        "relativeTime": 1030,
+        "size": 449
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 17192,
+    "audioDuration": 1,
+    "bitrate": 131
+  },
+  "status": "success",
+  "iteration": 1
+}

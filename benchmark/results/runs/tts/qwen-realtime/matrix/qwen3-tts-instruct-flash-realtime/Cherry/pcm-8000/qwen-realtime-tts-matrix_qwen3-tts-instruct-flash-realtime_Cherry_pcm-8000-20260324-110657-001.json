@@ -1,0 +1,58 @@
+{
+  "id": "448b4f0f-0ad6-4ca7-9142-ee8b728e982e",
+  "timestamp": "2026-03-24T03:06:57.374Z",
+  "provider": "qwen-realtime",
+  "model": "qwen3-tts-instruct-flash-realtime",
+  "testType": "tts",
+  "scenario": "matrix/qwen3-tts-instruct-flash-realtime/Cherry/pcm-8000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "Cherry",
+    "sampleRate": 8000
+  },
+  "latency": {
+    "firstChunk": 1054,
+    "total": 1443
+  },
+  "throughput": {
+    "dataRate": 17.84338184338184,
+    "chunkCount": 6,
+    "avgChunkSize": 4291.333333333333,
+    "chunks": [
+      {
+        "relativeTime": 1054,
+        "size": 4894
+      },
+      {
+        "relativeTime": 1108,
+        "size": 4894
+      },
+      {
+        "relativeTime": 1182,
+        "size": 4892
+      },
+      {
+        "relativeTime": 1266,
+        "size": 4894
+      },
+      {
+        "relativeTime": 1339,
+        "size": 4894
+      },
+      {
+        "relativeTime": 1341,
+        "size": 1280
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 25748,
+    "audioDuration": 0.8,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

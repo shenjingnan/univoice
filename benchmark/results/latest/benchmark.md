@@ -12,7 +12,7 @@
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/23 21:03:13
+> 生成时间: 2026/3/24 13:22:19
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -54,7 +54,7 @@
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | 3 | 1080 | 1581 | 1414 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | 3 | 1593 | 1599 | 1597 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 3 | 1609 | 1588 | 1595 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 3 | **544 🏆** | **1068 🏆** | **893 🏆** |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 3 | **544 🏆** | 1068 | **893 🏆** |
 | 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | 3 | 1070 | 1105 | 1093 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | 3 | 2054 | 1853 | 1920 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | 3 | 2127 | 1871 | 1956 |
@@ -71,13 +71,31 @@
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 8000 | 3 | 1579 | 1596 | 1590 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 22050 | 3 | 1070 | 1335 | 1246 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 44100 | 3 | 1624 | 1350 | 1441 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 8000 | 5 | 1799 | 1379 | 1463 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 16000 | 1 | 1159 | 1159 | 1159 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 24000 | 1 | 1497 | 1497 | 1497 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 48000 | 1 | 1307 | 1307 | 1307 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 8000 | 1 | 1444 | 1444 | 1444 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 16000 | 1 | 1084 | 1084 | 1084 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 24000 | 1 | 1546 | 1546 | 1546 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 48000 | 1 | 1591 | 1591 | 1591 |
+| qwen-realtime | qwen-tts-realtime | Cherry | pcm | 24000 | 5 | 1227 | 1487 | 1435 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 8000 | 3 | 2014 | 1594 | 1734 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 16000 | 3 | 1592 | 1138 | 1289 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 24000 | 3 | 1507 | 1487 | 1494 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 48000 | 3 | 1264 | 1331 | 1308 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 8000 | 3 | 1238 | 1187 | 1204 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 16000 | 3 | 1517 | 999 | 1172 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 24000 | 3 | 752 | 1082 | 972 |
+| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 48000 | 3 | 1006 | **966 🏆** | 979 |
 
 ### 能力矩阵
 
 | 提供商 | 协议 | 流式输入 | 流式输出 |
 |--------|------|:--------:|:--------:|
 | 通义千问 | WebSocket | ❌ | ✅ |
+| qwen-realtime | Unknown | ❌ | ✅ |
 
 ---
 
-*数据更新于: 2026-03-23*
+*数据更新于: 2026-03-24*
