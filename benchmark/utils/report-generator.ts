@@ -724,6 +724,7 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
   lines.push('> - 测试环境与地理位置');
   lines.push('> - univoice 的实现方式');
   lines.push('> - 服务商当前的负载情况');
+  lines.push('> - 服务商对模型的迭代');
   lines.push('>');
   lines.push('> 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。');
   lines.push('');

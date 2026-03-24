@@ -14,6 +14,7 @@
       "**/*.json",
       "!docs",
       "!benchmark/scenarios/qwen-matrix-data.ts",
+      "!benchmark/scenarios/doubao-matrix-data.ts",
       "!benchmark/results/latest/benchmark.json"
     ]
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-24T05:22:19.157Z",
+  "generatedAt": "2026-03-24T06:58:00.743Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
@@ -34,6 +34,21 @@
         "avgFirstChunkLatency": 1029.8292682926829,
         "successRate": 1,
         "sampleCount": 41
+      }
+    },
+    {
+      "provider": "doubao",
+      "capabilities": {
+        "provider": "doubao",
+        "displayName": "豆包",
+        "streamInput": false,
+        "streamOutput": false,
+        "protocol": "websocket"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1165.625,
+        "successRate": 1,
+        "sampleCount": 48
       }
     }
   ],
@@ -317440,6 +317455,2518 @@
         "dataSize": 76800,
         "audioDuration": 2.3,
         "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "231d85c0-bbee-44da-ae4e-605005aa85c1",
+      "timestamp": "2026-03-24T06:32:55.666Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1391,
+        "total": 1970
+      },
+      "throughput": {
+        "dataRate": 14.218274111675127,
+        "chunkCount": 5,
+        "avgChunkSize": 5602,
+        "chunks": [
+          {
+            "relativeTime": 1391,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1434,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1477,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1921,
+            "size": 4096
+          },
+          {
+            "relativeTime": 1921,
+            "size": 1386
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 28010,
+        "audioDuration": 0.9,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "caf99829-ee68-49f4-8082-b86254c35b85",
+      "timestamp": "2026-03-24T06:32:57.227Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1010,
+        "total": 1056
+      },
+      "throughput": {
+        "dataRate": 24.577651515151516,
+        "chunkCount": 5,
+        "avgChunkSize": 5190.8,
+        "chunks": [
+          {
+            "relativeTime": 1010,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1010,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1010,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1010,
+            "size": 2048
+          },
+          {
+            "relativeTime": 1013,
+            "size": 1378
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 25954,
+        "audioDuration": 0.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "e4edc7c4-54a6-4f8e-af98-beb7390485a0",
+      "timestamp": "2026-03-24T06:32:59.382Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1601,
+        "total": 1652
+      },
+      "throughput": {
+        "dataRate": 15.732445520581114,
+        "chunkCount": 5,
+        "avgChunkSize": 5198,
+        "chunks": [
+          {
+            "relativeTime": 1601,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1601,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1601,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1601,
+            "size": 2048
+          },
+          {
+            "relativeTime": 1601,
+            "size": 1414
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 25990,
+        "audioDuration": 0.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "77f7f5cc-8ea9-42ca-abce-6b12f76e35fe",
+      "timestamp": "2026-03-24T06:33:01.917Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1951,
+        "total": 2028
+      },
+      "throughput": {
+        "dataRate": 28.48915187376726,
+        "chunkCount": 5,
+        "avgChunkSize": 11555.2,
+        "chunks": [
+          {
+            "relativeTime": 1951,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1951,
+            "size": 16384
+          },
+          {
+            "relativeTime": 1951,
+            "size": 16384
+          },
+          {
+            "relativeTime": 1974,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1974,
+            "size": 432
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 57776,
+        "audioDuration": 1.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "2a9c48cc-218e-4e67-8b05-772a27b221e4",
+      "timestamp": "2026-03-24T06:33:04.025Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1518,
+        "total": 1604
+      },
+      "throughput": {
+        "dataRate": 33.751870324189525,
+        "chunkCount": 5,
+        "avgChunkSize": 10827.6,
+        "chunks": [
+          {
+            "relativeTime": 1518,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1518,
+            "size": 16384
+          },
+          {
+            "relativeTime": 1543,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1549,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1549,
+            "size": 890
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 54138,
+        "audioDuration": 1.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "746f7f16-5d97-4675-a6ff-51826232ce72",
+      "timestamp": "2026-03-24T06:33:06.650Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 2053,
+        "total": 2102
+      },
+      "throughput": {
+        "dataRate": 23.63939105613701,
+        "chunkCount": 5,
+        "avgChunkSize": 9938,
+        "chunks": [
+          {
+            "relativeTime": 2053,
+            "size": 14336
+          },
+          {
+            "relativeTime": 2053,
+            "size": 16384
+          },
+          {
+            "relativeTime": 2053,
+            "size": 16384
+          },
+          {
+            "relativeTime": 2053,
+            "size": 2048
+          },
+          {
+            "relativeTime": 2053,
+            "size": 538
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 49690,
+        "audioDuration": 1.5,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "126b01d4-2313-4c91-8b80-23cb4090b936",
+      "timestamp": "2026-03-24T06:33:08.287Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1010,
+        "total": 1125
+      },
+      "throughput": {
+        "dataRate": 71.36711111111111,
+        "chunkCount": 4,
+        "avgChunkSize": 20072,
+        "chunks": [
+          {
+            "relativeTime": 1010,
+            "size": 22800
+          },
+          {
+            "relativeTime": 1054,
+            "size": 24036
+          },
+          {
+            "relativeTime": 1063,
+            "size": 23854
+          },
+          {
+            "relativeTime": 1075,
+            "size": 9598
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 80288,
+        "audioDuration": 2.5,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "c192d2ae-b73b-4a89-a23b-c035fd5b9af8",
+      "timestamp": "2026-03-24T06:33:10.293Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1431,
+        "total": 1499
+      },
+      "throughput": {
+        "dataRate": 53.831887925283525,
+        "chunkCount": 4,
+        "avgChunkSize": 20173.5,
+        "chunks": [
+          {
+            "relativeTime": 1431,
+            "size": 22800
+          },
+          {
+            "relativeTime": 1437,
+            "size": 24252
+          },
+          {
+            "relativeTime": 1447,
+            "size": 24038
+          },
+          {
+            "relativeTime": 1451,
+            "size": 9604
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 80694,
+        "audioDuration": 2.5,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "8017d46c-4894-466c-9d69-460ae9b95d63",
+      "timestamp": "2026-03-24T06:33:12.321Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 932,
+        "total": 1527
+      },
+      "throughput": {
+        "dataRate": 57.47740667976424,
+        "chunkCount": 4,
+        "avgChunkSize": 21942,
+        "chunks": [
+          {
+            "relativeTime": 932,
+            "size": 22800
+          },
+          {
+            "relativeTime": 997,
+            "size": 24062
+          },
+          {
+            "relativeTime": 1033,
+            "size": 24012
+          },
+          {
+            "relativeTime": 1061,
+            "size": 16894
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 87768,
+        "audioDuration": 2.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "164a47bf-0d63-4910-a07a-630864459f32",
+      "timestamp": "2026-03-24T06:33:14.510Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1603,
+        "total": 1685
+      },
+      "throughput": {
+        "dataRate": 92.31572700296736,
+        "chunkCount": 5,
+        "avgChunkSize": 31110.4,
+        "chunks": [
+          {
+            "relativeTime": 1603,
+            "size": 45056
+          },
+          {
+            "relativeTime": 1603,
+            "size": 47104
+          },
+          {
+            "relativeTime": 1630,
+            "size": 47104
+          },
+          {
+            "relativeTime": 1630,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1630,
+            "size": 1952
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 155552,
+        "audioDuration": 4.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "82b6b491-9934-4037-8ce8-d83e1de765dd",
+      "timestamp": "2026-03-24T06:33:16.612Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1498,
+        "total": 1592
+      },
+      "throughput": {
+        "dataRate": 109.66834170854271,
+        "chunkCount": 5,
+        "avgChunkSize": 34918.4,
+        "chunks": [
+          {
+            "relativeTime": 1498,
+            "size": 45056
+          },
+          {
+            "relativeTime": 1515,
+            "size": 47104
+          },
+          {
+            "relativeTime": 1518,
+            "size": 47104
+          },
+          {
+            "relativeTime": 1536,
+            "size": 34816
+          },
+          {
+            "relativeTime": 1537,
+            "size": 512
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 174592,
+        "audioDuration": 5.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "0653f8eb-9ebf-409d-b177-d2ef688a37de",
+      "timestamp": "2026-03-24T06:33:18.709Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1510,
+        "total": 1594
+      },
+      "throughput": {
+        "dataRate": 97.88205771643663,
+        "chunkCount": 5,
+        "avgChunkSize": 31204.8,
+        "chunks": [
+          {
+            "relativeTime": 1510,
+            "size": 45056
+          },
+          {
+            "relativeTime": 1513,
+            "size": 47104
+          },
+          {
+            "relativeTime": 1534,
+            "size": 49152
+          },
+          {
+            "relativeTime": 1544,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1544,
+            "size": 376
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 156024,
+        "audioDuration": 4.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "dceae004-22c6-4ffb-81da-ad401921f4a8",
+      "timestamp": "2026-03-24T06:33:20.831Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1492,
+        "total": 1615
+      },
+      "throughput": {
+        "dataRate": 2.3126934984520124,
+        "chunkCount": 5,
+        "avgChunkSize": 747,
+        "chunks": [
+          {
+            "relativeTime": 1492,
+            "size": 1000
+          },
+          {
+            "relativeTime": 1492,
+            "size": 1170
+          },
+          {
+            "relativeTime": 1498,
+            "size": 1082
+          },
+          {
+            "relativeTime": 1533,
+            "size": 387
+          },
+          {
+            "relativeTime": 1533,
+            "size": 96
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3735,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f90f5135-8e61-41b5-8e8c-66df481c08d3",
+      "timestamp": "2026-03-24T06:33:22.866Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1480,
+        "total": 1531
+      },
+      "throughput": {
+        "dataRate": 2.4585238406270413,
+        "chunkCount": 5,
+        "avgChunkSize": 752.8,
+        "chunks": [
+          {
+            "relativeTime": 1480,
+            "size": 997
+          },
+          {
+            "relativeTime": 1481,
+            "size": 1175
+          },
+          {
+            "relativeTime": 1481,
+            "size": 1112
+          },
+          {
+            "relativeTime": 1485,
+            "size": 390
+          },
+          {
+            "relativeTime": 1489,
+            "size": 90
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3764,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "0502c8ed-a090-498d-9996-34593f89572d",
+      "timestamp": "2026-03-24T06:33:24.441Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 995,
+        "total": 1054
+      },
+      "throughput": {
+        "dataRate": 3.4686907020872866,
+        "chunkCount": 5,
+        "avgChunkSize": 731.2,
+        "chunks": [
+          {
+            "relativeTime": 995,
+            "size": 992
+          },
+          {
+            "relativeTime": 995,
+            "size": 1145
+          },
+          {
+            "relativeTime": 995,
+            "size": 1042
+          },
+          {
+            "relativeTime": 998,
+            "size": 385
+          },
+          {
+            "relativeTime": 1000,
+            "size": 92
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3656,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "2292e7a9-46ad-4dfb-b0b7-51b30ad9a066",
+      "timestamp": "2026-03-24T06:33:26.486Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1011,
+        "total": 1524
+      },
+      "throughput": {
+        "dataRate": 2.492782152230971,
+        "chunkCount": 5,
+        "avgChunkSize": 759.8,
+        "chunks": [
+          {
+            "relativeTime": 1011,
+            "size": 1013
+          },
+          {
+            "relativeTime": 1100,
+            "size": 1154
+          },
+          {
+            "relativeTime": 1118,
+            "size": 1045
+          },
+          {
+            "relativeTime": 1131,
+            "size": 493
+          },
+          {
+            "relativeTime": 1131,
+            "size": 94
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3799,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "686a1a6f-1889-45e9-9aef-726be0f8b110",
+      "timestamp": "2026-03-24T06:33:28.092Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1057,
+        "total": 1097
+      },
+      "throughput": {
+        "dataRate": 3.1458523245214223,
+        "chunkCount": 4,
+        "avgChunkSize": 862.75,
+        "chunks": [
+          {
+            "relativeTime": 1057,
+            "size": 1008
+          },
+          {
+            "relativeTime": 1057,
+            "size": 1174
+          },
+          {
+            "relativeTime": 1057,
+            "size": 1125
+          },
+          {
+            "relativeTime": 1057,
+            "size": 144
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3451,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "b1df85ea-ad32-48d8-8290-28b3eb821ce9",
+      "timestamp": "2026-03-24T06:33:29.702Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 998,
+        "total": 1108
+      },
+      "throughput": {
+        "dataRate": 3.07942238267148,
+        "chunkCount": 4,
+        "avgChunkSize": 853,
+        "chunks": [
+          {
+            "relativeTime": 998,
+            "size": 1015
+          },
+          {
+            "relativeTime": 1029,
+            "size": 1165
+          },
+          {
+            "relativeTime": 1056,
+            "size": 1093
+          },
+          {
+            "relativeTime": 1056,
+            "size": 139
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3412,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c5ca69ba-9c07-4620-b725-627392d33e34",
+      "timestamp": "2026-03-24T06:33:31.060Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 792,
+        "total": 856
+      },
+      "throughput": {
+        "dataRate": 4.489485981308412,
+        "chunkCount": 5,
+        "avgChunkSize": 768.6,
+        "chunks": [
+          {
+            "relativeTime": 792,
+            "size": 1009
+          },
+          {
+            "relativeTime": 792,
+            "size": 1138
+          },
+          {
+            "relativeTime": 803,
+            "size": 1059
+          },
+          {
+            "relativeTime": 819,
+            "size": 497
+          },
+          {
+            "relativeTime": 819,
+            "size": 140
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3843,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "4ec28f09-e397-4dc1-9d15-06c09e61c631",
+      "timestamp": "2026-03-24T06:33:32.804Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1206,
+        "total": 1239
+      },
+      "throughput": {
+        "dataRate": 3.1331719128329296,
+        "chunkCount": 5,
+        "avgChunkSize": 776.4,
+        "chunks": [
+          {
+            "relativeTime": 1206,
+            "size": 1009
+          },
+          {
+            "relativeTime": 1206,
+            "size": 1179
+          },
+          {
+            "relativeTime": 1206,
+            "size": 1067
+          },
+          {
+            "relativeTime": 1206,
+            "size": 492
+          },
+          {
+            "relativeTime": 1206,
+            "size": 135
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3882,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "8e07bcf3-baed-4cbb-82cf-62b8a896a0b1",
+      "timestamp": "2026-03-24T06:33:34.388Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1043,
+        "total": 1081
+      },
+      "throughput": {
+        "dataRate": 2.908418131359852,
+        "chunkCount": 4,
+        "avgChunkSize": 786,
+        "chunks": [
+          {
+            "relativeTime": 1043,
+            "size": 1052
+          },
+          {
+            "relativeTime": 1043,
+            "size": 1115
+          },
+          {
+            "relativeTime": 1044,
+            "size": 885
+          },
+          {
+            "relativeTime": 1044,
+            "size": 92
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3144,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "83223305-60f8-4422-9809-3acb8cee1677",
+      "timestamp": "2026-03-24T06:33:35.797Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 825,
+        "total": 906
+      },
+      "throughput": {
+        "dataRate": 4.080573951434879,
+        "chunkCount": 5,
+        "avgChunkSize": 739.4,
+        "chunks": [
+          {
+            "relativeTime": 825,
+            "size": 1017
+          },
+          {
+            "relativeTime": 854,
+            "size": 1162
+          },
+          {
+            "relativeTime": 859,
+            "size": 1091
+          },
+          {
+            "relativeTime": 868,
+            "size": 340
+          },
+          {
+            "relativeTime": 869,
+            "size": 87
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3697,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "82afb47d-3412-4db0-a57d-6ead0406da98",
+      "timestamp": "2026-03-24T06:33:37.540Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1209,
+        "total": 1241
+      },
+      "throughput": {
+        "dataRate": 3.4987912973408544,
+        "chunkCount": 5,
+        "avgChunkSize": 868.4,
+        "chunks": [
+          {
+            "relativeTime": 1209,
+            "size": 1002
+          },
+          {
+            "relativeTime": 1209,
+            "size": 1182
+          },
+          {
+            "relativeTime": 1209,
+            "size": 1103
+          },
+          {
+            "relativeTime": 1209,
+            "size": 969
+          },
+          {
+            "relativeTime": 1209,
+            "size": 86
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 4342,
+        "audioDuration": 0.3,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f1d052c6-fed6-40c7-b7ab-0a7c6a553053",
+      "timestamp": "2026-03-24T06:33:39.646Z",
+      "provider": "doubao",
+      "model": "seed-tts-1.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1118,
+        "total": 1603
+      },
+      "throughput": {
+        "dataRate": 2.202121023081722,
+        "chunkCount": 5,
+        "avgChunkSize": 706,
+        "chunks": [
+          {
+            "relativeTime": 1118,
+            "size": 992
+          },
+          {
+            "relativeTime": 1548,
+            "size": 1137
+          },
+          {
+            "relativeTime": 1548,
+            "size": 1119
+          },
+          {
+            "relativeTime": 1548,
+            "size": 189
+          },
+          {
+            "relativeTime": 1548,
+            "size": 93
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3530,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "374ab0d0-73f5-4198-a2a5-108aa031b40c",
+      "timestamp": "2026-03-24T06:57:09.236Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 934,
+        "total": 1082
+      },
+      "throughput": {
+        "dataRate": 20.724584103512015,
+        "chunkCount": 5,
+        "avgChunkSize": 4484.8,
+        "chunks": [
+          {
+            "relativeTime": 934,
+            "size": 4096
+          },
+          {
+            "relativeTime": 934,
+            "size": 8192
+          },
+          {
+            "relativeTime": 935,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1028,
+            "size": 2048
+          },
+          {
+            "relativeTime": 1032,
+            "size": 1944
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22424,
+        "audioDuration": 0.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "c20cc808-ab30-4a41-9315-f1419ff76270",
+      "timestamp": "2026-03-24T06:57:11.252Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1442,
+        "total": 1510
+      },
+      "throughput": {
+        "dataRate": 14.919205298013246,
+        "chunkCount": 5,
+        "avgChunkSize": 4505.6,
+        "chunks": [
+          {
+            "relativeTime": 1442,
+            "size": 4096
+          },
+          {
+            "relativeTime": 1443,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1456,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1457,
+            "size": 2048
+          },
+          {
+            "relativeTime": 1457,
+            "size": 2048
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22528,
+        "audioDuration": 0.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "1b3d973d-5eca-4035-ac36-c6f52a5ca09f",
+      "timestamp": "2026-03-24T06:57:13.280Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 998,
+        "total": 1522
+      },
+      "throughput": {
+        "dataRate": 14.773981603153745,
+        "chunkCount": 5,
+        "avgChunkSize": 4497.2,
+        "chunks": [
+          {
+            "relativeTime": 998,
+            "size": 4096
+          },
+          {
+            "relativeTime": 1005,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1028,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1077,
+            "size": 2048
+          },
+          {
+            "relativeTime": 1079,
+            "size": 2006
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 22486,
+        "audioDuration": 0.7,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "77dce6f3-731e-4546-9dbc-704b268ed83e",
+      "timestamp": "2026-03-24T06:57:15.441Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1069,
+        "total": 1656
+      },
+      "throughput": {
+        "dataRate": 34.993961352657,
+        "chunkCount": 6,
+        "avgChunkSize": 9658.333333333334,
+        "chunks": [
+          {
+            "relativeTime": 1069,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1069,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1073,
+            "size": 12288
+          },
+          {
+            "relativeTime": 1093,
+            "size": 12288
+          },
+          {
+            "relativeTime": 1598,
+            "size": 8192
+          },
+          {
+            "relativeTime": 1598,
+            "size": 606
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 57950,
+        "audioDuration": 1.8,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "1483400a-4872-487c-9111-c05142a16079",
+      "timestamp": "2026-03-24T06:57:17.479Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1015,
+        "total": 1533
+      },
+      "throughput": {
+        "dataRate": 29.384213959556426,
+        "chunkCount": 5,
+        "avgChunkSize": 9009.2,
+        "chunks": [
+          {
+            "relativeTime": 1015,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1015,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1027,
+            "size": 12288
+          },
+          {
+            "relativeTime": 1080,
+            "size": 6144
+          },
+          {
+            "relativeTime": 1080,
+            "size": 2038
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 45046,
+        "audioDuration": 1.4,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "85b8a3dc-d116-4776-9a7a-b7bf7c308f7c",
+      "timestamp": "2026-03-24T06:57:19.572Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1067,
+        "total": 1590
+      },
+      "throughput": {
+        "dataRate": 31.549685534591195,
+        "chunkCount": 5,
+        "avgChunkSize": 10032.8,
+        "chunks": [
+          {
+            "relativeTime": 1067,
+            "size": 10240
+          },
+          {
+            "relativeTime": 1067,
+            "size": 12288
+          },
+          {
+            "relativeTime": 1072,
+            "size": 14336
+          },
+          {
+            "relativeTime": 1082,
+            "size": 12288
+          },
+          {
+            "relativeTime": 1138,
+            "size": 1012
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 50164,
+        "audioDuration": 1.5,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "7d1442eb-0eb8-4987-b716-60f7fb5e00db",
+      "timestamp": "2026-03-24T06:57:21.676Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1076,
+        "total": 1601
+      },
+      "throughput": {
+        "dataRate": 47.320424734540914,
+        "chunkCount": 4,
+        "avgChunkSize": 18940,
+        "chunks": [
+          {
+            "relativeTime": 1076,
+            "size": 18000
+          },
+          {
+            "relativeTime": 1077,
+            "size": 18934
+          },
+          {
+            "relativeTime": 1083,
+            "size": 19444
+          },
+          {
+            "relativeTime": 1093,
+            "size": 19382
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 75760,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "340b7785-8857-4cb4-9c26-4f884d676365",
+      "timestamp": "2026-03-24T06:57:23.826Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1089,
+        "total": 1647
+      },
+      "throughput": {
+        "dataRate": 46.193078324225866,
+        "chunkCount": 4,
+        "avgChunkSize": 19020,
+        "chunks": [
+          {
+            "relativeTime": 1089,
+            "size": 18000
+          },
+          {
+            "relativeTime": 1182,
+            "size": 19228
+          },
+          {
+            "relativeTime": 1594,
+            "size": 19462
+          },
+          {
+            "relativeTime": 1604,
+            "size": 19390
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 76080,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "137c06b0-5a3c-44a4-aa37-cb8c686f694d",
+      "timestamp": "2026-03-24T06:57:25.418Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1027,
+        "total": 1089
+      },
+      "throughput": {
+        "dataRate": 69.27640036730946,
+        "chunkCount": 4,
+        "avgChunkSize": 18860.5,
+        "chunks": [
+          {
+            "relativeTime": 1027,
+            "size": 18000
+          },
+          {
+            "relativeTime": 1027,
+            "size": 19126
+          },
+          {
+            "relativeTime": 1040,
+            "size": 19118
+          },
+          {
+            "relativeTime": 1049,
+            "size": 19198
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 75442,
+        "audioDuration": 2.3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "81706e6c-7903-4d2c-a53b-39b48c8d89c3",
+      "timestamp": "2026-03-24T06:57:27.492Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 999,
+        "total": 1569
+      },
+      "throughput": {
+        "dataRate": 96.07138304652645,
+        "chunkCount": 5,
+        "avgChunkSize": 30147.2,
+        "chunks": [
+          {
+            "relativeTime": 999,
+            "size": 34816
+          },
+          {
+            "relativeTime": 1014,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1022,
+            "size": 36864
+          },
+          {
+            "relativeTime": 1106,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1522,
+            "size": 1232
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 150736,
+        "audioDuration": 4.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "224f883b-0218-4a53-9b92-eac151cc1284",
+      "timestamp": "2026-03-24T06:57:29.130Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1046,
+        "total": 1136
+      },
+      "throughput": {
+        "dataRate": 133.47535211267606,
+        "chunkCount": 5,
+        "avgChunkSize": 30325.6,
+        "chunks": [
+          {
+            "relativeTime": 1046,
+            "size": 34816
+          },
+          {
+            "relativeTime": 1064,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1094,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1094,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1094,
+            "size": 76
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 151628,
+        "audioDuration": 4.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "3a82a0e0-1c96-4a92-a30b-d359b9de3d8f",
+      "timestamp": "2026-03-24T06:57:31.199Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/pcm-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1489,
+        "total": 1567
+      },
+      "throughput": {
+        "dataRate": 96.67645181876196,
+        "chunkCount": 5,
+        "avgChunkSize": 30298.4,
+        "chunks": [
+          {
+            "relativeTime": 1489,
+            "size": 34816
+          },
+          {
+            "relativeTime": 1503,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1518,
+            "size": 36864
+          },
+          {
+            "relativeTime": 1526,
+            "size": 38912
+          },
+          {
+            "relativeTime": 1526,
+            "size": 1988
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 151492,
+        "audioDuration": 4.6,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "ca58229d-854a-4d30-997a-52104df0dd6e",
+      "timestamp": "2026-03-24T06:57:37.479Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 878,
+        "total": 933
+      },
+      "throughput": {
+        "dataRate": 3.5787781350482315,
+        "chunkCount": 5,
+        "avgChunkSize": 667.8,
+        "chunks": [
+          {
+            "relativeTime": 878,
+            "size": 902
+          },
+          {
+            "relativeTime": 879,
+            "size": 916
+          },
+          {
+            "relativeTime": 879,
+            "size": 975
+          },
+          {
+            "relativeTime": 883,
+            "size": 464
+          },
+          {
+            "relativeTime": 883,
+            "size": 82
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3339,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "48d0484f-a05b-432e-8b6a-306426f4bf81",
+      "timestamp": "2026-03-24T06:57:39.525Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1021,
+        "total": 1543
+      },
+      "throughput": {
+        "dataRate": 2.4556059624108877,
+        "chunkCount": 5,
+        "avgChunkSize": 757.8,
+        "chunks": [
+          {
+            "relativeTime": 1021,
+            "size": 906
+          },
+          {
+            "relativeTime": 1021,
+            "size": 928
+          },
+          {
+            "relativeTime": 1021,
+            "size": 963
+          },
+          {
+            "relativeTime": 1038,
+            "size": 872
+          },
+          {
+            "relativeTime": 1090,
+            "size": 120
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3789,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "d05c2d91-ab64-4b71-a090-ad256fb6410d",
+      "timestamp": "2026-03-24T06:57:41.190Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-8000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 8000
+      },
+      "latency": {
+        "firstChunk": 1070,
+        "total": 1163
+      },
+      "throughput": {
+        "dataRate": 3.226999140154772,
+        "chunkCount": 5,
+        "avgChunkSize": 750.6,
+        "chunks": [
+          {
+            "relativeTime": 1070,
+            "size": 880
+          },
+          {
+            "relativeTime": 1070,
+            "size": 944
+          },
+          {
+            "relativeTime": 1071,
+            "size": 935
+          },
+          {
+            "relativeTime": 1071,
+            "size": 871
+          },
+          {
+            "relativeTime": 1119,
+            "size": 123
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3753,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "da0f44fc-8d77-476b-b156-1ac40c6ec397",
+      "timestamp": "2026-03-24T06:57:42.760Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1015,
+        "total": 1065
+      },
+      "throughput": {
+        "dataRate": 3.1737089201877935,
+        "chunkCount": 5,
+        "avgChunkSize": 676,
+        "chunks": [
+          {
+            "relativeTime": 1014,
+            "size": 886
+          },
+          {
+            "relativeTime": 1015,
+            "size": 924
+          },
+          {
+            "relativeTime": 1015,
+            "size": 963
+          },
+          {
+            "relativeTime": 1015,
+            "size": 485
+          },
+          {
+            "relativeTime": 1015,
+            "size": 122
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3380,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "c5cd3cfc-88ce-43b2-9c05-86df1b809a6f",
+      "timestamp": "2026-03-24T06:57:44.729Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 1308,
+        "total": 1466
+      },
+      "throughput": {
+        "dataRate": 2.311050477489768,
+        "chunkCount": 5,
+        "avgChunkSize": 677.6,
+        "chunks": [
+          {
+            "relativeTime": 1308,
+            "size": 905
+          },
+          {
+            "relativeTime": 1308,
+            "size": 909
+          },
+          {
+            "relativeTime": 1308,
+            "size": 988
+          },
+          {
+            "relativeTime": 1367,
+            "size": 506
+          },
+          {
+            "relativeTime": 1369,
+            "size": 80
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3388,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "d638f1b2-2d85-44a9-9764-15b3ca2a43ec",
+      "timestamp": "2026-03-24T06:57:46.195Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-16000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 16000
+      },
+      "latency": {
+        "firstChunk": 675,
+        "total": 965
+      },
+      "throughput": {
+        "dataRate": 3.4735751295336788,
+        "chunkCount": 5,
+        "avgChunkSize": 670.4,
+        "chunks": [
+          {
+            "relativeTime": 675,
+            "size": 877
+          },
+          {
+            "relativeTime": 746,
+            "size": 915
+          },
+          {
+            "relativeTime": 916,
+            "size": 966
+          },
+          {
+            "relativeTime": 918,
+            "size": 474
+          },
+          {
+            "relativeTime": 919,
+            "size": 120
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3352,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "ba2590cd-2402-4aff-b3bf-f6a75460d714",
+      "timestamp": "2026-03-24T06:57:47.981Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1229,
+        "total": 1283
+      },
+      "throughput": {
+        "dataRate": 2.9041309431021043,
+        "chunkCount": 5,
+        "avgChunkSize": 745.2,
+        "chunks": [
+          {
+            "relativeTime": 1229,
+            "size": 894
+          },
+          {
+            "relativeTime": 1229,
+            "size": 916
+          },
+          {
+            "relativeTime": 1230,
+            "size": 975
+          },
+          {
+            "relativeTime": 1231,
+            "size": 861
+          },
+          {
+            "relativeTime": 1231,
+            "size": 80
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3726,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "b4da3fb3-0d74-4843-a9b9-72b900352a68",
+      "timestamp": "2026-03-24T06:57:49.578Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1003,
+        "total": 1094
+      },
+      "throughput": {
+        "dataRate": 3.43327239488117,
+        "chunkCount": 5,
+        "avgChunkSize": 751.2,
+        "chunks": [
+          {
+            "relativeTime": 1003,
+            "size": 890
+          },
+          {
+            "relativeTime": 1003,
+            "size": 954
+          },
+          {
+            "relativeTime": 1004,
+            "size": 920
+          },
+          {
+            "relativeTime": 1004,
+            "size": 911
+          },
+          {
+            "relativeTime": 1035,
+            "size": 81
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3756,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "1b68afc7-d35c-4839-bae2-8153d8c6aff4",
+      "timestamp": "2026-03-24T06:57:51.146Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 985,
+        "total": 1067
+      },
+      "throughput": {
+        "dataRate": 3.1640112464854733,
+        "chunkCount": 5,
+        "avgChunkSize": 675.2,
+        "chunks": [
+          {
+            "relativeTime": 985,
+            "size": 882
+          },
+          {
+            "relativeTime": 985,
+            "size": 916
+          },
+          {
+            "relativeTime": 985,
+            "size": 967
+          },
+          {
+            "relativeTime": 1019,
+            "size": 533
+          },
+          {
+            "relativeTime": 1021,
+            "size": 78
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3376,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "a87bb202-7191-484b-8b76-4ebf3f238840",
+      "timestamp": "2026-03-24T06:57:52.643Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 659,
+        "total": 994
+      },
+      "throughput": {
+        "dataRate": 3.7977867203219318,
+        "chunkCount": 5,
+        "avgChunkSize": 755,
+        "chunks": [
+          {
+            "relativeTime": 659,
+            "size": 881
+          },
+          {
+            "relativeTime": 659,
+            "size": 941
+          },
+          {
+            "relativeTime": 696,
+            "size": 948
+          },
+          {
+            "relativeTime": 706,
+            "size": 925
+          },
+          {
+            "relativeTime": 727,
+            "size": 80
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3775,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "7bdf2acd-5d5c-4dbf-8097-291735738e15",
+      "timestamp": "2026-03-24T06:57:54.748Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1063,
+        "total": 1601
+      },
+      "throughput": {
+        "dataRate": 2.3447845096814492,
+        "chunkCount": 5,
+        "avgChunkSize": 750.8,
+        "chunks": [
+          {
+            "relativeTime": 1063,
+            "size": 854
+          },
+          {
+            "relativeTime": 1063,
+            "size": 947
+          },
+          {
+            "relativeTime": 1092,
+            "size": 1004
+          },
+          {
+            "relativeTime": 1158,
+            "size": 872
+          },
+          {
+            "relativeTime": 1222,
+            "size": 77
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3754,
+        "audioDuration": 0.2,
+        "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "f28b61da-27f4-469e-9443-3e86f040431c",
+      "timestamp": "2026-03-24T06:57:56.472Z",
+      "provider": "doubao",
+      "model": "seed-tts-2.0",
+      "testType": "tts",
+      "scenario": "matrix/seed-tts-2.0/zh_female_vv_uranus_bigtts/ogg_opus-48000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "ogg_opus",
+        "textLength": 6,
+        "voice": "zh_female_vv_uranus_bigtts",
+        "sampleRate": 48000
+      },
+      "latency": {
+        "firstChunk": 1059,
+        "total": 1221
+      },
+      "throughput": {
+        "dataRate": 2.7854217854217853,
+        "chunkCount": 5,
+        "avgChunkSize": 680.2,
+        "chunks": [
+          {
+            "relativeTime": 1059,
+            "size": 900
+          },
+          {
+            "relativeTime": 1059,
+            "size": 918
+          },
+          {
+            "relativeTime": 1088,
+            "size": 982
+          },
+          {
+            "relativeTime": 1166,
+            "size": 481
+          },
+          {
+            "relativeTime": 1168,
+            "size": 120
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 3401,
+        "audioDuration": 0.2,
+        "bitrate": 131
       },
       "status": "success"
     }

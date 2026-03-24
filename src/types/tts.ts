@@ -29,7 +29,7 @@ export interface TTSOptions {
   speed?: number;
   volume?: number;
   pitch?: number;
-  format?: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm';
+  format?: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm' | 'ogg_opus';
   language?: string;
 
   /** 火山引擎 App ID (doubao 专用) */

@@ -1,0 +1,50 @@
+{
+  "id": "126b01d4-2313-4c91-8b80-23cb4090b936",
+  "timestamp": "2026-03-24T06:33:08.287Z",
+  "provider": "doubao",
+  "model": "seed-tts-1.0",
+  "testType": "tts",
+  "scenario": "matrix/seed-tts-1.0/zh_male_lengkugege_emo_v2_mars_bigtts/pcm-24000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "zh_male_lengkugege_emo_v2_mars_bigtts",
+    "sampleRate": 24000
+  },
+  "latency": {
+    "firstChunk": 1010,
+    "total": 1125
+  },
+  "throughput": {
+    "dataRate": 71.36711111111111,
+    "chunkCount": 4,
+    "avgChunkSize": 20072,
+    "chunks": [
+      {
+        "relativeTime": 1010,
+        "size": 22800
+      },
+      {
+        "relativeTime": 1054,
+        "size": 24036
+      },
+      {
+        "relativeTime": 1063,
+        "size": 23854
+      },
+      {
+        "relativeTime": 1075,
+        "size": 9598
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 80288,
+    "audioDuration": 2.5,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}
