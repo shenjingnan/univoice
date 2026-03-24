@@ -457,7 +457,7 @@ export interface ScenarioSummary {
  */
 export interface MatrixItem {
   /** 提供商标识 */
-  provider: 'qwen' | 'qwen-realtime' | 'doubao';
+  provider: 'qwen' | 'qwen-realtime' | 'doubao' | 'glm';
   /** 模型名称 */
   model: string;
   /** 音色名称 */
@@ -494,6 +494,12 @@ export type QwenMatrixConfig = MatrixItem;
  * 用于测试不同模型、音色、编码、采样率的组合
  */
 export type DoubaoMatrixConfig = MatrixItem;
+
+/**
+ * GLM TTS 矩阵测试配置
+ * 用于测试不同模型、音色、编码、采样率的组合
+ */
+export type GlmMatrixConfig = MatrixItem;
 
 /**
  * 矩阵测试场景配置

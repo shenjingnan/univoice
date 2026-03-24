@@ -493,7 +493,7 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/24 14:58:00
+> 生成时间: 2026/3/24 15:39:33
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -585,6 +585,7 @@ const asr = createASR({
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 16000 | 3 | 1065 | 1216 | 1165 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | 3 | 1283 | 1081 | 1148 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | 3 | 994 | 1411 | 1272 |
+| 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 1650 | 1065 | 1260 |
 
 ### 能力矩阵
 
@@ -593,6 +594,7 @@ const asr = createASR({
 | 通义千问 | WebSocket | ❌ | ✅ |
 | qwen-realtime | Unknown | ❌ | ✅ |
 | 豆包 | WebSocket | ❌ | ✅ |
+| 智谱 GLM | HTTP | ❌ | ✅ |
 
 ---
 

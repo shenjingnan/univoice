@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-24T06:58:00.743Z",
+  "generatedAt": "2026-03-24T07:39:33.477Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "darwin",
@@ -49,6 +49,21 @@
         "avgFirstChunkLatency": 1165.625,
         "successRate": 1,
         "sampleCount": 48
+      }
+    },
+    {
+      "provider": "glm",
+      "capabilities": {
+        "provider": "glm",
+        "displayName": "智谱 GLM",
+        "streamInput": false,
+        "streamOutput": false,
+        "protocol": "http"
+      },
+      "performance": {
+        "avgFirstChunkLatency": 1086,
+        "successRate": 1,
+        "sampleCount": 3
       }
     }
   ],
@@ -319967,6 +319982,129 @@
         "dataSize": 3401,
         "audioDuration": 0.2,
         "bitrate": 131
+      },
+      "status": "success"
+    },
+    {
+      "id": "050a334f-5311-47a0-bcbf-f3d44ccbbc4d",
+      "timestamp": "2026-03-24T07:39:21.762Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "matrix/glm-tts/tongtong/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "tongtong",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1169,
+        "total": 1650
+      },
+      "throughput": {
+        "dataRate": 60.02424242424242,
+        "chunkCount": 2,
+        "avgChunkSize": 49520,
+        "chunks": [
+          {
+            "relativeTime": 1169,
+            "size": 50082
+          },
+          {
+            "relativeTime": 1643,
+            "size": 48958
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "0fb34db5-903c-412b-bc7d-3af85db3f589",
+      "timestamp": "2026-03-24T07:39:23.347Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "matrix/glm-tts/tongtong/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "tongtong",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1055,
+        "total": 1074
+      },
+      "throughput": {
+        "dataRate": 92.21601489757914,
+        "chunkCount": 2,
+        "avgChunkSize": 49520,
+        "chunks": [
+          {
+            "relativeTime": 1055,
+            "size": 50082
+          },
+          {
+            "relativeTime": 1073,
+            "size": 48958
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 3,
+        "bitrate": 262
+      },
+      "status": "success"
+    },
+    {
+      "id": "c44480d2-f810-4890-a717-c23c56c1b537",
+      "timestamp": "2026-03-24T07:39:24.903Z",
+      "provider": "glm",
+      "model": "glm-tts",
+      "testType": "tts",
+      "scenario": "matrix/glm-tts/tongtong/pcm-24000",
+      "config": {
+        "inputMode": "non-stream",
+        "outputMode": "stream",
+        "format": "pcm",
+        "textLength": 6,
+        "voice": "tongtong",
+        "sampleRate": 24000
+      },
+      "latency": {
+        "firstChunk": 1034,
+        "total": 1055
+      },
+      "throughput": {
+        "dataRate": 93.87677725118483,
+        "chunkCount": 2,
+        "avgChunkSize": 49520,
+        "chunks": [
+          {
+            "relativeTime": 1034,
+            "size": 50082
+          },
+          {
+            "relativeTime": 1055,
+            "size": 48958
+          }
+        ]
+      },
+      "quality": {
+        "dataSize": 99040,
+        "audioDuration": 3,
+        "bitrate": 262
       },
       "status": "success"
     }
