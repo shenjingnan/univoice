@@ -1,0 +1,226 @@
+{
+  "id": "c6beb584-1334-4af6-bc45-a93ccda33f59",
+  "timestamp": "2026-03-24T09:24:23.092Z",
+  "provider": "minimax",
+  "model": "speech-2.6-turbo",
+  "testType": "tts",
+  "scenario": "matrix/speech-2.6-turbo/male-qn-qingse/pcm-32000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 32000
+  },
+  "latency": {
+    "firstChunk": 831,
+    "total": 1118
+  },
+  "throughput": {
+    "dataRate": 84.40608228980322,
+    "chunkCount": 48,
+    "avgChunkSize": 1965.9583333333333,
+    "chunks": [
+      {
+        "relativeTime": 831,
+        "size": 2048
+      },
+      {
+        "relativeTime": 831,
+        "size": 2048
+      },
+      {
+        "relativeTime": 918,
+        "size": 2048
+      },
+      {
+        "relativeTime": 925,
+        "size": 2048
+      },
+      {
+        "relativeTime": 925,
+        "size": 2048
+      },
+      {
+        "relativeTime": 942,
+        "size": 2048
+      },
+      {
+        "relativeTime": 943,
+        "size": 2048
+      },
+      {
+        "relativeTime": 943,
+        "size": 2048
+      },
+      {
+        "relativeTime": 943,
+        "size": 1416
+      },
+      {
+        "relativeTime": 1000,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1002,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1004,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1006,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1054,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1054,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1054,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1054,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1062,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1062,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1062,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1085,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1085,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1085,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1085,
+        "size": 1956
+      },
+      {
+        "relativeTime": 1095,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1096,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1096,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1096,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1110,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1110,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1110,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1110,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1114,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1114,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1114,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1117,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1117,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1117,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1117,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1118,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1118,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1118,
+        "size": 850
+      },
+      {
+        "relativeTime": 1118,
+        "size": 32
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 94366,
+    "audioDuration": 2.9,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

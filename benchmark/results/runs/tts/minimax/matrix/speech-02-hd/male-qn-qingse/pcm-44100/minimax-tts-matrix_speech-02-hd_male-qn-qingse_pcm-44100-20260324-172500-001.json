@@ -1,0 +1,270 @@
+{
+  "id": "ca9252d4-f600-4fba-9f52-856aaf2b48c6",
+  "timestamp": "2026-03-24T09:25:00.287Z",
+  "provider": "minimax",
+  "model": "speech-02-hd",
+  "testType": "tts",
+  "scenario": "matrix/speech-02-hd/male-qn-qingse/pcm-44100",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 44100
+  },
+  "latency": {
+    "firstChunk": 964,
+    "total": 1549
+  },
+  "throughput": {
+    "dataRate": 77.34538411878631,
+    "chunkCount": 59,
+    "avgChunkSize": 2030.6440677966102,
+    "chunks": [
+      {
+        "relativeTime": 964,
+        "size": 2048
+      },
+      {
+        "relativeTime": 964,
+        "size": 2048
+      },
+      {
+        "relativeTime": 964,
+        "size": 2048
+      },
+      {
+        "relativeTime": 966,
+        "size": 2048
+      },
+      {
+        "relativeTime": 966,
+        "size": 2048
+      },
+      {
+        "relativeTime": 992,
+        "size": 2048
+      },
+      {
+        "relativeTime": 992,
+        "size": 2048
+      },
+      {
+        "relativeTime": 992,
+        "size": 2048
+      },
+      {
+        "relativeTime": 994,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1014,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1014,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1014,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1023,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1023,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1023,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1047,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1060,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1060,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1060,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1499,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1499,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1499,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1499,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1527,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1541,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1549,
+        "size": 1024
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 119808,
+    "audioDuration": 3.7,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

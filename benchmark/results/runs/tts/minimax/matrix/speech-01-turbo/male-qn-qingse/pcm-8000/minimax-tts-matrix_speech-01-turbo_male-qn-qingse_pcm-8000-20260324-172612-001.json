@@ -1,0 +1,82 @@
+{
+  "id": "8db89529-4020-44d9-bbab-889c6e1ab4fa",
+  "timestamp": "2026-03-24T09:26:12.720Z",
+  "provider": "minimax",
+  "model": "speech-01-turbo",
+  "testType": "tts",
+  "scenario": "matrix/speech-01-turbo/male-qn-qingse/pcm-8000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 8000
+  },
+  "latency": {
+    "firstChunk": 1026,
+    "total": 1115
+  },
+  "throughput": {
+    "dataRate": 18.159641255605383,
+    "chunkCount": 12,
+    "avgChunkSize": 1687.3333333333333,
+    "chunks": [
+      {
+        "relativeTime": 1026,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1034,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1034,
+        "size": 330
+      },
+      {
+        "relativeTime": 1061,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1065,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1068,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1068,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1068,
+        "size": 2024
+      },
+      {
+        "relativeTime": 1097,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1097,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1097,
+        "size": 1478
+      },
+      {
+        "relativeTime": 1097,
+        "size": 32
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 20248,
+    "audioDuration": 0.6,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

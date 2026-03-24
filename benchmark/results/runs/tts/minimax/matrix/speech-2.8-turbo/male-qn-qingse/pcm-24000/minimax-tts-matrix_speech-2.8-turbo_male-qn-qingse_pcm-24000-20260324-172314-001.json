@@ -1,0 +1,190 @@
+{
+  "id": "3e1aafb5-ebf2-4dec-93bc-a947c5cb1f21",
+  "timestamp": "2026-03-24T09:23:14.335Z",
+  "provider": "minimax",
+  "model": "speech-2.8-turbo",
+  "testType": "tts",
+  "scenario": "matrix/speech-2.8-turbo/male-qn-qingse/pcm-24000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 24000
+  },
+  "latency": {
+    "firstChunk": 548,
+    "total": 1033
+  },
+  "throughput": {
+    "dataRate": 72.82865440464666,
+    "chunkCount": 39,
+    "avgChunkSize": 1929.025641025641,
+    "chunks": [
+      {
+        "relativeTime": 548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 549,
+        "size": 2048
+      },
+      {
+        "relativeTime": 972,
+        "size": 2048
+      },
+      {
+        "relativeTime": 972,
+        "size": 1054
+      },
+      {
+        "relativeTime": 972,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 973,
+        "size": 2048
+      },
+      {
+        "relativeTime": 995,
+        "size": 2048
+      },
+      {
+        "relativeTime": 995,
+        "size": 2048
+      },
+      {
+        "relativeTime": 995,
+        "size": 2048
+      },
+      {
+        "relativeTime": 995,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1002,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1002,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1002,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1007,
+        "size": 1978
+      },
+      {
+        "relativeTime": 1007,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1007,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1007,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1015,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1015,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1015,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1015,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1028,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1028,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1028,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1028,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1033,
+        "size": 488
+      },
+      {
+        "relativeTime": 1033,
+        "size": 32
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 75232,
+    "audioDuration": 2.3,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

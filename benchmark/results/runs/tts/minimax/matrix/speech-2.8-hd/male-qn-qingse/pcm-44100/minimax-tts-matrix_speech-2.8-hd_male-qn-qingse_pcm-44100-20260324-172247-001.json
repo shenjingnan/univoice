@@ -1,0 +1,334 @@
+{
+  "id": "0325f7c3-c29d-4f9a-9455-db7d0809c363",
+  "timestamp": "2026-03-24T09:22:47.525Z",
+  "provider": "minimax",
+  "model": "speech-2.8-hd",
+  "testType": "tts",
+  "scenario": "matrix/speech-2.8-hd/male-qn-qingse/pcm-44100",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "male-qn-qingse",
+    "sampleRate": 44100
+  },
+  "latency": {
+    "firstChunk": 996,
+    "total": 2035
+  },
+  "throughput": {
+    "dataRate": 75.47911547911548,
+    "chunkCount": 75,
+    "avgChunkSize": 2048,
+    "chunks": [
+      {
+        "relativeTime": 996,
+        "size": 2048
+      },
+      {
+        "relativeTime": 996,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1000,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1000,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1025,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1057,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1089,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1089,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1089,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1089,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1098,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1098,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1098,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1099,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1100,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1100,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1100,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1543,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1543,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1543,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1543,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1544,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1544,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1545,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1545,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1548,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1576,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1576,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1576,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1576,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1589,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1589,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1589,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1589,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1608,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1608,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1608,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1628,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1628,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1628,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1628,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1639,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1639,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1639,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1639,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1654,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1654,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1654,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1654,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1667,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1667,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1667,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1667,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1679,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1679,
+        "size": 2048
+      },
+      {
+        "relativeTime": 1679,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2032,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      },
+      {
+        "relativeTime": 2035,
+        "size": 2048
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 153600,
+    "audioDuration": 4.7,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}
