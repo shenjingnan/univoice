@@ -15,33 +15,38 @@ import type {
  */
 function calculateStats(values: number[]): {
   avg: number;
-  median: number;
+  p50: number;
   p95: number;
   min: number;
   max: number;
+  stdDev: number;
 } {
   if (values.length === 0) {
-    return { avg: 0, median: 0, p95: 0, min: 0, max: 0 };
+    return { avg: 0, p50: 0, p95: 0, min: 0, max: 0, stdDev: 0 };
   }
 
   const sorted = [...values].sort((a, b) => a - b);
   const sum = sorted.reduce((a, b) => a + b, 0);
   const avg = sum / sorted.length;
 
-  // 中位数
+  // P50 (中位数)
   const mid = Math.floor(sorted.length / 2);
-  const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const p50 = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 
   // P95
   const p95Index = Math.ceil(sorted.length * 0.95) - 1;
   const p95 = sorted[Math.max(0, Math.min(p95Index, sorted.length - 1))];
 
+  // 标准差
+  const stdDev = Math.sqrt(sorted.reduce((sum, v) => sum + (v - avg) ** 2, 0) / sorted.length);
+
   return {
     avg,
-    median,
+    p50,
     p95,
     min: sorted[0],
     max: sorted[sorted.length - 1],
+    stdDev,
   };
 }
 
@@ -147,10 +152,13 @@ export function aggregateByScenario(results: SingleTestResult[]): Map<string, Sc
       successCount: successResults.length,
       successRate: calculateSuccessRate(group),
       avgFirstChunkLatency: firstChunkStats.avg,
-      medianFirstChunkLatency: firstChunkStats.median,
+      medianFirstChunkLatency: firstChunkStats.p50,
       p95FirstChunkLatency: firstChunkStats.p95,
       avgTotalLatency: totalStats.avg,
-      medianTotalLatency: totalStats.median,
+      medianTotalLatency: totalStats.p50,
+      p50TotalLatency: totalStats.p50,
+      p95TotalLatency: totalStats.p95,
+      stdDevTotalLatency: totalStats.stdDev,
       minTotalLatency: totalStats.min,
       maxTotalLatency: totalStats.max,
     };
