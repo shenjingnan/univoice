@@ -27,7 +27,7 @@ GLM_API_KEY=your-api-key
 
 # ASR 提供商
 DOUBAO_APP_KEY=your-app-key
-DOUBAO_ACCESS_KEY=your-access-key
+DOUBAO_ACCESS_TOKEN=your-access-key
 ```
 
 ## 目录结构

@@ -19,7 +19,7 @@
  *
  * 注意: app-key 和 access-key 可通过环境变量配置:
  *   DOUBAO_APP_KEY
- *   DOUBAO_ACCESS_KEY
+ *   DOUBAO_ACCESS_TOKEN
  */
 
 import 'univoice/asr/providers';

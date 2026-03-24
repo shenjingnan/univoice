@@ -71,10 +71,10 @@ export interface ASRConfig {
  */
 export function getASRConfig(): ASRConfig {
   const appKey = process.env.DOUBAO_APP_KEY;
-  const accessKey = process.env.DOUBAO_ACCESS_KEY;
+  const accessKey = process.env.DOUBAO_ACCESS_TOKEN;
 
   if (!appKey || !accessKey) {
-    console.error('请设置环境变量 DOUBAO_APP_KEY 和 DOUBAO_ACCESS_KEY');
+    console.error('请设置环境变量 DOUBAO_APP_KEY 和 DOUBAO_ACCESS_TOKEN');
     process.exit(1);
   }
 

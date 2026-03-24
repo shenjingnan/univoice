@@ -59,7 +59,7 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
   }
 
   // Doubao
-  if (process.env.DOUBAO_APP_KEY && process.env.DOUBAO_ACCESS_KEY) {
+  if (process.env.DOUBAO_APP_KEY && process.env.DOUBAO_ACCESS_TOKEN) {
     configs.push({
       provider: 'doubao',
       displayName: '豆包',
@@ -68,7 +68,7 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
       streamOutput: true,
       createConfig: {
         appKey: process.env.DOUBAO_APP_KEY,
-        accessKey: process.env.DOUBAO_ACCESS_KEY,
+        accessKey: process.env.DOUBAO_ACCESS_TOKEN,
         resourceId: process.env.DOUBAO_RESOURCE_ID,
         language: 'zh-CN',
         format: 'pcm',
