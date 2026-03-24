@@ -73,7 +73,7 @@ export function parseRunArgs(): {
   --no-atomic             禁用原子化保存（不推荐）
   -h, --help              显示帮助信息
 
-矩阵测试过滤选项 (仅用于 qwen-matrix 场景):
+矩阵测试过滤选项 (用于矩阵测试场景):
   --model <models>        按模型过滤（支持逗号分隔多个）
                           例如: --model cosyvoice-v3-flash,cosyvoice-v2
   --voice <voices>        按音色过滤（支持逗号分隔多个）
@@ -86,6 +86,7 @@ export function parseRunArgs(): {
 场景说明:
   qwen-matrix             Qwen TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
   doubao-matrix           Doubao TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
+  glm-matrix              GLM TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
 
 示例:
   pnpm benchmark run --                         # 测试所有服务商
@@ -100,6 +101,7 @@ export function parseRunArgs(): {
   pnpm benchmark run -- -s qwen-matrix -i 3     # 矩阵测试，每组合 3 次迭代
   pnpm benchmark run -- -s qwen-matrix --model cosyvoice-v1  # 只测试 cosyvoice-v1 模型
   pnpm benchmark run -- -s qwen-matrix --format pcm --sample-rate 16000  # 只测试 PCM 16kHz
+  pnpm benchmark run -- -s glm-matrix           # 运行 GLM TTS 矩阵测试
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -317,6 +319,39 @@ export async function run(options?: {
     }
     const { runDoubaoMatrixScenario } = await import('./scenarios/doubao-matrix');
     const matrixResults = await runDoubaoMatrixScenario({
+      iterations: args.iterations,
+      filter: args.matrixFilter,
+    });
+    allResults.push(...matrixResults);
+
+    const totalTime = Date.now() - startTime;
+    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
+    console.log(`   - 总测试次数: ${allResults.length}`);
+
+    return allResults;
+  }
+
+  // GLM 矩阵测试场景
+  if (args.scenario === 'glm-matrix') {
+    console.log('📊 运行 GLM TTS 矩阵测试场景...\n');
+    if (args.matrixFilter) {
+      console.log('📋 矩阵过滤条件:');
+      if (args.matrixFilter.model) {
+        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
+      }
+      if (args.matrixFilter.voice) {
+        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
+      }
+      if (args.matrixFilter.format) {
+        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
+      }
+      if (args.matrixFilter.sampleRate) {
+        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
+      }
+      console.log('');
+    }
+    const { runGlmMatrixScenario } = await import('./scenarios/glm-matrix');
+    const matrixResults = await runGlmMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
     });

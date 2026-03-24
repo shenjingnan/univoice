@@ -1,0 +1,42 @@
+{
+  "id": "c44480d2-f810-4890-a717-c23c56c1b537",
+  "timestamp": "2026-03-24T07:39:24.903Z",
+  "provider": "glm",
+  "model": "glm-tts",
+  "testType": "tts",
+  "scenario": "matrix/glm-tts/tongtong/pcm-24000",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "tongtong",
+    "sampleRate": 24000
+  },
+  "latency": {
+    "firstChunk": 1034,
+    "total": 1055
+  },
+  "throughput": {
+    "dataRate": 93.87677725118483,
+    "chunkCount": 2,
+    "avgChunkSize": 49520,
+    "chunks": [
+      {
+        "relativeTime": 1034,
+        "size": 50082
+      },
+      {
+        "relativeTime": 1055,
+        "size": 48958
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 99040,
+    "audioDuration": 3,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

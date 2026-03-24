@@ -9,6 +9,7 @@ import type {
   BenchmarkConfig,
   BenchmarkResult,
   DoubaoMatrixConfig,
+  GlmMatrixConfig,
   QwenMatrixConfig,
   StreamInputConfig,
   TextFixture,
@@ -699,6 +700,89 @@ export async function runTTSTestForDoubaoMatrix(
     collector.endCollecting();
     const result = collector.buildResult(
       'doubao',
+      matrixConfig.model,
+      'tts',
+      scenarioName,
+      config,
+      'error',
+      error instanceof Error ? error.message : String(error)
+    );
+
+    // 保存失败结果
+    const singleResult = toSingleTestResult(result, 1);
+    saveSingleResult(singleResult);
+
+    return result;
+  }
+}
+
+/**
+ * 运行 GLM 矩阵测试
+ * 专门用于 GLM TTS 矩阵测试，支持 format 和 sampleRate 参数
+ */
+export async function runTTSTestForGlmMatrix(
+  matrixConfig: GlmMatrixConfig,
+  text: TextFixture,
+  scenarioName: string
+): Promise<BenchmarkResult> {
+  // 导入 provider 模块（导入 index 自动注册所有 provider）
+  await import('univoice/tts/providers');
+
+  // 创建 GLM TTS 实例
+  const tts = createTTS({
+    provider: 'glm',
+    apiKey: process.env.GLM_API_KEY || '',
+    model: matrixConfig.model,
+    voice: matrixConfig.voice,
+    format: matrixConfig.format,
+    sampleRate: matrixConfig.sampleRate,
+  } as Parameters<typeof createTTS>[0]);
+
+  const config: BenchmarkConfig = {
+    inputMode: 'non-stream',
+    outputMode: 'stream',
+    format: matrixConfig.format,
+    textLength: text.text.length,
+    voice: matrixConfig.voice,
+    sampleRate: matrixConfig.sampleRate,
+  };
+
+  const collector = new MetricsCollector();
+  collector.setTextLength(text.text.length);
+  collector.startCollecting();
+
+  try {
+    let totalAudioSize = 0;
+    for await (const { audioChunk } of tts.speak(text.text, { stream: true })) {
+      collector.addChunk(audioChunk);
+      totalAudioSize += audioChunk.length;
+    }
+    collector.endCollecting();
+
+    const result = collector.buildResult(
+      tts.name,
+      tts.model,
+      'tts',
+      scenarioName,
+      config,
+      'success'
+    );
+
+    // 更新质量指标
+    const duration = estimateAudioDuration(totalAudioSize, matrixConfig.format);
+    const bitrate = calculateBitrate(totalAudioSize, duration);
+    result.quality.audioDuration = Math.round(duration * 10) / 10;
+    result.quality.bitrate = Math.round(bitrate);
+
+    // 原子化保存
+    const singleResult = toSingleTestResult(result, 1);
+    saveSingleResult(singleResult);
+
+    return result;
+  } catch (error) {
+    collector.endCollecting();
+    const result = collector.buildResult(
+      'glm',
       matrixConfig.model,
       'tts',
       scenarioName,
