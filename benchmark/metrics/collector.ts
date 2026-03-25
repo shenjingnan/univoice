@@ -7,7 +7,6 @@ import type {
   BenchmarkConfig,
   BenchmarkResult,
   ChunkDetail,
-  LatencyMetrics,
   QualityMetrics,
   ThroughputMetrics,
 } from './types';
@@ -90,11 +89,13 @@ export class MetricsCollector {
    * 添加数据块
    */
   addChunk(chunk: Uint8Array): void {
-    // 记录当前时间（相对于开始时间）
-    const relativeTime = Date.now() - this.timer.getStartTime();
+    // 记录当前时间
+    const now = Date.now();
+    const relativeTime = now - this.timer.getStartTime();
 
-    // 记录 chunk 详情
+    // 记录 chunk 详情（包含绝对时间戳和相对时间）
     this.chunkDetails.push({
+      timestamp: now,
       relativeTime,
       size: chunk.length,
     });
@@ -115,26 +116,6 @@ export class MetricsCollector {
    */
   endCollecting(): void {
     this.timer.end();
-  }
-
-  /**
-   * 获取延迟指标
-   */
-  getLatencyMetrics(): LatencyMetrics {
-    const firstChunk = this.timer.getFirstChunkLatency();
-    const total = this.timer.getTotalLatency();
-
-    const metrics: LatencyMetrics = {
-      firstChunk,
-      total,
-    };
-
-    // 计算每字符延迟（TTS）
-    if (this.textLength > 0) {
-      metrics.perChar = total / this.textLength;
-    }
-
-    return metrics;
   }
 
   /**
@@ -185,7 +166,7 @@ export class MetricsCollector {
       testType,
       scenario,
       config,
-      latency: this.getLatencyMetrics(),
+      startTime: this.timer.getStartTime(),
       throughput: this.getThroughputMetrics(),
       quality: this.getQualityMetrics(),
       status,

@@ -205,14 +205,7 @@ function generateMockTTSResults(
         const total = firstChunk * randomInRange(perf.totalMultiplier[0], perf.totalMultiplier[1]);
 
         results.push(
-          createTTSResult(
-            provider,
-            scenario,
-            'non-stream-in-non-stream-out',
-            success,
-            firstChunk,
-            total
-          )
+          createTTSResult(provider, scenario, 'non-stream-in-non-stream-out', success, total)
         );
       }
 
@@ -225,14 +218,7 @@ function generateMockTTSResults(
             firstChunk * randomInRange(perf.totalMultiplier[0], perf.totalMultiplier[1]);
 
           results.push(
-            createTTSResult(
-              provider,
-              scenario,
-              'non-stream-in-stream-out',
-              success,
-              firstChunk,
-              total
-            )
+            createTTSResult(provider, scenario, 'non-stream-in-stream-out', success, total)
           );
         }
       }
@@ -246,14 +232,7 @@ function generateMockTTSResults(
             firstChunk * randomInRange(perf.totalMultiplier[0], perf.totalMultiplier[1]);
 
           results.push(
-            createTTSResult(
-              provider,
-              scenario,
-              'stream-in-stream-out-normal',
-              success,
-              firstChunk,
-              total
-            )
+            createTTSResult(provider, scenario, 'stream-in-stream-out-normal', success, total)
           );
         }
       }
@@ -271,7 +250,6 @@ function createTTSResult(
   scenario: { name: string; text: string; length: number },
   scenarioName: string,
   success: boolean,
-  firstChunk: number,
   total: number
 ): BenchmarkResult {
   const config: BenchmarkConfig = {
@@ -293,20 +271,24 @@ function createTTSResult(
     testType: 'tts',
     scenario: scenarioName,
     config,
-    latency: {
-      firstChunk: success ? firstChunk : 0,
-      total: success ? total : 0,
-      perChar: success ? Math.round((total / scenario.length) * 10) / 10 : undefined,
-    },
+    startTime: Date.now() - (success ? total : 0),
     throughput: {
       dataRate: success ? Math.round(audioSize / total) : 0,
       chunkCount: success ? randomInRange(5, 20) : 0,
       avgChunkSize: success ? Math.round(audioSize / randomInRange(5, 20)) : 0,
+      chunks: success
+        ? Array.from({ length: randomInRange(5, 20) }, (_, i) => ({
+            timestamp: Date.now() - total + Math.round((total / randomInRange(5, 20)) * i),
+            relativeTime: Math.round((total / randomInRange(5, 20)) * i),
+            size: Math.round(audioSize / randomInRange(5, 20)),
+          }))
+        : [],
     },
     quality: {
       dataSize: success ? audioSize : 0,
       audioDuration: success ? audioDuration : undefined,
       bitrate: success ? bitrate : undefined,
+      textLength: scenario.length,
     },
     status: success ? 'success' : 'error',
     error: success ? undefined : 'Mock error: connection timeout',
@@ -334,7 +316,6 @@ function generateMockASRResults(
       if (provider.streamInput) {
         for (let i = 0; i < iterations; i++) {
           const success = randomSuccess();
-          const firstChunk = randomInRange(perf.firstChunkRange[0], perf.firstChunkRange[1]);
           const rtf = randomFloatInRange(perf.rtfRange[0], perf.rtfRange[1]);
           const total = Math.round(scenario.duration * rtf * 1000);
 
@@ -344,9 +325,7 @@ function generateMockASRResults(
               scenario,
               'stream-input-stream-output',
               success,
-              firstChunk,
               total,
-              rtf,
               perf.accuracyRange
             )
           );
@@ -356,7 +335,6 @@ function generateMockASRResults(
       // 非流式入/流式出
       for (let i = 0; i < iterations; i++) {
         const success = randomSuccess();
-        const firstChunk = randomInRange(perf.firstChunkRange[0], perf.firstChunkRange[1]);
         const rtf = randomFloatInRange(perf.rtfRange[0], perf.rtfRange[1]);
         const total = Math.round(scenario.duration * rtf * 1000);
 
@@ -366,9 +344,7 @@ function generateMockASRResults(
             scenario,
             'non-stream-input-non-stream-output',
             success,
-            firstChunk,
             total,
-            rtf,
             perf.accuracyRange
           )
         );
@@ -387,9 +363,7 @@ function createASRResult(
   scenario: { name: string; duration: number },
   scenarioName: string,
   success: boolean,
-  firstChunk: number,
   total: number,
-  rtf: number,
   accuracyRange: [number, number]
 ): BenchmarkResult {
   const config: BenchmarkConfig = {
@@ -420,15 +394,18 @@ function createASRResult(
     testType: 'asr',
     scenario: scenarioName,
     config,
-    latency: {
-      firstChunk: success ? firstChunk : 0,
-      total: success ? total : 0,
-      rtf: success ? rtf : undefined,
-    },
+    startTime: Date.now() - (success ? total : 0),
     throughput: {
       dataRate: success ? randomInRange(10, 50) : 0,
       chunkCount: success ? randomInRange(3, 10) : 0,
       avgChunkSize: success ? randomInRange(100, 500) : 0,
+      chunks: success
+        ? Array.from({ length: randomInRange(3, 10) }, (_, i) => ({
+            timestamp: Date.now() - total + Math.round((total / randomInRange(3, 10)) * i),
+            relativeTime: Math.round((total / randomInRange(3, 10)) * i),
+            size: randomInRange(100, 500),
+          }))
+        : [],
     },
     quality: {
       dataSize: randomInRange(5000, 20000),
@@ -448,7 +425,10 @@ function createASRResult(
 function summarizeProvider(provider: ProviderConfig, results: BenchmarkResult[]) {
   const providerResults = results.filter((r) => r.provider === provider.name);
   const successResults = providerResults.filter((r) => r.status === 'success');
-  const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+  const firstChunkLatencies = successResults.map((r) => {
+    const chunks = r.throughput.chunks;
+    return chunks && chunks.length > 0 ? chunks[0].relativeTime : 0;
+  });
 
   const avgFirstChunk =
     firstChunkLatencies.length > 0

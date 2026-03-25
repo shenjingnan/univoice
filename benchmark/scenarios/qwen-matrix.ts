@@ -1,4 +1,3 @@
-// @ts-nocheck
 /* biome-ignore format: custom formatting */
 /**
  * Qwen TTS 矩阵测试场景
@@ -182,9 +181,13 @@ export async function runQwenMatrixScenario(options?: {
 
       // 打印进度
       const status = result.status === 'success' ? '✓' : '✗';
+      // 从 chunks 计算延迟
+      const firstChunk = result.throughput.chunks?.[0]?.relativeTime ?? 0;
+      const total =
+        result.throughput.chunks?.[result.throughput.chunks.length - 1]?.relativeTime ?? 0;
       console.log(
         `[${currentTest}/${totalTests}] ${scenarioName} ` +
-          `#${i + 1}: ${status} 首包=${result.latency.firstChunk}ms, 总计=${result.latency.total}ms`
+          `#${i + 1}: ${status} 首包=${firstChunk}ms, 总计=${total}ms`
       );
 
       // 回调

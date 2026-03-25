@@ -1,0 +1,136 @@
+{
+  "id": "425f718e-9b45-46b6-9188-a3031b711f8e",
+  "timestamp": "2026-03-25T02:06:20.897Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-flash",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v3-flash/longanyang/pcm-44100",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longanyang",
+    "sampleRate": 44100
+  },
+  "startTime": 1774404378817,
+  "throughput": {
+    "dataRate": 75.05480769230769,
+    "chunkCount": 21,
+    "avgChunkSize": 7434,
+    "chunks": [
+      {
+        "timestamp": 1774404380366,
+        "relativeTime": 1549,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380368,
+        "relativeTime": 1551,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380374,
+        "relativeTime": 1557,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380378,
+        "relativeTime": 1561,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380402,
+        "relativeTime": 1585,
+        "size": 4148
+      },
+      {
+        "timestamp": 1774404380404,
+        "relativeTime": 1587,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380443,
+        "relativeTime": 1626,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380443,
+        "relativeTime": 1626,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380444,
+        "relativeTime": 1627,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380444,
+        "relativeTime": 1627,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380480,
+        "relativeTime": 1663,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380490,
+        "relativeTime": 1673,
+        "size": 4920
+      },
+      {
+        "timestamp": 1774404380894,
+        "relativeTime": 2077,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380894,
+        "relativeTime": 2077,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380895,
+        "relativeTime": 2078,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380896,
+        "relativeTime": 2079,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380896,
+        "relativeTime": 2079,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380896,
+        "relativeTime": 2079,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380897,
+        "relativeTime": 2080,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380897,
+        "relativeTime": 2080,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404380897,
+        "relativeTime": 2080,
+        "size": 3046
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 156114,
+    "audioDuration": 4.8,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

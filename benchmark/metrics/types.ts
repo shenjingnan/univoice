@@ -7,7 +7,9 @@
  * 用于分析流式输出的实时性能
  */
 export interface ChunkDetail {
-  /** 接收时间戳（相对于测试开始，毫秒） */
+  /** 接收时间戳（绝对时间，毫秒） */
+  timestamp: number;
+  /** 相对时间（相对于测试开始，毫秒） */
   relativeTime: number;
   /** 块大小（字节） */
   size: number;
@@ -59,8 +61,8 @@ export interface BenchmarkResult {
   /** 测试配置 */
   config: BenchmarkConfig;
 
-  /** 延迟指标 */
-  latency: LatencyMetrics;
+  /** 测试开始时间戳（毫秒） */
+  startTime: number;
 
   /** 吞吐量指标 */
   throughput: ThroughputMetrics;
@@ -216,8 +218,8 @@ export interface SingleTestResult {
   iteration: number;
   /** 测试配置 */
   config: BenchmarkConfig;
-  /** 延迟指标 */
-  latency: LatencyMetrics;
+  /** 测试开始时间戳（毫秒） */
+  startTime: number;
   /** 吞吐量指标 */
   throughput: ThroughputMetrics;
   /** 质量指标 */
