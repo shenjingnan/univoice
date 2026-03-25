@@ -35,6 +35,7 @@ export function parseRunArgs(): {
   atomicSave: boolean;
   scenario: string | undefined;
   matrixFilter: MatrixFilter | undefined;
+  interval: number;
 } {
   // 过滤掉 pnpm 传递的开头 '--'
   const args = process.argv.slice(2).filter((arg, index) => !(index === 0 && arg === '--'));
@@ -52,6 +53,7 @@ export function parseRunArgs(): {
       voice: { type: 'string' },
       format: { type: 'string' },
       'sample-rate': { type: 'string' },
+      interval: { type: 'string', default: '1000' },
       help: { type: 'boolean', short: 'h' },
     },
     strict: false,
@@ -71,6 +73,7 @@ export function parseRunArgs(): {
   -s, --scenario <name>   测试场景 (qwen-matrix)，默认常规测试
   -d, --dry-run           生成模拟数据预览报告，不实际运行测试
   --no-atomic             禁用原子化保存（不推荐）
+  --interval <ms>         任务间隔时间（毫秒），默认 1000
   -h, --help              显示帮助信息
 
 矩阵测试过滤选项 (用于矩阵测试场景):
@@ -104,6 +107,7 @@ export function parseRunArgs(): {
   pnpm benchmark run -- -s qwen-matrix --format pcm --sample-rate 16000  # 只测试 PCM 16kHz
   pnpm benchmark run -- -s glm-matrix           # 运行 GLM TTS 矩阵测试
   pnpm benchmark run -- -s minimax-matrix       # 运行 Minimax TTS 矩阵测试
+  pnpm benchmark run -- -s qwen-matrix --interval 2000  # 矩阵测试间隔 2 秒
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -127,6 +131,13 @@ export function parseRunArgs(): {
   const iterations = Number.parseInt(values.iterations as string, 10);
   if (Number.isNaN(iterations) || iterations < 1) {
     console.error(`❌ 无效的迭代次数: ${values.iterations}，必须为正整数`);
+    process.exit(1);
+  }
+
+  // 解析间隔时间
+  const interval = Number.parseInt(values.interval as string, 10);
+  if (Number.isNaN(interval) || interval < 0) {
+    console.error(`❌ 无效的间隔时间: ${values.interval}，必须为非负整数`);
     process.exit(1);
   }
 
@@ -175,6 +186,7 @@ export function parseRunArgs(): {
     atomicSave: !values['no-atomic'],
     scenario: values.scenario as string | undefined,
     matrixFilter,
+    interval,
   };
 }
 
@@ -189,6 +201,7 @@ export async function run(options?: {
   atomicSave?: boolean;
   scenario?: string;
   matrixFilter?: MatrixFilter;
+  interval?: number;
 }): Promise<BenchmarkResult[]> {
   // 如果没有提供选项，从命令行解析
   const args = options
@@ -200,6 +213,7 @@ export async function run(options?: {
         atomicSave: options.atomicSave ?? true,
         scenario: options.scenario,
         matrixFilter: options.matrixFilter,
+        interval: options.interval ?? 1000,
       }
     : parseRunArgs();
 
@@ -290,6 +304,7 @@ export async function run(options?: {
     const matrixResults = await runQwenMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
+      interval: args.interval,
     });
     allResults.push(...matrixResults);
 
@@ -323,6 +338,7 @@ export async function run(options?: {
     const matrixResults = await runDoubaoMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
+      interval: args.interval,
     });
     allResults.push(...matrixResults);
 
@@ -356,6 +372,7 @@ export async function run(options?: {
     const matrixResults = await runGlmMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
+      interval: args.interval,
     });
     allResults.push(...matrixResults);
 
@@ -389,6 +406,7 @@ export async function run(options?: {
     const matrixResults = await runMinimaxMatrixScenario({
       iterations: args.iterations,
       filter: args.matrixFilter,
+      interval: args.interval,
     });
     allResults.push(...matrixResults);
 
@@ -406,6 +424,7 @@ export async function run(options?: {
       providers: args.providers,
       iterations: args.iterations,
       atomicSave: args.atomicSave,
+      interval: args.interval,
     });
     allResults.push(...ttsResults);
   }
@@ -429,6 +448,7 @@ export async function run(options?: {
         iterations: args.iterations,
         audioFiles,
         atomicSave: args.atomicSave,
+        interval: args.interval,
       });
       allResults.push(...asrResults);
     }

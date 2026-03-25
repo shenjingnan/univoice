@@ -458,6 +458,8 @@ export async function runTTSSuite(options?: {
   iterations?: number;
   /** 是否原子化保存每次测试结果 */
   atomicSave?: boolean;
+  /** 任务间隔时间（毫秒），默认 1000 */
+  interval?: number;
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
   let globalIteration = 0;
@@ -470,6 +472,7 @@ export async function runTTSSuite(options?: {
   );
   const iterations = options?.iterations || 3;
   const atomicSave = options?.atomicSave ?? true;
+  const interval = options?.interval ?? 1000;
 
   // 流式输入配置
   const streamConfigs: StreamInputConfig[] = [
@@ -515,8 +518,8 @@ export async function runTTSSuite(options?: {
           );
         }
 
-        // 每次测试后等待 1 秒，避免连接复用问题
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // 每次测试后等待，避免连接复用问题
+        await new Promise((resolve) => setTimeout(resolve, interval));
       }
 
       // 2. 非流式输入 + 流式输出
@@ -542,7 +545,7 @@ export async function runTTSSuite(options?: {
             );
           }
 
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, interval));
         }
       }
 
@@ -571,7 +574,7 @@ export async function runTTSSuite(options?: {
             );
           }
 
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, interval));
         }
       }
     }

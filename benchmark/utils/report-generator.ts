@@ -76,7 +76,12 @@ function formatMetricValue(
  * 计算提供商的扩展性能统计
  */
 function calculateExtendedPerformance(results: BenchmarkResult[]) {
-  const successResults = results.filter((r) => r.status === 'success');
+  // 过滤成功记录：必须是 success 状态且有实际数据（chunkCount > 0）
+  // 过滤有效记录：status 为 success 且有实际数据返回（chunkCount > 0）
+  // chunkCount = 0 表示请求正常完成但未收到任何音频/识别数据
+  const successResults = results.filter(
+    (r) => r.status === 'success' && r.throughput.chunkCount > 0
+  );
 
   // 检查是否全部失败
   if (successResults.length === 0) {
@@ -203,23 +208,32 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
 
   // 计算 P50、P95、标准差
   const sortedLatencies = [...totalLatencies].sort((a, b) => a - b);
-  const avgTotal = average(totalLatencies);
+  const avgTotal = totalLatencies.length > 0 ? average(totalLatencies) : 0;
 
-  // P50 (中位数)
-  const mid = Math.floor(sortedLatencies.length / 2);
-  const p50 =
-    sortedLatencies.length % 2 !== 0
-      ? sortedLatencies[mid]
-      : (sortedLatencies[mid - 1] + sortedLatencies[mid]) / 2;
+  // P50 (中位数) - 空数组时返回 0
+  let p50 = 0;
+  if (sortedLatencies.length > 0) {
+    const mid = Math.floor(sortedLatencies.length / 2);
+    p50 =
+      sortedLatencies.length % 2 !== 0
+        ? sortedLatencies[mid]
+        : (sortedLatencies[mid - 1] + sortedLatencies[mid]) / 2;
+  }
 
-  // P95
-  const p95Index = Math.ceil(sortedLatencies.length * 0.95) - 1;
-  const p95 = sortedLatencies[Math.max(0, Math.min(p95Index, sortedLatencies.length - 1))];
+  // P95 - 空数组时返回 0
+  let p95 = 0;
+  if (sortedLatencies.length > 0) {
+    const p95Index = Math.ceil(sortedLatencies.length * 0.95) - 1;
+    p95 = sortedLatencies[Math.max(0, Math.min(p95Index, sortedLatencies.length - 1))];
+  }
 
-  // 标准差
-  const stdDev = Math.sqrt(
-    totalLatencies.reduce((sum, v) => sum + (v - avgTotal) ** 2, 0) / totalLatencies.length
-  );
+  // 标准差 - 空数组时返回 0，避免除零
+  const stdDev =
+    totalLatencies.length > 0
+      ? Math.sqrt(
+          totalLatencies.reduce((sum, v) => sum + (v - avgTotal) ** 2, 0) / totalLatencies.length
+        )
+      : 0;
 
   // 吞吐量（TTS: chars/s）= 文本长度 / 总耗时(秒)
   const textLengths = successResults
