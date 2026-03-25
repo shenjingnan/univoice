@@ -4,11 +4,63 @@
  */
 import { calculateNormalizedAccuracy } from '../metrics/accuracy';
 import type {
+  LatencyMetrics,
   ProviderCapabilities,
   ProviderSummary,
   ScenarioSummary,
   SingleTestResult,
 } from '../metrics/types';
+
+/**
+ * 从原始时间戳数据计算延迟指标
+ * 支持新旧两种格式：
+ * - 新格式：使用 startTime 和 chunks[].timestamp/relativeTime
+ * - 旧格式：直接使用 latency 字段（向后兼容）
+ */
+export function calculateLatency(result: SingleTestResult): LatencyMetrics {
+  // 旧格式兼容：如果存在 latency 字段，直接返回
+  const legacyResult = result as unknown as {
+    latency?: LatencyMetrics;
+  };
+  if (legacyResult.latency) {
+    return legacyResult.latency;
+  }
+
+  // 新格式：从 chunks 和 startTime 计算
+  const chunks = result.throughput.chunks;
+  const startTime = result.startTime;
+
+  if (!chunks || chunks.length === 0 || !startTime) {
+    return {
+      firstChunk: 0,
+      total: 0,
+    };
+  }
+
+  // 首包延迟：第一个 chunk 的相对时间
+  const firstChunk = chunks[0].relativeTime;
+
+  // 总延迟：最后一个 chunk 的相对时间
+  const total = chunks[chunks.length - 1].relativeTime;
+
+  const metrics: LatencyMetrics = {
+    firstChunk,
+    total,
+  };
+
+  // TTS：计算每字符延迟
+  if (result.quality.textLength && result.quality.textLength > 0) {
+    metrics.perChar = total / result.quality.textLength;
+  }
+
+  // ASR：计算 RTF（实时率）
+  if (result.config.audioDuration && result.config.audioDuration > 0) {
+    // RTF = 处理时间 / 音频时长，音频时长单位是秒，total 是毫秒
+    metrics.rtf = total / (result.config.audioDuration * 1000);
+  }
+
+  return metrics;
+}
 
 /**
  * 计算数组的统计指标
@@ -119,17 +171,18 @@ export function aggregateByScenario(results: SingleTestResult[]): Map<string, Sc
   for (const [key, group] of groups) {
     const successResults = group.filter((r) => r.status === 'success');
 
+    // 计算每个结果的延迟指标
+    const latencies = successResults.map((r) => calculateLatency(r));
+
     // 延迟统计
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
-    const totalLatencies = successResults.map((r) => r.latency.total);
+    const firstChunkLatencies = latencies.map((l) => l.firstChunk);
+    const totalLatencies = latencies.map((l) => l.total);
 
     const firstChunkStats = calculateStats(firstChunkLatencies);
     const totalStats = calculateStats(totalLatencies);
 
     // ASR 特有指标
-    const rtfs = successResults
-      .map((r) => r.latency.rtf)
-      .filter((v): v is number => v !== undefined);
+    const rtfs = latencies.map((l) => l.rtf).filter((v): v is number => v !== undefined);
 
     // 从结果计算准确率（支持新旧格式）
     const accuracyResults = successResults
@@ -140,8 +193,8 @@ export function aggregateByScenario(results: SingleTestResult[]): Map<string, Sc
     const cers = accuracyResults.map((r) => r?.cer);
 
     // TTS 特有指标
-    const perCharLatencies = successResults
-      .map((r) => r.latency.perChar)
+    const perCharLatencies = latencies
+      .map((l) => l.perChar)
       .filter((v): v is number => v !== undefined);
 
     const summary: ScenarioSummary = {
@@ -213,7 +266,8 @@ export function aggregateByProvider(
 
   for (const [provider, group] of ttsGroups) {
     const successResults = group.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const latencies = successResults.map((r) => calculateLatency(r));
+    const firstChunkLatencies = latencies.map((l) => l.firstChunk);
 
     const summary: ProviderSummary = {
       provider,
@@ -233,7 +287,8 @@ export function aggregateByProvider(
 
   for (const [provider, group] of asrGroups) {
     const successResults = group.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const latencies = successResults.map((r) => calculateLatency(r));
+    const firstChunkLatencies = latencies.map((l) => l.firstChunk);
 
     const summary: ProviderSummary = {
       provider,
@@ -313,7 +368,8 @@ export function analyzeResults(results: SingleTestResult[]): {
 
   for (const [provider, group] of ttsByProvider) {
     const successResults = group.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const latencies = successResults.map((r) => calculateLatency(r));
+    const firstChunkLatencies = latencies.map((l) => l.firstChunk);
 
     ttsProviders.push({
       provider,
@@ -340,7 +396,8 @@ export function analyzeResults(results: SingleTestResult[]): {
 
   for (const [provider, group] of asrByProvider) {
     const successResults = group.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const latencies = successResults.map((r) => calculateLatency(r));
+    const firstChunkLatencies = latencies.map((l) => l.firstChunk);
 
     asrProviders.push({
       provider,

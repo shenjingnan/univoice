@@ -14,7 +14,7 @@ import { getLatestDir } from './utils/result-writer';
 
 /**
  * 将 SingleTestResult 转换为 BenchmarkResult（用于报告生成）
- * 在转换时计算准确率（从 expectedText 和 actualText）
+ * 在转换时计算准确率（从 expectedText 和 actualText）和延迟（从原始时间戳）
  */
 function toBenchmarkResult(result: SingleTestResult): BenchmarkResult {
   // 计算准确率（如果存在原始数据）
@@ -52,6 +52,9 @@ function toBenchmarkResult(result: SingleTestResult): BenchmarkResult {
     }
   }
 
+  // 获取 startTime（支持新旧格式）
+  const startTime = result.startTime || 0;
+
   return {
     id: result.id,
     timestamp: result.timestamp,
@@ -60,7 +63,7 @@ function toBenchmarkResult(result: SingleTestResult): BenchmarkResult {
     testType: result.testType,
     scenario: result.scenario,
     config: result.config,
-    latency: result.latency,
+    startTime,
     throughput: result.throughput,
     quality: result.quality,
     accuracy,

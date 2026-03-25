@@ -10,9 +10,40 @@ import type {
   AudioFixture,
   BenchmarkConfig,
   BenchmarkResult,
+  LatencyMetrics,
   RawAccuracyData,
 } from '../metrics/types';
 import { saveSingleResult, toSingleTestResult } from '../utils/result-writer';
+
+/**
+ * 从 BenchmarkResult 的 chunks 计算延迟指标
+ * 支持新旧两种格式
+ */
+function getLatencyFromResult(result: BenchmarkResult): LatencyMetrics {
+  // 旧格式兼容：如果存在 latency 字段，直接返回
+  const legacyResult = result as unknown as { latency?: LatencyMetrics };
+  if (legacyResult.latency) {
+    return legacyResult.latency;
+  }
+
+  // 新格式：从 chunks 计算
+  const chunks = result.throughput.chunks;
+  if (!chunks || chunks.length === 0) {
+    return { firstChunk: 0, total: 0 };
+  }
+
+  const firstChunk = chunks[0].relativeTime;
+  const total = chunks[chunks.length - 1].relativeTime;
+
+  return {
+    firstChunk,
+    total,
+    rtf:
+      result.config.audioDuration && result.config.audioDuration > 0
+        ? total / (result.config.audioDuration * 1000)
+        : undefined,
+  };
+}
 
 /**
  * ASR 提供商配置
@@ -140,10 +171,6 @@ async function testStreamInput(
     collector.endCollecting();
     collector.setTextLength(textLength);
 
-    // 计算 RTF
-    const totalTime = collector.getLatencyMetrics().total;
-    const rtf = audioDuration > 0 ? totalTime / 1000 / audioDuration : 0;
-
     const result = collector.buildResult(
       asr.name,
       asr.model,
@@ -152,9 +179,6 @@ async function testStreamInput(
       { ...config, audioDuration },
       'success'
     );
-
-    // 添加 RTF
-    result.latency.rtf = rtf;
 
     // 存储原始准确率数据（不计算，由分析阶段处理）
     if (expectedText || recognizedText) {
@@ -198,10 +222,6 @@ async function testNonStreamInput(
     collector.endCollecting();
     collector.setTextLength(response.text.length);
 
-    // 计算 RTF
-    const totalTime = collector.getLatencyMetrics().total;
-    const rtf = audioDuration > 0 ? totalTime / 1000 / audioDuration : 0;
-
     const result = collector.buildResult(
       asr.name,
       asr.model,
@@ -210,8 +230,6 @@ async function testNonStreamInput(
       { ...config, audioDuration },
       'success'
     );
-
-    result.latency.rtf = rtf;
 
     // 存储原始准确率数据（不计算，由分析阶段处理）
     if (expectedText || response.text) {
@@ -328,12 +346,14 @@ export async function runASRSuite(options?: {
             if (atomicSave) {
               const singleResult = toSingleTestResult(result, globalIteration);
               saveSingleResult(singleResult);
+              const lat = getLatencyFromResult(result);
               console.log(
-                `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
+                `    [${i + 1}/${iterations}] 流式入: 首包 ${lat.firstChunk}ms, RTF ${lat.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
               );
             } else {
+              const lat = getLatencyFromResult(result);
               console.log(
-                `    [${i + 1}/${iterations}] 流式入: 首包 ${result.latency.firstChunk}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+                `    [${i + 1}/${iterations}] 流式入: 首包 ${lat.firstChunk}ms, RTF ${lat.rtf?.toFixed(2) || 'N/A'}`
               );
             }
 
@@ -361,12 +381,14 @@ export async function runASRSuite(options?: {
           if (atomicSave) {
             const singleResult = toSingleTestResult(result, globalIteration);
             saveSingleResult(singleResult);
+            const lat = getLatencyFromResult(result);
             console.log(
-              `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
+              `    [${i + 1}/${iterations}] 非流式入: 总计 ${lat.total}ms, RTF ${lat.rtf?.toFixed(2) || 'N/A'} ✓ 已保存`
             );
           } else {
+            const lat = getLatencyFromResult(result);
             console.log(
-              `    [${i + 1}/${iterations}] 非流式入: 总计 ${result.latency.total}ms, RTF ${result.latency.rtf?.toFixed(2) || 'N/A'}`
+              `    [${i + 1}/${iterations}] 非流式入: 总计 ${lat.total}ms, RTF ${lat.rtf?.toFixed(2) || 'N/A'}`
             );
           }
 

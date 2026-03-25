@@ -1,0 +1,91 @@
+{
+  "id": "c75a3c8a-6674-470d-8734-e8e3db87811d",
+  "timestamp": "2026-03-25T02:06:07.927Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-flash",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v3-flash/longanyang/pcm-22050",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longanyang",
+    "sampleRate": 22050
+  },
+  "startTime": 1774404366215,
+  "throughput": {
+    "dataRate": 45.59345794392523,
+    "chunkCount": 12,
+    "avgChunkSize": 6504.666666666667,
+    "chunks": [
+      {
+        "timestamp": 1774404367260,
+        "relativeTime": 1045,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367261,
+        "relativeTime": 1046,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367271,
+        "relativeTime": 1056,
+        "size": 3152
+      },
+      {
+        "timestamp": 1774404367772,
+        "relativeTime": 1557,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367774,
+        "relativeTime": 1559,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367775,
+        "relativeTime": 1560,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367789,
+        "relativeTime": 1574,
+        "size": 1052
+      },
+      {
+        "timestamp": 1774404367899,
+        "relativeTime": 1684,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367911,
+        "relativeTime": 1696,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367919,
+        "relativeTime": 1704,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367921,
+        "relativeTime": 1706,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404367926,
+        "relativeTime": 1711,
+        "size": 1852
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 78056,
+    "audioDuration": 2.4,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

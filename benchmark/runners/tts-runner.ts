@@ -10,12 +10,43 @@ import type {
   BenchmarkResult,
   DoubaoMatrixConfig,
   GlmMatrixConfig,
+  LatencyMetrics,
   MinimaxMatrixConfig,
   QwenMatrixConfig,
   StreamInputConfig,
   TextFixture,
 } from '../metrics/types';
 import { saveSingleResult, toSingleTestResult } from '../utils/result-writer';
+
+/**
+ * 从 BenchmarkResult 的 chunks 计算延迟指标
+ * 支持新旧两种格式
+ */
+export function getLatencyFromResult(result: BenchmarkResult): LatencyMetrics {
+  // 旧格式兼容：如果存在 latency 字段，直接返回
+  const legacyResult = result as unknown as { latency?: LatencyMetrics };
+  if (legacyResult.latency) {
+    return legacyResult.latency;
+  }
+
+  // 新格式：从 chunks 计算
+  const chunks = result.throughput.chunks;
+  if (!chunks || chunks.length === 0) {
+    return { firstChunk: 0, total: 0 };
+  }
+
+  const firstChunk = chunks[0].relativeTime;
+  const total = chunks[chunks.length - 1].relativeTime;
+
+  return {
+    firstChunk,
+    total,
+    perChar:
+      result.quality.textLength && result.quality.textLength > 0
+        ? total / result.quality.textLength
+        : undefined,
+  };
+}
 
 /**
  * 提供商配置
@@ -476,11 +507,11 @@ export async function runTTSSuite(options?: {
           const singleResult = toSingleTestResult(result, globalIteration);
           saveSingleResult(singleResult);
           console.log(
-            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms ✓ 已保存`
           );
         } else {
           console.log(
-            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+            `    [${i + 1}/${iterations}] 非流式入/出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms`
           );
         }
 
@@ -503,11 +534,11 @@ export async function runTTSSuite(options?: {
             const singleResult = toSingleTestResult(result, globalIteration);
             saveSingleResult(singleResult);
             console.log(
-              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms ✓ 已保存`
             );
           } else {
             console.log(
-              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+              `    [${i + 1}/${iterations}] 非流式入/流式出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms`
             );
           }
 
@@ -532,11 +563,11 @@ export async function runTTSSuite(options?: {
             const singleResult = toSingleTestResult(result, globalIteration);
             saveSingleResult(singleResult);
             console.log(
-              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms ✓ 已保存`
+              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms ✓ 已保存`
             );
           } else {
             console.log(
-              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${result.latency.firstChunk}ms, 总计 ${result.latency.total}ms`
+              `    [${i + 1}/${iterations}] 流式入/出: 首包 ${getLatencyFromResult(result).firstChunk}ms, 总计 ${getLatencyFromResult(result).total}ms`
             );
           }
 

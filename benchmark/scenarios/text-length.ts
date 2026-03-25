@@ -5,7 +5,7 @@
 
 import { textFixtures } from '../fixtures/texts';
 import type { BenchmarkResult, ScenarioConfig } from '../metrics/types';
-import { getProviderConfigs, runTTSTest } from '../runners/tts-runner';
+import { getLatencyFromResult, getProviderConfigs, runTTSTest } from '../runners/tts-runner';
 
 /**
  * 场景配置
@@ -53,8 +53,9 @@ export async function runTextLengthScenario(options?: {
         results.push(result);
 
         const status = result.status === 'success' ? '✓' : '✗';
+        const latency = getLatencyFromResult(result);
         console.log(
-          `    [${i + 1}/${iterations}] ${status} 首包: ${result.latency.firstChunk}ms, 总计: ${result.latency.total}ms`
+          `    [${i + 1}/${iterations}] ${status} 首包: ${latency.firstChunk}ms, 总计: ${latency.total}ms`
         );
       }
     }

@@ -6,6 +6,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { BenchmarkReport, BenchmarkResult, IncrementalTestResult } from '../metrics/types';
+import { getLatencyFromResult } from '../runners/tts-runner';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..', '..');
@@ -139,7 +140,7 @@ export function mergeResults(results: IncrementalTestResult[]): BenchmarkReport 
       (r) => r.provider === provider && r.testType === 'tts'
     );
     const successResults = providerResults.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const firstChunkLatencies = successResults.map((r) => getLatencyFromResult(r).firstChunk);
 
     return {
       provider,
@@ -167,7 +168,7 @@ export function mergeResults(results: IncrementalTestResult[]): BenchmarkReport 
       (r) => r.provider === provider && r.testType === 'asr'
     );
     const successResults = providerResults.filter((r) => r.status === 'success');
-    const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
+    const firstChunkLatencies = successResults.map((r) => getLatencyFromResult(r).firstChunk);
 
     return {
       provider,

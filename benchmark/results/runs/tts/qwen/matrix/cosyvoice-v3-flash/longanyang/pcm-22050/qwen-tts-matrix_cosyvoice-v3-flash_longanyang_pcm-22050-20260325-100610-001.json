@@ -1,0 +1,91 @@
+{
+  "id": "72740056-cf08-4820-8584-3de6becda842",
+  "timestamp": "2026-03-25T02:06:10.939Z",
+  "provider": "qwen",
+  "model": "cosyvoice-v3-flash",
+  "testType": "tts",
+  "scenario": "matrix/cosyvoice-v3-flash/longanyang/pcm-22050",
+  "config": {
+    "inputMode": "non-stream",
+    "outputMode": "stream",
+    "format": "pcm",
+    "textLength": 6,
+    "voice": "longanyang",
+    "sampleRate": 22050
+  },
+  "startTime": 1774404368438,
+  "throughput": {
+    "dataRate": 31.209916033586566,
+    "chunkCount": 12,
+    "avgChunkSize": 6504.666666666667,
+    "chunks": [
+      {
+        "timestamp": 1774404369869,
+        "relativeTime": 1431,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404369870,
+        "relativeTime": 1432,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404369880,
+        "relativeTime": 1442,
+        "size": 3152
+      },
+      {
+        "timestamp": 1774404370388,
+        "relativeTime": 1950,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370391,
+        "relativeTime": 1953,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370398,
+        "relativeTime": 1960,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370411,
+        "relativeTime": 1973,
+        "size": 1052
+      },
+      {
+        "timestamp": 1774404370917,
+        "relativeTime": 2479,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370925,
+        "relativeTime": 2487,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370926,
+        "relativeTime": 2488,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370926,
+        "relativeTime": 2488,
+        "size": 8000
+      },
+      {
+        "timestamp": 1774404370928,
+        "relativeTime": 2490,
+        "size": 1852
+      }
+    ]
+  },
+  "quality": {
+    "dataSize": 78056,
+    "audioDuration": 2.4,
+    "bitrate": 262
+  },
+  "status": "success",
+  "iteration": 1
+}

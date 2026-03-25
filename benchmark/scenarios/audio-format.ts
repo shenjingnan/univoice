@@ -6,7 +6,7 @@
 import { textFixtures } from '../fixtures/texts';
 import type { BenchmarkResult, ScenarioConfig } from '../metrics/types';
 import type { ProviderConfig } from '../runners/tts-runner';
-import { getProviderConfigs, runTTSTest } from '../runners/tts-runner';
+import { getLatencyFromResult, getProviderConfigs, runTTSTest } from '../runners/tts-runner';
 
 /**
  * 场景配置
@@ -78,8 +78,9 @@ export async function runAudioFormatScenario(options?: {
 
         const status = result.status === 'success' ? '✓' : '✗';
         const size = result.quality.dataSize;
+        const latency = getLatencyFromResult(result);
         console.log(
-          `    [${i + 1}/${iterations}] ${status} 首包: ${result.latency.firstChunk}ms, 大小: ${size} bytes`
+          `    [${i + 1}/${iterations}] ${status} 首包: ${latency.firstChunk}ms, 大小: ${size} bytes`
         );
       }
     }

@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { calculateNormalizedAccuracy } from '../metrics/accuracy';
 import { average, successRate } from '../metrics/collector';
-import type { BenchmarkReport, BenchmarkResult } from '../metrics/types';
+import type { BenchmarkReport, BenchmarkResult, LatencyMetrics } from '../metrics/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..', '..', '..');
@@ -108,13 +108,44 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
     };
   }
 
+  // 计算每个结果的延迟指标（支持新旧格式）
+  const latencies = successResults.map((r) => {
+    // 尝试从新格式计算
+    const chunks = r.throughput.chunks;
+    const startTime = (r as unknown as { startTime?: number }).startTime;
+
+    // 旧格式兼容：如果存在 latency 字段，直接使用
+    const legacyResult = r as unknown as { latency?: LatencyMetrics };
+    if (legacyResult.latency) {
+      return legacyResult.latency;
+    }
+
+    // 新格式：从 chunks 和 startTime 计算
+    if (!chunks || chunks.length === 0 || !startTime) {
+      return { firstChunk: 0, total: 0 };
+    }
+
+    return {
+      firstChunk: chunks[0].relativeTime,
+      total: chunks[chunks.length - 1].relativeTime,
+      perChar:
+        r.quality.textLength && r.quality.textLength > 0
+          ? chunks[chunks.length - 1].relativeTime / r.quality.textLength
+          : undefined,
+      rtf:
+        r.config.audioDuration && r.config.audioDuration > 0
+          ? chunks[chunks.length - 1].relativeTime / (r.config.audioDuration * 1000)
+          : undefined,
+    };
+  });
+
   // 延迟统计
-  const firstChunkLatencies = successResults.map((r) => r.latency.firstChunk);
-  const totalLatencies = successResults.map((r) => r.latency.total);
-  const perCharLatencies = successResults
-    .map((r) => r.latency.perChar)
+  const firstChunkLatencies = latencies.map((l) => l.firstChunk);
+  const totalLatencies = latencies.map((l) => l.total);
+  const perCharLatencies = latencies
+    .map((l) => l.perChar)
     .filter((v): v is number => v !== undefined);
-  const rtfs = successResults.map((r) => r.latency.rtf).filter((v): v is number => v !== undefined);
+  const rtfs = latencies.map((l) => l.rtf).filter((v): v is number => v !== undefined);
 
   // 准确率统计（ASR）- 需要从原始数据计算或直接获取
   const accuracies: number[] = [];
@@ -154,10 +185,11 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
 
   // 平均耗时 = 排除首包后，平均每个 chunk 的间隔时间
   const avgLatencies = successResults
-    .map((r) => {
+    .map((r, i) => {
       const chunkCount = r.throughput.chunkCount;
       if (chunkCount <= 1) return 0;
-      return (r.latency.total - r.latency.firstChunk) / (chunkCount - 1);
+      const lat = latencies[i];
+      return (lat.total - lat.firstChunk) / (chunkCount - 1);
     })
     .filter((v) => v > 0);
   const avgLatency = avgLatencies.length > 0 ? average(avgLatencies) : undefined;
