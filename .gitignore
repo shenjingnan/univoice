@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 examples/output
 
 worktrees
+
+# Benchmark results (generated at runtime)
+benchmark/results/
