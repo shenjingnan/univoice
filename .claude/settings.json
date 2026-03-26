@@ -47,7 +47,7 @@
     "ask": []
   },
   "attribution": {
-    "commit": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: GLM-5 <noreply@bigmodel.cn>",
+    "commit": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: GLM-5 (Qwen Coding Plan) <noreply@bigmodel.cn>",
     "pr": ""
   }
 }
