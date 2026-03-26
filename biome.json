@@ -13,9 +13,7 @@
       "**/*.jsx",
       "**/*.json",
       "!docs",
-      "!benchmark/scenarios/qwen-matrix-data.ts",
-      "!benchmark/scenarios/doubao-matrix-data.ts",
-      "!benchmark/results/latest/benchmark.json"
+      "!benchmark/results/**/*.json"
     ]
   },
   "linter": {
@@ -50,5 +48,13 @@
         }
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["benchmark/scenarios/*-matrix.ts", "benchmark/scenarios/matrix/**/*.ts"],
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ]
 }

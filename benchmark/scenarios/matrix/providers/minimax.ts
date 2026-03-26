@@ -5,41 +5,66 @@ import type { MatrixItem, MatrixScenarioConfig } from '../../../metrics/types';
 import type { ProviderMatrixConfig } from '../types';
 
 /**
- * Minimax TTS 模型列表
- */
-const minimaxModels = [
-  'speech-2.8-hd',
-  'speech-2.8-turbo',
-  'speech-2.6-hd',
-  'speech-2.6-turbo',
-  'speech-02-hd',
-  'speech-02-turbo',
-  'speech-01-hd',
-  'speech-01-turbo',
-] as const;
-
-/**
- * Minimax TTS 采样率列表
- */
-const minimaxSampleRates = [8000, 16000, 22050, 24000, 32000, 44100] as const;
-
-/**
  * Minimax TTS 矩阵测试列表
  */
-export const minimaxMatrixItems: MatrixItem[] = [];
-
-// 生成所有测试组合
-for (const model of minimaxModels) {
-  for (const sampleRate of minimaxSampleRates) {
-    minimaxMatrixItems.push({
-      provider: 'minimax',
-      model,
-      voice: 'male-qn-qingse',
-      format: 'pcm',
-      sampleRate,
-    });
-  }
-}
+export const minimaxMatrixItems: MatrixItem[] = [
+  // speech-2.8-hd + male-qn-qingse
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-2.8-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-2.8-turbo + male-qn-qingse
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-2.8-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-2.6-hd + male-qn-qingse
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-2.6-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-2.6-turbo + male-qn-qingse
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-2.6-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-02-hd + male-qn-qingse
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-02-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-02-turbo + male-qn-qingse
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-02-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-01-hd + male-qn-qingse
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-01-hd', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+  // speech-01-turbo + male-qn-qingse
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 8000 },
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 16000 },
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 22050 },
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 24000 },
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 32000 },
+  { provider: 'minimax', model: 'speech-01-turbo', voice: 'male-qn-qingse', format: 'pcm', sampleRate: 44100 },
+];
 
 /**
  * Minimax 场景配置

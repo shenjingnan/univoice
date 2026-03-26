@@ -93,6 +93,7 @@
     "node_modules",
     "dist",
     "*.lock",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "benchmark/results"
   ]
 }
