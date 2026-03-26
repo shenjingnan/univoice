@@ -295,6 +295,8 @@ export async function runASRSuite(options?: {
   audioFiles?: AudioFixture[];
   /** 是否原子化保存每次测试结果 */
   atomicSave?: boolean;
+  /** 任务间隔时间（毫秒），默认 1000 */
+  interval?: number;
 }): Promise<BenchmarkResult[]> {
   const results: BenchmarkResult[] = [];
   let globalIteration = 0;
@@ -307,6 +309,7 @@ export async function runASRSuite(options?: {
   );
   const iterations = options?.iterations || 3;
   const atomicSave = options?.atomicSave ?? true;
+  const interval = options?.interval ?? 1000;
 
   console.log(`\n=== ASR 性能测试 ===\n`);
   console.log(`已配置的提供商: ${providerConfigs.map((p) => p.displayName).join(', ')}`);
@@ -363,8 +366,8 @@ export async function runASRSuite(options?: {
               `    [${i + 1}/${iterations}] 流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`
             );
           }
-          // 每次测试后等待 1 秒，避免连接复用问题
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          // 每次测试后等待，避免连接复用问题
+          await new Promise((resolve) => setTimeout(resolve, interval));
         }
       }
 
@@ -398,8 +401,8 @@ export async function runASRSuite(options?: {
             `    [${i + 1}/${iterations}] 非流式入: 失败 - ${error instanceof Error ? error.message : String(error)}`
           );
         }
-        // 每次测试后等待 1 秒，避免连接复用问题
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // 每次测试后等待，避免连接复用问题
+        await new Promise((resolve) => setTimeout(resolve, interval));
       }
     }
   }

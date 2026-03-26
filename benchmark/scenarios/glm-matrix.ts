@@ -108,6 +108,8 @@ export async function runGlmMatrixScenario(options?: {
   iterations?: number;
   /** 过滤条件 */
   filter?: MatrixFilter;
+  /** 任务间隔时间（毫秒），默认 1000 */
+  interval?: number;
   /** 进度回调 */
   onProgress?: (
     current: number,
@@ -122,6 +124,7 @@ export async function runGlmMatrixScenario(options?: {
 
   const results: BenchmarkResult[] = [];
   const iterations = options?.iterations || matrixScenarioConfig.iterations;
+  const interval = options?.interval ?? 1000;
 
   // 使用第一个文本进行测试
   const text = textFixtures[0];
@@ -193,7 +196,7 @@ export async function runGlmMatrixScenario(options?: {
       options?.onProgress?.(currentTest, totalTests, matrixConfig, result);
 
       // 测试间隔，避免请求过快
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, interval));
     }
   }
 

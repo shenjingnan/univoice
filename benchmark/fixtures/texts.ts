@@ -9,11 +9,11 @@ import type { TextFixture } from '../metrics/types';
  */
 export const textFixtures: TextFixture[] = [
   // 短文本（1-20 字符）
-  {
-    name: 'simple-greeting',
-    text: '你好，欢迎！',
-    category: 'short',
-  },
+  // {
+  //   name: 'simple-greeting',
+  //   text: '你好，欢迎！',
+  //   category: 'short',
+  // },
   //   {
   //     name: 'short-question',
   //     text: '今天天气怎么样？',
@@ -26,11 +26,11 @@ export const textFixtures: TextFixture[] = [
   //   },
 
   //   // 中等文本（50-200 字符）
-  //   {
-  //     name: 'intro-paragraph',
-  //     text: '欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！',
-  //     category: 'medium',
-  //   },
+  {
+    name: 'intro-paragraph',
+    text: '欢迎来到杭州！我是您的智能导游。杭州是一座有着两千多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。西湖、灵隐寺、龙井茶园，处处皆是风景。让我们一起开启这段美妙的杭州之旅吧！',
+    category: 'medium',
+  },
   //   {
   //     name: 'news-brief',
   //     text: '今日科技新闻：人工智能领域迎来重大突破。国内领先的人工智能公司发布了新一代大语言模型，在多项基准测试中取得优异成绩。该模型在自然语言理解、逻辑推理和代码生成等方面展现出强大能力，将为各行各业带来深远影响。',

@@ -7,7 +7,13 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { calculateNormalizedAccuracy } from '../metrics/accuracy';
 import { average, successRate } from '../metrics/collector';
-import type { BenchmarkReport, BenchmarkResult, LatencyMetrics } from '../metrics/types';
+import type {
+  BenchmarkReport,
+  BenchmarkResult,
+  LatencyMetrics,
+  MatrixCoverageSummary,
+} from '../metrics/types';
+import { allMatrixItems, getProviderDisplayName } from './matrix-loader';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..', '..', '..');
@@ -76,7 +82,12 @@ function formatMetricValue(
  * 计算提供商的扩展性能统计
  */
 function calculateExtendedPerformance(results: BenchmarkResult[]) {
-  const successResults = results.filter((r) => r.status === 'success');
+  // 过滤成功记录：必须是 success 状态且有实际数据（chunkCount > 0）
+  // 过滤有效记录：status 为 success 且有实际数据返回（chunkCount > 0）
+  // chunkCount = 0 表示请求正常完成但未收到任何音频/识别数据
+  const successResults = results.filter(
+    (r) => r.status === 'success' && r.throughput.chunkCount > 0
+  );
 
   // 检查是否全部失败
   if (successResults.length === 0) {
@@ -203,23 +214,32 @@ function calculateExtendedPerformance(results: BenchmarkResult[]) {
 
   // 计算 P50、P95、标准差
   const sortedLatencies = [...totalLatencies].sort((a, b) => a - b);
-  const avgTotal = average(totalLatencies);
+  const avgTotal = totalLatencies.length > 0 ? average(totalLatencies) : 0;
 
-  // P50 (中位数)
-  const mid = Math.floor(sortedLatencies.length / 2);
-  const p50 =
-    sortedLatencies.length % 2 !== 0
-      ? sortedLatencies[mid]
-      : (sortedLatencies[mid - 1] + sortedLatencies[mid]) / 2;
+  // P50 (中位数) - 空数组时返回 0
+  let p50 = 0;
+  if (sortedLatencies.length > 0) {
+    const mid = Math.floor(sortedLatencies.length / 2);
+    p50 =
+      sortedLatencies.length % 2 !== 0
+        ? sortedLatencies[mid]
+        : (sortedLatencies[mid - 1] + sortedLatencies[mid]) / 2;
+  }
 
-  // P95
-  const p95Index = Math.ceil(sortedLatencies.length * 0.95) - 1;
-  const p95 = sortedLatencies[Math.max(0, Math.min(p95Index, sortedLatencies.length - 1))];
+  // P95 - 空数组时返回 0
+  let p95 = 0;
+  if (sortedLatencies.length > 0) {
+    const p95Index = Math.ceil(sortedLatencies.length * 0.95) - 1;
+    p95 = sortedLatencies[Math.max(0, Math.min(p95Index, sortedLatencies.length - 1))];
+  }
 
-  // 标准差
-  const stdDev = Math.sqrt(
-    totalLatencies.reduce((sum, v) => sum + (v - avgTotal) ** 2, 0) / totalLatencies.length
-  );
+  // 标准差 - 空数组时返回 0，避免除零
+  const stdDev =
+    totalLatencies.length > 0
+      ? Math.sqrt(
+          totalLatencies.reduce((sum, v) => sum + (v - avgTotal) ** 2, 0) / totalLatencies.length
+        )
+      : 0;
 
   // 吞吐量（TTS: chars/s）= 文本长度 / 总耗时(秒)
   const textLengths = successResults
@@ -430,142 +450,194 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
   const nonStreamOutResults = ttsResults.filter((r) => r.config.outputMode === 'non-stream');
 
   // 非流式入/流式出表格
-  if (streamOutResults.length > 0) {
-    lines.push('### 非流式入/流式出');
-    lines.push('');
-    lines.push(
-      '| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | 吞吐量 (chars/s) |'
-    );
-    lines.push(
-      '|--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----------------|'
-    );
+  // 始终显示表格，即使没有测试结果
+  lines.push('### 非流式入/流式出');
+  lines.push('');
+  lines.push(
+    '| 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | 吞吐量 (chars/s) |'
+  );
+  lines.push(
+    '|--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----------------|'
+  );
 
-    // 按配置分组（忽略 textCategory），聚合同一配置的测试记录
-    const groups = new Map<string, BenchmarkResult[]>();
-    for (const result of streamOutResults) {
-      const detail = extractScenarioDetail(result);
-      const key = `${result.provider}/${detail.model}/${detail.voice}/${detail.format}/${detail.sampleRate}`;
-      const group = groups.get(key) || [];
-      group.push(result);
-      groups.set(key, group);
-    }
+  // 按配置分组（忽略 textCategory），聚合同一配置的测试记录
+  const groups = new Map<string, BenchmarkResult[]>();
+  for (const result of streamOutResults) {
+    const detail = extractScenarioDetail(result);
+    const key = `${result.provider}/${detail.model}/${detail.voice}/${detail.format}/${detail.sampleRate}`;
+    const group = groups.get(key) || [];
+    group.push(result);
+    groups.set(key, group);
+  }
 
-    const stats = Array.from(groups.entries()).map(([key, res]) => {
-      const [provider, model, voice, format, sampleRate] = key.split('/');
-      return {
+  // 遍历所有矩阵定义的场景
+  const stats: Array<{
+    key: string;
+    provider: string;
+    model: string;
+    voice: string;
+    format: string;
+    sampleRate: string;
+    displayName: string;
+    hasFailure: boolean;
+    sampleCount: number;
+    firstLatency?: number;
+    avgLatency?: number;
+    p50?: number;
+    p95?: number;
+    stdDev?: number;
+    throughput?: number;
+  }> = [];
+
+  for (const item of allMatrixItems) {
+    const key = `${item.provider}/${item.model}/${item.voice}/${item.format}/${item.sampleRate}`;
+    const testResults = groups.get(key);
+
+    if (testResults && testResults.length > 0) {
+      // 有测试结果
+      const perf = calculateExtendedPerformance(testResults);
+      stats.push({
         key,
-        provider,
-        model,
-        voice,
-        format,
-        sampleRate,
-        displayName: providers.get(provider) || provider,
-        ...calculateExtendedPerformance(res),
-      };
-    });
+        provider: item.provider,
+        model: item.model,
+        voice: item.voice,
+        format: item.format,
+        sampleRate: `${item.sampleRate}`,
+        displayName: providers.get(item.provider) || getProviderDisplayName(item.provider),
+        hasFailure: perf.hasFailure,
+        sampleCount: perf.sampleCount,
+        firstLatency: perf.firstLatency,
+        avgLatency: perf.avgLatency,
+        p50: perf.p50,
+        p95: perf.p95,
+        stdDev: perf.stdDev,
+        throughput: perf.throughput,
+      });
+    } else {
+      // 无测试结果
+      stats.push({
+        key,
+        provider: item.provider,
+        model: item.model,
+        voice: item.voice,
+        format: item.format,
+        sampleRate: `${item.sampleRate}`,
+        displayName: providers.get(item.provider) || getProviderDisplayName(item.provider),
+        hasFailure: true,
+        sampleCount: 0,
+      });
+    }
+  }
 
-    // 计算各指标的 min/max 索引用于标记最佳值
-    const successStats = stats.filter((s) => !s.hasFailure);
-    const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
-    const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
-    const p50Values = successStats.map((s) => s.p50 ?? 0);
-    const p95Values = successStats.map((s) => s.p95 ?? 0);
-    const stdDevValues = successStats.map((s) => s.stdDev ?? 0);
-    const throughputValues = successStats
-      .filter((s) => s.throughput !== undefined)
-      .map((s) => s.throughput as number);
+  // 计算各指标的 min/max 索引用于标记最佳值（只计算有成功结果的）
+  const successStats = stats.filter((s) => !s.hasFailure);
+  const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
+  const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
+  const p50Values = successStats.map((s) => s.p50 ?? 0);
+  const p95Values = successStats.map((s) => s.p95 ?? 0);
+  const stdDevValues = successStats.map((s) => s.stdDev ?? 0);
+  const throughputValues = successStats
+    .filter((s) => s.throughput !== undefined)
+    .map((s) => s.throughput as number);
 
-    const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
-    const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
-    const p50MinMax = findMinMaxIndices(p50Values);
-    const p95MinMax = findMinMaxIndices(p95Values);
-    const stdDevMinMax = findMinMaxIndices(stdDevValues);
-    const throughputMinMax = findMinMaxIndices(throughputValues);
+  const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
+  const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
+  const p50MinMax = findMinMaxIndices(p50Values);
+  const p95MinMax = findMinMaxIndices(p95Values);
+  const stdDevMinMax = findMinMaxIndices(stdDevValues);
+  const throughputMinMax = findMinMaxIndices(throughputValues);
 
-    let throughputIdx = 0;
+  let throughputIdx = 0;
 
-    for (let i = 0; i < stats.length; i++) {
-      const s = stats[i];
+  for (let i = 0; i < stats.length; i++) {
+    const s = stats[i];
 
-      if (s.hasFailure) {
+    if (s.hasFailure) {
+      if (s.sampleCount === 0) {
+        // 未测试
+        lines.push(
+          `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | - | 未测试 | - | - | - | - | - |`
+        );
+      } else {
+        // 测试失败
         lines.push(
           `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 | - | - | - | - | - |`
         );
-        continue;
       }
-
-      const successIndex = successStats.indexOf(s);
-
-      // 首次耗时
-      const firstLat = formatMetricValue(
-        s.firstLatency ?? 0,
-        successIndex,
-        firstLatencyMinMax.minIndex,
-        firstLatencyMinMax.maxIndex,
-        true,
-        ''
-      );
-
-      // 平均耗时
-      const avgLat = formatMetricValue(
-        s.avgLatency ?? 0,
-        successIndex,
-        avgLatencyMinMax.minIndex,
-        avgLatencyMinMax.maxIndex,
-        true,
-        ''
-      );
-
-      // P50
-      const p50 = formatMetricValue(
-        s.p50 ?? 0,
-        successIndex,
-        p50MinMax.minIndex,
-        p50MinMax.maxIndex,
-        true,
-        ''
-      );
-
-      // P95
-      const p95 = formatMetricValue(
-        s.p95 ?? 0,
-        successIndex,
-        p95MinMax.minIndex,
-        p95MinMax.maxIndex,
-        true,
-        ''
-      );
-
-      // 标准差
-      const stdDev = formatMetricValue(
-        s.stdDev ?? 0,
-        successIndex,
-        stdDevMinMax.minIndex,
-        stdDevMinMax.maxIndex,
-        true,
-        ''
-      );
-
-      // 吞吐量
-      const throughput = s.throughput
-        ? formatMetricValue(
-            s.throughput,
-            throughputIdx++,
-            throughputMinMax.minIndex,
-            throughputMinMax.maxIndex,
-            false, // 越大越好
-            '',
-            1
-          )
-        : 'N/A';
-
-      lines.push(
-        `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${throughput} |`
-      );
+      continue;
     }
 
-    lines.push('');
+    const successIndex = successStats.indexOf(s);
+
+    // 首次耗时
+    const firstLat = formatMetricValue(
+      s.firstLatency ?? 0,
+      successIndex,
+      firstLatencyMinMax.minIndex,
+      firstLatencyMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 平均耗时
+    const avgLat = formatMetricValue(
+      s.avgLatency ?? 0,
+      successIndex,
+      avgLatencyMinMax.minIndex,
+      avgLatencyMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // P50
+    const p50 = formatMetricValue(
+      s.p50 ?? 0,
+      successIndex,
+      p50MinMax.minIndex,
+      p50MinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // P95
+    const p95 = formatMetricValue(
+      s.p95 ?? 0,
+      successIndex,
+      p95MinMax.minIndex,
+      p95MinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 标准差
+    const stdDev = formatMetricValue(
+      s.stdDev ?? 0,
+      successIndex,
+      stdDevMinMax.minIndex,
+      stdDevMinMax.maxIndex,
+      true,
+      ''
+    );
+
+    // 吞吐量
+    const throughput = s.throughput
+      ? formatMetricValue(
+          s.throughput,
+          throughputIdx++,
+          throughputMinMax.minIndex,
+          throughputMinMax.maxIndex,
+          false, // 越大越好
+          '',
+          1
+        )
+      : 'N/A';
+
+    lines.push(
+      `| ${s.displayName} | ${s.model} | ${s.voice} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${throughput} |`
+    );
   }
+
+  lines.push('');
 
   // 非流式入/非流式出表格
   if (nonStreamOutResults.length > 0) {
@@ -910,6 +982,75 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
 }
 
 /**
+ * 生成测试覆盖率报告
+ */
+function generateMatrixCoverageSection(coverage: MatrixCoverageSummary): string[] {
+  const lines: string[] = [];
+
+  lines.push('## 测试覆盖率');
+  lines.push('');
+  lines.push('> 以下展示测试矩阵中所有定义的测试场景覆盖情况。');
+  lines.push('');
+
+  // 总体覆盖情况
+  lines.push('### 总体覆盖情况');
+  lines.push('');
+  lines.push('| 总场景数 | 已测试 | 待测试 | 覆盖率 |');
+  lines.push('|----------|--------|--------|--------|');
+  const totalRate = (coverage.totalCoverageRate * 100).toFixed(1);
+  lines.push(
+    `| ${coverage.totalScenarios} | ${coverage.testedScenarios} | ${coverage.pendingScenarios} | ${totalRate}% |`
+  );
+  lines.push('');
+
+  // 按提供商统计
+  lines.push('### 按提供商统计');
+  lines.push('');
+  lines.push('| 提供商 | 总场景数 | 已测试 | 待测试 | 覆盖率 |');
+  lines.push('|--------|----------|--------|--------|--------|');
+
+  for (const pc of coverage.byProvider) {
+    const rate = (pc.coverageRate * 100).toFixed(1);
+    lines.push(
+      `| ${pc.displayName} | ${pc.totalScenarios} | ${pc.testedScenarios} | ${pc.pendingScenarios} | ${rate}% |`
+    );
+  }
+  lines.push('');
+
+  // 待测试场景列表（限制显示数量）
+  const maxPendingDisplay = 50;
+  const allPendingItems = coverage.byProvider.flatMap((pc) => pc.pendingItems);
+
+  if (allPendingItems.length > 0) {
+    lines.push('### 待测试场景');
+    lines.push('');
+
+    const displayItems = allPendingItems.slice(0, maxPendingDisplay);
+    const remaining = allPendingItems.length - displayItems.length;
+
+    lines.push('| 提供商 | 模型 | 音色 | 格式 | 采样率 |');
+    lines.push('|--------|------|------|------|--------|');
+
+    for (const item of displayItems) {
+      const providerName =
+        coverage.byProvider.find((p) => p.provider === item.provider)?.displayName || item.provider;
+      lines.push(
+        `| ${providerName} | ${item.model} | ${item.voice} | ${item.format} | ${item.sampleRate} |`
+      );
+    }
+
+    if (remaining > 0) {
+      lines.push('');
+      lines.push(`> *还有 ${remaining} 个场景未显示...*`);
+    }
+
+    lines.push('');
+  }
+
+  return lines;
+}
+
+/**
  * 生成 Markdown 格式的性能报告
  */
 export function generateMarkdownReport(report: BenchmarkReport): string {
@@ -947,6 +1088,12 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
   }
   for (const p of report.asrProviders) {
     providerNames.set(p.provider, p.capabilities.displayName);
+  }
+
+  // 测试覆盖率（放在性能指标之前）
+  if (report.matrixCoverage) {
+    const coverageLines = generateMatrixCoverageSection(report.matrixCoverage);
+    lines.push(...coverageLines);
   }
 
   // TTS 报告
