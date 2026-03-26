@@ -281,43 +281,20 @@ export async function run(options?: {
 
   allResults = [];
 
-  // 矩阵测试场景
-  if (args.scenario === 'qwen-matrix') {
-    console.log('📊 运行 Qwen TTS 矩阵测试场景...\n');
-    if (args.matrixFilter) {
-      console.log('📋 猟阵过滤条件:');
-      if (args.matrixFilter.model) {
-        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
-      }
-      if (args.matrixFilter.voice) {
-        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
-      }
-      if (args.matrixFilter.format) {
-        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
-      }
-      if (args.matrixFilter.sampleRate) {
-        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
-      }
-      console.log('');
-    }
-    const { runQwenMatrixScenario } = await import('./scenarios/qwen-matrix');
-    const matrixResults = await runQwenMatrixScenario({
-      iterations: args.iterations,
-      filter: args.matrixFilter,
-      interval: args.interval,
-    });
-    allResults.push(...matrixResults);
+  // 矩阵测试场景（统一处理）
+  if (args.scenario?.endsWith('-matrix')) {
+    const providerName = args.scenario.replace('-matrix', '');
+    const providerDisplayName: Record<string, string> = {
+      qwen: 'Qwen',
+      doubao: 'Doubao',
+      glm: 'GLM',
+      minimax: 'Minimax',
+    };
 
-    const totalTime = Date.now() - startTime;
-    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
-    console.log(`   - 总测试次数: ${allResults.length}`);
+    console.log(
+      `📊 运行 ${providerDisplayName[providerName] || providerName} TTS 矩阵测试场景...\n`
+    );
 
-    return allResults;
-  }
-
-  // 豆包矩阵测试场景
-  if (args.scenario === 'doubao-matrix') {
-    console.log('📊 运行 Doubao TTS 矩阵测试场景...\n');
     if (args.matrixFilter) {
       console.log('📋 矩阵过滤条件:');
       if (args.matrixFilter.model) {
@@ -334,78 +311,20 @@ export async function run(options?: {
       }
       console.log('');
     }
-    const { runDoubaoMatrixScenario } = await import('./scenarios/doubao-matrix');
-    const matrixResults = await runDoubaoMatrixScenario({
-      iterations: args.iterations,
-      filter: args.matrixFilter,
-      interval: args.interval,
-    });
-    allResults.push(...matrixResults);
 
-    const totalTime = Date.now() - startTime;
-    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
-    console.log(`   - 总测试次数: ${allResults.length}`);
+    // 使用新的统一矩阵测试运行器
+    const { runMatrixScenario, getProviderConfig } = await import('./scenarios/matrix');
+    const providerConfig = getProviderConfig(providerName);
 
-    return allResults;
-  }
-
-  // GLM 矩阵测试场景
-  if (args.scenario === 'glm-matrix') {
-    console.log('📊 运行 GLM TTS 矩阵测试场景...\n');
-    if (args.matrixFilter) {
-      console.log('📋 矩阵过滤条件:');
-      if (args.matrixFilter.model) {
-        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
-      }
-      if (args.matrixFilter.voice) {
-        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
-      }
-      if (args.matrixFilter.format) {
-        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
-      }
-      if (args.matrixFilter.sampleRate) {
-        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
-      }
-      console.log('');
+    if (!providerConfig) {
+      console.error(`❌ 未知的矩阵测试提供商: ${providerName}`);
+      process.exit(1);
     }
-    const { runGlmMatrixScenario } = await import('./scenarios/glm-matrix');
-    const matrixResults = await runGlmMatrixScenario({
-      iterations: args.iterations,
+
+    const matrixResults = await runMatrixScenario({
+      providers: [providerName],
       filter: args.matrixFilter,
-      interval: args.interval,
-    });
-    allResults.push(...matrixResults);
-
-    const totalTime = Date.now() - startTime;
-    console.log(`\n✅ 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
-    console.log(`   - 总测试次数: ${allResults.length}`);
-
-    return allResults;
-  }
-
-  // Minimax 矩阵测试场景
-  if (args.scenario === 'minimax-matrix') {
-    console.log('📊 运行 Minimax TTS 矩阵测试场景...\n');
-    if (args.matrixFilter) {
-      console.log('📋 矩阵过滤条件:');
-      if (args.matrixFilter.model) {
-        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
-      }
-      if (args.matrixFilter.voice) {
-        console.log(`   - 音色: ${args.matrixFilter.voice.join(', ')}`);
-      }
-      if (args.matrixFilter.format) {
-        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
-      }
-      if (args.matrixFilter.sampleRate) {
-        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
-      }
-      console.log('');
-    }
-    const { runMinimaxMatrixScenario } = await import('./scenarios/minimax-matrix');
-    const matrixResults = await runMinimaxMatrixScenario({
       iterations: args.iterations,
-      filter: args.matrixFilter,
       interval: args.interval,
     });
     allResults.push(...matrixResults);
