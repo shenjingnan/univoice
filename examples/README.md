@@ -1,19 +1,77 @@
 # 示例代码
 
-本目录包含 univoice SDK 的使用示例，演示 TTS（文字转语音）和 LLM 流式输出转语音等功能。
+本目录包含 univoice SDK 的使用示例，演示 TTS（文字转语音）和 ASR（语音识别）等功能。
+
+## 目录结构
+
+```
+examples/
+├── utils/                      # 公共工具函数
+│   ├── common.ts               # 通用工具（配置获取、时间戳等）
+│   ├── ogg-to-opus-packets.ts  # OGG 转 Opus 数据包
+│   ├── opus-packets-to-ogg.ts  # Opus 数据包转 OGG
+│   └── ...
+│
+├── tts/                        # TTS 示例
+│   ├── basic/                  # 基础用法
+│   │   ├── speak-string.ts     # 字符串输入
+│   │   └── speak-stream.ts     # 流式输入
+│   │
+│   ├── advanced/               # 高级用法
+│   │   └── llm-to-tts.ts       # LLM + TTS 集成
+│   │
+│   └── providers/              # 提供商特定示例
+│       ├── doubao/             # 火山引擎
+│       │   ├── basic.ts
+│       │   ├── seed-v1.ts
+│       │   └── pcm-output.ts
+│       ├── qwen/               # 阿里云
+│       │   ├── basic.ts
+│       │   ├── realtime.ts
+│       │   └── opus-output.ts
+│       ├── minimax/            # Minimax
+│       │   └── basic.ts
+│       └── glm/                # 智谱 AI
+│           └── basic.ts
+│
+├── asr/                        # ASR 示例
+│   ├── basic/                  # 基础用法
+│   │   ├── listen-stream.ts    # 流式识别
+│   │   └── listen-non-stream.ts
+│   │
+│   ├── advanced/               # 高级用法
+│   │   ├── ogg-to-asr.ts
+│   │   └── opus-packets-to-asr.ts
+│   │
+│   └── providers/              # 提供商特定示例
+│       ├── doubao/
+│       ├── qwen/
+│       ├── glm/
+│       └── openai/
+│
+└── audio/                      # 音频处理工具示例
+    ├── ogg-to-opus-packets.ts
+    └── opus-packets-to-ogg.ts
+```
 
 ## 环境配置
 
 运行示例前，需要在项目根目录创建 `.env` 文件：
 
 ```bash
-# 火山引擎 Doubao TTS 配置
+# 火山引擎 Doubao 配置
 DOUBAO_APP_KEY=your_app_id
 DOUBAO_ACCESS_TOKEN=your_access_token
 DOUBAO_VOICE_TYPE=zh_female_tianmeixiaoyuan_moon_bigtts
 
-# Minimax TTS 配置
+# 阿里云 Qwen 配置
+QWEN_API_KEY=your_api_key
+
+# Minimax 配置
 MINIMAX_API_KEY=your_api_key
+
+# 智谱 AI GLM 配置
+GLM_API_KEY=your_api_key
 
 # OpenAI 配置（用于 LLM 示例）
 OPENAI_API_KEY=your_api_key
@@ -21,79 +79,99 @@ OPENAI_BASE_URL=https://api.openai.com/v1
 OPENAI_MODEL=gpt-4o-mini
 ```
 
-## 示例列表
+## 快速开始
 
-### Doubao TTS 示例
+### TTS 基础示例
 
-| 文件 | 说明 | 输出格式 |
-|------|------|----------|
-| [doubao-tts-demo.ts](./doubao-tts-demo.ts) | 基础 TTS 合成示例 | MP3 |
-| [doubao-tts-speak-collect.ts](./doubao-tts-speak-collect.ts) | 流式音频收集示例 | PCM |
-| [doubao-tts-speak-string.ts](./doubao-tts-speak-string.ts) | 字符串输入模式示例 | PCM |
-| [doubao-tts-stream-direct.ts](./doubao-tts-stream-direct.ts) | 直接流式保存示例 | PCM |
+```bash
+# 字符串输入（支持多提供商）
+pnpm tsx examples/tts/basic/speak-string.ts doubao
+pnpm tsx examples/tts/basic/speak-string.ts qwen
+pnpm tsx examples/tts/basic/speak-string.ts minimax
 
-### Minimax TTS 示例
+# 流式输入（模拟 LLM 输出）
+pnpm tsx examples/tts/basic/speak-stream.ts doubao
+```
 
-| 文件 | 说明 | 输出格式 |
-|------|------|----------|
-| [minimax-tts-speak-non-stream.ts](./minimax-tts-speak-non-stream.ts) | 非流式输出示例 | MP3 |
-| [minimax-tts-speak-string.ts](./minimax-tts-speak-string.ts) | 字符串输入 + 流式输出 | MP3 |
-| [minimax-tts-speak-stream-input.ts](./minimax-tts-speak-stream-input.ts) | 流式输入 + 流式输出 | MP3 |
-| [minimax-tts-speak-collect.ts](./minimax-tts-speak-collect.ts) | 流式输入 + 非流式输出 | MP3 |
+### TTS 提供商示例
 
-### 其他示例
+```bash
+# Doubao
+pnpm tsx examples/tts/providers/doubao/basic.ts
+pnpm tsx examples/tts/providers/doubao/seed-v1.ts
 
-| 文件 | 说明 | 输出格式 |
-|------|------|----------|
-| [llm-to-tts-demo.ts](./llm-to-tts-demo.ts) | LLM 流转语音示例 | PCM |
-| [openai-stream-demo.ts](./openai-stream-demo.ts) | OpenAI 流式调试示例 | JSONL |
+# Qwen
+pnpm tsx examples/tts/providers/qwen/basic.ts
+pnpm tsx examples/tts/providers/qwen/realtime.ts
 
-## 详细说明
+# Minimax
+pnpm tsx examples/tts/providers/minimax/basic.ts
 
-### doubao-tts-demo.ts
+# GLM
+pnpm tsx examples/tts/providers/glm/basic.ts
+```
 
-基础 TTS 合成示例，演示如何使用 `synthesize()` 方法合成语音。
+### ASR 基础示例
 
-**核心功能：**
-- 使用 `createTTS()` 创建 TTS 实例
-- 调用 `synthesize()` 方法合成完整文本
-- 保存为 MP3 格式音频文件
+```bash
+# 流式识别
+pnpm tsx examples/asr/basic/listen-stream.ts
 
-**适用场景：** 已知完整文本内容，需要一次性合成语音。
+# 非流式识别
+pnpm tsx examples/asr/basic/listen-non-stream.ts
+```
 
-### doubao-tts-speak-collect.ts
+### ASR 提供商示例
 
-流式音频收集示例，演示如何使用 `speak()` 方法收集音频块。
+```bash
+# Doubao
+pnpm tsx examples/asr/providers/doubao/basic.ts
+pnpm tsx examples/asr/providers/doubao/stream.ts
 
-**核心功能：**
-- 使用 `speak()` 方法流式获取音频
-- 通过 `for await...of` 遍历音频块
-- 使用 `saveAudio()` 工具函数保存音频
+# Qwen
+pnpm tsx examples/asr/providers/qwen/basic.ts
 
-**适用场景：** 需要实时处理音频块或监控合成进度。
+# GLM
+pnpm tsx examples/asr/providers/glm/basic.ts
+```
 
-### doubao-tts-speak-string.ts
+### 音频处理示例
 
-字符串输入模式示例，演示 `speak(string)` 的用法。
+```bash
+# OGG 转 Opus 数据包
+pnpm tsx examples/audio/ogg-to-opus-packets.ts
+
+# Opus 数据包合并为 OGG
+pnpm tsx examples/audio/opus-packets-to-ogg.ts
+```
+
+## 示例说明
+
+### TTS 示例
+
+#### tts/basic/speak-string.ts
+
+字符串输入示例，演示 `speak(string)` 的用法。
 
 **核心功能：**
 - 直接传入字符串而非流式输入
+- 支持多提供商（doubao、qwen、minimax）
 - 输出首字延迟统计信息
-- 演示性能监控最佳实践
 
 **适用场景：** 已知完整文本，但希望获得流式输出的低延迟体验。
 
-### doubao-tts-stream-direct.ts
+#### tts/basic/speak-stream.ts
 
-直接流式保存示例，演示最简单的流式保存方式。
+流式输入示例，演示 `speak(textStream, { stream: true })` 的用法。
 
 **核心功能：**
-- 使用 `saveAudio()` 直接保存流
-- 无需手动收集音频块
+- 文本流输入（模拟 LLM 流式输出）
+- 实时流式音频输出
+- 边发边收，首字延迟最低
 
-**适用场景：** 快速保存音频，无需处理中间过程。
+**适用场景：** LLM 对话、语音助手等需要实时响应的场景。
 
-### llm-to-tts-demo.ts
+#### tts/advanced/llm-to-tts.ts
 
 LLM 流转语音示例，演示如何将 OpenAI 流式输出直接转为语音。
 
@@ -104,82 +182,28 @@ LLM 流转语音示例，演示如何将 OpenAI 流式输出直接转为语音�
 
 **适用场景：** AI 对话、语音助手等需要实时响应的场景。
 
-### openai-stream-demo.ts
+### ASR 示例
 
-OpenAI 流式调试示例，用于调试流式返回数据。
+#### asr/basic/listen-stream.ts
 
-**核心功能：**
-- 捕获 OpenAI 流式响应的每个 chunk
-- 保存为 JSONL 格式便于分析
-- 控制台输出详细的 chunk 信息
-
-**适用场景：** 调试 OpenAI 流式响应，分析数据格式。
-
-### Minimax TTS 示例
-
-#### minimax-tts-speak-non-stream.ts
-
-非流式输出示例，演示 `speak(text)` 获取完整音频的用法。
+流式识别示例，演示 `asr.listen(audioPath, { stream: true })` 的用法。
 
 **核心功能：**
-- 使用 `speak(string)` 获取完整音频
-- 等待所有音频数据返回后再输出
-- 保存为 MP3 格式
+- 输入完整音频，实时返回识别片段
+- 适合长音频，可以更早看到识别结果
+- 显示中间和最终结果
 
-**适用场景：** 已知完整文本，需要一次性获取完整音频。
+**适用场景：** 需要实时显示识别进度的场景。
 
-#### minimax-tts-speak-string.ts
+#### asr/basic/listen-non-stream.ts
 
-字符串输入 + 流式输出示例，演示 `speak(text, { stream: true })` 的用法。
-
-**核心功能：**
-- 字符串输入，流式音频输出
-- 实时接收音频块，降低首字延迟
-- 输出首字延迟统计信息
-
-**适用场景：** 已知完整文本，但希望获得流式输出的低延迟体验。
-
-#### minimax-tts-speak-stream-input.ts
-
-流式输入 + 流式输出示例，演示 `speak(textStream, { stream: true })` 的用法。
+非流式识别示例，演示 `asr.listen(audioPath)` 的用法。
 
 **核心功能：**
-- 文本流输入（模拟 LLM 流式输出）
-- 实时流式音频输出
-- 边发边收，首字延迟最低
+- 输入完整音频，等待识别完成
+- 返回完整识别结果
 
-**适用场景：** LLM 对话、语音助手等需要实时响应的场景。
-
-#### minimax-tts-speak-collect.ts
-
-流式输入 + 非流式输出示例，演示 `speak(textStream)` 获取完整音频的用法。
-
-**核心功能：**
-- 文本流输入（模拟 LLM 流式输出）
-- 等待完整音频后一次性返回
-- 适用于需要完整音频数据的场景
-
-**适用场景：** 接收流式文本，但需要保存完整音频文件或进行二次处理。
-
-## 运行方式
-
-```bash
-# Doubao TTS 示例
-pnpm tsx examples/doubao-tts-demo.ts
-pnpm tsx examples/doubao-tts-speak-collect.ts
-pnpm tsx examples/doubao-tts-speak-string.ts
-pnpm tsx examples/doubao-tts-stream-direct.ts
-
-# Minimax TTS 示例
-pnpm tsx examples/minimax-tts-speak-non-stream.ts
-pnpm tsx examples/minimax-tts-speak-string.ts
-pnpm tsx examples/minimax-tts-speak-stream-input.ts
-pnpm tsx examples/minimax-tts-speak-collect.ts
-
-# 其他示例
-pnpm tsx examples/llm-to-tts-demo.ts
-pnpm tsx examples/openai-stream-demo.ts
-```
+**适用场景：** 需要完整识别结果的场景。
 
 ## 输出文件
 
@@ -187,16 +211,11 @@ pnpm tsx examples/openai-stream-demo.ts
 
 ```
 examples/output/
-├── doubao-tts-demo.mp3                     # Doubao MP3 格式音频
-├── doubao-tts-speak-collect.pcm            # Doubao PCM 格式音频
-├── doubao-tts-speak-string.pcm             # Doubao PCM 格式音频
-├── doubao-tts-stream-direct.pcm            # Doubao PCM 格式音频
-├── minimax-tts-speak-non-stream.mp3        # Minimax MP3 格式音频
-├── minimax-tts-speak-string.mp3            # Minimax MP3 格式音频
-├── minimax-tts-speak-stream-input.mp3      # Minimax MP3 格式音频
-├── minimax-tts-speak-collect.mp3           # Minimax MP3 格式音频
-├── llm-to-tts-demo.pcm                     # LLM 转 TTS PCM 格式音频
-└── openai-stream-*.jsonl                   # OpenAI 流式数据
+├── doubao-tts-demo.mp3
+├── qwen-tts-demo.mp3
+├── speak-string-doubao.pcm
+├── speak-string-qwen.mp3
+└── ...
 ```
 
 ### 播放 PCM 音频
@@ -205,13 +224,14 @@ PCM 格式需要指定采样率和格式参数：
 
 ```bash
 # 24000 Hz, 16-bit, mono
-ffplay -f s16le -ar 24000 examples/output/doubao-tts-speak-collect.pcm
+ffplay -f s16le -ar 24000 examples/output/speak-string-doubao.pcm
 ```
 
-### 播放 MP3 音频
+### 播放 MP3/OGG 音频
 
-MP3 格式可直接播放：
+MP3/OGG 格式可直接播放：
 
 ```bash
-ffplay examples/output/doubao-tts-demo.mp3
+ffplay examples/output/qwen-tts-demo.mp3
+ffplay examples/output/merged-from-opus-packets.ogg
 ```

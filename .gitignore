@@ -141,7 +141,7 @@ vite.config.ts.timestamp-*
 .DS_Store
 
 # Examples
-examples/output
+examples/**/output
 
 worktrees
 
