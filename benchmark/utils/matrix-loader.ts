@@ -3,10 +3,12 @@
  * 用于统一加载所有提供商的矩阵数据
  */
 import type { MatrixItem } from '../metrics/types';
-import { doubaoMatrixItems } from '../scenarios/doubao-matrix-data';
-import { glmMatrixItems } from '../scenarios/glm-matrix-data';
-import { minimaxMatrixItems } from '../scenarios/minimax-matrix-data';
-import { qwenMatrixItems } from '../scenarios/qwen-matrix-data';
+import {
+  doubaoMatrixItems,
+  glmMatrixItems,
+  minimaxMatrixItems,
+  qwenMatrixItems,
+} from '../scenarios/matrix';
 
 /**
  * 所有矩阵测试项

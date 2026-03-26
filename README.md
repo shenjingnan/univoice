@@ -493,29 +493,9 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/26 11:19:21
+> 生成时间: 2026/3/26 14:01:19
 
 > 环境: Node.js v24.14.0, darwin arm64
-
-## 测试覆盖率
-
-> 以下展示测试矩阵中所有定义的测试场景覆盖情况。
-
-### 总体覆盖情况
-
-| 总场景数 | 已测试 | 待测试 | 覆盖率 |
-|----------|--------|--------|--------|
-| 124 | 124 | 0 | 100.0% |
-
-### 按提供商统计
-
-| 提供商 | 总场景数 | 已测试 | 待测试 | 覆盖率 |
-|--------|----------|--------|--------|--------|
-| 通义千问 | 42 | 42 | 0 | 100.0% |
-| 通义千问 (Realtime) | 17 | 17 | 0 | 100.0% |
-| 火山引擎 | 16 | 16 | 0 | 100.0% |
-| Minimax | 48 | 48 | 0 | 100.0% |
-| 智谱 GLM | 1 | 1 | 0 | 100.0% |
 
 ## TTS 性能指标
 
@@ -541,145 +521,186 @@ const asr = createASR({
 
 | 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | 吞吐量 (chars/s) |
 |--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----------------|
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 8000 | 6 | 624 | 118 | 8726 | 10184 | 838 | 64.1 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 16000 | 6 | 556 | 64 | 8586 | 9838 | 3129 | 77.1 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | 6 | 573 | 57 | 8328 | 11354 | 1178 | 65.2 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 24000 | 6 | 704 | 67 | 11027 | 12958 | 1619 | 54.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | 6 | 532 | 27 | 8558 | 10379 | 3168 | 76.3 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 48000 | 6 | 578 | 27 | 8588 | 9112 | 443 | 67.5 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 9 | 729 | 23 | 8813 | 12104 | 1307 | 92.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 16000 | 9 | 760 | 23 | 8797 | 13435 | 3442 | 94.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 12 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 24000 | 9 | 821 | 20 | 8368 | 13894 | 3968 | 105.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | 6 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 48000 | 12 | 662 | 21 | 8402 | *17053* | 4134 | 136.8 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | 6 | 839 | 153 | 11754 | 11923 | 517 | 49.3 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 16000 | 6 | 792 | 81 | 11509 | 12051 | 4063 | 59.6 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | 6 | 832 | 69 | 10916 | 11902 | 1025 | 52.8 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 24000 | 6 | 868 | 75 | 11809 | 12117 | 195 | 48.2 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 44100 | 6 | 801 | 34 | 11631 | 11973 | 3981 | 59.3 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 48000 | 6 | 868 | 37 | *11900* | 13024 | 882 | 48.6 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 8000 | 9 | 1063 | 30 | 11896 | 12627 | 331 | 71.7 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 16000 | 9 | 902 | 22 | 11514 | 12601 | 4307 | 93.2 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 22050 | 9 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 24000 | 9 | 819 | 17 | 11060 | 11858 | 5180 | 122.9 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 44100 | 9 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 48000 | 9 | 846 | 17 | 11501 | 12383 | *5206* | 118.3 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 8000 | 6 | 1602 | 99 | 9461 | 12421 | 3538 | 66.8 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 16000 | 6 | 1575 | 67 | 9929 | 11489 | 3463 | 65.0 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 22050 | 6 | 1299 | 49 | 9829 | 11190 | 3612 | 67.4 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 24000 | 6 | 1673 | 60 | 10435 | 11589 | 875 | 54.7 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 44100 | 6 | 1299 | 32 | 9563 | 11176 | 917 | 59.3 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 48000 | 6 | *1700* | 30 | 10863 | 12202 | 1336 | 53.8 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 8000 | 6 | 920 | 16 | 8183 | 12148 | 4475 | 85.7 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 16000 | 6 | 1141 | 15 | 9283 | 10047 | 4008 | 84.3 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 22050 | 6 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 24000 | 6 | 1443 | 20 | 9942 | 11236 | 3302 | 64.7 |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 44100 | 6 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 48000 | 6 | 1085 | 19 | 9183 | 10977 | 3316 | 70.5 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 8000 | 6 | 675 | 114 | 6465 | 6533 | 220 | 89.6 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 16000 | 6 | 728 | 58 | 6363 | 6776 | 199 | 88.9 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 22050 | 6 | 681 | 43 | 6336 | 7031 | 303 | 88.2 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 24000 | 6 | 694 | 39 | 6246 | 7566 | 551 | 87.8 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 44100 | 6 | 1029 | 23 | 6641 | 10311 | 1427 | 79.5 |
-| 通义千问 | cosyvoice-v1 | longwan | pcm | 48000 | 6 | 661 | 20 | 6626 | 6753 | 219 | 87.3 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 8000 | 9 | 815 | 127 | 6269 | 7875 | 745 | 132.4 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 16000 | 6 | 903 | 123 | 6208 | 6887 | 337 | 91.3 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 24000 | 4 | 961 | 122 | 6331 | 6854 | 512 | 60.9 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 48000 | 3 | 1274 | 121 | 6379 | 6867 | 415 | 44.8 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 8000 | 6 | 1039 | 16 | 6191 | 7811 | 680 | 87.9 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 16000 | 4 | 1101 | 16 | 6600 | 6928 | 273 | 57.4 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 24000 | 3 | 1078 | 16 | 6665 | 7372 | 446 | *42.0* |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 48000 | 3 | 941 | 16 | 6339 | 6852 | 346 | 44.5 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 8000 | 3 | 494 | 81 | 3877 | 3883 | 91 | 74.7 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 16000 | 3 | 489 | 85 | 3923 | 4608 | 355 | 69.3 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 24000 | 3 | 450 | 82 | 3951 | 4131 | 125 | 71.8 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 48000 | 3 | 570 | 79 | 3859 | 3861 | 73 | 74.8 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 8000 | 3 | 508 | 10 | 3918 | 3987 | 136 | 73.9 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 16000 | 3 | 501 | 11 | 3786 | 3846 | 68 | 75.6 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 24000 | 3 | 473 | 10 | 3899 | 4131 | 124 | 72.0 |
-| qwen-realtime | qwen3-tts-flash-realtime | Cherry | opus | 48000 | 3 | 457 | 10 | 3807 | 4134 | 176 | 73.3 |
-| qwen-realtime | qwen-tts-realtime | Cherry | pcm | 24000 | 3 | 667 | 63 | 4585 | 4897 | 169 | 61.1 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 8000 | 3 | 679 | 62 | 3082 | 3373 | 156 | 90.3 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 16000 | 3 | 710 | 61 | 3224 | 3297 | 35 | 87.8 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 24000 | 3 | 935 | 112 | 3531 | 9650 | 2997 | 52.6 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 48000 | 3 | 760 | 61 | 3181 | 3397 | 151 | 89.0 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 8000 | 3 | 827 | 60 | 3146 | 3722 | 318 | 86.8 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 16000 | 3 | 653 | 62 | 3254 | 3461 | 231 | 88.9 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 24000 | 3 | 670 | 102 | 3429 | 7919 | 2209 | 59.3 |
-| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 48000 | 3 | 698 | 65 | 3217 | 3603 | 200 | 85.8 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 491 | 65 | 3810 | 3859 | **29 🏆** | 74.6 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 16000 | 3 | 500 | 66 | 3752 | 3832 | 43 | 75.5 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 24000 | 3 | 510 | 65 | 3760 | 3783 | 50 | 76.3 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 48000 | 3 | 560 | 64 | 3770 | 3835 | 43 | 75.4 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 8000 | 3 | 511 | 65 | 3733 | 3798 | 70 | 76.6 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 16000 | 3 | 509 | 65 | 3740 | 3761 | 52 | 76.7 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | 3 | 514 | 66 | 3810 | 3837 | 41 | 75.1 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | 3 | 476 | 64 | 3631 | 3839 | 125 | 77.7 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 8000 | 3 | 399 | 10 | 2496 | 2728 | 112 | 110.9 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 16000 | 3 | 431 | 6 | 2533 | 2989 | 295 | 109.6 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 22050 | 3 | 458 | 3 | 2203 | 2379 | 88 | 126.4 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 24000 | 3 | 453 | 3 | 2281 | 3109 | 436 | 114.0 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 32000 | 3 | 490 | 3 | 2781 | 2945 | 288 | 107.0 |
-| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 44100 | 3 | 465 | 2 | 2323 | 2410 | 61 | 122.2 |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 8000 | 3 | **374 🏆** | 8 | **1890 🏆** | **2051 🏆** | 88 | **147.8 🏆** |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 16000 | 3 | 419 | 5 | 2528 | 2876 | 367 | 115.7 |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 22050 | 3 | 386 | 3 | 2188 | 2298 | 80 | 129.8 |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 24000 | 3 | 486 | 3 | 2483 | 2679 | 156 | 114.6 |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 32000 | 3 | 395 | 2 | 2382 | 2453 | 169 | 123.9 |
-| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 44100 | 3 | 447 | 2 | 2398 | 2489 | 213 | 124.2 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 8000 | 3 | 484 | 12 | 2552 | 2889 | 174 | 107.7 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 16000 | 3 | 708 | 6 | 2824 | 3097 | 214 | 100.6 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 22050 | 3 | 554 | 4 | 2581 | 3188 | 296 | 102.9 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 24000 | 3 | 522 | 4 | 2799 | 2902 | 156 | 103.9 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 32000 | 3 | 490 | 3 | 2526 | 2707 | 164 | 113.4 |
-| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 44100 | 3 | 588 | 2 | 2821 | 2943 | 167 | 102.9 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 8000 | 3 | 479 | 9 | 2201 | 2225 | 53 | 131.0 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 16000 | 3 | 511 | 5 | 2203 | 2574 | 196 | 123.9 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 22050 | 3 | 458 | 4 | 2157 | 2740 | 318 | 124.0 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 24000 | 3 | 450 | 3 | 1990 | 2484 | 235 | 132.4 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 32000 | 3 | 526 | 3 | 2291 | 2415 | 86 | 123.7 |
-| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 44100 | 3 | 476 | 2 | 2037 | 2113 | 79 | 140.9 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 8000 | 3 | 490 | 15 | 2680 | 3387 | 1141 | 126.5 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 16000 | 3 | 497 | 6 | 2485 | 2625 | 90 | 113.7 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 22050 | 3 | 519 | 4 | 2674 | 2795 | 154 | 108.3 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 24000 | 3 | 528 | 4 | 2785 | 3025 | 116 | 99.6 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 32000 | 3 | 610 | 3 | 2816 | 3432 | 303 | 94.8 |
-| MiniMax | speech-02-hd | male-qn-qingse | pcm | 44100 | 3 | 555 | 2 | 2837 | 3231 | 197 | 96.5 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 8000 | 3 | 429 | 10 | 1979 | 2730 | 370 | 129.1 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 16000 | 3 | 456 | 5 | 2026 | 2761 | 431 | 131.0 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 22050 | 3 | 418 | 4 | 2563 | 2919 | 349 | 113.2 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 24000 | 3 | 862 | 4 | 2714 | 2877 | 277 | 109.4 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 32000 | 3 | 424 | 2 | 1995 | 2120 | 75 | 141.2 |
-| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 44100 | 3 | 436 | 2 | 2244 | 2815 | 270 | 117.1 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 8000 | 3 | 484 | 10 | 2247 | 2306 | 30 | 125.9 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 16000 | 3 | 505 | 6 | 2531 | 2559 | 46 | 113.4 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 22050 | 3 | 464 | 4 | 2375 | 2483 | 227 | 125.5 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 24000 | 3 | 538 | 4 | 2325 | 2856 | 266 | 114.8 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 32000 | 3 | 590 | 3 | 2548 | 2634 | 143 | 114.3 |
-| MiniMax | speech-01-hd | male-qn-qingse | pcm | 44100 | 3 | 592 | 2 | 2432 | 2509 | 136 | 119.9 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 8000 | 3 | 427 | 10 | 2146 | 2243 | 72 | 132.4 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 16000 | 3 | 516 | 4 | 1965 | 2055 | 59 | 144.1 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 22050 | 3 | 465 | 4 | 2088 | 2247 | 119 | 135.9 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 24000 | 3 | 471 | 3 | 2048 | 2201 | 74 | 135.9 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | 3 | 490 | 2 | 2101 | 2148 | 99 | 138.6 |
-| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | 3 | 448 | **2 🏆** | 1920 | 2100 | 99 | 145.2 |
-| 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 861 | *542* | 5037 | 5614 | 296 | 54.8 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v2 | longyingxiao | opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v1 | longwan | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-instruct-flash-realtime | Cherry | opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen3-tts-flash-realtime | Cherry | opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 通义千问 (Realtime) | qwen-tts-realtime | Cherry | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 48000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 48000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 8000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 16000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | - | 未测试 | - | - | - | - | - |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.8-turbo | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-hd | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-2.6-turbo | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-hd | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-02-turbo | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-hd | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 8000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 16000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 22050 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 24000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | - | 未测试 | - | - | - | - | - |
+| MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | - | 未测试 | - | - | - | - | - |
+| 智谱 GLM | glm-tts | tongtong | pcm | 24000 | - | 未测试 | - | - | - | - | - |
 
 ### 能力矩阵
 
 | 提供商 | 协议 | 流式输入 | 流式输出 |
 |--------|------|:--------:|:--------:|
-| 通义千问 | WebSocket | ❌ | ✅ |
-| qwen-realtime | Unknown | ❌ | ✅ |
-| 豆包 | WebSocket | ❌ | ✅ |
-| 智谱 GLM | HTTP | ❌ | ✅ |
-| MiniMax | WebSocket | ❌ | ✅ |
+| 通义千问 | WebSocket | ✅ | ✅ |
+| 豆包 | WebSocket | ✅ | ✅ |
+| MiniMax | WebSocket | ✅ | ✅ |
+| 智谱 GLM | HTTP | ✅ | ✅ |
+
+## ASR 性能指标
+
+### 场景说明
+
+| 场景 | 说明 |
+|------|------|
+| 流式入/流式出 | 实时音频流输入，实时识别结果输出 |
+| 非流式入/非流式出 | 完整音频输入，完整结果返回 |
+| 非流式入/流式出 | 完整音频输入，实时识别结果输出 |
+
+> **注意**：标记 `*` 的场景使用 WebSocket 流式传输后聚合结果，并非原生非流式。
+
+### 指标说明
+
+| 指标 | 含义 | 计算方法 | 作用 |
+|------|------|----------|------|
+| 首包延迟 | 从发送请求到收到第一个识别结果的时间 | 所有测试首包延迟的平均值 | 反映 ASR 服务的响应速度 |
+| 平均间隔 | 稳定状态下平均每个 chunk 的间隔时间 | (总耗时 - 首包延迟) / (chunk数 - 1) 的平均值 | 反映 ASR 服务吐识别结果的节奏 |
+| P50 | 中位数，50% 请求低于此值 | 所有耗时排序后取中位数 | 反映典型请求的性能 |
+| P95 | 95% 请求低于此值 | 所有耗时排序后取第95百分位 | 评估尾部延迟，了解最坏情况 |
+| 标准差 | 延迟的离散程度 | 各耗时与平均值差值的平方的均值的平方根 | 值越小性能越稳定 |
+| RTF | 实时因子，处理时间与音频时长的比值 | 处理耗时 / 音频时长 | 值越小效率越高，<1 表示快于实时 |
+| 准确率 | 识别正确的字符比例 | 正确字符数 / 总字符数 | 值越高识别越准确 |
+| CER | 字符错误率，需编辑操作的字符比例 | (替换+删除+插入) / 总字符数 | 值越低识别越准确 |
+
+### 综合性能指标
+
+| ASR | 场景 | 协议 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | RTF | 准确率 | CER |
+|-----|------|------|---------------|---------------|----------|----------|-------------|-----|--------|-----|
+| 通义千问 | 流式入/流式出 | WebSocket | 0 | **639 🏆** | **2267 🏆** | 14800 | 4559 | **0.40 🏆** | 97.6% | **2.4% 🏆** |
+| 通义千问 | 非流式入/非流式出 | WebSocket | 0 | 886 | *5200* | **10620 🏆** | 4088 | 0.41 | 97.4% | 2.6% |
+| 豆包 | 流式入/流式出 | WebSocket | 0 | 951 | 3300 | 13000 | **3602 🏆** | 0.54 | 95.9% | 4.1% |
+| 豆包 | 非流式入/非流式出 | WebSocket | 0 | *1839* | 3578 | 25600 | 7988 | 0.55 | 96.2% | 3.8% |
+| 智谱 GLM | 非流式入/非流式出 | HTTP | 0 | 1638 | 3533 | *37260* | *11171* | *0.57* | 94.5% | *5.5%* |
+
+### 能力矩阵
+
+| 提供商 | 协议 | 流式输入 | 流式输出 | 原生非流式 |
+|--------|------|:--------:|:--------:|:----------:|
+| 通义千问 | WebSocket | ✅ | ✅ | ❌ |
+| 豆包 | WebSocket | ✅ | ✅ | ❌ |
+| 智谱 GLM | HTTP | ✅ | ✅ | ✅ |
 
 ---
 
 *数据更新于: 2026-03-26*
-
 <!-- PERFORMANCE_TABLE_END -->
 
 ---
