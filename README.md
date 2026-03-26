@@ -493,9 +493,29 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/25 23:02:44
+> 生成时间: 2026/3/26 11:19:21
 
 > 环境: Node.js v24.14.0, darwin arm64
+
+## 测试覆盖率
+
+> 以下展示测试矩阵中所有定义的测试场景覆盖情况。
+
+### 总体覆盖情况
+
+| 总场景数 | 已测试 | 待测试 | 覆盖率 |
+|----------|--------|--------|--------|
+| 124 | 124 | 0 | 100.0% |
+
+### 按提供商统计
+
+| 提供商 | 总场景数 | 已测试 | 待测试 | 覆盖率 |
+|--------|----------|--------|--------|--------|
+| 通义千问 | 42 | 42 | 0 | 100.0% |
+| 通义千问 (Realtime) | 17 | 17 | 0 | 100.0% |
+| 火山引擎 | 16 | 16 | 0 | 100.0% |
+| Minimax | 48 | 48 | 0 | 100.0% |
+| 智谱 GLM | 1 | 1 | 0 | 100.0% |
 
 ## TTS 性能指标
 
@@ -521,30 +541,30 @@ const asr = createASR({
 
 | 服务商 | 模型 | 音色 | 编码格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | 吞吐量 (chars/s) |
 |--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----------------|
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 9 | 729 | 23 | 8813 | 12104 | 1307 | 92.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 16000 | 9 | 760 | 23 | 8797 | 13435 | 3442 | 94.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 24000 | 9 | 821 | 20 | 8368 | 13894 | 3968 | 105.0 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 48000 | 12 | 662 | 21 | 8402 | *17053* | 4134 | 136.8 |
-| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 12 | 测试失败 | - | - | - | - | - |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 8000 | 6 | 624 | 118 | 8726 | 10184 | 838 | 64.1 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 16000 | 6 | 556 | 64 | 8586 | 9838 | 3129 | 77.1 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 22050 | 6 | 573 | 57 | 8328 | 11354 | 1178 | 65.2 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 24000 | 6 | 704 | 67 | 11027 | 12958 | 1619 | 54.0 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 44100 | 6 | 532 | 27 | 8558 | 10379 | 3168 | 76.3 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | pcm | 48000 | 6 | 578 | 27 | 8588 | 9112 | 443 | 67.5 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 8000 | 9 | 729 | 23 | 8813 | 12104 | 1307 | 92.0 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 16000 | 9 | 760 | 23 | 8797 | 13435 | 3442 | 94.0 |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 22050 | 12 | 测试失败 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 24000 | 9 | 821 | 20 | 8368 | 13894 | 3968 | 105.0 |
 | 通义千问 | cosyvoice-v3-flash | longanyang | opus | 44100 | 6 | 测试失败 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-flash | longanyang | opus | 48000 | 12 | 662 | 21 | 8402 | *17053* | 4134 | 136.8 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 8000 | 6 | 839 | 153 | 11754 | 11923 | 517 | 49.3 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 16000 | 6 | 792 | 81 | 11509 | 12051 | 4063 | 59.6 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 22050 | 6 | 832 | 69 | 10916 | 11902 | 1025 | 52.8 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 24000 | 6 | 868 | 75 | 11809 | 12117 | 195 | 48.2 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 44100 | 6 | 801 | 34 | 11631 | 11973 | 3981 | 59.3 |
 | 通义千问 | cosyvoice-v3-plus | longanyang | pcm | 48000 | 6 | 868 | 37 | *11900* | 13024 | 882 | 48.6 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 8000 | 6 | 885 | 30 | 11788 | 12124 | 228 | 48.4 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 16000 | 6 | 791 | 24 | 11720 | 12162 | 4008 | 58.7 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 22050 | 6 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 24000 | 6 | 686 | 15 | 6341 | 11858 | *5373* | 89.3 |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 44100 | 6 | 测试失败 | - | - | - | - | - |
-| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 48000 | 6 | 798 | 25 | 11797 | 12383 | 4045 | 56.6 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 8000 | 9 | 1063 | 30 | 11896 | 12627 | 331 | 71.7 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 16000 | 9 | 902 | 22 | 11514 | 12601 | 4307 | 93.2 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 22050 | 9 | 测试失败 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 24000 | 9 | 819 | 17 | 11060 | 11858 | 5180 | 122.9 |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 44100 | 9 | 测试失败 | - | - | - | - | - |
+| 通义千问 | cosyvoice-v3-plus | longanyang | opus | 48000 | 9 | 846 | 17 | 11501 | 12383 | *5206* | 118.3 |
 | 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 8000 | 6 | 1602 | 99 | 9461 | 12421 | 3538 | 66.8 |
 | 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 16000 | 6 | 1575 | 67 | 9929 | 11489 | 3463 | 65.0 |
 | 通义千问 | cosyvoice-v2 | longyingxiao | pcm | 22050 | 6 | 1299 | 49 | 9829 | 11190 | 3612 | 67.4 |
@@ -563,9 +583,14 @@ const asr = createASR({
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 24000 | 6 | 694 | 39 | 6246 | 7566 | 551 | 87.8 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 44100 | 6 | 1029 | 23 | 6641 | 10311 | 1427 | 79.5 |
 | 通义千问 | cosyvoice-v1 | longwan | pcm | 48000 | 6 | 661 | 20 | 6626 | 6753 | 219 | 87.3 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 8000 | 6 | 603 | 124 | 5921 | 6726 | 390 | 94.8 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 16000 | 3 | 558 | 124 | 5959 | 6117 | 110 | 47.7 |
-| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 24000 | 1 | 548 | 119 | 5433 | 5433 | **0 🏆** | *17.5* |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 8000 | 9 | 815 | 127 | 6269 | 7875 | 745 | 132.4 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 16000 | 6 | 903 | 123 | 6208 | 6887 | 337 | 91.3 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 24000 | 4 | 961 | 122 | 6331 | 6854 | 512 | 60.9 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | pcm | 48000 | 3 | 1274 | 121 | 6379 | 6867 | 415 | 44.8 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 8000 | 6 | 1039 | 16 | 6191 | 7811 | 680 | 87.9 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 16000 | 4 | 1101 | 16 | 6600 | 6928 | 273 | 57.4 |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 24000 | 3 | 1078 | 16 | 6665 | 7372 | 446 | *42.0* |
+| qwen-realtime | qwen3-tts-instruct-flash-realtime | Cherry | opus | 48000 | 3 | 941 | 16 | 6339 | 6852 | 346 | 44.5 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 8000 | 3 | 494 | 81 | 3877 | 3883 | 91 | 74.7 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 16000 | 3 | 489 | 85 | 3923 | 4608 | 355 | 69.3 |
 | qwen-realtime | qwen3-tts-flash-realtime | Cherry | pcm | 24000 | 3 | 450 | 82 | 3951 | 4131 | 125 | 71.8 |
@@ -583,7 +608,7 @@ const asr = createASR({
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 16000 | 3 | 653 | 62 | 3254 | 3461 | 231 | 88.9 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 24000 | 3 | 670 | 102 | 3429 | 7919 | 2209 | 59.3 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 48000 | 3 | 698 | 65 | 3217 | 3603 | 200 | 85.8 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 491 | 65 | 3810 | 3859 | 29 | 74.6 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 491 | 65 | 3810 | 3859 | **29 🏆** | 74.6 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 16000 | 3 | 500 | 66 | 3752 | 3832 | 43 | 75.5 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 24000 | 3 | 510 | 65 | 3760 | 3783 | 50 | 76.3 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 48000 | 3 | 560 | 64 | 3770 | 3835 | 43 | 75.4 |
@@ -591,7 +616,6 @@ const asr = createASR({
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 16000 | 3 | 509 | 65 | 3740 | 3761 | 52 | 76.7 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 24000 | 3 | 514 | 66 | 3810 | 3837 | 41 | 75.1 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | ogg_opus | 48000 | 3 | 476 | 64 | 3631 | 3839 | 125 | 77.7 |
-| 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 861 | *542* | 5037 | 5614 | 296 | 54.8 |
 | MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 8000 | 3 | 399 | 10 | 2496 | 2728 | 112 | 110.9 |
 | MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 16000 | 3 | 431 | 6 | 2533 | 2989 | 295 | 109.6 |
 | MiniMax | speech-2.8-hd | male-qn-qingse | pcm | 22050 | 3 | 458 | 3 | 2203 | 2379 | 88 | 126.4 |
@@ -640,6 +664,7 @@ const asr = createASR({
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 24000 | 3 | 471 | 3 | 2048 | 2201 | 74 | 135.9 |
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | 3 | 490 | 2 | 2101 | 2148 | 99 | 138.6 |
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | 3 | 448 | **2 🏆** | 1920 | 2100 | 99 | 145.2 |
+| 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 861 | *542* | 5037 | 5614 | 296 | 54.8 |
 
 ### 能力矩阵
 
@@ -653,7 +678,7 @@ const asr = createASR({
 
 ---
 
-*数据更新于: 2026-03-25*
+*数据更新于: 2026-03-26*
 
 <!-- PERFORMANCE_TABLE_END -->
 

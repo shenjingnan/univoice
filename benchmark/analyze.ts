@@ -6,8 +6,21 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { calculateNormalizedAccuracy } from './metrics/accuracy';
-import type { BenchmarkReport, BenchmarkResult, SingleTestResult } from './metrics/types';
+import type {
+  BenchmarkReport,
+  BenchmarkResult,
+  MatrixCoverageItem,
+  MatrixCoverageSummary,
+  ProviderMatrixCoverage,
+  SingleTestResult,
+} from './metrics/types';
 import { analyzeResults } from './utils/aggregator';
+import {
+  allMatrixItems,
+  generateScenarioName,
+  getAllProviders,
+  getProviderDisplayName,
+} from './utils/matrix-loader';
 import { generateMarkdownReport } from './utils/report-generator';
 import { countResults, loadResults } from './utils/result-loader';
 import { getLatestDir } from './utils/result-writer';
@@ -86,6 +99,7 @@ function ensureDir(dir: string): void {
  */
 function generateReport(results: SingleTestResult[]): BenchmarkReport {
   const analysis = analyzeResults(results);
+  const matrixCoverage = calculateMatrixCoverage(results);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -97,6 +111,72 @@ function generateReport(results: SingleTestResult[]): BenchmarkReport {
     ttsProviders: analysis.ttsProviders,
     asrProviders: analysis.asrProviders,
     results: results.map(toBenchmarkResult),
+    matrixCoverage,
+  };
+}
+
+/**
+ * 计算矩阵覆盖率
+ */
+function calculateMatrixCoverage(results: SingleTestResult[]): MatrixCoverageSummary {
+  // 构建已测试场景的 Set（只统计成功的测试）
+  const testedScenarios = new Set<string>();
+  for (const result of results) {
+    if (result.status === 'success' && result.scenario.startsWith('matrix/')) {
+      testedScenarios.add(result.scenario);
+    }
+  }
+
+  // 按提供商分组统计
+  const providerCoverages: ProviderMatrixCoverage[] = [];
+  const providers = getAllProviders();
+
+  for (const provider of providers) {
+    const providerItems = allMatrixItems.filter((item) => item.provider === provider);
+    const pendingItems: MatrixCoverageItem[] = [];
+    let testedCount = 0;
+
+    for (const item of providerItems) {
+      const scenario = generateScenarioName(item);
+      const isTested = testedScenarios.has(scenario);
+
+      if (!isTested) {
+        pendingItems.push({
+          provider: item.provider,
+          model: item.model,
+          voice: item.voice,
+          format: item.format,
+          sampleRate: item.sampleRate,
+          status: 'pending',
+          scenario,
+        });
+      } else {
+        testedCount++;
+      }
+    }
+
+    const totalScenarios = providerItems.length;
+    providerCoverages.push({
+      provider,
+      displayName: getProviderDisplayName(provider),
+      totalScenarios,
+      testedScenarios: testedCount,
+      pendingScenarios: pendingItems.length,
+      coverageRate: totalScenarios > 0 ? testedCount / totalScenarios : 0,
+      pendingItems,
+    });
+  }
+
+  // 计算总计
+  const totalScenarios = allMatrixItems.length;
+  const testedScenariosCount = testedScenarios.size;
+
+  return {
+    totalScenarios,
+    testedScenarios: testedScenariosCount,
+    pendingScenarios: totalScenarios - testedScenariosCount,
+    totalCoverageRate: totalScenarios > 0 ? testedScenariosCount / totalScenarios : 0,
+    byProvider: providerCoverages,
   };
 }
 
@@ -250,6 +330,19 @@ export async function analyze(options?: {
   console.log(`\n✅ 分析完成!`);
   console.log(`   - TTS 测试: ${ttsCount} 条`);
   console.log(`   - ASR 测试: ${asrCount} 条`);
+
+  // 显示矩阵覆盖率摘要
+  if (report.matrixCoverage) {
+    const coverage = report.matrixCoverage;
+    console.log(`\n📊 测试矩阵覆盖率:`);
+    console.log(
+      `   - 总覆盖率: ${(coverage.totalCoverageRate * 100).toFixed(1)}% (${coverage.testedScenarios}/${coverage.totalScenarios})`
+    );
+    for (const pc of coverage.byProvider) {
+      const rate = (pc.coverageRate * 100).toFixed(1);
+      console.log(`   - ${pc.displayName}: ${rate}% (${pc.testedScenarios}/${pc.totalScenarios})`);
+    }
+  }
 }
 
 // 直接运行时执行

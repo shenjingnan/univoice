@@ -250,6 +250,8 @@ export interface BenchmarkReport {
   asrProviders: ProviderSummary[];
   /** 原始测试结果 */
   results: BenchmarkResult[];
+  /** 矩阵覆盖率 */
+  matrixCoverage?: MatrixCoverageSummary;
 }
 
 /**
@@ -531,4 +533,65 @@ export interface MatrixScenarioConfig {
   iterations: number;
   /** 超时时间（ms） */
   timeout: number;
+}
+
+/**
+ * 矩阵测试状态
+ */
+export type MatrixTestStatus = 'tested' | 'pending';
+
+/**
+ * 单个矩阵场景覆盖信息
+ */
+export interface MatrixCoverageItem {
+  /** 提供商标识 */
+  provider: string;
+  /** 模型名称 */
+  model: string;
+  /** 音色名称 */
+  voice: string;
+  /** 音频编码格式 */
+  format: string;
+  /** 采样率 (Hz) */
+  sampleRate: number;
+  /** 测试状态 */
+  status: MatrixTestStatus;
+  /** 场景名称（用于匹配） */
+  scenario: string;
+}
+
+/**
+ * 按提供商分组的覆盖率
+ */
+export interface ProviderMatrixCoverage {
+  /** 提供商标识 */
+  provider: string;
+  /** 提供商显示名称 */
+  displayName: string;
+  /** 总场景数 */
+  totalScenarios: number;
+  /** 已测试场景数 */
+  testedScenarios: number;
+  /** 待测试场景数 */
+  pendingScenarios: number;
+  /** 覆盖率 (0-1) */
+  coverageRate: number;
+  /** 待测试场景列表 */
+  pendingItems: MatrixCoverageItem[];
+}
+
+/**
+ * 矩阵覆盖率汇总
+ */
+export interface MatrixCoverageSummary {
+  /** 总场景数 */
+  totalScenarios: number;
+  /** 已测试场景数 */
+  testedScenarios: number;
+  /** 待测试场景数 */
+  pendingScenarios: number;
+  /** 总覆盖率 (0-1) */
+  totalCoverageRate: number;
+  /** 按提供商统计 */
+  byProvider: ProviderMatrixCoverage[];
 }
