@@ -117,3 +117,71 @@ export function printStats(startTime: number, chunkCount: number, chunks: Uint8A
   console.log(`总音频块数: ${chunkCount}`);
   console.log(`总音频大小: ${chunks.reduce((sum, c) => sum + c.length, 0)} bytes`);
 }
+
+// ============================================
+// 提供商配置获取函数
+// ============================================
+
+/**
+ * 获取 Qwen API Key
+ */
+export function getQwenApiKey(): string {
+  const apiKey = process.env.QWEN_API_KEY;
+  if (!apiKey) {
+    console.error('请设置环境变量 QWEN_API_KEY');
+    process.exit(1);
+  }
+  return apiKey;
+}
+
+/**
+ * 获取 Minimax API Key
+ */
+export function getMinimaxApiKey(): string {
+  const apiKey = process.env.MINIMAX_API_KEY;
+  if (!apiKey) {
+    console.error('请设置环境变量 MINIMAX_API_KEY');
+    process.exit(1);
+  }
+  return apiKey;
+}
+
+/**
+ * 获取 GLM API Key
+ */
+export function getGlmApiKey(): string {
+  const apiKey = process.env.GLM_API_KEY;
+  if (!apiKey) {
+    console.error('请设置环境变量 GLM_API_KEY');
+    process.exit(1);
+  }
+  return apiKey;
+}
+
+// ============================================
+// 模拟数据生成函数
+// ============================================
+
+/**
+ * 模拟 LLM 流式输出
+ * 实际场景中，这里可能是 OpenAI SDK 的 stream 对象
+ * @param delay - 每个文本块的延迟时间（毫秒），默认 100ms
+ */
+export async function* mockLLMStream(delay = 100): AsyncIterable<string> {
+  const chunks = [
+    '欢迎来到杭州！',
+    '我是您的智能导游。',
+    '杭州，这座有着2200多年历史的古城，',
+    '曾是南宋都城，',
+    '如今是现代与古典完美交融的东方名城。',
+    '让我们一起开启这段美妙的杭州之旅吧！',
+  ];
+
+  for (const chunk of chunks) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    console.log(`[${timestamp()}] LLM 输出: "${chunk}"`);
+    yield chunk;
+  }
+
+  console.log(`[${timestamp()}] LLM 流结束`);
+}
