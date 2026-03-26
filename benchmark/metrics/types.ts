@@ -464,7 +464,7 @@ export interface ScenarioSummary {
 }
 
 /**
- * 矩阵测试项
+ * TTS 矩阵测试项
  * 每个项代表一个完整的测试场景配置
  */
 export interface MatrixItem {
@@ -481,7 +481,24 @@ export interface MatrixItem {
 }
 
 /**
- * 矩阵测试过滤器
+ * ASR 矩阵测试项
+ * 使用 language 替代 TTS 的 voice 作为矩阵维度
+ */
+export interface ASRMatrixItem {
+  /** 提供商标识 */
+  provider: 'qwen' | 'doubao' | 'glm' | 'minimax';
+  /** 模型名称 */
+  model: string;
+  /** 语言 */
+  language: string;
+  /** 音频格式 */
+  format: 'pcm' | 'wav' | 'mp3';
+  /** 采样率 (Hz，可选) */
+  sampleRate?: number;
+}
+
+/**
+ * TTS 矩阵测试过滤器
  * 用于筛选特定的矩阵测试项
  */
 export interface MatrixFilter {
@@ -492,6 +509,21 @@ export interface MatrixFilter {
   /** 音频编码格式过滤（支持逗号分隔多个） */
   format?: string[];
   /** 采样率过滤（支持逗号分隔多个） */
+  sampleRate?: number[];
+}
+
+/**
+ * ASR 矩阵测试过滤器
+ * 用于筛选特定的 ASR 矩阵测试项
+ */
+export interface ASRMatrixFilter {
+  /** 模型名称过滤 */
+  model?: string[];
+  /** 语言过滤 */
+  language?: string[];
+  /** 音频格式过滤 */
+  format?: string[];
+  /** 采样率过滤 */
   sampleRate?: number[];
 }
 
@@ -529,6 +561,26 @@ export interface MatrixScenarioConfig {
   description: string;
   /** 测试类型 */
   testType: 'tts';
+  /** 每个组合的迭代次数 */
+  iterations: number;
+  /** 超时时间（ms） */
+  timeout: number;
+}
+
+/**
+ * ASR 矩阵测试场景配置
+ */
+export interface ASRMatrixScenarioConfig {
+  /** 场景名称 */
+  name: string;
+  /** 场景描述 */
+  description: string;
+  /** 测试类型 */
+  testType: 'asr';
+  /** 输入模式（ASR 矩阵仅支持非流式入） */
+  inputMode: 'non-stream';
+  /** 输出模式（ASR 矩阵仅支持流式出） */
+  outputMode: 'stream';
   /** 每个组合的迭代次数 */
   iterations: number;
   /** 超时时间（ms） */
@@ -594,4 +646,60 @@ export interface MatrixCoverageSummary {
   totalCoverageRate: number;
   /** 按提供商统计 */
   byProvider: ProviderMatrixCoverage[];
+}
+
+/**
+ * ASR 单个矩阵场景覆盖信息
+ */
+export interface ASRMatrixCoverageItem {
+  /** 提供商标识 */
+  provider: string;
+  /** 模型名称 */
+  model: string;
+  /** 语言 */
+  language: string;
+  /** 音频格式 */
+  format: string;
+  /** 采样率 (Hz) */
+  sampleRate: number;
+  /** 测试状态 */
+  status: MatrixTestStatus;
+  /** 场景名称（用于匹配） */
+  scenario: string;
+}
+
+/**
+ * ASR 按提供商分组的覆盖率
+ */
+export interface ASRProviderMatrixCoverage {
+  /** 提供商标识 */
+  provider: string;
+  /** 提供商显示名称 */
+  displayName: string;
+  /** 总场景数 */
+  totalScenarios: number;
+  /** 已测试场景数 */
+  testedScenarios: number;
+  /** 待测试场景数 */
+  pendingScenarios: number;
+  /** 覆盖率 (0-1) */
+  coverageRate: number;
+  /** 待测试场景列表 */
+  pendingItems: ASRMatrixCoverageItem[];
+}
+
+/**
+ * ASR 矩阵覆盖率汇总
+ */
+export interface ASRMatrixCoverageSummary {
+  /** 总场景数 */
+  totalScenarios: number;
+  /** 已测试场景数 */
+  testedScenarios: number;
+  /** 待测试场景数 */
+  pendingScenarios: number;
+  /** 总覆盖率 (0-1) */
+  totalCoverageRate: number;
+  /** 按提供商统计 */
+  byProvider: ASRProviderMatrixCoverage[];
 }

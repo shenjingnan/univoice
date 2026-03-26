@@ -7,13 +7,8 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { calculateNormalizedAccuracy } from '../metrics/accuracy';
 import { average, successRate } from '../metrics/collector';
-import type {
-  BenchmarkReport,
-  BenchmarkResult,
-  LatencyMetrics,
-  MatrixCoverageSummary,
-} from '../metrics/types';
-import { allMatrixItems, getProviderDisplayName } from './matrix-loader';
+import type { BenchmarkReport, BenchmarkResult, LatencyMetrics } from '../metrics/types';
+import { allASRMatrixItems, allMatrixItems, getProviderDisplayName } from './matrix-loader';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..', '..', '..');
@@ -337,6 +332,64 @@ function extractScenarioDetail(result: BenchmarkResult): {
 }
 
 /**
+ * ASR 矩阵场景信息
+ */
+interface ASRMatrixScenarioInfo {
+  model: string;
+  language: string;
+  format: string;
+  sampleRate: number;
+}
+
+/**
+ * 解析 ASR 矩阵场景名称
+ * 格式: asr-matrix/<model>/<language>/<format>-<sampleRate>
+ * 示例: asr-matrix/paraformer-realtime-v2/zh-CN/pcm-16000
+ */
+function parseASRMatrixScenario(scenario: string): ASRMatrixScenarioInfo | null {
+  if (!scenario.startsWith('asr-matrix/')) return null;
+  const parts = scenario.split('/');
+  if (parts.length !== 4) return null;
+
+  const [_, model, language, formatSampleRate] = parts;
+  const [format, sampleRateStr] = formatSampleRate.split('-');
+  const sampleRate = parseInt(sampleRateStr, 10);
+  if (Number.isNaN(sampleRate)) return null;
+
+  return { model, language, format, sampleRate };
+}
+
+/**
+ * 提取 ASR 场景详细配置
+ * 从 BenchmarkResult 提取模型、语言、格式等信息，优先使用矩阵场景名称解析
+ */
+function extractASRScenarioDetail(result: BenchmarkResult): {
+  model: string;
+  language: string;
+  format: string;
+  sampleRate: string;
+} {
+  // 优先从 ASR 矩阵场景名称解析
+  const asrMatrixInfo = parseASRMatrixScenario(result.scenario);
+  if (asrMatrixInfo) {
+    return {
+      model: asrMatrixInfo.model,
+      language: asrMatrixInfo.language,
+      format: asrMatrixInfo.format,
+      sampleRate: `${asrMatrixInfo.sampleRate}`,
+    };
+  }
+
+  // 从 result 中获取
+  return {
+    model: result.model || 'default',
+    language: 'unknown',
+    format: result.config.format || 'unknown',
+    sampleRate: result.config.sampleRate ? `${result.config.sampleRate}` : 'unknown',
+  };
+}
+
+/**
  * ASR 场景说明配置
  */
 const ASR_SCENARIO_CONFIG: Record<string, { label: string; description: string; note?: string }> = {
@@ -367,40 +420,6 @@ const TTS_SCENARIO_CONFIG: Record<string, { label: string; description: string; 
     description: '完整文本输入，完整音频返回',
   },
 };
-
-/**
- * 提供商协议配置
- */
-const PROVIDER_PROTOCOL: Record<string, string> = {
-  qwen: 'WebSocket',
-  doubao: 'WebSocket',
-  glm: 'HTTP',
-  minimax: 'WebSocket',
-  openai: 'HTTP',
-  gemini: 'HTTP',
-};
-
-/**
- * 格式化场景名称
- */
-function formatScenario(
-  scenario: string,
-  type: 'tts' | 'asr' = 'asr'
-): { label: string; note?: string } {
-  const config = type === 'tts' ? TTS_SCENARIO_CONFIG : ASR_SCENARIO_CONFIG;
-  const scenarioConfig = config[scenario];
-  if (scenarioConfig) {
-    return { label: scenarioConfig.label, note: scenarioConfig.note };
-  }
-  return { label: scenario };
-}
-
-/**
- * 获取提供商协议
- */
-function getProtocol(provider: string): string {
-  return PROVIDER_PROTOCOL[provider] || 'Unknown';
-}
 
 /**
  * 生成 TTS 性能报告
@@ -705,35 +724,6 @@ function generateTTSReport(results: BenchmarkResult[], providers: Map<string, st
     lines.push('');
   }
 
-  // 能力矩阵
-  lines.push('### 能力矩阵');
-  lines.push('');
-  lines.push('| 提供商 | 协议 | 流式输入 | 流式输出 |');
-  lines.push('|--------|------|:--------:|:--------:|');
-
-  // 按提供商分组来生成能力矩阵
-  const providerGroups = new Map<string, BenchmarkResult[]>();
-  for (const result of ttsResults) {
-    const group = providerGroups.get(result.provider) || [];
-    group.push(result);
-    providerGroups.set(result.provider, group);
-  }
-
-  for (const [provider, res] of providerGroups) {
-    const displayName = providers.get(provider) || provider;
-    const protocol = getProtocol(provider);
-    // 根据 config.inputMode 和 config.outputMode 判断流式能力
-    const hasStreamIn = res.some((r) => r.config.inputMode === 'stream' && r.status === 'success');
-    const hasStreamOut = res.some(
-      (r) => r.config.outputMode === 'stream' && r.status === 'success'
-    );
-    const streamIn = hasStreamIn ? '✅' : '❌';
-    const streamOut = hasStreamOut ? '✅' : '❌';
-    lines.push(`| ${displayName} | ${protocol} | ${streamIn} | ${streamOut} |`);
-  }
-
-  lines.push('');
-
   return lines;
 }
 
@@ -788,260 +778,195 @@ function generateASRReport(results: BenchmarkResult[], providers: Map<string, st
   );
   lines.push('');
 
-  // 按提供商 + 场景分组
-  const scenarioGroups = new Map<string, BenchmarkResult[]>();
-  for (const result of asrResults) {
-    const key = `${result.provider}/${result.scenario}`;
-    const group = scenarioGroups.get(key) || [];
-    group.push(result);
-    scenarioGroups.set(key, group);
-  }
+  // ASR 矩阵表格（非流式入/流式出）
+  // 检查是否有 ASR 矩阵场景
+  const asrMatrixResults = asrResults.filter((r) => r.scenario.startsWith('asr-matrix/'));
 
-  // 计算统计
-  const scenarioStats = Array.from(scenarioGroups.entries()).map(([key, res]) => {
-    const [provider, scenario] = key.split('/');
-    return {
-      key,
-      provider,
-      scenario,
-      displayName: providers.get(provider) || provider,
-      ...calculateExtendedPerformance(res),
-    };
-  });
-
-  // 综合性能表格
-  lines.push('### 综合性能指标');
-  lines.push('');
-  lines.push(
-    '| ASR | 场景 | 协议 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | RTF | 准确率 | CER |'
-  );
-  lines.push(
-    '|-----|------|------|---------------|---------------|----------|----------|-------------|-----|--------|-----|'
-  );
-
-  // 计算各指标的 min/max 索引用于标记最佳值（只计算成功的）
-  const successStats = scenarioStats.filter((s) => !s.hasFailure);
-  const firstLatencyValues = successStats.map((s) => s.firstLatency ?? 0);
-  const avgLatencyValues = successStats.map((s) => s.avgLatency ?? 0);
-  const p50Values = successStats.map((s) => s.p50 ?? 0);
-  const p95Values = successStats.map((s) => s.p95 ?? 0);
-  const stdDevValues = successStats.map((s) => s.stdDev ?? 0);
-  const rtfValues = successStats
-    .filter((s) => s.avgRTF !== undefined)
-    .map((s) => s.avgRTF as number);
-  const cerValues = successStats
-    .filter((s) => s.avgCER !== undefined)
-    .map((s) => s.avgCER as number);
-
-  const firstLatencyMinMax = findMinMaxIndices(firstLatencyValues);
-  const avgLatencyMinMax = findMinMaxIndices(avgLatencyValues);
-  const p50MinMax = findMinMaxIndices(p50Values);
-  const p95MinMax = findMinMaxIndices(p95Values);
-  const stdDevMinMax = findMinMaxIndices(stdDevValues);
-  const rtfMinMax = findMinMaxIndices(rtfValues);
-  const cerMinMax = findMinMaxIndices(cerValues);
-
-  let rtfIdx = 0;
-  let cerIdx = 0;
-
-  for (let i = 0; i < scenarioStats.length; i++) {
-    const s = scenarioStats[i];
-    const scenarioInfo = formatScenario(s.scenario, 'asr');
-    const protocol = getProtocol(s.provider);
-
-    // 场景名称（带标记）
-    const scenarioLabel = `${scenarioInfo.label}${scenarioInfo.note || ''}`;
-
-    if (s.hasFailure) {
-      lines.push(
-        `| ${s.displayName} | ${scenarioLabel} | ${protocol} | 测试失败 | - | - | - | - | - | - | - |`
-      );
-      continue;
-    }
-
-    // 首次耗时
-    const successIndex = successStats.indexOf(s);
-    const firstLat = formatMetricValue(
-      s.firstLatency ?? 0,
-      successIndex,
-      firstLatencyMinMax.minIndex,
-      firstLatencyMinMax.maxIndex,
-      true,
-      ''
-    );
-
-    // 平均耗时
-    const avgLat = formatMetricValue(
-      s.avgLatency ?? 0,
-      successIndex,
-      avgLatencyMinMax.minIndex,
-      avgLatencyMinMax.maxIndex,
-      true,
-      ''
-    );
-
-    // P50
-    const p50 = formatMetricValue(
-      s.p50 ?? 0,
-      successIndex,
-      p50MinMax.minIndex,
-      p50MinMax.maxIndex,
-      true,
-      ''
-    );
-
-    // P95
-    const p95 = formatMetricValue(
-      s.p95 ?? 0,
-      successIndex,
-      p95MinMax.minIndex,
-      p95MinMax.maxIndex,
-      true,
-      ''
-    );
-
-    // 标准差
-    const stdDev = formatMetricValue(
-      s.stdDev ?? 0,
-      successIndex,
-      stdDevMinMax.minIndex,
-      stdDevMinMax.maxIndex,
-      true,
-      ''
-    );
-
-    // RTF
-    const rtf = s.avgRTF
-      ? formatMetricValue(s.avgRTF, rtfIdx++, rtfMinMax.minIndex, rtfMinMax.maxIndex, true, '', 2)
-      : 'N/A';
-
-    // 准确率
-    const accuracy = s.avgAccuracy !== undefined ? `${(s.avgAccuracy * 100).toFixed(1)}%` : 'N/A';
-
-    // CER
-    const cer = s.avgCER
-      ? formatMetricValue(
-          s.avgCER * 100,
-          cerIdx++,
-          cerMinMax.minIndex,
-          cerMinMax.maxIndex,
-          true,
-          '%',
-          1
-        )
-      : 'N/A';
-
-    lines.push(
-      `| ${s.displayName} | ${scenarioLabel} | ${protocol} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${rtf} | ${accuracy} | ${cer} |`
-    );
-  }
-
-  lines.push('');
-
-  // 能力矩阵
-  lines.push('### 能力矩阵');
-  lines.push('');
-  lines.push('| 提供商 | 协议 | 流式输入 | 流式输出 | 原生非流式 |');
-  lines.push('|--------|------|:--------:|:--------:|:----------:|');
-
-  // 按提供商分组来生成能力矩阵
-  const providerGroups = new Map<string, BenchmarkResult[]>();
-  for (const result of asrResults) {
-    const group = providerGroups.get(result.provider) || [];
-    group.push(result);
-    providerGroups.set(result.provider, group);
-  }
-
-  for (const [provider, res] of providerGroups) {
-    const displayName = providers.get(provider) || provider;
-    const protocol = getProtocol(provider);
-    const hasStreamIn = res.some(
-      (r) => r.scenario.includes('stream-input') && r.status === 'success'
-    );
-    const hasStreamOut = res.some(
-      (r) => r.scenario.includes('stream-output') && r.status === 'success'
-    );
-    // WebSocket 提供商不支持原生非流式
-    const hasNativeNonStream =
-      protocol !== 'WebSocket' &&
-      res.some(
-        (r) => r.scenario === 'non-stream-input-non-stream-output' && r.status === 'success'
-      );
-
-    const streamIn = hasStreamIn ? '✅' : '❌';
-    const streamOut = hasStreamOut ? '✅' : '❌';
-    const nativeNonStream = hasNativeNonStream ? '✅' : '❌';
-    lines.push(
-      `| ${displayName} | ${protocol} | ${streamIn} | ${streamOut} | ${nativeNonStream} |`
-    );
-  }
-
-  lines.push('');
-
-  return lines;
-}
-
-/**
- * 生成测试覆盖率报告
- */
-function generateMatrixCoverageSection(coverage: MatrixCoverageSummary): string[] {
-  const lines: string[] = [];
-
-  lines.push('## 测试覆盖率');
-  lines.push('');
-  lines.push('> 以下展示测试矩阵中所有定义的测试场景覆盖情况。');
-  lines.push('');
-
-  // 总体覆盖情况
-  lines.push('### 总体覆盖情况');
-  lines.push('');
-  lines.push('| 总场景数 | 已测试 | 待测试 | 覆盖率 |');
-  lines.push('|----------|--------|--------|--------|');
-  const totalRate = (coverage.totalCoverageRate * 100).toFixed(1);
-  lines.push(
-    `| ${coverage.totalScenarios} | ${coverage.testedScenarios} | ${coverage.pendingScenarios} | ${totalRate}% |`
-  );
-  lines.push('');
-
-  // 按提供商统计
-  lines.push('### 按提供商统计');
-  lines.push('');
-  lines.push('| 提供商 | 总场景数 | 已测试 | 待测试 | 覆盖率 |');
-  lines.push('|--------|----------|--------|--------|--------|');
-
-  for (const pc of coverage.byProvider) {
-    const rate = (pc.coverageRate * 100).toFixed(1);
-    lines.push(
-      `| ${pc.displayName} | ${pc.totalScenarios} | ${pc.testedScenarios} | ${pc.pendingScenarios} | ${rate}% |`
-    );
-  }
-  lines.push('');
-
-  // 待测试场景列表（限制显示数量）
-  const maxPendingDisplay = 50;
-  const allPendingItems = coverage.byProvider.flatMap((pc) => pc.pendingItems);
-
-  if (allPendingItems.length > 0) {
-    lines.push('### 待测试场景');
+  if (asrMatrixResults.length > 0 || allASRMatrixItems.length > 0) {
+    lines.push('### 非流式入/流式出');
     lines.push('');
+    lines.push(
+      '| 服务商 | 模型 | 语言 | 输入格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | RTF |'
+    );
+    lines.push(
+      '|--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----|'
+    );
 
-    const displayItems = allPendingItems.slice(0, maxPendingDisplay);
-    const remaining = allPendingItems.length - displayItems.length;
-
-    lines.push('| 提供商 | 模型 | 音色 | 格式 | 采样率 |');
-    lines.push('|--------|------|------|------|--------|');
-
-    for (const item of displayItems) {
-      const providerName =
-        coverage.byProvider.find((p) => p.provider === item.provider)?.displayName || item.provider;
-      lines.push(
-        `| ${providerName} | ${item.model} | ${item.voice} | ${item.format} | ${item.sampleRate} |`
-      );
+    // 按配置分组
+    const asrMatrixGroups = new Map<string, BenchmarkResult[]>();
+    for (const result of asrMatrixResults) {
+      const detail = extractASRScenarioDetail(result);
+      const key = `${result.provider}/${detail.model}/${detail.language}/${detail.format}/${detail.sampleRate}`;
+      const group = asrMatrixGroups.get(key) || [];
+      group.push(result);
+      asrMatrixGroups.set(key, group);
     }
 
-    if (remaining > 0) {
-      lines.push('');
-      lines.push(`> *还有 ${remaining} 个场景未显示...*`);
+    // 遍历所有 ASR 矩阵定义的场景
+    const asrStats: Array<{
+      key: string;
+      provider: string;
+      model: string;
+      language: string;
+      format: string;
+      sampleRate: string;
+      displayName: string;
+      hasFailure: boolean;
+      sampleCount: number;
+      firstLatency?: number;
+      avgLatency?: number;
+      p50?: number;
+      p95?: number;
+      stdDev?: number;
+      avgRTF?: number;
+    }> = [];
+
+    for (const item of allASRMatrixItems) {
+      const key = `${item.provider}/${item.model}/${item.language}/${item.format}/${item.sampleRate}`;
+      const testResults = asrMatrixGroups.get(key);
+
+      if (testResults && testResults.length > 0) {
+        // 有测试结果
+        const perf = calculateExtendedPerformance(testResults);
+        asrStats.push({
+          key,
+          provider: item.provider,
+          model: item.model,
+          language: item.language,
+          format: item.format,
+          sampleRate: `${item.sampleRate}`,
+          displayName: providers.get(item.provider) || getProviderDisplayName(item.provider),
+          hasFailure: perf.hasFailure,
+          sampleCount: perf.sampleCount,
+          firstLatency: perf.firstLatency,
+          avgLatency: perf.avgLatency,
+          p50: perf.p50,
+          p95: perf.p95,
+          stdDev: perf.stdDev,
+          avgRTF: perf.avgRTF,
+        });
+      } else {
+        // 无测试结果
+        asrStats.push({
+          key,
+          provider: item.provider,
+          model: item.model,
+          language: item.language,
+          format: item.format,
+          sampleRate: `${item.sampleRate}`,
+          displayName: providers.get(item.provider) || getProviderDisplayName(item.provider),
+          hasFailure: true,
+          sampleCount: 0,
+        });
+      }
+    }
+
+    // 计算各指标的 min/max 索引
+    const successAsrStats = asrStats.filter((s) => !s.hasFailure);
+    const asrFirstLatencyValues = successAsrStats.map((s) => s.firstLatency ?? 0);
+    const asrAvgLatencyValues = successAsrStats.map((s) => s.avgLatency ?? 0);
+    const asrP50Values = successAsrStats.map((s) => s.p50 ?? 0);
+    const asrP95Values = successAsrStats.map((s) => s.p95 ?? 0);
+    const asrStdDevValues = successAsrStats.map((s) => s.stdDev ?? 0);
+    const asrRtfValues = successAsrStats
+      .filter((s) => s.avgRTF !== undefined)
+      .map((s) => s.avgRTF as number);
+
+    const asrFirstLatencyMinMax = findMinMaxIndices(asrFirstLatencyValues);
+    const asrAvgLatencyMinMax = findMinMaxIndices(asrAvgLatencyValues);
+    const asrP50MinMax = findMinMaxIndices(asrP50Values);
+    const asrP95MinMax = findMinMaxIndices(asrP95Values);
+    const asrStdDevMinMax = findMinMaxIndices(asrStdDevValues);
+    const asrRtfMinMax = findMinMaxIndices(asrRtfValues);
+
+    let asrRtfIdx = 0;
+
+    for (let i = 0; i < asrStats.length; i++) {
+      const s = asrStats[i];
+
+      if (s.hasFailure) {
+        if (s.sampleCount === 0) {
+          // 未测试
+          lines.push(
+            `| ${s.displayName} | ${s.model} | ${s.language} | ${s.format} | ${s.sampleRate} | - | 未测试 | - | - | - | - | - |`
+          );
+        } else {
+          // 测试失败
+          lines.push(
+            `| ${s.displayName} | ${s.model} | ${s.language} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | 测试失败 | - | - | - | - | - |`
+          );
+        }
+        continue;
+      }
+
+      const successIndex = successAsrStats.indexOf(s);
+
+      // 首包延迟
+      const firstLat = formatMetricValue(
+        s.firstLatency ?? 0,
+        successIndex,
+        asrFirstLatencyMinMax.minIndex,
+        asrFirstLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 平均间隔
+      const avgLat = formatMetricValue(
+        s.avgLatency ?? 0,
+        successIndex,
+        asrAvgLatencyMinMax.minIndex,
+        asrAvgLatencyMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // P50
+      const p50 = formatMetricValue(
+        s.p50 ?? 0,
+        successIndex,
+        asrP50MinMax.minIndex,
+        asrP50MinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // P95
+      const p95 = formatMetricValue(
+        s.p95 ?? 0,
+        successIndex,
+        asrP95MinMax.minIndex,
+        asrP95MinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // 标准差
+      const stdDev = formatMetricValue(
+        s.stdDev ?? 0,
+        successIndex,
+        asrStdDevMinMax.minIndex,
+        asrStdDevMinMax.maxIndex,
+        true,
+        ''
+      );
+
+      // RTF
+      const rtf = s.avgRTF
+        ? formatMetricValue(
+            s.avgRTF,
+            asrRtfIdx++,
+            asrRtfMinMax.minIndex,
+            asrRtfMinMax.maxIndex,
+            true,
+            '',
+            2
+          )
+        : 'N/A';
+
+      lines.push(
+        `| ${s.displayName} | ${s.model} | ${s.language} | ${s.format} | ${s.sampleRate} | ${s.sampleCount} | ${firstLat} | ${avgLat} | ${p50} | ${p95} | ${stdDev} | ${rtf} |`
+      );
     }
 
     lines.push('');
@@ -1088,12 +1013,6 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
   }
   for (const p of report.asrProviders) {
     providerNames.set(p.provider, p.capabilities.displayName);
-  }
-
-  // 测试覆盖率（放在性能指标之前）
-  if (report.matrixCoverage) {
-    const coverageLines = generateMatrixCoverageSection(report.matrixCoverage);
-    lines.push(...coverageLines);
   }
 
   // TTS 报告

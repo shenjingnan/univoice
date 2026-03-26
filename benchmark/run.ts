@@ -91,6 +91,7 @@ export function parseRunArgs(): {
   doubao-matrix           Doubao TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
   glm-matrix              GLM TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
   minimax-matrix          Minimax TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
+  qwen-asr-matrix         Qwen ASR 矩阵测试，覆盖多种模型、语言、格式、采样率组合
 
 示例:
   pnpm benchmark run --                         # 测试所有服务商
@@ -108,6 +109,7 @@ export function parseRunArgs(): {
   pnpm benchmark run -- -s glm-matrix           # 运行 GLM TTS 矩阵测试
   pnpm benchmark run -- -s minimax-matrix       # 运行 Minimax TTS 矩阵测试
   pnpm benchmark run -- -s qwen-matrix --interval 2000  # 矩阵测试间隔 2 秒
+  pnpm benchmark run -- -s qwen-asr-matrix      # 运行 Qwen ASR 矩阵测试
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -281,7 +283,86 @@ export async function run(options?: {
 
   allResults = [];
 
-  // 矩阵测试场景（统一处理）
+  // ASR 矩阵测试场景
+  if (args.scenario?.endsWith('-asr-matrix')) {
+    const providerName = args.scenario.replace('-asr-matrix', '');
+    const providerDisplayName: Record<string, string> = {
+      qwen: 'Qwen',
+      doubao: 'Doubao',
+      glm: 'GLM',
+      minimax: 'Minimax',
+    };
+
+    console.log(
+      `📊 运行 ${providerDisplayName[providerName] || providerName} ASR 矩阵测试场景...\n`
+    );
+
+    if (args.matrixFilter) {
+      console.log('📋 矩阵过滤条件:');
+      if (args.matrixFilter.model) {
+        console.log(`   - 模型: ${args.matrixFilter.model.join(', ')}`);
+      }
+      if (args.matrixFilter.format) {
+        console.log(`   - 格式: ${args.matrixFilter.format.join(', ')}`);
+      }
+      if (args.matrixFilter.sampleRate) {
+        console.log(`   - 采样率: ${args.matrixFilter.sampleRate.join(', ')} Hz`);
+      }
+      console.log('');
+    }
+
+    // 检查并生成音频
+    if (!hasAudioFixtures()) {
+      console.log('📝 音频文件不存在，正在生成...\n');
+      await generateAudioFixtures();
+    }
+
+    const audioFiles = await getAudioFixtures();
+    if (audioFiles.length === 0) {
+      console.log('⚠️ 无法获取音频文件，跳过 ASR 矩阵测试');
+      return allResults;
+    }
+
+    // 使用第一个音频文件进行测试
+    const audioFile = audioFiles[0];
+    console.log(`📁 使用音频文件: ${audioFile.path}\n`);
+
+    // 使用 ASR 矩阵测试运行器
+    const { runASRMatrixScenario, getASRProviderMatrixConfig } = await import(
+      './scenarios/matrix/asr'
+    );
+    const providerConfig = getASRProviderMatrixConfig(providerName);
+
+    if (!providerConfig) {
+      console.error(`❌ 未知的 ASR 矩阵测试提供商: ${providerName}`);
+      process.exit(1);
+    }
+
+    // 转换过滤条件为 ASR 格式
+    const asrFilter = args.matrixFilter
+      ? {
+          model: args.matrixFilter.model,
+          format: args.matrixFilter.format,
+          sampleRate: args.matrixFilter.sampleRate,
+        }
+      : undefined;
+
+    const matrixResults = await runASRMatrixScenario(audioFile.path, {
+      providers: [providerName],
+      filter: asrFilter,
+      iterations: args.iterations,
+      interval: args.interval,
+    });
+    allResults.push(...matrixResults);
+
+    const totalTime = Date.now() - startTime;
+    console.log(`\n✅ ASR 矩阵测试完成! 总耗时: ${(totalTime / 1000).toFixed(1)}s`);
+    console.log(`   - 总测试次数: ${allResults.length}`);
+
+    return allResults;
+  }
+
+  // TTS 矩阵测试场景（统一处理）
   if (args.scenario?.endsWith('-matrix')) {
     const providerName = args.scenario.replace('-matrix', '');
     const providerDisplayName: Record<string, string> = {
