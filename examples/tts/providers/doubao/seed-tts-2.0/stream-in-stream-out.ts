@@ -1,9 +1,18 @@
 /**
- * Doubao TTS seed-tts-1.0 示例
- * 演示如何使用 seed-tts-1.0 模型进行语音合成
+ * Doubao TTS seed-tts-2.0 - 流式输入/流式输出示例
+ * 演示实时语音合成场景
  *
- * seed-tts-1.0 是豆包 TTS 的早期版本模型
- * 本示例使用 zh_male_lengkugege_emo_v2_mars_bigtts 音色
+ * 模型特点:
+ * - V2 版本
+ * - 性能更优
+ * - 推荐用于一般场景
+ *
+ * 环境变量:
+ * - DOUBAO_APP_ID: 火山引擎应用 ID
+ * - DOUBAO_ACCESS_TOKEN: 火山引擎访问令牌
+ *
+ * 使用方法:
+ * npx tsx examples/tts/providers/doubao/seed-tts-2.0/stream-in-stream-out.ts
  */
 import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
@@ -15,20 +24,24 @@ import {
   printPlayTip,
   printStats,
   timestamp,
-} from '../../../utils/common';
+} from '../../../../utils/common';
 
 const { __dirname, basename } = getScriptMeta(import.meta.url);
+
+// 固定使用 seed-tts-2.0 模型
+const RESOURCE_ID = 'seed-tts-2.0';
 
 async function main() {
   const { appId, accessToken } = getTTSConfig();
 
+  // 创建 TTS 实例
   const tts = createTTS({
     provider: 'doubao',
     appId,
     accessToken,
     voice: 'zh_male_lengkugege_emo_v2_mars_bigtts',
     format: 'pcm',
-    resourceId: 'seed-tts-1.0',
+    resourceId: RESOURCE_ID,
     sampleRate: 24000,
   });
 
@@ -37,7 +50,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`\n[${timestamp()}] === seed-tts-1.0 演示 ===\n`);
+  console.log(`\n[${timestamp()}] === Seed TTS 2.0 - 流式入/流式出 ===`);
+  console.log(`模型: ${RESOURCE_ID}`);
+  console.log(`场景: 实时语音合成\n`);
 
   const text =
     '欢迎来到龙井村。这里是西湖龙井茶的原产地，漫山遍野的茶园层层叠叠，空气中弥漫着淡淡的茶香。春天采茶季节，您还能看到茶农们忙碌的身影。';
@@ -56,7 +71,7 @@ async function main() {
       firstChunkTime = Date.now();
       console.log(`[${timestamp()}] [首字延迟] ${firstChunkTime - startTime} ms\n`);
     }
-    console.log(`[${timestamp()}] 收到音频块: ${audioChunk.length} bytes`);
+    console.log(`[${timestamp()}] 收到音频块 #${chunkCount}: ${audioChunk.length} bytes`);
     chunks.push(audioChunk);
   }
 
