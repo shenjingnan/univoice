@@ -2,6 +2,41 @@
 
 阿里云 DashScope TTS 服务示例代码，支持 CosyVoice 和 Realtime 两种模式。
 
+## 目录结构
+
+```
+examples/tts/providers/qwen/
+├── cosyvoice-v3-flash/          # 推荐模型
+│   ├── stream-in-stream-out.ts      # 流式入/流式出
+│   ├── non-stream-in-non-stream-out.ts  # 非流式入/非流式出
+│   └── README.md
+├── cosyvoice-v3-plus/           # 高质量版本
+│   ├── stream-in-stream-out.ts
+│   ├── non-stream-in-non-stream-out.ts
+│   └── README.md
+├── cosyvoice-v2/                # V2 版本
+│   ├── stream-in-stream-out.ts
+│   ├── non-stream-in-non-stream-out.ts
+│   └── README.md
+├── cosyvoice-v1/                # V1 版本
+│   ├── stream-in-stream-out.ts
+│   ├── non-stream-in-non-stream-out.ts
+│   └── README.md
+├── qwen3-tts-instruct-flash-realtime/  # 支持指令控制
+│   ├── stream-in-stream-out.ts
+│   └── README.md
+├── qwen3-tts-flash-realtime/    # 标准实时版本
+│   ├── stream-in-stream-out.ts
+│   └── README.md
+├── basic.ts                     # 基础示例（支持命令行指定模型）
+├── stream-input.ts              # 流式输入示例
+├── non-stream-output.ts         # 非流式输出示例
+├── opus-output.ts               # Opus 格式输出
+├── realtime.ts                  # Realtime API 示例
+├── README.md
+└── output/                      # 输出目录
+```
+
 ## 支持的模型
 
 ### CosyVoice 模型 (provider: `qwen`)
@@ -39,16 +74,48 @@
 | `Ethan` | 沉稳男声 |
 | `Luna` | 温柔女声 |
 
-## 示例文件说明
+## 快速开始
+
+### 推荐模型: CosyVoice v3 Flash
+
+```bash
+# 流式入/流式出
+npx tsx examples/tts/providers/qwen/cosyvoice-v3-flash/stream-in-stream-out.ts
+
+# 非流式入/非流式出
+npx tsx examples/tts/providers/qwen/cosyvoice-v3-flash/non-stream-in-non-stream-out.ts
+```
+
+### 高质量模型: CosyVoice v3 Plus
+
+```bash
+# 流式入/流式出
+npx tsx examples/tts/providers/qwen/cosyvoice-v3-plus/stream-in-stream-out.ts
+
+# 非流式入/非流式出
+npx tsx examples/tts/providers/qwen/cosyvoice-v3-plus/non-stream-in-non-stream-out.ts
+```
+
+### 指令控制: Qwen3 TTS Instruct Flash Realtime
+
+```bash
+# 流式入/流式出（支持情感控制）
+npx tsx examples/tts/providers/qwen/qwen3-tts-instruct-flash-realtime/stream-in-stream-out.ts
+```
+
+## 旧示例文件
+
+以下示例文件仍然可用，支持通过命令行参数指定模型：
 
 | 文件 | 场景 | 说明 |
 |------|------|------|
 | `basic.ts` | 字符串输入 → 流式输出 | 最常用的场景，展示基础用法 |
 | `stream-input.ts` | 流式输入 → 流式输出 | LLM 流式输出转语音 |
 | `non-stream-output.ts` | 字符串输入 → 完整音频 | 离线存储或批量处理 |
+| `opus-output.ts` | Opus 格式输出 | 高压缩比音频格式 |
 | `realtime.ts` | Realtime API | 指令控制、情感调节 |
 
-## 使用方法
+## 旧示例文件使用方法
 
 ### 基础示例
 
