@@ -395,13 +395,23 @@ export async function receiveEvent(ws: WebSocket): Promise<ServerEvent> {
       reject(error);
     };
 
+    const closeHandler = () => {
+      const index = state.callbacks.indexOf(resolver);
+      if (index !== -1) {
+        state.callbacks.splice(index, 1);
+      }
+      reject(new Error('WebSocket connection closed'));
+    };
+
     const resolver = (event: ServerEvent) => {
       ws.removeListener('error', errorHandler);
+      ws.removeListener('close', closeHandler);
       resolve(event);
     };
 
     state.callbacks.push(resolver);
     ws.once('error', errorHandler);
+    ws.once('close', closeHandler);
   });
 }
 
