@@ -9,7 +9,7 @@ import {
   minimaxMatrixItems,
   qwenMatrixItems,
 } from '../scenarios/matrix';
-import { qwenASRMatrixItems } from '../scenarios/matrix/asr';
+import { doubaoASRMatrixItems, qwenASRMatrixItems } from '../scenarios/matrix/asr';
 
 /**
  * 所有 TTS 矩阵测试项
@@ -25,10 +25,7 @@ export const allMatrixItems: MatrixItem[] = [
 /**
  * 所有 ASR 矩阵测试项
  */
-export const allASRMatrixItems: ASRMatrixItem[] = [
-  ...qwenASRMatrixItems,
-  // 其他提供商的 ASR 矩阵项可以在这里添加
-];
+export const allASRMatrixItems: ASRMatrixItem[] = [...qwenASRMatrixItems, ...doubaoASRMatrixItems];
 
 /**
  * 提供商显示名称映射
