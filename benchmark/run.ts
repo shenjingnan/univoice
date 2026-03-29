@@ -324,8 +324,7 @@ export async function run(options?: {
     }
 
     // 使用第一个音频文件进行测试
-    const audioFile = audioFiles[0];
-    console.log(`📁 使用音频文件: ${audioFile.path}\n`);
+    let audioFile = audioFiles[0];
 
     // 使用 ASR 矩阵测试运行器
     const { runASRMatrixScenario, getASRProviderMatrixConfig } = await import(
@@ -337,6 +336,16 @@ export async function run(options?: {
       console.error(`❌ 未知的 ASR 矩阵测试提供商: ${providerName}`);
       process.exit(1);
     }
+
+    // 检查 provider 是否支持 PCM 格式，不支持则回退到 MP3
+    const supportsPCM = providerConfig.items.some((item) => item.format === 'pcm');
+    if (!supportsPCM && audioFile.format === 'pcm') {
+      const mp3Path = audioFile.path.replace(/\.pcm$/, '.mp3');
+      if (existsSync(mp3Path)) {
+        audioFile = { ...audioFile, path: mp3Path, format: 'mp3' };
+      }
+    }
+    console.log(`📁 使用音频文件: ${audioFile.path}\n`);
 
     // 转换过滤条件为 ASR 格式
     const asrFilter = args.matrixFilter
