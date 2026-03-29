@@ -37,6 +37,53 @@ export function isWav(data: Buffer): boolean {
 }
 
 /**
+ * 检测是否为压缩音频格式（MP3、OGG、FLAC 等）
+ */
+export function isCompressedAudio(data: Buffer): boolean {
+  if (data.length < 4) return false;
+  // MP3: ID3v2 标签
+  if (data[0] === 0x49 && data[1] === 0x44 && data[2] === 0x33) return true;
+  // MP3: 帧同步标记
+  if (data[0] === 0xff && (data[1] & 0xe0) === 0xe0) return true;
+  // OGG
+  if (data.slice(0, 4).toString() === 'OggS') return true;
+  // FLAC
+  if (data.slice(0, 4).toString() === 'fLaC') return true;
+  return false;
+}
+
+/**
+ * 将裸 PCM 数据封装为 WAV 格式
+ */
+export function createWavFromPcm(
+  pcmData: Buffer,
+  sampleRate: number = DEFAULT_SAMPLE_RATE,
+  channels: number = 1,
+  bitDepth: number = 16
+): Buffer {
+  const byteRate = sampleRate * channels * (bitDepth / 8);
+  const blockAlign = channels * (bitDepth / 8);
+  const dataSize = pcmData.length;
+
+  const header = Buffer.alloc(44);
+  header.write('RIFF', 0);
+  header.writeUInt32LE(36 + dataSize, 4);
+  header.write('WAVE', 8);
+  header.write('fmt ', 12);
+  header.writeUInt32LE(16, 16);
+  header.writeUInt16LE(1, 20); // PCM 格式
+  header.writeUInt16LE(channels, 22);
+  header.writeUInt32LE(sampleRate, 24);
+  header.writeUInt32LE(byteRate, 28);
+  header.writeUInt16LE(blockAlign, 32);
+  header.writeUInt16LE(bitDepth, 34);
+  header.write('data', 36);
+  header.writeUInt32LE(dataSize, 40);
+
+  return Buffer.concat([header, pcmData]);
+}
+
+/**
  * 解析 WAV 文件信息
  */
 export function parseWavInfo(data: Buffer): WavInfo {
@@ -303,12 +350,16 @@ export async function processAudio(
   // 读取音频数据
   const rawData = await readAudio(input);
 
-  // 判断是否为 WAV 格式，如果不是则转换
+  // 判断音频格式并转换为 WAV
   let wavData: Buffer;
   if (isWav(rawData)) {
     wavData = rawData;
-  } else {
+  } else if (isCompressedAudio(rawData)) {
+    // 压缩格式（MP3 等）需要 ffmpeg 解码
     wavData = convertToWav(rawData, DEFAULT_SAMPLE_RATE);
+  } else {
+    // 裸 PCM 数据，直接添加 WAV 头
+    wavData = createWavFromPcm(rawData, DEFAULT_SAMPLE_RATE);
   }
 
   // 解析 WAV 信息

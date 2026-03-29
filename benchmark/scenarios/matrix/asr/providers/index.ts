@@ -2,10 +2,14 @@
  * ASR 矩阵测试提供商配置汇总
  */
 import type { ASRProviderMatrixConfig } from '../types';
+import { DOUBAO_ASR_MATRIX_CONFIG, doubaoASRMatrixItems, doubaoASRScenarioConfig } from './doubao';
 import { QWEN_ASR_MATRIX_CONFIG, qwenASRMatrixItems, qwenASRScenarioConfig } from './qwen';
 
 // 重新导出各提供商配置和数据
 export {
+  DOUBAO_ASR_MATRIX_CONFIG,
+  doubaoASRMatrixItems,
+  doubaoASRScenarioConfig,
   QWEN_ASR_MATRIX_CONFIG,
   qwenASRMatrixItems,
   qwenASRScenarioConfig,
@@ -16,7 +20,7 @@ export {
  */
 export const ALL_ASR_PROVIDER_MATRIX_CONFIGS: ASRProviderMatrixConfig[] = [
   QWEN_ASR_MATRIX_CONFIG,
-  // 其他提供商配置可以在这里添加
+  DOUBAO_ASR_MATRIX_CONFIG,
 ];
 
 /**

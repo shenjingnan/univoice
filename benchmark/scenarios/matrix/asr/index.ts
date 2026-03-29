@@ -4,6 +4,9 @@
 
 // 导出提供商配置
 export {
+  DOUBAO_ASR_MATRIX_CONFIG,
+  doubaoASRMatrixItems,
+  doubaoASRScenarioConfig,
   getASRProviderConfig,
   getASRProviderConfigs,
   QWEN_ASR_MATRIX_CONFIG,
