@@ -2,9 +2,8 @@
  * ASR 性能测试运行器
  */
 import 'dotenv/config';
-import type { BaseASR } from '../../src/asr/base';
-import { createASR } from '../../src/asr/factory';
-import type { AudioStream } from '../../src/types/asr';
+import type { AudioStream, BaseASR } from 'univoice/asr';
+import { createASR } from 'univoice/asr';
 import { MetricsCollector } from '../metrics/collector';
 import type {
   AudioFixture,
@@ -302,7 +301,7 @@ export async function runASRSuite(options?: {
   let globalIteration = 0;
 
   // 导入所有 provider 模块（自动注册）
-  await import('../../src/asr/providers');
+  await import('univoice/asr/providers');
 
   const providerConfigs = getASRProviderConfigs().filter(
     (p) => !options?.providers || options.providers.includes(p.provider)

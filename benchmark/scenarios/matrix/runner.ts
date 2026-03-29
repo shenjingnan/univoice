@@ -2,7 +2,7 @@
  * 矩阵测试运行器
  */
 import 'dotenv/config';
-import { createTTS } from '../../../src/tts/factory';
+import { createTTS } from 'univoice/tts';
 import { MetricsCollector } from '../../metrics/collector';
 import type { BenchmarkConfig, BenchmarkResult, MatrixItem } from '../../metrics/types';
 import { saveSingleResult, toSingleTestResult } from '../../utils/result-writer';

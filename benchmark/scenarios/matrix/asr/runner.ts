@@ -3,7 +3,7 @@
  */
 import 'dotenv/config';
 import { readFile } from 'node:fs/promises';
-import { createASR } from '../../../../src/asr/factory';
+import { createASR } from 'univoice/asr';
 import { MetricsCollector } from '../../../metrics/collector';
 import type { ASRMatrixItem, BenchmarkConfig, BenchmarkResult } from '../../../metrics/types';
 import { saveSingleResult, toSingleTestResult } from '../../../utils/result-writer';
