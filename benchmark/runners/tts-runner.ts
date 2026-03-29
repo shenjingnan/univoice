@@ -2,8 +2,8 @@
  * TTS 性能测试运行器
  */
 import 'dotenv/config';
-import type { BaseTTS } from '../../src/tts/base';
-import { createTTS } from '../../src/tts/factory';
+import type { BaseTTS } from 'univoice/tts';
+import { createTTS } from 'univoice/tts';
 import { MetricsCollector } from '../metrics/collector';
 import type {
   BenchmarkConfig,
@@ -461,7 +461,7 @@ export async function runTTSSuite(options?: {
   let globalIteration = 0;
 
   // 导入所有 provider 模块（自动注册）
-  await import('../../src/tts/providers');
+  await import('univoice/tts/providers');
 
   const providerConfigs = getProviderConfigs().filter(
     (p) => !options?.providers || options.providers.includes(p.provider)
