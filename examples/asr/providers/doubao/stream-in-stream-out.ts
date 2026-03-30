@@ -4,7 +4,7 @@
  *
  * 特点:
  * - 使用本地 opus 数据包（16kHz, 60ms 帧）解码为 PCM 后模拟实时音频流
- * - 通过 opusPacketsToPcmStream 将裸 Opus 帧解码为 PCM
+ * - 通过 decodeOpusStream（univoice/asr 内置）将裸 Opus 帧解码为 PCM
  * - WebSocket 二进制协议，边发边收，实时返回识别片段
  *
  * 环境变量:
@@ -15,12 +15,30 @@
  * npx tsx examples/asr/providers/doubao/stream-in-stream-out.ts
  */
 import 'dotenv/config';
-import { stat } from 'node:fs/promises';
+import { Buffer } from 'node:buffer';
+import { readdirSync } from 'node:fs';
+import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import 'univoice/asr/providers';
-import { createASR } from 'univoice/asr';
+import { createASR, decodeOpusStream } from 'univoice/asr';
 import { getASRConfig, getExamplesRoot, timestamp } from '../../../utils/common';
-import { opusPacketsToPcmStream } from '../../../utils/opus-packets-to-pcm-stream';
+
+/**
+ * 从目录中按顺序读取 Opus 文件，返回 AsyncIterable<Buffer>
+ */
+async function* readOpusPackets(directory: string): AsyncIterable<Buffer> {
+  const files = readdirSync(directory)
+    .filter((f) => f.toLowerCase().endsWith('.opus'))
+    .sort((a, b) => {
+      const numA = Number.parseInt(a.match(/^(\d+)/)?.[1] ?? '0', 10);
+      const numB = Number.parseInt(b.match(/^(\d+)/)?.[1] ?? '0', 10);
+      return numA - numB;
+    });
+
+  for (const file of files) {
+    yield await readFile(path.join(directory, file));
+  }
+}
 
 async function main() {
   const { appKey, accessKey } = getASRConfig();
@@ -59,9 +77,8 @@ async function main() {
     });
 
     // 将 opus 数据包解码为 PCM 流（16kHz, 16bit, mono）
-    const audioStream = opusPacketsToPcmStream(opusDir, {
-      opusSampleRate: 16000,
-      targetSampleRate: 16000,
+    const audioStream = decodeOpusStream(readOpusPackets(opusDir), {
+      sampleRate: 16000,
     });
 
     const startTime = Date.now();
