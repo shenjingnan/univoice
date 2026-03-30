@@ -89,6 +89,7 @@
     "yjsjy"
   ],
   "ignorePaths": [
+    "examples/assets",
     "examples/output",
     "coverage",
     "docs",
