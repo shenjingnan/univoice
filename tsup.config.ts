@@ -19,4 +19,5 @@ export default defineConfig({
   platform: 'node',
   treeshake: true,
   splitting: true,
+  external: ['prism-media'],
 });
