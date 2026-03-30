@@ -19,6 +19,34 @@ export function getScriptMeta(importMetaUrl: string) {
 }
 
 /**
+ * 获取项目根目录的绝对路径
+ * 基于 examples/ 目录位于项目根目录下的约定，通过向上查找 package.json 来定位
+ * @param importMetaUrl - import.meta.url
+ * @returns 项目根目录的绝对路径
+ */
+export function getProjectRoot(importMetaUrl: string): string {
+  const { __dirname } = getScriptMeta(importMetaUrl);
+  // 从脚本目录向上查找，直到找到包含 package.json 的项目根目录
+  let current = __dirname;
+  while (current !== path.dirname(current)) {
+    if (path.basename(current) === 'examples') {
+      return path.dirname(current);
+    }
+    current = path.dirname(current);
+  }
+  throw new Error('无法定位项目根目录：未找到 examples/ 目录');
+}
+
+/**
+ * 获取 examples/ 目录的绝对路径
+ * @param importMetaUrl - import.meta.url
+ * @returns examples/ 目录的绝对路径
+ */
+export function getExamplesRoot(importMetaUrl: string): string {
+  return path.join(getProjectRoot(importMetaUrl), 'examples');
+}
+
+/**
  * 格式化时间戳
  * @returns 格式化的时间字符串，如 "14:30:25.123"
  */
