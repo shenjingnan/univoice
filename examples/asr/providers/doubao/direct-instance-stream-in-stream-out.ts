@@ -69,11 +69,6 @@ async function main() {
       appKey,
       accessKey,
       language: 'zh-CN',
-      audioFormat: {
-        sampleRate: 16000,
-        bits: 16,
-        channel: 1,
-      },
     });
 
     // 将 opus 数据包解码为 PCM 流（16kHz, 16bit, mono）
