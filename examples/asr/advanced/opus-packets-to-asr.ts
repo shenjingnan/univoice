@@ -11,27 +11,11 @@
 import 'univoice/asr/providers';
 import { createASR, decodeOpusStream } from 'univoice/asr';
 import 'dotenv/config';
-import { Buffer } from 'node:buffer';
-import { readdirSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { getASRConfig, getScriptMeta } from '../../utils/common';
+import { getASRConfig, getScriptMeta, readOpusPackets } from '../../utils/common';
 
 const { __dirname } = getScriptMeta(import.meta.url);
 const opusPacketsDir = path.join(__dirname, '..', '..', 'output', 'doubao-tts-demo-opus-packets');
-
-async function* readOpusPackets(directory: string): AsyncIterable<Buffer> {
-  const files = readdirSync(directory)
-    .filter((f) => f.toLowerCase().endsWith('.opus'))
-    .sort((a, b) => {
-      const numA = Number.parseInt(a.match(/^(\d+)/)?.[1] ?? '0', 10);
-      const numB = Number.parseInt(b.match(/^(\d+)/)?.[1] ?? '0', 10);
-      return numA - numB;
-    });
-  for (const file of files) {
-    yield await readFile(path.join(directory, file));
-  }
-}
 
 async function main() {
   const { appKey, accessKey } = getASRConfig();

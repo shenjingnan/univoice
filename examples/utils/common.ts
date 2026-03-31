@@ -2,7 +2,8 @@
  * 示例代码共享工具模块
  * 提供公共函数，减少示例代码重复
  */
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readdirSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -212,4 +213,21 @@ export async function* mockLLMStream(delay = 100): AsyncIterable<string> {
   }
 
   console.log(`[${timestamp()}] LLM 流结束`);
+}
+
+/**
+ * 从目录中按顺序读取 Opus 文件，返回 AsyncIterable<Buffer>
+ */
+export async function* readOpusPackets(directory: string): AsyncIterable<Buffer> {
+  const files = readdirSync(directory)
+    .filter((f) => f.toLowerCase().endsWith('.opus'))
+    .sort((a, b) => {
+      const numA = Number.parseInt(a.match(/^(\d+)/)?.[1] ?? '0', 10);
+      const numB = Number.parseInt(b.match(/^(\d+)/)?.[1] ?? '0', 10);
+      return numA - numB;
+    });
+
+  for (const file of files) {
+    yield await readFile(path.join(directory, file));
+  }
 }

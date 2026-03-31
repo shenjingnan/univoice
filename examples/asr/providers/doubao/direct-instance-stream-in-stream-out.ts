@@ -16,29 +16,10 @@
  * npx tsx examples/asr/providers/doubao/direct-instance-stream-in-stream-out.ts
  */
 import 'dotenv/config';
-import { Buffer } from 'node:buffer';
-import { readdirSync } from 'node:fs';
-import { readFile, stat } from 'node:fs/promises';
+import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import { DoubaoASR, decodeOpusStream } from 'univoice/asr';
-import { getASRConfig, getExamplesRoot, timestamp } from '../../../utils/common';
-
-/**
- * 从目录中按顺序读取 Opus 文件，返回 AsyncIterable<Buffer>
- */
-async function* readOpusPackets(directory: string): AsyncIterable<Buffer> {
-  const files = readdirSync(directory)
-    .filter((f) => f.toLowerCase().endsWith('.opus'))
-    .sort((a, b) => {
-      const numA = Number.parseInt(a.match(/^(\d+)/)?.[1] ?? '0', 10);
-      const numB = Number.parseInt(b.match(/^(\d+)/)?.[1] ?? '0', 10);
-      return numA - numB;
-    });
-
-  for (const file of files) {
-    yield await readFile(path.join(directory, file));
-  }
-}
+import { getASRConfig, getExamplesRoot, readOpusPackets, timestamp } from '../../../utils/common';
 
 async function main() {
   const { appKey, accessKey } = getASRConfig();
