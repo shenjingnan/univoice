@@ -1,0 +1,283 @@
+import { Callout, Steps, Tabs } from "nextra/components";
+
+# GlmASR 使用指南
+
+本文介绍如何使用 univoice SDK 中的智谱 GLM ASR（语音识别）功能。
+
+## 概述
+
+GlmASR 基于智谱 AI HTTP REST API 实现语音识别，使用 **Event Stream** 实现流式输出。
+
+| 特性 | 说明 |
+|------|------|
+| 协议 | HTTP REST API（非 WebSocket） |
+| 端点 | `https://open.bigmodel.cn/api/paas/v4/audio/transcriptions` |
+| 模型 | `glm-asr-2512` |
+| 音频格式 | `.wav`、`.mp3` |
+| 文件限制 | ≤ 25 MB，时长 ≤ 30 秒 |
+| 流式输出 | 通过 `stream=true` 启用 Event Stream |
+
+<Callout type="warning">
+GLM ASR **不支持真正的流式输入**。音频流会被完整收集后一次性发送给服务端，但支持通过 Event Stream 流式接收识别结果。
+</Callout>
+
+## 安装与准备
+
+<Steps>
+
+### 安装 univoice SDK
+
+<Tabs items={['pnpm', 'npm']}>
+<Tabs.Tab>
+```bash
+pnpm add univoice
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```bash
+npm install univoice
+```
+</Tabs.Tab>
+</Tabs>
+
+### 获取智谱 AI API Key
+
+在[智谱 AI 开放平台](https://open.bigmodel.cn/)注册账号，获取 API Key：
+
+- **API Key**：用于身份验证的密钥
+
+<Callout type="info">
+建议将 API Key 配置在环境变量中，避免硬编码到代码中：
+
+```bash
+export GLM_API_KEY=your_api_key
+```
+</Callout>
+
+</Steps>
+
+## 创建 ASR 实例
+
+univoice 提供两种创建 GlmASR 实例的方式：
+
+<Tabs items={['工厂函数（推荐）', '直接实例化']}>
+<Tabs.Tab>
+
+使用 `createASR` 工厂函数，需先导入 `univoice/asr/providers` 注册提供商：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+直接导入 `GlmASR` 类并实例化，无需注册 provider：
+
+```typescript
+import { GlmASR } from 'univoice/asr/providers';
+
+const asr = new GlmASR({
+  apiKey: process.env.GLM_API_KEY,
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+<Callout type="info">
+两种方式创建的实例拥有完全一致的 API，推荐使用工厂函数，便于切换不同提供商。
+</Callout>
+
+## 非流式识别
+
+最简单的使用方式 —— 传入音频文件路径，一次性获取完整识别结果：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+});
+
+// 传入文件路径，返回完整识别结果
+const result = await asr.listen('/path/to/audio.wav');
+
+console.log('识别结果:', result.text);
+```
+
+### ASRResponse 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 完整识别文本 |
+| `language` | `string?` | 检测到的语言 |
+| `duration` | `number?` | 音频时长（ms） |
+| `segments` | `ASRSegment[]?` | 分段信息 |
+
+## 流式识别
+
+流式识别通过 Event Stream 实时获取识别片段：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+});
+
+// 流式识别（传入文件路径）
+for await (const chunk of asr.listen('/path/to/audio.mp3', { stream: true })) {
+  const status = chunk.isFinal ? '最终' : '中间';
+  console.log(`[${status}] ${chunk.text}`);
+}
+```
+
+### ASRStreamChunk 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 本次识别的文本片段 |
+| `isFinal` | `boolean` | 是否为最终结果 |
+| `segment` | `ASRSegment?` | 分段信息 |
+
+<Callout type="info">
+流式识别会持续返回中间结果（`isFinal: false`），最终结果（`isFinal: true`）代表完整的识别文本。通常需要将最终结果作为最终输出。
+</Callout>
+
+## GLM 专属功能
+
+### 热词（hotwords）
+
+热词功能可以提高特定词汇的识别准确率，适合包含专有名词、行业术语的场景：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+  hotwords: ['智谱AI', 'GLM', 'BigModel'],
+});
+
+const result = await asr.listen('/path/to/audio.wav');
+console.log('识别结果:', result.text);
+```
+
+### 上下文（context）
+
+上下文功能用于长文本场景优化，提供相关背景文本可以提升识别效果：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+  context: '本次会议讨论的是智谱AI的GLM大模型技术方案',
+});
+
+const result = await asr.listen('/path/to/audio.wav');
+console.log('识别结果:', result.text);
+```
+
+## 音频格式支持
+
+GlmASR 仅支持以下音频格式：
+
+| 格式 | 说明 | 文件扩展名 |
+|------|------|------------|
+| WAV | 无损音频，包含参数头信息 | `.wav` |
+| MP3 | 有损压缩格式 | `.mp3` |
+
+### 格式限制
+
+- 文件大小：≤ **25 MB**
+- 音频时长：≤ **30 秒**
+
+```typescript
+// WAV 格式
+const result1 = await asr.listen('/path/to/audio.wav');
+
+// MP3 格式
+const result2 = await asr.listen('/path/to/audio.mp3');
+```
+
+<Callout type="warning">
+GLM ASR 不支持 PCM、OGG Opus 等原始音频格式。如果需要处理这些格式，建议先转换为 WAV 或 MP3。
+</Callout>
+
+## 完整配置参考
+
+### GlmASROptions
+
+#### 认证配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `apiKey` | `string` | `''` | 智谱 AI API Key（**必填**） |
+
+#### 识别配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `hotwords` | `string[]?` | `undefined` | 热词列表，提高特定词汇识别准确率 |
+| `context` | `string?` | `undefined` | 上下文文本，用于长文本场景优化 |
+
+#### 通用配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `baseUrl` | `string` | `'https://open.bigmodel.cn/api/paas/v4/audio/transcriptions'` | API 端点地址 |
+| `model` | `string` | `'glm-asr-2512'` | 模型名称 |
+| `language` | `string?` | `undefined` | 识别语言 |
+| `prompt` | `string?` | `undefined` | 提示文本 |
+| `responseFormat` | `'json' \| 'text' \| 'srt' \| 'vtt' \| 'verbose_json'` | `'json'` | 响应格式 |
+
+## 常见问题
+
+### 支持哪些音频格式？
+
+GlmASR 仅支持 `.wav` 和 `.mp3` 格式。文件大小不能超过 25 MB，时长不能超过 30 秒。
+
+### GLM ASR 是否支持实时流式输入？
+
+GLM ASR **不支持真正的流式输入**。音频数据会被完整收集后一次性发送给服务端。但可以通过 `stream: true` 参数实现流式输出，通过 Event Stream 实时接收识别片段。
+
+### 应该使用文件路径还是 Buffer 作为输入？
+
+- **文件路径**：适合已有音频文件的场景，SDK 自动处理文件读取和验证
+- **Buffer / Uint8Array**：适合已在内存中的音频数据
+- **音频流（AudioStream）**：SDK 会自动将流收集为完整数据后发送
+
+三种方式都可以传入 `asr.listen()` 方法，SDK 会自动适配。
+
+### 热词（hotwords）如何使用？
+
+热词用于提高特定词汇的识别准确率。将需要识别的专有名词、行业术语等作为热词传入：
+
+```typescript
+const asr = createASR({
+  provider: 'glm',
+  apiKey: process.env.GLM_API_KEY,
+  hotwords: ['智谱AI', 'GLM'],
+});
+```
+
+### 如何获取智谱 AI API Key？
+
+1. 前往 [智谱 AI 开放平台](https://open.bigmodel.cn/)
+2. 注册并登录账号
+3. 在「API Keys」管理页面创建新的 API Key
