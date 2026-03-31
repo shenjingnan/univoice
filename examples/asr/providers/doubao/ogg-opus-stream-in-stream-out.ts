@@ -1,10 +1,10 @@
 /**
- * Doubao ASR - 流式入/流式出示例（Opus 数据包）
- * 使用本地 opus 数据包模拟实时语音流识别
+ * Doubao ASR - 流式入/流式出示例（Ogg Opus 格式）
+ * 使用 Ogg Opus 格式直接流式输入 ASR，无需本地解码
  *
  * 特点:
- * - 使用本地 opus 数据包（16kHz, 60ms 帧）解码为 PCM 后模拟实时音频流
- * - 通过 decodeOpusStream（univoice/asr 内置）将裸 Opus 帧解码为 PCM
+ * - 使用 createOggMuxer（univoice/asr 内置）将裸 Opus 帧封装为 Ogg Opus 格式
+ * - 直接以 Ogg Opus 编码流式发送，无需本地解码为 PCM
  * - WebSocket 二进制协议，边发边收，实时返回识别片段
  *
  * 环境变量:
@@ -12,7 +12,7 @@
  * - DOUBAO_ACCESS_TOKEN: 火山引擎 Access Token
  *
  * 使用方法:
- * npx tsx examples/asr/providers/doubao/stream-in-stream-out.ts
+ * npx tsx examples/asr/providers/doubao/ogg-opus-stream-in-stream-out.ts
  */
 import 'dotenv/config';
 import { Buffer } from 'node:buffer';
@@ -20,7 +20,7 @@ import { readdirSync } from 'node:fs';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import 'univoice/asr/providers';
-import { createASR, decodeOpusStream } from 'univoice/asr';
+import { createASR, createOggMuxer } from 'univoice/asr';
 import { getASRConfig, getExamplesRoot, timestamp } from '../../../utils/common';
 
 /**
@@ -58,26 +58,26 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`\n[${timestamp()}] === Doubao ASR - 流式入/流式出（Opus 数据包）===`);
-  console.log(`场景: Opus 数据包流式发送 → 实时识别结果输出\n`);
+  console.log(`\n[${timestamp()}] === Doubao ASR - 流式入/流式出（Ogg Opus 格式）===`);
+  console.log(`场景: Opus 数据包 → Ogg Opus 封装 → 流式发送 → 实时识别结果输出\n`);
   console.log(`数据包目录: ${opusDir}\n`);
 
   try {
-    // 创建 ASR 实例，使用 PCM 格式（opus 解码后的数据）
+    // 创建 ASR 实例，使用 Ogg/Opus 格式（无需本地解码）
     const asr = createASR({
       provider: 'doubao',
       appKey,
       accessKey,
       language: 'zh-CN',
+      format: 'ogg',
+      codec: 'opus',
       audioFormat: {
         sampleRate: 16000,
-        bits: 16,
-        channel: 1,
       },
     });
 
-    // 将 opus 数据包解码为 PCM 流（16kHz, 16bit, mono）
-    const audioStream = decodeOpusStream(readOpusPackets(opusDir), {
+    // 将 opus 数据包封装为 Ogg Opus 流
+    const audioStream = createOggMuxer(readOpusPackets(opusDir), {
       sampleRate: 16000,
     });
 

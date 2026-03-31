@@ -6,16 +6,20 @@
 
 ```
 examples/asr/providers/doubao/
-├── stream-in-stream-out.ts          # 流式入/流式出
-├── non-stream-in-non-stream-out.ts  # 非流式入/非流式出
+├── stream-in-stream-out.ts              # 流式入/流式出（Opus 解码为 PCM）
+├── ogg-opus-stream-in-stream-out.ts     # 流式入/流式出（Ogg Opus 格式）
+├── non-stream-in-non-stream-out.ts      # 非流式入/非流式出
 └── README.md
 ```
 
 ## 快速开始
 
 ```bash
-# 流式入/流式出
+# 流式入/流式出（Opus 解码为 PCM）
 npx tsx examples/asr/providers/doubao/stream-in-stream-out.ts
+
+# 流式入/流式出（Ogg Opus 格式，无需本地解码）
+npx tsx examples/asr/providers/doubao/ogg-opus-stream-in-stream-out.ts
 
 # 非流式入/非流式出
 npx tsx examples/asr/providers/doubao/non-stream-in-non-stream-out.ts

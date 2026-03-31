@@ -5,19 +5,33 @@
  *
  * 工作流程：
  * 1. 读取 Opus 数据包目录
- * 2. 使用 @discordjs/opus 解码 Opus → PCM (24kHz)
- * 3. 使用 ffmpeg 重采样 24kHz → 16kHz
- * 4. 使用 asr.listen(stream, { stream: true }) 进行流式识别
+ * 2. 使用 decodeOpusStream 解码 Opus → PCM (16kHz)
+ * 3. 使用 asr.listen(stream, { stream: true }) 进行流式识别
  */
 import 'univoice/asr/providers';
-import { createASR } from 'univoice/asr';
+import { createASR, decodeOpusStream } from 'univoice/asr';
 import 'dotenv/config';
+import { Buffer } from 'node:buffer';
+import { readdirSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { getASRConfig, getScriptMeta } from '../../utils/common';
-import { opusPacketsToPcmStream } from '../../utils/opus-packets-to-pcm-stream';
 
 const { __dirname } = getScriptMeta(import.meta.url);
 const opusPacketsDir = path.join(__dirname, '..', '..', 'output', 'doubao-tts-demo-opus-packets');
+
+async function* readOpusPackets(directory: string): AsyncIterable<Buffer> {
+  const files = readdirSync(directory)
+    .filter((f) => f.toLowerCase().endsWith('.opus'))
+    .sort((a, b) => {
+      const numA = Number.parseInt(a.match(/^(\d+)/)?.[1] ?? '0', 10);
+      const numB = Number.parseInt(b.match(/^(\d+)/)?.[1] ?? '0', 10);
+      return numA - numB;
+    });
+  for (const file of files) {
+    yield await readFile(path.join(directory, file));
+  }
+}
 
 async function main() {
   const { appKey, accessKey } = getASRConfig();
@@ -40,9 +54,8 @@ async function main() {
     });
 
     // 创建 PCM 流（从 Opus 数据包转换）
-    const audioStream = opusPacketsToPcmStream(opusPacketsDir, {
-      opusSampleRate: 16000,
-      targetSampleRate: 16000,
+    const audioStream = decodeOpusStream(readOpusPackets(opusPacketsDir), {
+      sampleRate: 16000,
     });
 
     console.time('识别耗时');
