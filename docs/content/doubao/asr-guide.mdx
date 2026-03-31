@@ -1,0 +1,474 @@
+import { Callout, Steps, Tabs } from "nextra/components";
+
+# DoubaoASR 使用指南
+
+本文介绍如何使用 univoice SDK 中的豆包 ASR（语音识别）功能。
+
+## 概述
+
+DoubaoASR 基于火山引擎语音服务，使用 **SAUC 协议**（WebSocket 二进制协议）实现实时语音识别，支持三种识别模式：
+
+| 模式 | 说明 | 适用场景 |
+|------|------|----------|
+| `streaming`（默认） | 流式识别 | 实时对话、语音输入 |
+| `nostream` | 非流式识别 | 短音频快速识别 |
+| `async` | 异步识别 | 长音频离线处理 |
+
+## 安装与准备
+
+<Steps>
+
+### 安装 univoice SDK
+
+<Tabs items={['pnpm', 'npm']}>
+<Tabs.Tab>
+```bash
+pnpm add univoice
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```bash
+npm install univoice
+```
+</Tabs.Tab>
+</Tabs>
+
+### 获取火山引擎凭证
+
+在[火山引擎控制台](https://console.volcengine.com/speech/service/overview)开通语音识别服务，获取以下凭证：
+
+- **App Key**：应用标识
+- **Access Token**：访问令牌
+
+<Callout type="info">
+建议将凭证配置在环境变量中，避免硬编码到代码中：
+
+```bash
+export DOUBAO_APP_KEY=your_app_key
+export DOUBAO_ACCESS_TOKEN=your_access_token
+```
+</Callout>
+
+### 安装可选依赖（Opus 解码场景）
+
+如果你的输入是 Opus 编码的音频，需要安装 `prism-media` 用于解码：
+
+```bash
+pnpm add prism-media
+```
+
+<Callout type="warning">
+Opus 解码需要系统安装 `ffmpeg`。请参考 [常见问题](#常见问题) 中的说明。
+</Callout>
+
+</Steps>
+
+## 创建 ASR 实例
+
+univoice 提供两种创建 DoubaoASR 实例的方式：
+
+<Tabs items={['工厂函数（推荐）', '直接实例化']}>
+<Tabs.Tab>
+
+使用 `createASR` 工厂函数，需先导入 `univoice/asr/providers` 注册提供商：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'doubao',
+  appKey: process.env.DOUBAO_APP_KEY,
+  accessKey: process.env.DOUBAO_ACCESS_TOKEN,
+  language: 'zh-CN',
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+直接导入 `DoubaoASR` 类并实例化，无需注册 provider：
+
+```typescript
+import { DoubaoASR } from 'univoice/asr';
+
+const asr = new DoubaoASR({
+  appKey: process.env.DOUBAO_APP_KEY,
+  accessKey: process.env.DOUBAO_ACCESS_TOKEN,
+  language: 'zh-CN',
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+<Callout type="info">
+两种方式创建的实例拥有完全一致的 API，推荐使用工厂函数，便于切换不同提供商。
+</Callout>
+
+## 非流式识别
+
+最简单的使用方式 —— 传入音频文件路径，一次性获取完整识别结果：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'doubao',
+  appKey: process.env.DOUBAO_APP_KEY,
+  accessKey: process.env.DOUBAO_ACCESS_TOKEN,
+  language: 'zh-CN',
+});
+
+// 传入文件路径，返回完整识别结果
+const result = await asr.listen('/path/to/audio.mp3');
+
+console.log('识别结果:', result.text);
+
+// 查看分段信息
+if (result.segments) {
+  for (const segment of result.segments) {
+    console.log(`[${segment.start}ms - ${segment.end}ms] ${segment.text}`);
+  }
+}
+```
+
+### ASRResponse 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 完整识别文本 |
+| `language` | `string?` | 检测到的语言 |
+| `duration` | `number?` | 音频时长（ms） |
+| `segments` | `ASRSegment[]?` | 分段信息 |
+
+## 流式识别
+
+流式识别适合实时场景，音频边发送边接收识别结果：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice/asr';
+import { bufferToAudioStream } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'doubao',
+  appKey: process.env.DOUBAO_APP_KEY,
+  accessKey: process.env.DOUBAO_ACCESS_TOKEN,
+  language: 'zh-CN',
+});
+
+// 将 Buffer 转为音频流
+const audioStream = bufferToAudioStream(audioBuffer);
+
+// 流式识别
+for await (const chunk of asr.listen(audioStream, { stream: true })) {
+  const status = chunk.isFinal ? '最终' : '中间';
+  console.log(`[${status}] ${chunk.text}`);
+}
+```
+
+### ASRStreamChunk 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 本次识别的文本片段 |
+| `isFinal` | `boolean` | 是否为最终结果（中间结果可能被修正） |
+| `confidence` | `number?` | 置信度 |
+| `segment` | `ASRSegment?` | 分段信息 |
+
+<Callout type="info">
+流式识别会持续返回中间结果（`isFinal: false`），每个最终结果（`isFinal: true`）代表一个稳定的识别片段。通常需要将所有最终结果拼接起来得到完整文本。
+</Callout>
+
+## 音频格式支持
+
+DoubaoASR 支持以下音频格式：
+
+<Tabs items={['PCM', 'WAV', 'MP3', 'OGG Opus']}>
+<Tabs.Tab>
+
+PCM 是最基础的音频格式，无需容器封装，直接传输原始采样数据。
+
+默认配置为 16kHz、16bit、单声道：
+
+```typescript
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+  format: 'pcm',
+  codec: 'raw',
+  audioFormat: {
+    sampleRate: 16000,
+    bits: 16,
+    channel: 1,
+  },
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+WAV 格式自带音频参数头信息，SDK 会自动解析采样率等参数。
+
+```typescript
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+  format: 'wav',
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+MP3 格式需要系统安装 `ffmpeg`，SDK 会自动进行解码转换。
+
+```typescript
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+});
+
+// 直接传入 MP3 文件路径，SDK 自动处理
+const result = await asr.listen('/path/to/audio.mp3');
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+OGG Opus 格式是流式场景的推荐选择，压缩率高、延迟低。详见 [Opus 音频处理](#opus-音频处理) 章节。
+
+```typescript
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+  format: 'ogg',
+  codec: 'opus',
+  audioFormat: {
+    sampleRate: 16000,
+  },
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## Opus 音频处理
+
+在实时语音场景中，音频通常以 Opus 编码传输。DoubaoASR 提供两种处理路径：
+
+### 对比
+
+| 特性 | PCM 解码路径 | OGG Opus 封装路径 |
+|------|-------------|-------------------|
+| 原理 | 本地解码为 PCM 后发送 | 直接封装为 OGG 格式发送 |
+| 依赖 | `prism-media` + `ffmpeg` | 无额外依赖 |
+| 带宽 | 较高（PCM 未压缩） | 较低（Opus 压缩） |
+| 延迟 | 需要本地解码 | 直接封装发送 |
+| 适用场景 | 需要本地 PCM 数据 | 追求低延迟、低带宽 |
+
+### PCM 解码路径
+
+使用 `decodeOpusStream` 将 Opus 数据包解码为 PCM 后流式发送：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR, decodeOpusStream } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+  language: 'zh-CN',
+  audioFormat: {
+    sampleRate: 16000,
+    bits: 16,
+    channel: 1,
+  },
+});
+
+// 将 Opus 数据包解码为 PCM 流
+const audioStream = decodeOpusStream(opusPacketStream, {
+  sampleRate: 16000,
+});
+
+for await (const chunk of asr.listen(audioStream, { stream: true })) {
+  console.log(chunk.text);
+}
+```
+
+### OGG Opus 封装路径
+
+使用 `createOggMuxer` 将裸 Opus 帧封装为 OGG 容器格式后直接发送：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR, createOggMuxer } from 'univoice/asr';
+
+const asr = createASR({
+  provider: 'doubao',
+  appKey,
+  accessKey,
+  language: 'zh-CN',
+  format: 'ogg',
+  codec: 'opus',
+  audioFormat: {
+    sampleRate: 16000,
+  },
+});
+
+// 将 Opus 数据包封装为 OGG Opus 流
+const audioStream = createOggMuxer(opusPacketStream, {
+  sampleRate: 16000,
+});
+
+for await (const chunk of asr.listen(audioStream, { stream: true })) {
+  console.log(chunk.text);
+}
+```
+
+## 完整配置参考
+
+### DoubaoASROptions
+
+#### 认证配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `appKey` | `string` | `''` | 火山引擎 App Key |
+| `accessKey` | `string` | `''` | 火山引擎 Access Key |
+| `resourceId` | `string` | `'volc.bigasr.sauc.duration'` | 火山引擎 Resource ID |
+
+#### 识别配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `language` | `string` | `'zh-CN'` | 识别语言 |
+| `mode` | `'streaming' \| 'nostream' \| 'async'` | `'streaming'` | 识别模式 |
+| `enableItn` | `boolean` | `true` | 是否启用逆文本标准化 |
+| `enablePunc` | `boolean` | `true` | 是否启用标点预测 |
+| `enableDdc` | `boolean` | `false` | 是否启用 DDC |
+| `showUtterances` | `boolean` | `true` | 是否显示话语级结果 |
+
+#### 音频配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `format` | `'pcm' \| 'wav' \| 'ogg' \| 'mp3'` | `'pcm'` | 音频容器格式 |
+| `codec` | `'raw' \| 'opus'` | `'raw'` | 音频编码格式 |
+| `audioFormat.sampleRate` | `number` | `16000` | 采样率 |
+| `audioFormat.bits` | `number` | `16` | 位深度 |
+| `audioFormat.channel` | `number` | `1` | 声道数 |
+| `segmentDuration` | `number` | `200` | 分段时长（ms） |
+
+#### 通用配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `baseUrl` | `string` | `'wss://openspeech.bytedance.com/api/v3/sauc'` | WebSocket 服务地址 |
+| `model` | `string` | `'default'` | 模型名称 |
+| `prompt` | `string` | `''` | 提示文本 |
+| `responseFormat` | `'json' \| 'text' \| 'srt' \| 'vtt' \| 'verbose_json'` | `'json'` | 响应格式 |
+
+## 工具函数
+
+### collectText
+
+收集识别结果文本，支持分段回调：
+
+```typescript
+import { collectText } from 'univoice/asr';
+
+const result = await asr.listen('/path/to/audio.wav');
+const text = await collectText(result, {
+  onSegment: (segment) => console.log('分段:', segment),
+  onComplete: (text) => console.log('完成:', text),
+});
+```
+
+### saveText
+
+将识别结果保存到文件，支持多种格式：
+
+```typescript
+import { saveText } from 'univoice/asr';
+
+const result = await asr.listen('/path/to/audio.wav');
+
+// 保存为纯文本
+await saveText(result, { filename: 'result.txt' });
+
+// 保存为 JSON（包含完整响应结构）
+await saveText(result, { format: 'json', directory: './output' });
+```
+
+### bufferToAudioStream
+
+将 Buffer 转为音频流，用于流式识别的输入：
+
+```typescript
+import { bufferToAudioStream } from 'univoice/asr';
+
+const audioBuffer = await fs.readFile('/path/to/audio.pcm');
+const stream = bufferToAudioStream(audioBuffer);
+
+for await (const chunk of asr.listen(stream, { stream: true })) {
+  console.log(chunk.text);
+}
+```
+
+## 常见问题
+
+### 安装 prism-media 后运行报错
+
+**症状**：使用 `decodeOpusStream` 时抛出模块未找到错误。
+
+**原因**：`prism-media` 是可选依赖，需要手动安装。
+
+**解决**：
+```bash
+pnpm add prism-media
+```
+
+同时确保系统已安装 `ffmpeg`：
+```bash
+# macOS
+brew install ffmpeg
+
+# Ubuntu
+sudo apt install ffmpeg
+```
+
+### ffmpeg 缺失导致音频转换失败
+
+**症状**：传入 MP3 等压缩格式时抛出 `ffmpeg not found` 错误。
+
+**解决**：安装 `ffmpeg` 并确保在 PATH 中可用：
+```bash
+ffmpeg -version  # 验证安装
+```
+
+### 应该使用文件路径还是音频流作为输入？
+
+- **文件路径**：适合非流式场景，SDK 自动处理文件读取和解码
+- **音频流（AudioStream）**：适合流式场景，如实时麦克风输入或网络音频流
+- **Buffer**：适合已在内存中的音频数据
+
+三种方式都可以传入 `asr.listen()` 方法，SDK 会自动适配。
+
+### 流式和非流式模式如何选择？
+
+- **非流式**（默认）：传入完整音频，一次性获取结果。适合文件识别、离线处理
+- **流式**（`{ stream: true }`）：边发送边接收，实时获取中间结果。适合实时对话、语音输入
+
+### 如何获取火山引擎凭证？
+
+1. 前往 [火山引擎控制台](https://console.volcengine.com/speech/service/overview)
+2. 开通「语音识别」服务
+3. 在「应用管理」中创建应用，获取 App Key 和 Access Token
