@@ -8,6 +8,10 @@ const meta: MetaRecord = {
     title: "豆包",
     type: "page",
   },
+  glm: {
+    title: "智谱 GLM",
+    type: "page",
+  },
 };
 
 export default meta;
