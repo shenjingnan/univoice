@@ -1,10 +1,10 @@
 import { BaseTTS } from '@/tts/base';
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
+import type { BaseTTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 
 export class TTS1 extends BaseTTS {
   name = 'openai';
 
-  constructor(options: TTSOptions) {
+  constructor(options: BaseTTSOptions) {
     super(options);
     this.baseUrl = options.baseUrl || 'https://api.openai.com/v1';
     this.model = options.model || 'tts-1';

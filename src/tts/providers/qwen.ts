@@ -13,7 +13,13 @@ import {
   waitForTaskStarted,
 } from '@/tts/protocols/dashscope';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
+import type {
+  QwenTTSOptions,
+  TextStream,
+  TTSRequest,
+  TTSResponse,
+  TTSStreamChunk,
+} from '@/types/tts';
 
 /** 队列项类型，用于 speakStream 的推拉转换 */
 type QueueItem =
@@ -39,7 +45,7 @@ export class QwenTTS extends BaseTTS {
   /** 采样率 */
   public sampleRate?: number;
 
-  constructor(options: TTSOptions) {
+  constructor(options: QwenTTSOptions) {
     super(options);
     // WebSocket API 地址
     this.baseUrl = options.baseUrl || 'wss://dashscope.aliyuncs.com/api-ws/v1/inference/';
@@ -105,7 +111,7 @@ export class QwenTTS extends BaseTTS {
         model: opts.model || this.model,
         voice: opts.voice || this.voice,
         format: opts.format || this.format,
-        sampleRate: opts.sampleRate,
+        sampleRate: this.sampleRate,
         volume: opts.volume || 50,
         rate: opts.speed,
         pitch: opts.pitch,

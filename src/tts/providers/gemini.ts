@@ -1,10 +1,10 @@
 import { BaseTTS } from '@/tts/base';
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
+import type { BaseTTSOptions, TTSRequest, TTSResponse } from '@/types/tts';
 
 export class GeminiTTS extends BaseTTS {
   name = 'gemini';
 
-  constructor(options: TTSOptions) {
+  constructor(options: BaseTTSOptions) {
     super(options);
     this.baseUrl = options.baseUrl || 'https://generativelanguage.googleapis.com/v1beta';
     this.model = options.model || 'gemini-tts';

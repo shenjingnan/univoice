@@ -1,7 +1,13 @@
 import { Buffer } from 'node:buffer';
 import { BaseTTS } from '@/tts/base';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
+import type {
+  BaseTTSOptions,
+  TextStream,
+  TTSRequest,
+  TTSResponse,
+  TTSStreamChunk,
+} from '@/types/tts';
 
 /**
  * GLM TTS API 响应类型
@@ -53,7 +59,7 @@ interface GlmTTSErrorResponse {
 export class GlmTTS extends BaseTTS {
   name = 'glm';
 
-  constructor(options: TTSOptions) {
+  constructor(options: BaseTTSOptions) {
     super(options);
     // REST API 地址
     this.baseUrl = options.baseUrl || 'https://open.bigmodel.cn/api/paas/v4/audio/speech';

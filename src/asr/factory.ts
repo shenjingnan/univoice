@@ -4,11 +4,13 @@ import type { ASROptions } from '@/types/asr';
 // 重新导出 BaseASR 以便外部使用
 export { BaseASR } from '@/asr/base';
 
-const providers = new Map<string, new (options: ASROptions) => BaseASR>();
+// biome-ignore lint/suspicious/noExplicitAny: 各 provider 构造函数参数类型不同，用 any 在 Map 层面做适配；类型安全由 createASR 的判别联合参数保证
+const providers = new Map<string, new (options: any) => BaseASR>();
 
 export function registerASRProvider(
   type: string,
-  provider: new (options: ASROptions) => BaseASR
+  // biome-ignore lint/suspicious/noExplicitAny: 同上
+  provider: new (options: any) => BaseASR
 ): void {
   providers.set(type, provider);
 }

@@ -46,7 +46,6 @@ async function main() {
   try {
     // 直接实例化 DoubaoASR，不使用 createASR 工厂函数
     const asr = new DoubaoASR({
-      provider: 'doubao',
       appKey,
       accessKey,
       language: 'zh-CN',

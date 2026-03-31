@@ -10,7 +10,7 @@ import {
   parseResponse,
 } from '@/asr/protocols/sauc';
 import { DEFAULT_SAMPLE_RATE } from '@/asr/utils/audio';
-import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr';
+import type { ASRStreamChunk, AudioStream, DoubaoASROptions } from '@/types/asr';
 
 /**
  * 豆包 ASR 提供商
@@ -37,7 +37,7 @@ export class DoubaoASR extends BaseASR {
   public enableDdc: boolean;
   public showUtterances: boolean;
 
-  constructor(options: ASROptions) {
+  constructor(options: DoubaoASROptions) {
     super(options);
 
     // 豆包专用配置

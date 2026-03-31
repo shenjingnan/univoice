@@ -1,7 +1,7 @@
 import type {
+  BaseTTSOptions,
   SpeakInstanceOptions,
   TextStream,
-  TTSOptions,
   TTSProvider,
   TTSRequest,
   TTSResponse,
@@ -22,7 +22,7 @@ export abstract class BaseTTS implements TTSProvider {
   public format: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm' | 'opus' | 'ogg_opus';
   public language: string;
 
-  constructor(options: TTSOptions) {
+  constructor(options: BaseTTSOptions) {
     this.apiKey = options.apiKey || '';
     this.baseUrl = options.baseUrl || '';
     this.model = options.model || 'default';
@@ -122,7 +122,7 @@ export abstract class BaseTTS implements TTSProvider {
     return [];
   }
 
-  public buildRequestOptions(request: TTSRequest): TTSOptions {
+  public buildRequestOptions(request: TTSRequest): BaseTTSOptions & { provider: string } {
     return {
       provider: this.constructor.name,
       apiKey: this.apiKey,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { BaseASR } from '@/asr/base.js';
-import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr.js';
+import type { ASRStreamChunk, AudioStream, BaseASROptions } from '@/types/asr.js';
 
 // 创建一个具体的 ASR 实现类用于测试
 class MockASR extends BaseASR {
@@ -15,7 +15,6 @@ describe('BaseASR', () => {
   describe('构造函数默认值', () => {
     it('应该使用默认选项初始化', () => {
       const asr = new MockASR({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -29,8 +28,7 @@ describe('BaseASR', () => {
     });
 
     it('应该使用提供的选项覆盖默认值', () => {
-      const options: ASROptions = {
-        provider: 'test',
+      const options: BaseASROptions = {
         apiKey: 'custom-key',
         baseUrl: 'https://custom.api.com',
         model: 'custom-model',

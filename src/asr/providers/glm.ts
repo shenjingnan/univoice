@@ -5,11 +5,11 @@ import { basename } from 'node:path';
 import { promisify } from 'node:util';
 import { BaseASR } from '@/asr/base';
 import type {
-  ASROptions,
   ASRResponse,
   ASRStreamChunk,
   AudioStream,
   AudioStreamInput,
+  GlmASROptions,
   ListenInstanceOptions,
 } from '@/types/asr';
 
@@ -72,7 +72,7 @@ export class GlmASR extends BaseASR {
   /** 最大文件大小（25 MB） */
   private readonly MAX_FILE_SIZE = 25 * 1024 * 1024;
 
-  constructor(options: ASROptions) {
+  constructor(options: GlmASROptions) {
     super(options);
     // REST API 地址
     this.baseUrl = options.baseUrl || 'https://open.bigmodel.cn/api/paas/v4/audio/transcriptions';

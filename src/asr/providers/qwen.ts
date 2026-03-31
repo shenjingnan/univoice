@@ -16,13 +16,13 @@ import {
 } from '@/asr/protocols/dashscope';
 import { detectSampleRate } from '@/asr/utils/audio';
 import type {
-  ASROptions,
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
   AudioStream,
   AudioStreamInput,
   ListenInstanceOptions,
+  QwenASROptions,
 } from '@/types/asr';
 
 /**
@@ -46,7 +46,7 @@ export class QwenASR extends BaseASR {
   /** 是否启用逆文本规范化 */
   public enableInverseTextNormalization?: boolean;
 
-  constructor(options: ASROptions) {
+  constructor(options: QwenASROptions) {
     super(options);
     // WebSocket API 地址
     this.baseUrl = options.baseUrl || 'wss://dashscope.aliyuncs.com/api-ws/v1/inference/';

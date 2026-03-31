@@ -14,7 +14,13 @@ import {
   waitForEvent,
 } from '@/tts/protocols/volcengine';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
+import type {
+  DoubaoTTSOptions,
+  TextStream,
+  TTSRequest,
+  TTSResponse,
+  TTSStreamChunk,
+} from '@/types/tts';
 
 /** 队列项类型，用于 speak 的推拉转换 */
 type QueueItem =
@@ -40,7 +46,7 @@ export class DoubaoTTS extends BaseTTS {
   /** 是否启用时间戳 */
   public enableTimestamp: boolean;
 
-  constructor(options: TTSOptions) {
+  constructor(options: DoubaoTTSOptions) {
     super(options);
     this.appId = options.appId || '';
     this.accessToken = options.accessToken || '';

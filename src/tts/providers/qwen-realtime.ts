@@ -16,8 +16,8 @@ import {
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type {
   QwenRealtimeOptions,
+  QwenRealtimeTTSOptions,
   TextStream,
-  TTSOptions,
   TTSRequest,
   TTSResponse,
   TTSStreamChunk,
@@ -51,7 +51,7 @@ export class QwenRealtimeTTS extends BaseTTS {
   /** 采样率 */
   public sampleRate?: number;
 
-  constructor(options: TTSOptions) {
+  constructor(options: QwenRealtimeTTSOptions) {
     super(options);
     // Realtime API 端点
     this.baseUrl = options.baseUrl || 'wss://dashscope.aliyuncs.com/api-ws/v1/realtime';
