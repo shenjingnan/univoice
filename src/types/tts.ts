@@ -20,8 +20,10 @@ export interface QwenRealtimeOptions {
   bitrate?: number;
 }
 
-export interface TTSOptions {
-  provider: string;
+/**
+ * TTS 通用配置（不含 provider，用于直接实例化）
+ */
+export interface BaseTTSOptions {
   apiKey?: string;
   baseUrl?: string;
   model?: string;
@@ -31,28 +33,71 @@ export interface TTSOptions {
   pitch?: number;
   format?: 'mp3' | 'wav' | 'ogg' | 'flac' | 'pcm' | 'opus' | 'ogg_opus';
   language?: string;
+}
 
-  /** 火山引擎 App ID (doubao 专用) */
+/**
+ * 豆包 TTS 专属配置
+ */
+export interface DoubaoTTSOptions extends BaseTTSOptions {
+  /** 火山引擎 App ID */
   appId?: string;
-  /** 火山引擎 Access Token (doubao 专用) */
+  /** 火山引擎 Access Token */
   accessToken?: string;
-  /** 火山引擎 Resource ID (doubao 专用) */
+  /** 火山引擎 Resource ID */
   resourceId?: string;
   /** 采样率 (默认 24000) */
   sampleRate?: number;
-  /** 比特率 (Minimax 专用) */
-  bitrate?: number;
   /** 是否启用时间戳 */
   enableTimestamp?: boolean;
-  /** Qwen 专用：指令文本（用于情感控制，如"请用温柔的语调朗读"） */
+}
+
+/**
+ * Minimax TTS 专属配置
+ */
+export interface MinimaxTTSOptions extends BaseTTSOptions {
+  /** 采样率 */
+  sampleRate?: number;
+  /** 比特率 */
+  bitrate?: number;
+}
+
+/**
+ * 通义千问 TTS 专属配置
+ */
+export interface QwenTTSOptions extends BaseTTSOptions {
+  /** 采样率 */
+  sampleRate?: number;
+  /** 指令文本（用于情感控制，如"请用温柔的语调朗读"） */
   instruction?: string;
+}
+
+/**
+ * 通义千问 Realtime TTS 专属配置
+ */
+export interface QwenRealtimeTTSOptions extends BaseTTSOptions {
+  /** 采样率 */
+  sampleRate?: number;
   /** Qwen Realtime 专用选项 */
   realtime?: QwenRealtimeOptions;
 }
 
+/**
+ * TTS 工厂函数选项（判别联合类型）
+ * 根据 provider 字段路由到对应 provider 的专属配置
+ */
+export type TTSOptions =
+  | ({ provider: 'doubao' } & DoubaoTTSOptions)
+  | ({ provider: 'minimax' } & MinimaxTTSOptions)
+  | ({ provider: 'qwen' } & QwenTTSOptions)
+  | ({ provider: 'qwen-realtime' } & QwenRealtimeTTSOptions)
+  | ({ provider: 'openai' } & BaseTTSOptions)
+  | ({ provider: 'gemini' } & BaseTTSOptions)
+  | ({ provider: 'glm' } & BaseTTSOptions)
+  | ({ provider: string } & BaseTTSOptions);
+
 export interface TTSRequest {
   text: string;
-  options?: Partial<TTSOptions>;
+  options?: Partial<BaseTTSOptions>;
 }
 
 export interface TTSResponse {

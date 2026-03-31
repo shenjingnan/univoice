@@ -13,7 +13,13 @@ import {
   waitForTaskStarted,
 } from '@/tts/protocols/minimax';
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
-import type { TextStream, TTSOptions, TTSRequest, TTSResponse, TTSStreamChunk } from '@/types/tts';
+import type {
+  MinimaxTTSOptions,
+  TextStream,
+  TTSRequest,
+  TTSResponse,
+  TTSStreamChunk,
+} from '@/types/tts';
 
 /** 队列项类型，用于 speakStream 的推拉转换 */
 type QueueItem =
@@ -43,7 +49,7 @@ export class MinimaxTTS extends BaseTTS {
   /** 比特率 */
   public bitrate?: number;
 
-  constructor(options: TTSOptions) {
+  constructor(options: MinimaxTTSOptions) {
     super(options);
     // WebSocket API 地址
     this.baseUrl = options.baseUrl || 'wss://api.minimaxi.com/ws/v1/t2a_v2';
@@ -110,8 +116,8 @@ export class MinimaxTTS extends BaseTTS {
         model: opts.model || this.model,
         voiceId: opts.voice || this.voice,
         format: opts.format || this.format,
-        sampleRate: opts.sampleRate,
-        bitrate: opts.bitrate,
+        sampleRate: this.sampleRate,
+        bitrate: this.bitrate,
         speed: opts.speed,
         volume: opts.volume,
         pitch: opts.pitch,

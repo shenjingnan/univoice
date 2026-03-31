@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { BaseTTS } from '@/tts/base.js';
-import type { TTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
+import type { BaseTTSOptions, TTSRequest, TTSResponse } from '@/types/tts.js';
 
 // 创建一个具体的 TTS 实现类用于测试
 class MockTTS extends BaseTTS {
@@ -38,7 +38,6 @@ describe('BaseTTS', () => {
   describe('构造函数默认值', () => {
     it('应该使用默认选项初始化', () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -55,8 +54,7 @@ describe('BaseTTS', () => {
     });
 
     it('应该使用提供的选项覆盖默认值', () => {
-      const options: TTSOptions = {
-        provider: 'test',
+      const options: BaseTTSOptions = {
         apiKey: 'custom-key',
         baseUrl: 'https://custom.api.com',
         model: 'custom-model',
@@ -85,7 +83,6 @@ describe('BaseTTS', () => {
   describe('buildRequestOptions', () => {
     it('应该返回包含所有默认选项的对象', () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -109,7 +106,6 @@ describe('BaseTTS', () => {
 
     it('应该合并请求选项到基础选项', () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
         model: 'base-model',
         format: 'mp3',
@@ -137,7 +133,6 @@ describe('BaseTTS', () => {
   describe('speak 方法', () => {
     it('字符串输入 + 非流式输出应该调用 synthesize', async () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -150,7 +145,6 @@ describe('BaseTTS', () => {
 
     it('流式输入 + 非流式输出应该收集文本后调用 synthesize', async () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -169,7 +163,6 @@ describe('BaseTTS', () => {
 
     it('字符串输入 + 流式输出应该抛错（provider 不支持）', async () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 
@@ -184,7 +177,6 @@ describe('BaseTTS', () => {
 
     it('流式输入 + 流式输出应该抛错（provider 不支持）', async () => {
       const tts = new MockTTS({
-        provider: 'test',
         apiKey: 'test-key',
       });
 

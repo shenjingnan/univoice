@@ -20,43 +20,84 @@ export type AudioContainerFormat = 'pcm' | 'wav' | 'ogg' | 'mp3';
  */
 export type AudioCodecFormat = 'raw' | 'opus';
 
-export interface ASROptions {
-  provider: string;
+/**
+ * ASR 通用配置（不含 provider，用于直接实例化）
+ */
+export interface BaseASROptions {
   apiKey?: string;
   baseUrl?: string;
   model?: string;
   language?: string;
   prompt?: string;
   responseFormat?: 'json' | 'text' | 'srt' | 'vtt' | 'verbose_json';
-
-  // 豆包专用参数
-  appKey?: string;
-  accessKey?: string;
-  resourceId?: string;
-  mode?: 'streaming' | 'nostream' | 'async';
-
-  // 音频格式配置
-  audioFormat?: AudioFormat;
   /** 音频容器格式 (pcm, wav, ogg, mp3) */
   format?: AudioContainerFormat;
   /** 音频编码格式 (raw, opus) */
   codec?: AudioCodecFormat;
+}
+
+/**
+ * 豆包 ASR 专属配置
+ */
+export interface DoubaoASROptions extends BaseASROptions {
+  /** 火山引擎 App Key */
+  appKey?: string;
+  /** 火山引擎 Access Key */
+  accessKey?: string;
+  /** 火山引擎 Resource ID */
+  resourceId?: string;
+  /** 识别模式 */
+  mode?: 'streaming' | 'nostream' | 'async';
+  /** 音频格式配置 */
+  audioFormat?: AudioFormat;
+  /** 分段时长 (ms) */
   segmentDuration?: number;
-
-  // 识别配置
+  /** 是否启用逆文本标准化 */
   enableItn?: boolean;
+  /** 是否启用标点预测 */
   enablePunc?: boolean;
+  /** 是否启用 DDC */
   enableDdc?: boolean;
+  /** 是否显示话语级结果 */
   showUtterances?: boolean;
-  /** 是否启用词级时间戳（Qwen ASR 专用） */
-  enableWords?: boolean;
+}
 
-  // GLM ASR 专用参数
-  /** 热词列表（GLM ASR 专用），提高特定词汇识别准确率 */
+/**
+ * 通义千问 ASR 专属配置
+ */
+export interface QwenASROptions extends BaseASROptions {
+  /** 音频采样率 */
+  audioFormat?: { sampleRate?: number };
+  /** 是否启用逆文本标准化 */
+  enableItn?: boolean;
+  /** 是否启用标点预测 */
+  enablePunc?: boolean;
+  /** 是否启用词级时间戳 */
+  enableWords?: boolean;
+}
+
+/**
+ * GLM ASR 专属配置
+ */
+export interface GlmASROptions extends BaseASROptions {
+  /** 热词列表，提高特定词汇识别准确率 */
   hotwords?: string[];
-  /** 上下文文本（GLM ASR 专用），用于长文本场景优化 */
+  /** 上下文文本，用于长文本场景优化 */
   context?: string;
 }
+
+/**
+ * ASR 工厂函数选项（判别联合类型）
+ * 根据 provider 字段路由到对应 provider 的专属配置
+ */
+export type ASROptions =
+  | ({ provider: 'doubao' } & DoubaoASROptions)
+  | ({ provider: 'qwen' } & QwenASROptions)
+  | ({ provider: 'glm' } & GlmASROptions)
+  | ({ provider: 'minimax' } & BaseASROptions)
+  | ({ provider: 'openai' } & BaseASROptions)
+  | ({ provider: 'gemini' } & BaseASROptions)
+  | ({ provider: string } & BaseASROptions);
 
 /**
  * ASR 实例方法 listen() 的选项
@@ -73,7 +114,7 @@ export interface ListenInstanceOptions {
 
 export interface ASRRequest {
   audio: Buffer | Uint8Array | string;
-  options?: Partial<ASROptions>;
+  options?: Partial<BaseASROptions>;
 }
 
 export interface ASRResponse {

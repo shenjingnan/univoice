@@ -1,6 +1,5 @@
 import { bufferToAudioStream, processAudio } from '@/asr/utils/audio';
 import type {
-  ASROptions,
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
@@ -8,6 +7,7 @@ import type {
   AudioContainerFormat,
   AudioStream,
   AudioStreamInput,
+  BaseASROptions,
   ListenInstanceOptions,
 } from '@/types/asr';
 
@@ -22,7 +22,7 @@ export abstract class BaseASR {
   public format: AudioContainerFormat;
   public codec: AudioCodecFormat;
 
-  constructor(options: ASROptions) {
+  constructor(options: BaseASROptions) {
     this.apiKey = options.apiKey || '';
     this.baseUrl = options.baseUrl || '';
     this.model = options.model || 'default';

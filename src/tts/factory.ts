@@ -1,11 +1,13 @@
 import { BaseTTS } from '@/tts/base';
 import type { TTSOptions, TTSProviderType } from '@/types/tts';
 
-const providers = new Map<string, new (options: TTSOptions) => BaseTTS>();
+// biome-ignore lint/suspicious/noExplicitAny: 各 provider 构造函数参数类型不同，用 any 在 Map 层面做适配；类型安全由 createTTS 的判别联合参数保证
+const providers = new Map<string, new (options: any) => BaseTTS>();
 
 export function registerTTSProvider(
   type: TTSProviderType,
-  provider: new (options: TTSOptions) => BaseTTS
+  // biome-ignore lint/suspicious/noExplicitAny: 同上
+  provider: new (options: any) => BaseTTS
 ): void {
   providers.set(type, provider);
 }

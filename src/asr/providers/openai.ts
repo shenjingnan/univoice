@@ -1,10 +1,10 @@
 import { BaseASR } from '@/asr/base';
-import type { ASROptions, ASRStreamChunk, AudioStream } from '@/types/asr';
+import type { ASRStreamChunk, AudioStream, BaseASROptions } from '@/types/asr';
 
 export class WhisperASR extends BaseASR {
   name = 'openai';
 
-  constructor(options: ASROptions) {
+  constructor(options: BaseASROptions) {
     super(options);
     this.baseUrl = options.baseUrl || 'https://api.openai.com/v1';
     this.model = options.model || 'whisper-1';

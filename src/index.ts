@@ -20,10 +20,19 @@ export type {
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
+  BaseASROptions,
+  DoubaoASROptions,
+  GlmASROptions,
+  QwenASROptions,
 } from '@/types/asr';
 export type { AudioData, AudioFormat, ProviderConfig } from '@/types/index';
 export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';
 export type {
+  BaseTTSOptions,
+  DoubaoTTSOptions,
+  MinimaxTTSOptions,
+  QwenRealtimeTTSOptions,
+  QwenTTSOptions,
   TextStream,
   TTSOptions,
   TTSProvider,
