@@ -15,10 +15,19 @@
 
 | 文件 | 场景 | 说明 |
 |------|------|------|
+| `direct-instance.ts` | 直接实例化 | 直接 new QwenASR() 创建实例，Opus 数据包流式识别 |
 | `stream-in-stream-out.ts` | 流式入/流式出 | 实时音频流识别，边发边收 |
 | `non-stream-in-non-stream-out.ts` | 非流式入/非流式出 | 离线音频文件处理 |
 
 ## 使用方法
+
+### 直接实例化
+
+使用 Opus 数据包和 `new QwenASR()` 直接实例化，无需工厂函数。
+
+```bash
+npx tsx examples/asr/providers/qwen/paraformer-realtime-8k-v1/direct-instance.ts
+```
 
 ### 流式入/流式出
 
