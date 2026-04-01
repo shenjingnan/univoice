@@ -224,7 +224,7 @@ PCM 格式需要指定采样率和格式参数：
 
 ```bash
 # 24000 Hz, 16-bit, mono
-ffplay -f s16le -ar 24000 examples/output/speak-string-doubao.pcm
+ffplay -autoexit -f s16le -ar 24000 examples/output/speak-string-doubao.pcm
 ```
 
 ### 播放 MP3/OGG 音频
@@ -232,6 +232,6 @@ ffplay -f s16le -ar 24000 examples/output/speak-string-doubao.pcm
 MP3/OGG 格式可直接播放：
 
 ```bash
-ffplay examples/output/qwen-tts-demo.mp3
-ffplay examples/output/merged-from-opus-packets.ogg
+ffplay -autoexit examples/output/qwen-tts-demo.mp3
+ffplay -autoexit examples/output/merged-from-opus-packets.ogg
 ```

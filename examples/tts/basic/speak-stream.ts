@@ -72,7 +72,7 @@ async function demoDoubao() {
   console.log(`\n音频已保存至: ${outputPath}`);
 
   console.log('\n=== 播放提示 ===');
-  console.log(`ffplay -f s16le -ar 24000 ${outputPath}`);
+  console.log(`ffplay -autoexit -f s16le -ar 24000 ${outputPath}`);
 }
 
 /**
@@ -120,7 +120,7 @@ async function demoQwen() {
   console.log(`\n音频已保存至: ${outputPath}`);
 
   console.log('\n=== 播放提示 ===');
-  console.log(`ffplay ${outputPath}`);
+  console.log(`ffplay -autoexit ${outputPath}`);
 }
 
 /**

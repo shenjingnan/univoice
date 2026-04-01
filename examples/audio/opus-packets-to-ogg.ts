@@ -32,7 +32,7 @@ async function main() {
     console.log(`合并了 ${count} 个 Opus 数据包`);
     console.log(`\n验证命令:`);
     console.log(`  ffprobe ${outputFile}`);
-    console.log(`  ffplay ${outputFile}`);
+    console.log(`  ffplay -autoexit ${outputFile}`);
   } catch (error) {
     console.error('合并失败:', error);
     process.exit(1);

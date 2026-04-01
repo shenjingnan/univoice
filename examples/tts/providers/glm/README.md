@@ -78,7 +78,7 @@ export GLM_API_KEY="your-api-key"
 ffplay -autoexit output.wav
 
 # PCM 格式（需要指定参数）
-ffplay -f s16le -ar 24000 output.pcm
+ffplay -autoexit -f s16le -ar 24000 output.pcm
 ```
 
 ### 3. 流式输出为什么只支持 PCM 格式？

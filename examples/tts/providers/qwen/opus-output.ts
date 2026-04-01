@@ -39,7 +39,7 @@ async function main() {
     writeFileSync(outputFile, response.audio);
     console.log(`音频已保存至: ${outputFile}`);
     console.log(`音频大小: ${response.audio.length} bytes`);
-    console.log(`\n播放命令: ffplay ${outputFile}`);
+    console.log(`\n播放命令: ffplay -autoexit ${outputFile}`);
   } catch (error) {
     console.error('语音合成失败:', error);
     process.exit(1);
