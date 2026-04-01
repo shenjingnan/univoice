@@ -1,22 +1,21 @@
 /**
- * Doubao TTS seed-tts-2.0 - 流式输入/流式输出示例
- * 演示实时语音合成场景
+ * Doubao TTS seed-tts-2.0 - 直接实例化示例
+ * 演示不使用工厂函数 createTTS，直接 new DoubaoTTS() 创建实例
  *
- * 模型特点:
- * - V2 版本
- * - 性能更优
- * - 推荐用于一般场景
+ * 特点:
+ * - 直接导入 DoubaoTTS 类并实例化，无需注册 provider
+ * - 使用 speak 方法进行流式语音合成，边合成边接收音频块
  *
  * 环境变量:
  * - DOUBAO_APP_ID: 火山引擎应用 ID
  * - DOUBAO_ACCESS_TOKEN: 火山引擎访问令牌
  *
  * 使用方法:
- * npx tsx examples/tts/providers/doubao/seed-tts-2.0/stream-in-stream-out.ts
+ * npx tsx examples/tts/providers/doubao/seed-tts-2.0/direct-instance.ts
  */
 import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
-import { createTTS } from 'univoice';
+import { DoubaoTTS } from 'univoice/tts/providers';
 import {
   ensureOutputDir,
   getScriptMeta,
@@ -34,9 +33,8 @@ const RESOURCE_ID = 'seed-tts-2.0';
 async function main() {
   const { appId, accessToken, voice } = getTTSConfig();
 
-  // 创建 TTS 实例
-  const tts = createTTS({
-    provider: 'doubao',
+  // 直接实例化 DoubaoTTS，不使用 createTTS 工厂函数
+  const tts = new DoubaoTTS({
     appId,
     accessToken,
     voice,
@@ -50,9 +48,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`\n[${timestamp()}] === Seed TTS 2.0 - 流式入/流式出 ===`);
+  console.log(`\n[${timestamp()}] === Seed TTS 2.0 - 直接实例化 ===`);
   console.log(`模型: ${RESOURCE_ID}`);
-  console.log(`场景: 实时语音合成\n`);
+  console.log(`场景: 直接 new DoubaoTTS() → 流式语音合成\n`);
 
   const text =
     '欢迎来到龙井村。这里是西湖龙井茶的原产地，漫山遍野的茶园层层叠叠，空气中弥漫着淡淡的茶香。春天采茶季节，您还能看到茶农们忙碌的身影。';
@@ -65,6 +63,7 @@ async function main() {
   let chunkCount = 0;
 
   // 使用 speak 直接传入字符串，通过 for await...of 消费流式音频
+  // 用法与工厂函数创建的实例完全一致
   for await (const { audioChunk } of tts.speak(text, { stream: true })) {
     chunkCount++;
     if (chunkCount === 1) {
