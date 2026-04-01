@@ -12,6 +12,10 @@ const meta: MetaRecord = {
     title: "智谱 GLM",
     type: "page",
   },
+  qwen: {
+    title: "通义千问",
+    type: "page",
+  },
 };
 
 export default meta;
