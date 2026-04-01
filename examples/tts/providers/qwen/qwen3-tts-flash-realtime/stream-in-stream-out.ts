@@ -17,6 +17,7 @@ import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
 import {
+  DEFAULT_TTS_TEXT,
   ensureOutputDir,
   getQwenApiKey,
   getScriptMeta,
@@ -47,7 +48,7 @@ async function main() {
   console.log(`场景: LLM 流式输出 → 实时语音合成\n`);
 
   // 模拟 LLM 流式输出
-  const textStream = mockLLMStream(150);
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT, { delay: 150 });
 
   const startTime = Date.now();
   const audioChunks: Uint8Array[] = [];
