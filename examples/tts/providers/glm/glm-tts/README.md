@@ -31,6 +31,7 @@
 |------|------|------|
 | `stream-in-stream-out.ts` | 流式入/流式出 | 实时语音合成（输出 PCM 格式） |
 | `non-stream-in-non-stream-out.ts` | 非流式入/非流式出 | 一次性获取完整音频（输出 WAV 格式） |
+| `direct-instance.ts` | 直接实例化 | 直接 `new GlmTTS()` 创建实例，不使用工厂函数 |
 
 ## 使用方法
 
@@ -44,6 +45,12 @@ npx tsx examples/tts/providers/glm/glm-tts/non-stream-in-non-stream-out.ts
 
 ```bash
 npx tsx examples/tts/providers/glm/glm-tts/stream-in-stream-out.ts
+```
+
+### 直接实例化
+
+```bash
+npx tsx examples/tts/providers/glm/glm-tts/direct-instance.ts
 ```
 
 ## 环境变量
