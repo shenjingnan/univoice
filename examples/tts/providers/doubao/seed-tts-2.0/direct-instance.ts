@@ -4,6 +4,7 @@
  *
  * 特点:
  * - 直接导入 DoubaoTTS 类并实例化，无需注册 provider
+ * - 使用流式文本输入（模拟 LLM 边生成文本边输入 TTS 的场景）
  * - 使用 speak 方法进行流式语音合成，边合成边接收音频块
  *
  * 环境变量:
@@ -17,9 +18,11 @@ import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
 import { DoubaoTTS } from 'univoice/tts/providers';
 import {
+  DEFAULT_TTS_TEXT,
   ensureOutputDir,
   getScriptMeta,
   getTTSConfig,
+  mockLLMStream,
   printPlayTip,
   printStats,
   timestamp,
@@ -44,27 +47,25 @@ async function main() {
   });
 
   if (!tts.speak) {
-    console.error('当前 TTS 提供商不支持流式输入模式');
+    console.error('当前 TTS 提供商不支持流式语音合成');
     process.exit(1);
   }
 
   console.log(`\n[${timestamp()}] === Seed TTS 2.0 - 直接实例化 ===`);
   console.log(`模型: ${RESOURCE_ID}`);
-  console.log(`场景: 直接 new DoubaoTTS() → 流式语音合成\n`);
+  console.log(`场景: 直接 new DoubaoTTS() → 流式文本输入 + 流式语音合成\n`);
 
-  const text =
-    '欢迎来到龙井村。这里是西湖龙井茶的原产地，漫山遍野的茶园层层叠叠，空气中弥漫着淡淡的茶香。春天采茶季节，您还能看到茶农们忙碌的身影。';
-
-  console.log(`输入文本: "${text}"\n`);
+  // 使用 mockLLMStream 模拟 LLM 流式输出，每隔 150ms 发送一个文本块
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT, { delay: 150 });
 
   const chunks: Uint8Array[] = [];
   const startTime = Date.now();
   let firstChunkTime = 0;
   let chunkCount = 0;
 
-  // 使用 speak 直接传入字符串，通过 for await...of 消费流式音频
+  // 使用 speak 直接传入流式文本，通过 for await...of 消费流式音频
   // 用法与工厂函数创建的实例完全一致
-  for await (const { audioChunk } of tts.speak(text, { stream: true })) {
+  for await (const { audioChunk } of tts.speak(textStream, { stream: true })) {
     chunkCount++;
     if (chunkCount === 1) {
       firstChunkTime = Date.now();

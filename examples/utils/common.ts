@@ -192,19 +192,25 @@ export function getGlmApiKey(): string {
 // ============================================
 
 /**
+ * 默认 TTS 演示文本（杭州导游）
+ */
+export const DEFAULT_TTS_TEXT =
+  '欢迎来到杭州！我是您的智能导游。杭州，这座有着2200多年历史的古城，曾是南宋都城，如今是现代与古典完美交融的东方名城。让我们一起开启这段美妙的杭州之旅吧！';
+
+/**
  * 模拟 LLM 流式输出
  * 实际场景中，这里可能是 OpenAI SDK 的 stream 对象
- * @param delay - 每个文本块的延迟时间（毫秒），默认 100ms
+ * @param text - 要流式输出的文本，按句子标点切分为多个 chunk
+ * @param options - 配置选项
+ * @param options.delay - 每个文本块的延迟时间（毫秒），默认 100ms
  */
-export async function* mockLLMStream(delay = 100): AsyncIterable<string> {
-  const chunks = [
-    '欢迎来到杭州！',
-    '我是您的智能导游。',
-    '杭州，这座有着2200多年历史的古城，',
-    '曾是南宋都城，',
-    '如今是现代与古典完美交融的东方名城。',
-    '让我们一起开启这段美妙的杭州之旅吧！',
-  ];
+export async function* mockLLMStream(
+  text: string,
+  options?: { delay?: number }
+): AsyncIterable<string> {
+  const delay = options?.delay ?? 100;
+  // 按句子级标点切分，保留标点在当前 chunk 末尾
+  const chunks = text.match(/[^。！？；]+[。！？；]?/g) ?? [text];
 
   for (const chunk of chunks) {
     await new Promise((resolve) => setTimeout(resolve, delay));

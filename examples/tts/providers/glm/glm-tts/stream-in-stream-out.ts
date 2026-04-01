@@ -17,6 +17,7 @@ import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
 import {
+  DEFAULT_TTS_TEXT,
   ensureOutputDir,
   getGlmApiKey,
   getScriptMeta,
@@ -63,7 +64,7 @@ async function main() {
   let chunkCount = 0;
 
   // 使用 mockLLMStream 模拟 LLM 流式输出，通过 speak 消费流式音频
-  const textStream = mockLLMStream(150);
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT, { delay: 150 });
   for await (const { audioChunk } of tts.speak(textStream, { stream: true })) {
     chunkCount++;
     if (chunkCount === 1) {

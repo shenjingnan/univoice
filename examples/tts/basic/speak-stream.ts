@@ -13,6 +13,7 @@ import 'dotenv/config';
 import { writeFileSync } from 'node:fs';
 import { createTTS } from 'univoice';
 import {
+  DEFAULT_TTS_TEXT,
   ensureOutputDir,
   getMinimaxApiKey,
   getQwenApiKey,
@@ -49,7 +50,7 @@ async function demoDoubao() {
   console.log('场景说明: 文本流输入（如 LLM 输出），同时实时接收音频流\n');
 
   const startTime = Date.now();
-  const textStream = mockLLMStream();
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT);
 
   const audioChunks: Uint8Array[] = [];
   let chunkCount = 0;
@@ -97,7 +98,7 @@ async function demoQwen() {
   console.log('场景说明: 文本流输入（如 LLM 输出），同时实时接收音频流\n');
 
   const startTime = Date.now();
-  const textStream = mockLLMStream();
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT);
 
   const audioChunks: Uint8Array[] = [];
   let chunkCount = 0;
@@ -142,7 +143,7 @@ async function demoMinimax() {
   console.log('场景说明: 文本流输入（如 LLM 输出），实时流式音频输出\n');
 
   const startTime = Date.now();
-  const textStream = mockLLMStream();
+  const textStream = mockLLMStream(DEFAULT_TTS_TEXT);
 
   const chunks: Uint8Array[] = [];
   let firstChunkTime = 0;
