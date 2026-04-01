@@ -79,7 +79,7 @@ export DOUBAO_ACCESS_TOKEN="your-access-token"
 ffplay -autoexit output.mp3
 
 # PCM 格式（需要指定参数）
-ffplay -f s16le -ar 24000 output.pcm
+ffplay -autoexit -f s16le -ar 24000 output.pcm
 ```
 
 ### 3. 如何自定义音色？

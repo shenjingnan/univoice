@@ -144,7 +144,7 @@ async function main() {
     // 播放提示
     console.log('\n=== 播放提示 ===');
     if (format === 'pcm') {
-      console.log(`ffplay -f s16le -ar 24000 ${outputPath}`);
+      console.log(`ffplay -autoexit -f s16le -ar 24000 ${outputPath}`);
     } else {
       console.log(`ffplay -autoexit ${outputPath}`);
     }

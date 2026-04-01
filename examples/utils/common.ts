@@ -130,7 +130,7 @@ export function ensureOutputDir(__dirname: string, basename: string, ext = 'pcm'
 export function printPlayTip(outputFile: string): void {
   console.log('\n=== 播放提示 ===');
   console.log('PCM 格式播放命令 (24000 Hz, 16-bit, mono):');
-  console.log(`ffplay -f s16le -ar 24000 ${outputFile}`);
+  console.log(`ffplay -autoexit -f s16le -ar 24000 ${outputFile}`);
 }
 
 /**

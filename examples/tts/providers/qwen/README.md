@@ -198,10 +198,10 @@ export QWEN_BASE_URL="wss://dashscope.aliyuncs.com/api-ws/v1/inference/"
 ffplay -autoexit output.mp3
 
 # PCM 格式（需要指定参数）
-ffplay -f s16le -ar 24000 output.pcm
+ffplay -autoexit -f s16le -ar 24000 output.pcm
 
 # Opus/Ogg 格式
-ffplay output.ogg
+ffplay -autoexit output.ogg
 ```
 
 ### 3. 如何自定义音色？

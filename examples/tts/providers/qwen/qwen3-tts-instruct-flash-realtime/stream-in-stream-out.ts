@@ -87,7 +87,7 @@ async function main() {
   const buffer = Buffer.concat(audioChunks.map((c) => Buffer.from(c)));
   writeFileSync(outputPath, buffer);
   console.log(`\n音频已保存至: ${outputPath}`);
-  console.log(`\n播放命令: ffplay -f s16le -ar 24000 ${outputPath}`);
+  console.log(`\n播放命令: ffplay -autoexit -f s16le -ar 24000 ${outputPath}`);
 }
 
 main();
