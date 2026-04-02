@@ -1,0 +1,554 @@
+import { Callout, Steps, Tabs } from "nextra/components";
+
+# QwenRealtimeTTS 使用指南
+
+本文介绍如何使用 univoice SDK 中的 QwenRealtimeTTS（Realtime TTS）功能。
+
+## 概述
+
+QwenRealtimeTTS 基于阿里云 DashScope **Realtime WebSocket API** 实现语音合成，与 [CosyVoice TTS](/qwen/tts-guide)（`qwen` provider）使用不同的 API 端点和消息协议。
+
+### 核心特点
+
+| 特性 | 说明 |
+|------|------|
+| 端点 | `wss://dashscope.aliyuncs.com/api-ws/v1/realtime` |
+| 协议 | 事件类型 + JSON 结构（session.update / input_text_buffer.append 等） |
+| 默认模型 | `qwen3-tts-instruct-flash-realtime` |
+| 默认音色 | `Cherry` |
+| 默认格式 | `pcm` |
+| 独有功能 | `instructions` 情感控制（仅 instruct 模型支持） |
+
+### 与 CosyVoice TTS 的区别
+
+| 对比项 | CosyVoice TTS（`qwen` provider） | Realtime TTS（`qwen-realtime` provider） |
+|--------|----------------------------------|------------------------------------------|
+| API 端点 | CosyVoice WebSocket API | Realtime WebSocket API |
+| 消息格式 | CosyVoice 协议 | 事件驱动（session.update 等） |
+| 内置音色 | 80+ | 有限（如 Cherry） |
+| 情感控制 | `instruction` 参数 | `realtime.instructions` 参数 |
+| 推荐场景 | 通用合成、音色丰富 | 需要情感控制、实时交互 |
+
+### 合成模式
+
+QwenRealtimeTTS 支持非流式和流式两种合成模式：
+
+| 模式 | 方法 | 说明 | 适用场景 |
+|------|------|------|----------|
+| 非流式 | `synthesize` | 一次性返回完整音频 | 文件合成、离线处理 |
+| 流式 | `speak` + `stream: true` | 边合成边接收音频块 | 实时播报、LLM 流式输出转语音 |
+
+## 安装与准备
+
+<Steps>
+
+### 安装 univoice SDK
+
+<Tabs items={['pnpm', 'npm']}>
+<Tabs.Tab>
+```bash
+pnpm add univoice
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```bash
+npm install univoice
+```
+</Tabs.Tab>
+</Tabs>
+
+### 获取 DashScope API Key
+
+在[阿里云 DashScope 控制台](https://dashscope.console.aliyun.com/)开通语音合成服务，获取 API Key：
+
+- **API Key**：用于 Bearer Token 认证的密钥
+
+<Callout type="info">
+建议将 API Key 配置在环境变量中，避免硬编码到代码中：
+
+```bash
+export QWEN_API_KEY=your_api_key
+```
+</Callout>
+
+</Steps>
+
+## 创建 TTS 实例
+
+univoice 提供两种创建 QwenRealtimeTTS 实例的方式：
+
+<Tabs items={['工厂函数（推荐）', '直接实例化']}>
+<Tabs.Tab>
+
+使用 `createTTS` 工厂函数，需先导入 `univoice/tts/providers` 注册提供商：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+  realtime: {
+    instructions: '请用温柔、亲切的语气说话',
+  },
+});
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+直接导入 `QwenRealtimeTTS` 类并实例化，无需注册 provider：
+
+```typescript
+import { QwenRealtimeTTS } from 'univoice/tts/providers';
+
+const tts = new QwenRealtimeTTS({
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+  realtime: {
+    instructions: '请用温柔、亲切的语气说话',
+  },
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+<Callout type="info">
+两种方式创建的实例拥有完全一致的 API，推荐使用工厂函数，便于切换不同提供商。
+</Callout>
+
+## 非流式合成
+
+最简单的使用方式 —— 传入文本，一次性获取完整音频：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+});
+
+// 传入文本，返回完整音频
+const response = await tts.synthesize({
+  text: '欢迎来到杭州！我是您的智能导游。',
+});
+
+console.log('音频大小:', response.audio.length, 'bytes');
+console.log('音频格式:', response.format);
+```
+
+### WebSocket 交互流程
+
+非流式合成的内部交互流程如下：
+
+1. 连接 WebSocket
+2. 等待 `session.created` 事件
+3. 发送 `session.update` 配置会话
+4. 等待 `session.updated` 确认
+5. 发送 `input_text_buffer.append`（包含文本）
+6. 发送 `session.finish`
+7. 收集音频数据直到 `session.finished`
+
+### TTSResponse 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `audio` | `Buffer \| Uint8Array` | 音频数据 |
+| `format` | `string` | 音频格式（如 `pcm`、`mp3`） |
+| `duration` | `number?` | 音频时长 |
+
+## 流式合成
+
+流式合成适合实时场景，文本边发送边接收音频块，也可接收 LLM 流式文本输出：
+
+### 字符串输入
+
+传入字符串，流式接收音频块：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+});
+
+// 传入字符串，流式接收音频块
+for await (const { audioChunk } of tts.speak('欢迎来到杭州！', { stream: true })) {
+  console.log('收到音频块:', audioChunk.length, 'bytes');
+}
+```
+
+### 文本流输入（LLM 流式输出转语音）
+
+传入 `AsyncIterable<string>` 流式文本，实现 LLM 边生成边合成语音：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+});
+
+// 模拟 LLM 流式输出
+async function* textStream() {
+  yield '欢迎来到杭州！';
+  yield '我是您的智能导游。';
+}
+
+// 流式文本输入 → 流式音频输出
+for await (const { audioChunk } of tts.speak(textStream(), { stream: true })) {
+  console.log('收到音频块:', audioChunk.length, 'bytes');
+}
+```
+
+<Callout type="info">
+`speak` 方法的 `input` 参数支持字符串、`AsyncIterable<string>` 和 OpenAI SDK 的 `Stream<ChatCompletionChunk>` 等多种输入类型。SDK 会自动将不同输入标准化为统一的文本流处理。
+</Callout>
+
+### TTSStreamChunk 结构
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `audioChunk` | `Uint8Array` | 音频数据块 |
+
+## 模型版本对比
+
+Realtime API 提供两个模型版本：
+
+| 特性 | `qwen3-tts-instruct-flash-realtime`（默认） | `qwen3-tts-flash-realtime` |
+|------|---------------------------------------------|---------------------------|
+| instructions 情感控制 | 支持 | 不支持 |
+| 默认使用 | 是 | 否 |
+| 适用场景 | 需要控制情感、语气 | 标准 Realtime 合成 |
+
+通过 `model` 参数切换模型版本：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+// 使用 instruct 模型（默认，支持 instructions）
+const tts1 = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+});
+
+// 使用基础 flash 模型
+const tts2 = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-flash-realtime',
+});
+```
+
+## instructions 情感控制
+
+Realtime API 独有的 `instructions` 功能，**仅 `qwen3-tts-instruct-flash-realtime` 模型支持**。通过自然语言描述控制语音的情感和风格：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice/tts';
+
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'qwen3-tts-instruct-flash-realtime',
+  voice: 'Cherry',
+  format: 'pcm',
+  realtime: {
+    instructions: '请用温柔、亲切的语气说话',
+  },
+});
+```
+
+### 支持的控制维度
+
+`instructions` 参数支持自然语言描述，可以控制：
+
+- **情感**：如 `"请用温柔的语气说话"`、`"用激动的语气播报"`
+- **语速**：如 `"请慢速朗读"`、`"加快语速"`
+- **风格**：如 `"像新闻主播一样播报"`、`"用讲故事的方式娓娓道来"`
+- **综合**：如 `"用温柔的语气，像讲故事一样娓娓道来"`
+
+<Callout type="warning">
+`instructions` 参数仅在 `qwen3-tts-instruct-flash-realtime` 模型上生效。如果使用 `qwen3-tts-flash-realtime` 模型，该参数会被忽略。
+</Callout>
+
+## 音频格式支持
+
+QwenRealtimeTTS 支持以下音频格式，通过 `format` 参数指定：
+
+<Tabs items={['PCM（默认）', 'MP3', 'Opus', 'WAV / FLAC / OGG']}>
+<Tabs.Tab>
+
+PCM 是 Realtime API 的默认格式，无压缩、无容器封装，延迟最低：
+
+```typescript
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'pcm',
+  sampleRate: 24000,
+});
+
+const response = await tts.synthesize({ text: '你好世界' });
+// response.audio 为 PCM 原始数据
+```
+
+<Callout type="info">
+PCM 格式不包含文件头信息，播放时需要指定采样率、位深和声道数。默认配置为 24000Hz、16bit、单声道。
+</Callout>
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+MP3 格式兼容性好，文件体积小：
+
+```typescript
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '你好世界' });
+// response.audio 为 MP3 数据，可直接保存为 .mp3 文件
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Opus 格式压缩率高，适合流式传输场景：
+
+```typescript
+const tts = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'opus',
+});
+
+const response = await tts.synthesize({ text: '你好世界' });
+// 输出的 Opus 音频，保存为 .ogg 文件
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+其他支持的格式：
+
+```typescript
+// WAV 格式（包含文件头，可直接播放）
+const tts1 = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'wav',
+  sampleRate: 24000,
+});
+
+// FLAC 无损压缩格式
+const tts2 = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'flac',
+});
+
+// OGG 格式
+const tts3 = createTTS({
+  provider: 'qwen-realtime',
+  apiKey: process.env.QWEN_API_KEY,
+  format: 'ogg',
+});
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## 完整配置参考
+
+### QwenRealtimeTTSOptions（qwen-realtime provider）
+
+#### 认证配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `apiKey` | `string` | `''` | 阿里云 DashScope API Key（**必填**） |
+
+#### 合成配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `model` | `string` | `'qwen3-tts-instruct-flash-realtime'` | Realtime 模型名称 |
+| `voice` | `string` | `'Cherry'` | 发音人音色 |
+| `format` | `'mp3' \| 'wav' \| 'ogg' \| 'flac' \| 'pcm' \| 'opus' \| 'ogg_opus'` | `'pcm'` | 音频格式 |
+| `sampleRate` | `number?` | `undefined` | 采样率 |
+
+#### Realtime 专用配置（`realtime` 字段）
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `realtime.mode` | `'server_commit' \| 'commit'` | `'server_commit'` | 交互模式（推荐 `server_commit`） |
+| `realtime.languageType` | `'Auto' \| 'Chinese' \| 'English' \| 'Japanese' \| 'Korean'` | `'Auto'` | 语言类型 |
+| `realtime.instructions` | `string?` | `undefined` | 情感控制指令（仅 instruct 模型支持） |
+| `realtime.optimizeInstructions` | `boolean?` | `undefined` | 是否启用指令优化 |
+| `realtime.speechRate` | `number?` | `undefined` | 语速倍率（0.5~2.0） |
+| `realtime.pitchRate` | `number?` | `undefined` | 音调倍率（0.5~2.0） |
+| `realtime.bitrate` | `number?` | `undefined` | 比特率 |
+
+#### 通用配置
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `baseUrl` | `string` | `'wss://dashscope.aliyuncs.com/api-ws/v1/realtime'` | WebSocket 服务地址 |
+
+## 工具函数
+
+以下工具函数来自 `univoice/tts` 模块，与 QwenRealtimeTTS 配合使用：
+
+### collectAudio
+
+收集音频数据，支持回调：
+
+```typescript
+import { collectAudio } from 'univoice/tts';
+
+const response = await tts.synthesize({ text: '你好世界' });
+const audio = await collectAudio(response, {
+  onComplete: (audio) => console.log('音频大小:', audio.length),
+});
+```
+
+### saveTTSResponse
+
+将 TTS 响应保存到文件：
+
+```typescript
+import { saveTTSResponse } from 'univoice/tts';
+
+const response = await tts.synthesize({ text: '你好世界' });
+
+// 自动生成文件名
+const filepath = await saveTTSResponse(response);
+
+// 指定文件名和目录
+await saveTTSResponse(response, {
+  filename: 'output.pcm',
+  directory: './audio',
+});
+```
+
+### saveAudio
+
+将音频块保存到文件，支持自动添加 WAV 头：
+
+```typescript
+import { saveAudio } from 'univoice/tts';
+
+// 保存流式音频块为 WAV 文件
+const stream = tts.speak('你好世界', { stream: true });
+await saveAudio('output.wav', stream, { sampleRate: 24000 });
+```
+
+### playAudio
+
+播放音频（需要系统安装播放器，macOS 默认使用 `afplay`）：
+
+```typescript
+import { playAudio } from 'univoice/tts';
+
+const response = await tts.synthesize({ text: '你好世界' });
+await playAudio(response);
+
+// 指定播放器
+await playAudio(response, { player: 'ffplay' });
+```
+
+### teeAudio
+
+同时保存和播放音频：
+
+```typescript
+import { teeAudio } from 'univoice/tts';
+
+const response = await tts.synthesize({ text: '你好世界' });
+await teeAudio(response, {
+  save: { filename: 'output.pcm', directory: './audio' },
+  play: { player: 'afplay' },
+});
+```
+
+## 常见问题
+
+### CosyVoice 和 Realtime 模型如何选择？
+
+- **CosyVoice**（`qwen` provider）：音色丰富（80+），推荐大多数场景使用。详见 [TTS 使用指南](/qwen/tts-guide)
+- **Realtime**（`qwen-realtime` provider）：支持 `instructions` 情感控制，适合需要精细控制语音表现的场景
+
+### Realtime 的两个模型如何选择？
+
+- **`qwen3-tts-instruct-flash-realtime`**（默认，推荐）：支持 `instructions` 情感控制，可通过自然语言控制语气、情感
+- **`qwen3-tts-flash-realtime`**：基础 Realtime 模型，不支持 `instructions`，适用于不需要情感控制的场景
+
+### 非流式和流式模式如何选择？
+
+- **非流式**（`synthesize`）：传入完整文本，一次性获取音频。适合文件合成、离线处理
+- **流式**（`speak` + `stream: true`）：边发送边接收，实时获取音频块。适合实时播报、LLM 流式输出转语音
+
+### 如何获取 DashScope API Key？
+
+1. 前往 [阿里云 DashScope 控制台](https://dashscope.console.aliyun.com/)
+2. 开通「语音合成」服务
+3. 在「API Keys」管理页面创建新的 API Key
+
+### PCM 格式音频如何播放？
+
+PCM 是原始音频数据，需要指定参数播放：
+
+```bash
+ffplay -autoexit -f s16le -ar 24000 -ac 1 output.pcm
+```
+
+或者使用 `saveAudio` 保存为 WAV 格式（自动添加文件头）：
+
+```typescript
+import { saveAudio } from 'univoice/tts';
+
+const response = await tts.synthesize({ text: '你好世界' });
+// 保存为 WAV 文件，自动添加文件头
+await saveAudio('output.wav', [response.audio], { sampleRate: 24000 });
+```
+
+### speak 方法支持哪些输入类型？
+
+`speak` 方法的 `input` 参数支持：
+
+- **字符串**：直接传入文本，适合固定文本的流式合成
+- **AsyncIterable\<string\>**：流式文本输入，适合 LLM 流式输出转语音
+- **OpenAI Stream**：直接接收 OpenAI SDK 的流式输出
+
+### realtime.mode 的 server_commit 和 commit 有什么区别？
+
+- **`server_commit`**（默认，推荐）：服务端自动判断文本边界，发送完文本后自动触发合成
+- **`commit`**：客户端手动触发合成，需要自行管理提交时机
