@@ -42,3 +42,11 @@ export type {
   TTSStreamChunk,
   TTSVoice,
 } from '@/types/tts';
+export type {
+  CosyVoiceV1Voice,
+  CosyVoiceV2Voice,
+  CosyVoiceV3FlashVoice,
+  CosyVoiceV3PlusVoice,
+  CosyVoiceVoice,
+  QwenTTSModel,
+} from '@/types/voices/index';

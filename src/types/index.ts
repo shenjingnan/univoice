@@ -1,6 +1,7 @@
 export * from './asr.js';
 export * from './llm-stream.js';
 export * from './tts.js';
+export * from './voices/index.js';
 
 export interface ProviderConfig {
   apiKey: string;
