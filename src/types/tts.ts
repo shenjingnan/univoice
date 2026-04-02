@@ -1,5 +1,5 @@
 import type { OpenAIStream } from './llm-stream';
-import type { CosyVoiceVoice, QwenRealtimeVoice } from './voices/index.js';
+import type { CosyVoiceVoice, GlmVoice, QwenRealtimeVoice } from './voices/index.js';
 import type { MinimaxVoice } from './voices/minimax.js';
 
 /**
@@ -100,6 +100,18 @@ export interface QwenRealtimeTTSOptions extends BaseTTSOptions {
  * TTS 工厂函数选项（判别联合类型）
  * 根据 provider 字段路由到对应 provider 的专属配置
  */
+/**
+ * GLM TTS 专属配置
+ */
+export interface GlmTTSOptions extends BaseTTSOptions {
+  /** 音色（支持 GLM 内置音色或自定义字符串） */
+  voice?: AcceptAnyString<GlmVoice>;
+}
+
+/**
+ * TTS 工厂函数选项（判别联合类型）
+ * 根据 provider 字段路由到对应 provider 的专属配置
+ */
 export type TTSOptions =
   | ({ provider: 'doubao' } & DoubaoTTSOptions)
   | ({ provider: 'minimax' } & MinimaxTTSOptions)
@@ -107,7 +119,7 @@ export type TTSOptions =
   | ({ provider: 'qwen-realtime' } & QwenRealtimeTTSOptions)
   | ({ provider: 'openai' } & BaseTTSOptions)
   | ({ provider: 'gemini' } & BaseTTSOptions)
-  | ({ provider: 'glm' } & BaseTTSOptions)
+  | ({ provider: 'glm' } & GlmTTSOptions)
   | ({ provider: string } & BaseTTSOptions);
 
 export interface TTSRequest {
