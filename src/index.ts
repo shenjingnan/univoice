@@ -48,6 +48,7 @@ export type {
   CosyVoiceV3FlashVoice,
   CosyVoiceV3PlusVoice,
   CosyVoiceVoice,
+  MinimaxVoice,
   QwenRealtimeVoice,
   QwenTTSModel,
 } from '@/types/voices/index';

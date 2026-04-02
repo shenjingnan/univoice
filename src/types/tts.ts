@@ -1,5 +1,6 @@
 import type { OpenAIStream } from './llm-stream';
 import type { CosyVoiceVoice, QwenRealtimeVoice } from './voices/index.js';
+import type { MinimaxVoice } from './voices/minimax.js';
 
 /**
  * 同时接受预定义字面量和任意字符串的类型工具。
@@ -63,6 +64,8 @@ export interface DoubaoTTSOptions extends BaseTTSOptions {
  * Minimax TTS 专属配置
  */
 export interface MinimaxTTSOptions extends BaseTTSOptions {
+  /** 音色（支持 Minimax 内置音色或自定义字符串） */
+  voice?: AcceptAnyString<MinimaxVoice>;
   /** 采样率 */
   sampleRate?: number;
   /** 比特率 */
