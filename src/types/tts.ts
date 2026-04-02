@@ -2,6 +2,13 @@ import type { OpenAIStream } from './llm-stream';
 import type { CosyVoiceVoice } from './voices/index.js';
 
 /**
+ * 同时接受预定义字面量和任意字符串的类型工具。
+ * 使用 `string & {}` 防止 TypeScript 将字面量联合类型简化为 string，
+ * 从而在 IDE 中保留字面量值的自动补全提示。
+ */
+type AcceptAnyString<T extends string> = T | (string & {});
+
+/**
  * Qwen Realtime TTS 专用选项
  */
 export interface QwenRealtimeOptions {
@@ -67,7 +74,7 @@ export interface MinimaxTTSOptions extends BaseTTSOptions {
  */
 export interface QwenTTSOptions extends BaseTTSOptions {
   /** 音色（支持 CosyVoice 内置音色或自定义字符串） */
-  voice?: CosyVoiceVoice | string;
+  voice?: AcceptAnyString<CosyVoiceVoice>;
   /** 采样率 */
   sampleRate?: number;
   /** 指令文本（用于情感控制，如"请用温柔的语调朗读"） */
