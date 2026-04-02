@@ -1,5 +1,5 @@
 import type { OpenAIStream } from './llm-stream';
-import type { CosyVoiceVoice } from './voices/index.js';
+import type { CosyVoiceVoice, QwenRealtimeVoice } from './voices/index.js';
 
 /**
  * 同时接受预定义字面量和任意字符串的类型工具。
@@ -85,6 +85,8 @@ export interface QwenTTSOptions extends BaseTTSOptions {
  * 通义千问 Realtime TTS 专属配置
  */
 export interface QwenRealtimeTTSOptions extends BaseTTSOptions {
+  /** 音色（支持 Qwen Realtime 内置音色或自定义字符串） */
+  voice?: AcceptAnyString<QwenRealtimeVoice>;
   /** 采样率 */
   sampleRate?: number;
   /** Qwen Realtime 专用选项 */
