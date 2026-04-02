@@ -1,5 +1,5 @@
 import type { OpenAIStream } from './llm-stream';
-import type { CosyVoiceVoice, GlmVoice, QwenRealtimeVoice } from './voices/index.js';
+import type { CosyVoiceVoice, DoubaoVoice, GlmVoice, QwenRealtimeVoice } from './voices/index.js';
 import type { MinimaxVoice } from './voices/minimax.js';
 
 /**
@@ -48,6 +48,8 @@ export interface BaseTTSOptions {
  * 豆包 TTS 专属配置
  */
 export interface DoubaoTTSOptions extends BaseTTSOptions {
+  /** 音色（支持豆包内置音色或自定义字符串） */
+  voice?: AcceptAnyString<DoubaoVoice>;
   /** 火山引擎 App ID */
   appId?: string;
   /** 火山引擎 Access Token */
