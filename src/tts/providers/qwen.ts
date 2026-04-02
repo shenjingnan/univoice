@@ -306,10 +306,21 @@ export class QwenTTS extends BaseTTS {
     while (true) {
       const result = await receiveAudioOrEvent(ws);
 
-      // 收到结束事件或失败事件
+      // 收到 task-finished：正常结束
       if (result === null) {
         console.log('[接收流程] 收到结束事件，结束接收');
         enqueue({ type: 'end' });
+        return;
+      }
+
+      // 收到 task-failed：输出错误信息
+      if (result.type === 'failed') {
+        const { error_code, error_message } = result.event.header;
+        console.error(`[接收流程] 收到 task-failed 事件: ${error_code} - ${error_message}`);
+        enqueue({
+          type: 'error',
+          error: new Error(`TTS task failed: ${error_code} - ${error_message}`),
+        });
         return;
       }
 
