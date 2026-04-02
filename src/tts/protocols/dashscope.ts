@@ -102,7 +102,8 @@ export interface TaskStartedEvent {
 }
 
 /**
- * result-generated 事件 - 包含音频数据
+ * result-generated 事件 - 句子级别的状态通知
+ * 注意：音频数据通过独立的二进制 WebSocket 帧传输，不在此事件中
  */
 export interface ResultGeneratedEvent {
   header: {
@@ -111,7 +112,19 @@ export interface ResultGeneratedEvent {
     task_status: TaskStatus;
   };
   payload: {
-    audio: string; // base64 编码的音频数据
+    output: {
+      type: 'sentence-begin' | 'sentence-synthesis' | 'sentence-end';
+      sentence: {
+        index: number;
+        begin_time?: number;
+        end_time?: number;
+        text?: string;
+      };
+    };
+    usage?: {
+      characters: number;
+      duration: number;
+    };
   };
 }
 
@@ -563,14 +576,25 @@ export function concatArrays(arrays: Uint8Array[]): Uint8Array {
 }
 
 /**
+ * 接收音频数据或事件的返回类型
+ * - audio: 收到二进制音频数据
+ * - event: 收到服务端事件（result-generated 等）
+ * - failed: 收到 task-failed 事件，携带错误详情
+ * - null: 收到 task-finished 事件，表示正常结束
+ */
+export type ReceiveResult =
+  | { type: 'audio'; data: Uint8Array }
+  | { type: 'event'; event: ServerResponse }
+  | { type: 'failed'; event: TaskFailedEvent }
+  | null;
+
+/**
  * 接收音频数据或事件
  * 用于流式场景，可以同时处理二进制音频数据和 JSON 事件
  *
- * @returns 返回音频数据或事件，如果收到结束事件则返回 null
+ * @returns 返回音频数据或事件，task-finished 返回 null，task-failed 返回错误详情
  */
-export async function receiveAudioOrEvent(
-  ws: WebSocket
-): Promise<{ type: 'audio'; data: Uint8Array } | { type: 'event'; event: ServerResponse } | null> {
+export async function receiveAudioOrEvent(ws: WebSocket): Promise<ReceiveResult> {
   setupMessageHandler(ws);
 
   return new Promise((resolve, reject) => {
@@ -591,8 +615,10 @@ export async function receiveAudioOrEvent(
     if (state.queue.length > 0) {
       const msg = state.queue.shift();
       if (msg) {
-        if (isFinishedEvent(msg) || isFailedEvent(msg)) {
+        if (isFinishedEvent(msg)) {
           resolve(null);
+        } else if (isFailedEvent(msg)) {
+          resolve({ type: 'failed', event: msg });
         } else {
           resolve({ type: 'event', event: msg });
         }
@@ -602,9 +628,20 @@ export async function receiveAudioOrEvent(
 
     // 如果都没有，同时等待音频和消息
     let resolved = false;
+    let audioTimer: ReturnType<typeof setTimeout> | null = null;
+
     const cleanup = () => {
       resolved = true;
+      if (audioTimer !== null) {
+        clearTimeout(audioTimer);
+        audioTimer = null;
+      }
       ws.removeListener('error', errorHandler);
+      // 从 callbacks 中移除 messageResolver，避免泄漏
+      const idx = state.callbacks.indexOf(messageResolver);
+      if (idx !== -1) {
+        state.callbacks.splice(idx, 1);
+      }
     };
 
     const errorHandler = (error: WebSocket.ErrorEvent) => {
@@ -622,14 +659,16 @@ export async function receiveAudioOrEvent(
         return;
       }
       // 继续检查
-      setTimeout(audioCheckCallback, 10);
+      audioTimer = setTimeout(audioCheckCallback, 10);
     };
 
     const messageResolver = (msg: ServerResponse) => {
       if (resolved) return;
       cleanup();
-      if (isFinishedEvent(msg) || isFailedEvent(msg)) {
+      if (isFinishedEvent(msg)) {
         resolve(null);
+      } else if (isFailedEvent(msg)) {
+        resolve({ type: 'failed', event: msg });
       } else {
         resolve({ type: 'event', event: msg });
       }

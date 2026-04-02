@@ -88,7 +88,7 @@ CosyVoice 系列模型**仅支持通过 WebSocket 连接调用，不支持 HTTP 
 
 ## 交互流程
 
-![image](https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/3551872771/CAEQaxiBgID50pCW3hkiIDVlOWNkODdhOGYyYjQ2ZDFiMzgyYjNmMmUzOGZkNGVh4709861_20241015153444.149.svg)
+![image](https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/7036173771/CAEQaxiBgID50pCW3hkiIDVlOWNkODdhOGYyYjQ2ZDFiMzgyYjNmMmUzOGZkNGVh4709861_20241015153444.149.svg)
 
 客户端发送给服务端的消息称作[指令](#271eb7a50ft6r)；服务端返回给客户端的消息有两种：JSON格式的[事件](#a989eb7099wjv)和二进制音频流。
 
@@ -2220,6 +2220,10 @@ if __name__ == "__main__":
 3.  确保待合成文本为纯文本格式且符合格式要求，详情请参见[SSML标记语言介绍](https://help.aliyun.com/zh/model-studio/introduction-to-cosyvoice-ssml-markup-language)
 
 
+#### **Q：****为什么TTS语音合成的语音和WAV文件显示的时间长度不一致？例如语音文件显示长度是7秒钟，但实际语音只有不到5秒？**
+
+TTS是流式合成机制，也就是边合成边返回数据，因此保存下来的WAV文件头是一个预估的值，有一定的误差。如果对于时长要求较为严格，您可以设置format为pcm，在获取的完整的一句合成结果文件中自行添加WAV头信息，这样就会得到更为精确的时长。
+
 #### **Q：为什么音频无法播放？**
 
 请根据以下场景逐一排查：
@@ -2295,7 +2299,7 @@ if __name__ == "__main__":
     WebSocket 连接在发送 run-task 指令后立即关闭，且关闭码为 1007。
 
     -   **错误原因**：服务端检测到协议或数据格式错误，主动断开连接。常见原因包括：
-       
+
         -   run-task 指令的 payload 中包含非法字段（如在 payload 中误加了 `"input": {}` 以外的其他字段）。
 
         -   JSON 格式错误（如缺少逗号、括号不匹配等）。
