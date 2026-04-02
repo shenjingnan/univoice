@@ -1,4 +1,5 @@
 import type { OpenAIStream } from './llm-stream';
+import type { CosyVoiceVoice } from './voices/index.js';
 
 /**
  * Qwen Realtime TTS 专用选项
@@ -65,6 +66,8 @@ export interface MinimaxTTSOptions extends BaseTTSOptions {
  * 通义千问 TTS 专属配置
  */
 export interface QwenTTSOptions extends BaseTTSOptions {
+  /** 音色（支持 CosyVoice 内置音色或自定义字符串） */
+  voice?: CosyVoiceVoice | string;
   /** 采样率 */
   sampleRate?: number;
   /** 指令文本（用于情感控制，如"请用温柔的语调朗读"） */
