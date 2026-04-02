@@ -231,3 +231,58 @@ export type CosyVoiceVoice =
   | CosyVoiceV2Voice
   | CosyVoiceV3FlashVoice
   | CosyVoiceV3PlusVoice;
+
+/**
+ * Qwen Realtime TTS 支持的音色
+ *
+ * 来源: https://help.aliyun.com/zh/model-studio/qwen-tts-realtime
+ */
+export type QwenRealtimeVoice =
+  | 'Cherry'
+  | 'Serena'
+  | 'Ethan'
+  | 'Chelsie'
+  | 'Momo'
+  | 'Vivian'
+  | 'Moon'
+  | 'Maia'
+  | 'Kai'
+  | 'Nofish'
+  | 'Bella'
+  | 'Jennifer'
+  | 'Ryan'
+  | 'Katerina'
+  | 'Aiden'
+  | 'Eldric Sage'
+  | 'Mia'
+  | 'Mochi'
+  | 'Bellona'
+  | 'Vincent'
+  | 'Bunny'
+  | 'Neil'
+  | 'Elias'
+  | 'Arthur'
+  | 'Nini'
+  | 'Seren'
+  | 'Pip'
+  | 'Stella'
+  | 'Bodega'
+  | 'Sonrisa'
+  | 'Alek'
+  | 'Dolce'
+  | 'Sohee'
+  | 'Ono Anna'
+  | 'Lenn'
+  | 'Emilien'
+  | 'Andre'
+  | 'Radio Gol'
+  | 'Jada'
+  | 'Dylan'
+  | 'Li'
+  | 'Marcus'
+  | 'Roy'
+  | 'Peter'
+  | 'Sunny'
+  | 'Eric'
+  | 'Rocky'
+  | 'Kiki';
