@@ -38,7 +38,7 @@ async function main() {
     provider: 'qwen',
     apiKey,
     model: MODEL,
-    voice: 'longxiaochun_v3',
+    voice: 'longyingxiao',
     format: 'mp3',
   });
 
