@@ -9,6 +9,7 @@ examples/asr/providers/qwen/
 ├── paraformer-realtime-v2/          # 推荐模型（支持多语言、任意采样率）
 │   ├── stream-in-stream-out.ts          # 流式入/流式出
 │   ├── non-stream-in-non-stream-out.ts  # 非流式入/非流式出
+│   ├── connect-and-listen.ts            # 连接预建立
 │   └── README.md
 ├── paraformer-realtime-8k-v1/       # 8kHz 版本（电话语音）
 │   ├── stream-in-stream-out.ts

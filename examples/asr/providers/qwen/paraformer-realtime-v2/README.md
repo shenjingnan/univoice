@@ -17,6 +17,7 @@
 |------|------|------|
 | `stream-in-stream-out.ts` | 流式入/流式出 | 实时音频流识别，边发边收 |
 | `non-stream-in-non-stream-out.ts` | 非流式入/非流式出 | 离线音频文件处理 |
+| `connect-and-listen.ts` | 连接预建立 | 预建立连接后再识别，降低首次延迟 |
 
 ## 使用方法
 

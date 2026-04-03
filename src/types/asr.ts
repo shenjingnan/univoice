@@ -161,3 +161,46 @@ export type AudioStream = AsyncIterable<Buffer | Uint8Array>;
 
 /** 音频流输入类型：支持音频流、Buffer、Uint8Array 或音频文件路径 */
 export type AudioStreamInput = AudioStream | Buffer | Uint8Array | string;
+
+/**
+ * ASR 连接状态
+ */
+export type ASRConnectionState = 'connected' | 'closed' | 'error';
+
+/**
+ * ASR 连接预建立选项
+ */
+export interface ASRConnectOptions {
+  /** 连接超时时间（毫秒），默认 10000ms */
+  timeout?: number;
+}
+
+/**
+ * ASR 连接实例
+ * 通过 ASR 提供商的 connect() 方法获取，支持在已建立的连接上进行多次识别
+ */
+export interface ASRConnection {
+  /** 当前连接状态 */
+  readonly state: ASRConnectionState;
+
+  /** 流式识别 */
+  listen(
+    audio: AudioStreamInput,
+    options: ListenInstanceOptions & { stream: true }
+  ): AsyncIterable<ASRStreamChunk>;
+
+  /** 非流式识别 */
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions & { stream?: false }
+  ): Promise<ASRResponse>;
+
+  /** 识别方法重载 */
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions
+  ): Promise<ASRResponse> | AsyncIterable<ASRStreamChunk>;
+
+  /** 关闭连接（幂等） */
+  close(): void;
+}

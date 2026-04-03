@@ -1,5 +1,7 @@
 import { bufferToAudioStream, processAudio } from '@/asr/utils/audio';
 import type {
+  ASRConnection,
+  ASRConnectOptions,
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
@@ -76,6 +78,19 @@ export abstract class BaseASR {
       const end = Math.min(i + chunkSize, audioData.length);
       yield audioData.slice(i, end);
     }
+  }
+
+  /**
+   * 预建立连接
+   * 默认不支持，子类可覆写此方法以支持连接预建立
+   *
+   * @param options 连接选项
+   * @returns ASR 连接实例
+   */
+  connect(_options?: ASRConnectOptions): Promise<ASRConnection> {
+    throw new Error(
+      `${this.name} does not support connection pre-establishment. Use listen() directly.`
+    );
   }
 
   /**

@@ -14,6 +14,9 @@ export {
 } from '@/tts/index';
 export { collectAudio, playAudio, saveAudio, saveTTSResponse, teeAudio } from '@/tts/utils/index';
 export type {
+  ASRConnection,
+  ASRConnectionState,
+  ASRConnectOptions,
   ASROptions,
   ASRProvider,
   ASRProviderType,

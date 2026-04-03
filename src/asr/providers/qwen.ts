@@ -16,6 +16,9 @@ import {
 } from '@/asr/protocols/dashscope';
 import { detectSampleRate } from '@/asr/utils/audio';
 import type {
+  ASRConnection,
+  ASRConnectionState,
+  ASRConnectOptions,
   ASRResponse,
   ASRSegment,
   ASRStreamChunk,
@@ -301,64 +304,113 @@ export class QwenASR extends BaseASR {
         ws.on('error', reject);
       });
 
-      // 创建响应队列
-      const queue = this.createResponseQueue();
-
-      // 设置消息处理器（事件驱动，不阻塞）
-      let cleanup: (() => void) | undefined;
-
-      try {
-        cleanup = this.setupMessageHandler(ws, queue);
-
-        // 生成任务 ID
-        const taskId = randomUUID();
-
-        // 发送 run-task 指令
-        const runTaskMsg = createRunTaskMessage(taskId, {
-          model: this.model,
-          format: this.format || 'mp3',
-          sampleRate,
-          languageHints: this.getLanguageHints(),
-          enableWords: this.enableWords,
-          enablePunctuationPrediction: this.enablePunctuationPrediction,
-          enableInverseTextNormalization: this.enableInverseTextNormalization,
-        });
-        await sendMessage(ws, runTaskMsg);
-
-        // 等待 task-started 事件
-        await waitForTaskStarted(ws);
-
-        // 启动发送任务，完成后发送 finish-task
-        const sendWithFinishPromise = this.sendAudioStream(ws, audio).then(async () => {
-          const finishTaskMsg = createFinishTaskMessage(taskId);
-          await sendMessage(ws, finishTaskMsg);
-        });
-
-        // 从队列 yield 响应（边发边收）
-        while (true) {
-          const chunk = await queue.next();
-
-          if (chunk === null) {
-            // 队列已完成
-            break;
-          }
-
-          yield chunk;
-        }
-
-        // 等待发送任务和 finish-task 完成
-        await sendWithFinishPromise;
-
-        // 检查是否有错误
-        const queueError = queue.getError();
-        if (queueError) {
-          throw queueError;
-        }
-      } finally {
-        cleanup?.();
-      }
+      yield* this.listenStreamOnConnection(ws, audio, sampleRate);
     } finally {
       ws.close();
+    }
+  }
+
+  /**
+   * 预建立 WebSocket 连接
+   * 只建立连接，不发送协议级初始化（DashScope 的 run-task 是 task 级别，每次 listen 时才发送）
+   */
+  override async connect(options?: ASRConnectOptions): Promise<ASRConnection> {
+    if (!this.apiKey) {
+      throw new Error('apiKey is required for Qwen ASR');
+    }
+
+    const timeout = options?.timeout ?? 10000;
+
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+    });
+
+    // 带超时的连接等待
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Connection timed out after ${timeout}ms`));
+        ws.close();
+      }, timeout);
+
+      ws.once('open', () => {
+        clearTimeout(timer);
+        resolve();
+      });
+
+      ws.once('error', (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+
+    return new QwenASRConnection(ws, this);
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行流式识别
+   * 从 listenStream 中提取的核心逻辑，不创建/关闭 WebSocket
+   */
+  async *listenStreamOnConnection(
+    ws: WebSocket,
+    audio: AudioStream,
+    detectedSampleRate?: number
+  ): AsyncIterable<ASRStreamChunk> {
+    const sampleRate = detectedSampleRate ?? this.sampleRate;
+
+    // 创建响应队列
+    const queue = this.createResponseQueue();
+
+    // 设置消息处理器（事件驱动，不阻塞）
+    let cleanup: (() => void) | undefined;
+
+    try {
+      cleanup = this.setupMessageHandler(ws, queue);
+
+      // 生成任务 ID
+      const taskId = randomUUID();
+
+      // 发送 run-task 指令
+      const runTaskMsg = createRunTaskMessage(taskId, {
+        model: this.model,
+        format: this.format || 'mp3',
+        sampleRate,
+        languageHints: this.getLanguageHints(),
+        enableWords: this.enableWords,
+        enablePunctuationPrediction: this.enablePunctuationPrediction,
+        enableInverseTextNormalization: this.enableInverseTextNormalization,
+      });
+      await sendMessage(ws, runTaskMsg);
+
+      // 等待 task-started 事件
+      await waitForTaskStarted(ws);
+
+      // 启动发送任务，完成后发送 finish-task
+      const sendWithFinishPromise = this.sendAudioStream(ws, audio).then(async () => {
+        const finishTaskMsg = createFinishTaskMessage(taskId);
+        await sendMessage(ws, finishTaskMsg);
+      });
+
+      // 从队列 yield 响应（边发边收）
+      while (true) {
+        const chunk = await queue.next();
+
+        if (chunk === null) {
+          break;
+        }
+
+        yield chunk;
+      }
+
+      // 等待发送任务和 finish-task 完成
+      await sendWithFinishPromise;
+
+      // 检查是否有错误
+      const queueError = queue.getError();
+      if (queueError) {
+        throw queueError;
+      }
+    } finally {
+      cleanup?.();
     }
   }
 
@@ -366,7 +418,7 @@ export class QwenASR extends BaseASR {
    * 将音频文件路径转换为原始音频流
    * Qwen ASR 原生支持 mp3、wav、pcm 等格式，直接发送原始数据即可
    */
-  private async *fileToRawAudioStream(filePath: string): AudioStream {
+  async *fileToRawAudioStream(filePath: string): AudioStream {
     const buffer = await readFile(filePath);
     // 分块发送，每块约 4KB
     const chunkSize = 4096;
@@ -378,7 +430,7 @@ export class QwenASR extends BaseASR {
   /**
    * 判断输入是否为文件路径
    */
-  private isFilePath(input: AudioStreamInput): input is string {
+  isFilePath(input: AudioStreamInput): input is string {
     if (typeof input !== 'string') return false;
     // 简单判断：如果字符串看起来像路径就尝试作为文件处理
     return (
@@ -444,7 +496,7 @@ export class QwenASR extends BaseASR {
   /**
    * 适配音频输入为音频流（Qwen 专用）
    */
-  private adaptQwenAudioInput(audio: AudioStreamInput): AudioStream {
+  adaptQwenAudioInput(audio: AudioStreamInput): AudioStream {
     if (this.isQwenAudioStream(audio)) return audio;
     // 对于非文件路径的字符串，使用父类的 PCM 转换
     if (this.isQwenString(audio) && !this.isFilePath(audio)) {
@@ -487,6 +539,113 @@ export class QwenASR extends BaseASR {
     const textParts: string[] = [];
 
     for await (const chunk of this.listenStream(audio, detectedSampleRate)) {
+      if (chunk.isFinal && chunk.text) {
+        textParts.push(chunk.text);
+      }
+      if (chunk.segment) {
+        segments.push(chunk.segment);
+      }
+    }
+
+    return {
+      text: textParts.join(''),
+      segments: segments.length > 0 ? segments : undefined,
+    };
+  }
+}
+
+/**
+ * Qwen ASR 连接实例
+ * 通过 QwenASR.connect() 获取，持有已建立的 WebSocket 连接
+ */
+class QwenASRConnection implements ASRConnection {
+  private _state: ASRConnectionState = 'connected';
+
+  constructor(
+    private ws: WebSocket,
+    private provider: QwenASR
+  ) {}
+
+  get state(): ASRConnectionState {
+    if (this.ws.readyState === WebSocket.CLOSED || this.ws.readyState === WebSocket.CLOSING) {
+      return 'closed';
+    }
+    return this._state;
+  }
+
+  listen(
+    audio: AudioStreamInput,
+    options: ListenInstanceOptions & { stream: true }
+  ): AsyncIterable<ASRStreamChunk>;
+
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions & { stream?: false }
+  ): Promise<ASRResponse>;
+
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions
+  ): Promise<ASRResponse> | AsyncIterable<ASRStreamChunk> {
+    this.ensureConnected();
+
+    const { audioStream, sampleRate } = this.adaptAudioInput(audio);
+
+    if (options?.stream === true) {
+      return this.streamOnConnection(audioStream, sampleRate);
+    }
+    return this.collectResponse(audioStream, sampleRate);
+  }
+
+  close(): void {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this._state = 'closed';
+  }
+
+  private ensureConnected(): void {
+    if (this.state !== 'connected') {
+      throw new Error('Connection is closed');
+    }
+  }
+
+  private adaptAudioInput(audio: AudioStreamInput): {
+    audioStream: AudioStream;
+    sampleRate?: number;
+  } {
+    if (this.provider.isFilePath(audio)) {
+      const sampleRate = detectSampleRate(audio) ?? this.provider.sampleRate;
+      return {
+        audioStream: this.provider.fileToRawAudioStream(audio),
+        sampleRate,
+      };
+    }
+    return {
+      audioStream: this.provider.adaptQwenAudioInput(audio),
+      sampleRate: this.provider.sampleRate,
+    };
+  }
+
+  private async *streamOnConnection(
+    audioStream: AudioStream,
+    sampleRate?: number
+  ): AsyncIterable<ASRStreamChunk> {
+    yield* this.provider.listenStreamOnConnection(this.ws, audioStream, sampleRate);
+  }
+
+  private async collectResponse(
+    audioStream: AudioStream,
+    sampleRate?: number
+  ): Promise<ASRResponse> {
+    const segments: ASRSegment[] = [];
+    const textParts: string[] = [];
+
+    for await (const chunk of this.provider.listenStreamOnConnection(
+      this.ws,
+      audioStream,
+      sampleRate
+    )) {
       if (chunk.isFinal && chunk.text) {
         textParts.push(chunk.text);
       }

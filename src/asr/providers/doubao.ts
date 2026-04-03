@@ -9,8 +9,19 @@ import {
   getErrorMessage,
   parseResponse,
 } from '@/asr/protocols/sauc';
-import { DEFAULT_SAMPLE_RATE } from '@/asr/utils/audio';
-import type { ASRStreamChunk, AudioStream, DoubaoASROptions } from '@/types/asr';
+import { bufferToAudioStream, DEFAULT_SAMPLE_RATE } from '@/asr/utils/audio';
+import type {
+  ASRConnection,
+  ASRConnectionState,
+  ASRConnectOptions,
+  ASRResponse,
+  ASRSegment,
+  ASRStreamChunk,
+  AudioStream,
+  AudioStreamInput,
+  DoubaoASROptions,
+  ListenInstanceOptions,
+} from '@/types/asr';
 
 /**
  * 豆包 ASR 提供商
@@ -302,63 +313,219 @@ export class DoubaoASR extends BaseASR {
       // 等待连接建立
       await this.waitForConnection(ws);
 
-      // 创建响应队列
-      const queue = this.createResponseQueue();
+      // 发送 Full Client Request 并等待确认
+      let sequence = 1;
+      const fullClientRequest = buildFullClientRequest(
+        this.buildFullClientRequestParams(),
+        sequence++
+      );
+      ws.send(fullClientRequest);
 
-      // 设置消息处理器（事件驱动，不阻塞）
-      let cleanup: (() => void) | undefined;
-
-      try {
-        cleanup = this.setupMessageHandler(ws, queue);
-
-        // 初始化序列号
-        let sequence = 1;
-
-        // 发送 Full Client Request
-        const fullClientRequest = buildFullClientRequest(
-          this.buildFullClientRequestParams(),
-          sequence++
-        );
-        ws.send(fullClientRequest);
-
-        // 等待初始化确认（使用 receiveMessage 确保同步）
-        const initResponse = await this.receiveMessage(ws);
-        if (initResponse.code !== 0) {
-          throw new Error(`Init failed: ${getErrorMessage(initResponse.code)}`);
-        }
-
-        // 启动发送任务（不等待，让它在后台运行）
-        const sendPromise = this.sendAudioStream(ws, audio, sequence);
-
-        // 从队列 yield 响应（边发边收）
-        while (true) {
-          const chunk = await queue.next();
-
-          if (chunk === null) {
-            // 队列已完成
-            break;
-          }
-
-          yield chunk;
-
-          if (chunk.isFinal) {
-            break;
-          }
-        }
-
-        // 等待发送任务完成
-        await sendPromise;
-
-        // 检查是否有错误
-        const queueError = queue.getError();
-        if (queueError) {
-          throw queueError;
-        }
-      } finally {
-        cleanup?.();
+      const initResponse = await this.receiveMessage(ws);
+      if (initResponse.code !== 0) {
+        throw new Error(`Init failed: ${getErrorMessage(initResponse.code)}`);
       }
+
+      yield* this.listenStreamOnConnection(ws, audio, { value: sequence });
     } finally {
       ws.close();
     }
+  }
+
+  /**
+   * 预建立 WebSocket 连接
+   * 建立 WebSocket 连接并发送 FullClientRequest（SAUC 协议的连接级别初始化）
+   */
+  override async connect(options?: ASRConnectOptions): Promise<ASRConnection> {
+    if (!this.appKey) {
+      throw new Error('appKey is required for Doubao ASR');
+    }
+    if (!this.accessKey) {
+      throw new Error('accessKey is required for Doubao ASR');
+    }
+
+    const timeout = options?.timeout ?? 10000;
+
+    const url = this.getWebSocketUrl();
+    const headers = buildAuthHeaders({
+      appKey: this.appKey,
+      accessKey: this.accessKey,
+      resourceId: this.resourceId,
+    });
+
+    const ws = new WebSocket(url, { headers });
+
+    // 带超时的连接等待
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Connection timed out after ${timeout}ms`));
+        ws.close();
+      }, timeout);
+
+      ws.once('open', () => {
+        clearTimeout(timer);
+        resolve();
+      });
+
+      ws.once('error', (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+
+    // 发送 FullClientRequest（连接级别初始化）
+    let sequence = 1;
+    const fullClientRequest = buildFullClientRequest(
+      this.buildFullClientRequestParams(),
+      sequence++
+    );
+    ws.send(fullClientRequest);
+
+    // 等待初始化确认
+    const initResponse = await this.receiveMessage(ws);
+    if (initResponse.code !== 0) {
+      ws.close();
+      throw new Error(`Init failed: ${getErrorMessage(initResponse.code)}`);
+    }
+
+    return new DoubaoASRConnection(ws, this, sequence);
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行流式识别
+   * 不创建/关闭 WebSocket，不发送 FullClientRequest
+   */
+  async *listenStreamOnConnection(
+    ws: WebSocket,
+    audio: AudioStream,
+    seqHolder: { value: number }
+  ): AsyncIterable<ASRStreamChunk> {
+    const queue = this.createResponseQueue();
+    let cleanup: (() => void) | undefined;
+
+    try {
+      cleanup = this.setupMessageHandler(ws, queue);
+
+      const sendPromise = this.sendAudioStream(ws, audio, seqHolder.value);
+
+      while (true) {
+        const chunk = await queue.next();
+
+        if (chunk === null) {
+          break;
+        }
+
+        yield chunk;
+
+        if (chunk.isFinal) {
+          break;
+        }
+      }
+
+      const finalSeq = await sendPromise;
+      // 更新序列号持有者，供下次 listen 使用
+      seqHolder.value = finalSeq + 1;
+
+      const queueError = queue.getError();
+      if (queueError) {
+        throw queueError;
+      }
+    } finally {
+      cleanup?.();
+    }
+  }
+}
+
+/**
+ * 豆包 ASR 连接实例
+ * 通过 DoubaoASR.connect() 获取，持有已建立的 WebSocket 连接
+ */
+class DoubaoASRConnection implements ASRConnection {
+  private _state: ASRConnectionState = 'connected';
+  private seqHolder: { value: number };
+
+  constructor(
+    private ws: WebSocket,
+    private provider: DoubaoASR,
+    initialSequence: number
+  ) {
+    this.seqHolder = { value: initialSequence };
+  }
+
+  get state(): ASRConnectionState {
+    if (this.ws.readyState === WebSocket.CLOSED || this.ws.readyState === WebSocket.CLOSING) {
+      return 'closed';
+    }
+    return this._state;
+  }
+
+  listen(
+    audio: AudioStreamInput,
+    options: ListenInstanceOptions & { stream: true }
+  ): AsyncIterable<ASRStreamChunk>;
+
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions & { stream?: false }
+  ): Promise<ASRResponse>;
+
+  listen(
+    audio: AudioStreamInput,
+    options?: ListenInstanceOptions
+  ): Promise<ASRResponse> | AsyncIterable<ASRStreamChunk> {
+    this.ensureConnected();
+
+    const audioStream = this.adaptAudioInput(audio);
+
+    if (options?.stream === true) {
+      return this.provider.listenStreamOnConnection(this.ws, audioStream, this.seqHolder);
+    }
+    return this.collectResponse(audioStream);
+  }
+
+  close(): void {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this._state = 'closed';
+  }
+
+  private ensureConnected(): void {
+    if (this.state !== 'connected') {
+      throw new Error('Connection is closed');
+    }
+  }
+
+  private adaptAudioInput(audio: AudioStreamInput): AudioStream {
+    if (audio !== null && typeof audio === 'object' && Symbol.asyncIterator in audio) {
+      return audio;
+    }
+    if (typeof audio === 'string') {
+      throw new Error('DoubaoASR connection does not support file path input');
+    }
+    return bufferToAudioStream(audio);
+  }
+
+  private async collectResponse(audioStream: AudioStream): Promise<ASRResponse> {
+    const segments: ASRSegment[] = [];
+    const textParts: string[] = [];
+
+    for await (const chunk of this.provider.listenStreamOnConnection(
+      this.ws,
+      audioStream,
+      this.seqHolder
+    )) {
+      if (chunk.isFinal && chunk.text) {
+        textParts.push(chunk.text);
+      }
+      if (chunk.segment) {
+        segments.push(chunk.segment);
+      }
+    }
+
+    return {
+      text: textParts.join(''),
+      segments: segments.length > 0 ? segments : undefined,
+    };
   }
 }
