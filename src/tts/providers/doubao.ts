@@ -16,7 +16,11 @@ import {
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type {
   DoubaoTTSOptions,
+  SpeakInstanceOptions,
   TextStream,
+  TTSConnection,
+  TTSConnectionState,
+  TTSConnectOptions,
   TTSRequest,
   TTSResponse,
   TTSStreamChunk,
@@ -421,5 +425,251 @@ export class DoubaoTTS extends BaseTTS {
     } finally {
       ws.close();
     }
+  }
+
+  /**
+   * 预建立 WebSocket 连接
+   * 建立 WebSocket 连接并完成 Connection 级别握手（StartConnection → ConnectionStarted）
+   */
+  override async connect(options?: TTSConnectOptions): Promise<TTSConnection> {
+    if (!this.appId) {
+      throw new Error('appId is required for Doubao TTS');
+    }
+    if (!this.accessToken) {
+      throw new Error('accessToken is required for Doubao TTS');
+    }
+
+    const timeout = options?.timeout ?? 10000;
+
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+      skipUTF8Validation: true,
+    });
+
+    // 带超时的连接等待
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Connection timed out after ${timeout}ms`));
+        ws.close();
+      }, timeout);
+
+      ws.once('open', () => {
+        clearTimeout(timer);
+        resolve();
+      });
+
+      ws.once('error', (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+
+    // 发送 StartConnection，等待 ConnectionStarted
+    await startConnection(ws);
+    await waitForEvent(ws, MsgType.FullServerResponse, EventType.ConnectionStarted);
+    console.log('[连接预建立] 连接已启动 (ConnectionStarted)');
+
+    return new DoubaoTTSConnection(ws, this);
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行流式合成
+   * 每次调用创建新的 Session：StartSession → TaskRequest → FinishSession
+   */
+  async *speakStreamOnConnection(
+    ws: WebSocket,
+    input: string | TextStream
+  ): AsyncIterable<TTSStreamChunk> {
+    const textStream = normalizeTextStream(input);
+
+    console.log('[连接复用-双向流] ========== 开始流式输入处理 ==========');
+
+    // 创建队列和同步机制
+    const queue: QueueItem[] = [];
+    const syncState = { resolveWait: null as (() => void) | null, finished: false };
+
+    const enqueue = (item: QueueItem) => {
+      queue.push(item);
+      syncState.resolveWait?.();
+      syncState.resolveWait = null;
+    };
+
+    // 启动处理流程（后台并发执行）
+    const processPromise = (async () => {
+      try {
+        // 1. 创建会话
+        const sessionId = randomUUID();
+        const sessionPayload = this.buildSessionPayload();
+        await startSession(ws, sessionPayload, sessionId);
+        await waitForEvent(ws, MsgType.FullServerResponse, EventType.SessionStarted);
+        console.log('[连接复用-双向流] 会话已启动 (SessionStarted)');
+
+        // 2. 并发执行发送和接收
+        await Promise.all([
+          this.sendTextStreamFlow(ws, sessionId, textStream),
+          this.receiveAudioFlowToQueue(ws, enqueue),
+        ]);
+
+        // 不关闭连接，由 TTSConnection 管理
+      } catch (error) {
+        enqueue({
+          type: 'error',
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      } finally {
+        syncState.finished = true;
+        syncState.resolveWait?.();
+        syncState.resolveWait = null;
+      }
+    })();
+
+    // Generator 主循环：从队列中取出数据
+    try {
+      while (!syncState.finished || queue.length > 0) {
+        while (queue.length === 0 && !syncState.finished) {
+          await new Promise<void>((resolve) => {
+            syncState.resolveWait = resolve;
+          });
+        }
+
+        if (queue.length === 0) break;
+
+        const item = queue.shift();
+        if (!item) break;
+
+        switch (item.type) {
+          case 'audio':
+            yield { audioChunk: item.chunk };
+            break;
+          case 'error':
+            throw item.error;
+          case 'end':
+            return;
+        }
+      }
+    } finally {
+      await processPromise.catch(() => {});
+    }
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行非流式合成
+   * 每次调用创建新的 Session：StartSession → TaskRequest → FinishSession → 收集音频
+   */
+  async synthesizeOnConnection(ws: WebSocket, text: string): Promise<TTSResponse> {
+    // 1. 创建会话
+    const sessionId = randomUUID();
+    const sessionPayload = this.buildSessionPayload();
+    await startSession(ws, sessionPayload, sessionId);
+    await waitForEvent(ws, MsgType.FullServerResponse, EventType.SessionStarted);
+
+    // 2. 发送文本任务
+    const taskPayload = this.buildTaskPayload(text);
+    await taskRequest(ws, taskPayload, sessionId);
+
+    // 3. 结束会话
+    await finishSession(ws, sessionId);
+
+    // 4. 收集音频数据
+    const audioChunks: Uint8Array[] = [];
+    while (true) {
+      const msg = await receiveMessage(ws);
+
+      switch (msg.type) {
+        case MsgType.AudioOnlyServer:
+          audioChunks.push(msg.payload);
+          break;
+        case MsgType.FullServerResponse:
+          break;
+        case MsgType.Error:
+          throw new Error(`TTS error: ${msg.errorCode}, ${new TextDecoder().decode(msg.payload)}`);
+        default:
+          throw new Error(`Unexpected message type: ${msg.type}`);
+      }
+
+      if (msg.event === EventType.SessionFinished) {
+        break;
+      }
+    }
+
+    // 5. 返回结果
+    const audio = this.concatArrays(audioChunks);
+    if (audio.length === 0) {
+      throw new Error('No audio received from TTS service');
+    }
+
+    return {
+      audio: Buffer.from(audio),
+      format: this.format,
+    };
+  }
+}
+
+/**
+ * 豆包 TTS 连接实例
+ * 通过 DoubaoTTS.connect() 获取，持有已建立的 WebSocket 连接
+ */
+class DoubaoTTSConnection implements TTSConnection {
+  private _state: TTSConnectionState = 'connected';
+
+  constructor(
+    private ws: WebSocket,
+    private provider: DoubaoTTS
+  ) {}
+
+  get state(): TTSConnectionState {
+    if (this.ws.readyState === WebSocket.CLOSED || this.ws.readyState === WebSocket.CLOSING) {
+      return 'closed';
+    }
+    return this._state;
+  }
+
+  speak(
+    input: string | TextStream,
+    options: SpeakInstanceOptions & { stream: true }
+  ): AsyncIterable<TTSStreamChunk>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions & { stream?: false }
+  ): Promise<TTSResponse>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions
+  ): Promise<TTSResponse> | AsyncIterable<TTSStreamChunk> {
+    this.ensureConnected();
+
+    if (options?.stream === true) {
+      return this.provider.speakStreamOnConnection(this.ws, input);
+    }
+    return this.collectResponse(input);
+  }
+
+  close(): void {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this._state = 'closed';
+  }
+
+  private ensureConnected(): void {
+    if (this.state !== 'connected') {
+      throw new Error('Connection is closed');
+    }
+  }
+
+  private async collectResponse(input: string | TextStream): Promise<TTSResponse> {
+    // 非流式模式：收集文本后调用 synthesizeOnConnection
+    if (typeof input === 'string') {
+      return this.provider.synthesizeOnConnection(this.ws, input);
+    }
+
+    // 流式文本输入：先收集全部文本
+    const textChunks: string[] = [];
+    for await (const chunk of normalizeTextStream(input)) {
+      textChunks.push(chunk);
+    }
+    return this.provider.synthesizeOnConnection(this.ws, textChunks.join(''));
   }
 }
