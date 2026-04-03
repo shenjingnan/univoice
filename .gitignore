@@ -148,3 +148,5 @@ worktrees
 
 # Benchmark results (generated at runtime)
 benchmark/results/
+
+settings.local.json
