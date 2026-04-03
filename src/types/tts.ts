@@ -179,3 +179,39 @@ export interface TTSVoice {
 }
 
 export type TTSProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
+
+/** TTS 连接状态 */
+export type TTSConnectionState = 'connected' | 'closed' | 'error';
+
+/** TTS 连接预建立选项 */
+export interface TTSConnectOptions {
+  /** 连接超时时间（毫秒），默认 10000ms */
+  timeout?: number;
+}
+
+/** TTS 连接实例 */
+export interface TTSConnection {
+  /** 当前连接状态 */
+  readonly state: TTSConnectionState;
+
+  /** 流式合成 */
+  speak(
+    input: string | TextStream,
+    options: SpeakInstanceOptions & { stream: true }
+  ): AsyncIterable<TTSStreamChunk>;
+
+  /** 非流式合成 */
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions & { stream?: false }
+  ): Promise<TTSResponse>;
+
+  /** 合成方法重载 */
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions
+  ): Promise<TTSResponse> | AsyncIterable<TTSStreamChunk>;
+
+  /** 关闭连接（幂等） */
+  close(): void;
+}

@@ -17,7 +17,11 @@ import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type {
   QwenRealtimeOptions,
   QwenRealtimeTTSOptions,
+  SpeakInstanceOptions,
   TextStream,
+  TTSConnection,
+  TTSConnectionState,
+  TTSConnectOptions,
   TTSRequest,
   TTSResponse,
   TTSStreamChunk,
@@ -77,15 +81,22 @@ export class QwenRealtimeTTS extends BaseTTS {
   }
 
   /**
+   * 构建 Realtime WebSocket URL（包含模型参数）
+   */
+  private buildRealtimeUrl(): string {
+    const url = new URL(this.baseUrl);
+    url.searchParams.set('model', this.model);
+    return url.toString();
+  }
+
+  /**
    * 创建 WebSocket 连接
    */
   private async createConnection(): Promise<WebSocket> {
-    // 在 URL 中添加模型参数
-    const url = new URL(this.baseUrl);
-    url.searchParams.set('model', this.model);
-    console.log('[Qwen Realtime] 连接 URL:', url.toString());
+    const url = this.buildRealtimeUrl();
+    console.log('[Qwen Realtime] 连接 URL:', url);
 
-    const ws = new WebSocket(url.toString(), {
+    const ws = new WebSocket(url, {
       headers: this.buildAuthHeaders(),
     });
 
@@ -233,9 +244,8 @@ export class QwenRealtimeTTS extends BaseTTS {
     };
 
     // 创建 WebSocket 连接（包含模型参数）
-    const url = new URL(this.baseUrl);
-    url.searchParams.set('model', this.model);
-    const ws = new WebSocket(url.toString(), {
+    const url = this.buildRealtimeUrl();
+    const ws = new WebSocket(url, {
       headers: this.buildAuthHeaders(),
     });
 
@@ -370,5 +380,236 @@ export class QwenRealtimeTTS extends BaseTTS {
       }
       // 其他事件忽略
     }
+  }
+
+  /**
+   * 预建立 WebSocket 连接（含会话初始化）
+   * Realtime 协议需要 session 初始化，connect() 会完成初始化
+   */
+  override async connect(options?: TTSConnectOptions): Promise<TTSConnection> {
+    if (!this.apiKey) {
+      throw new Error('apiKey is required for Qwen Realtime TTS');
+    }
+
+    const timeout = options?.timeout ?? 10000;
+
+    const url = this.buildRealtimeUrl();
+    const ws = new WebSocket(url, {
+      headers: this.buildAuthHeaders(),
+    });
+
+    // 带超时的连接等待
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Connection timed out after ${timeout}ms`));
+        ws.close();
+      }, timeout);
+
+      ws.once('open', () => {
+        clearTimeout(timer);
+        resolve();
+      });
+
+      ws.once('error', (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+
+    // 初始化会话（等待 session.created → 发送 session.update → 等待 session.updated）
+    await this.initializeSession(ws);
+
+    return new QwenRealtimeTTSConnection(ws, this);
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行流式合成
+   * 在已初始化的 session 上发送文本并接收音频
+   * 不关闭 WebSocket，由 TTSConnection 管理
+   */
+  async *speakStreamOnConnection(
+    ws: WebSocket,
+    input: string | TextStream
+  ): AsyncIterable<TTSStreamChunk> {
+    const textStream = normalizeTextStream(input);
+
+    console.log('[Qwen Realtime 连接复用] ========== 开始流式输入处理 ==========');
+
+    // 创建队列和同步机制
+    const queue: QueueItem[] = [];
+    const syncState = { resolveWait: null as (() => void) | null, finished: false };
+
+    const enqueue = (item: QueueItem) => {
+      queue.push(item);
+      syncState.resolveWait?.();
+      syncState.resolveWait = null;
+    };
+
+    // 启动处理流程（后台并发执行）
+    const processPromise = (async () => {
+      try {
+        // 并发执行发送和接收
+        await Promise.all([
+          this.sendTextStreamFlow(ws, textStream),
+          this.receiveAudioFlowToQueue(ws, enqueue),
+        ]);
+      } catch (error) {
+        enqueue({
+          type: 'error',
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      } finally {
+        syncState.finished = true;
+        syncState.resolveWait?.();
+        syncState.resolveWait = null;
+        // 不关闭 ws，由 TTSConnection 管理
+      }
+    })();
+
+    // Generator 主循环：从队列中取出数据
+    try {
+      while (!syncState.finished || queue.length > 0) {
+        while (queue.length === 0 && !syncState.finished) {
+          await new Promise<void>((resolve) => {
+            syncState.resolveWait = resolve;
+          });
+        }
+
+        if (queue.length === 0) break;
+
+        const item = queue.shift();
+        if (!item) break;
+
+        switch (item.type) {
+          case 'audio':
+            yield { audioChunk: item.chunk };
+            break;
+          case 'error':
+            throw item.error;
+          case 'end':
+            return;
+        }
+      }
+    } finally {
+      await processPromise.catch(() => {});
+    }
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行非流式合成
+   * 不关闭 WebSocket
+   */
+  async synthesizeOnConnection(ws: WebSocket, text: string): Promise<TTSResponse> {
+    // 发送文本
+    const appendEvent = createInputTextBufferAppendEvent(text);
+    await sendEvent(ws, appendEvent);
+
+    // 发送 session.finish
+    const finishEvent = createSessionFinishEvent();
+    await sendEvent(ws, finishEvent);
+
+    // 收集音频数据
+    const audioChunks: Uint8Array[] = [];
+
+    while (true) {
+      const event = await receiveEvent(ws);
+
+      if (isAudioEvent(event)) {
+        const audioData = Buffer.from(event.delta, 'base64');
+        audioChunks.push(new Uint8Array(audioData));
+      } else if (isSessionFinishedEvent(event)) {
+        console.log('[Qwen Realtime 连接复用] 会话结束');
+        break;
+      } else if (isErrorEvent(event)) {
+        throw new Error(`TTS error: ${event.error.code} - ${event.error.message}`);
+      }
+    }
+
+    if (audioChunks.length === 0) {
+      throw new Error('No audio received from Qwen Realtime TTS service');
+    }
+
+    // 合并音频数据
+    const totalLength = audioChunks.reduce((sum, chunk) => sum + chunk.length, 0);
+    const audio = new Uint8Array(totalLength);
+    let offset = 0;
+    for (const chunk of audioChunks) {
+      audio.set(chunk, offset);
+      offset += chunk.length;
+    }
+
+    return {
+      audio: Buffer.from(audio),
+      format: this.format,
+    };
+  }
+}
+
+/**
+ * Qwen Realtime TTS 连接实例
+ * 通过 QwenRealtimeTTS.connect() 获取，持有已建立的 WebSocket 连接
+ */
+class QwenRealtimeTTSConnection implements TTSConnection {
+  private _state: TTSConnectionState = 'connected';
+
+  constructor(
+    private ws: WebSocket,
+    private provider: QwenRealtimeTTS
+  ) {}
+
+  get state(): TTSConnectionState {
+    if (this.ws.readyState === WebSocket.CLOSED || this.ws.readyState === WebSocket.CLOSING) {
+      return 'closed';
+    }
+    return this._state;
+  }
+
+  speak(
+    input: string | TextStream,
+    options: SpeakInstanceOptions & { stream: true }
+  ): AsyncIterable<TTSStreamChunk>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions & { stream?: false }
+  ): Promise<TTSResponse>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions
+  ): Promise<TTSResponse> | AsyncIterable<TTSStreamChunk> {
+    this.ensureConnected();
+
+    if (options?.stream === true) {
+      return this.provider.speakStreamOnConnection(this.ws, input);
+    }
+    return this.collectResponse(input);
+  }
+
+  close(): void {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this._state = 'closed';
+  }
+
+  private ensureConnected(): void {
+    if (this.state !== 'connected') {
+      throw new Error('Connection is closed');
+    }
+  }
+
+  private async collectResponse(input: string | TextStream): Promise<TTSResponse> {
+    // 非流式模式：收集文本后调用 synthesizeOnConnection
+    if (typeof input === 'string') {
+      return this.provider.synthesizeOnConnection(this.ws, input);
+    }
+
+    // 流式文本输入：先收集全部文本
+    const textChunks: string[] = [];
+    for await (const chunk of normalizeTextStream(input)) {
+      textChunks.push(chunk);
+    }
+    return this.provider.synthesizeOnConnection(this.ws, textChunks.join(''));
   }
 }

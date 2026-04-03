@@ -15,7 +15,11 @@ import {
 import { normalizeTextStream } from '@/tts/utils/normalize-text-stream';
 import type {
   QwenTTSOptions,
+  SpeakInstanceOptions,
   TextStream,
+  TTSConnection,
+  TTSConnectionState,
+  TTSConnectOptions,
   TTSRequest,
   TTSResponse,
   TTSStreamChunk,
@@ -332,5 +336,246 @@ export class QwenTTS extends BaseTTS {
       }
       // 如果是其他事件，忽略继续等待
     }
+  }
+
+  /**
+   * 预建立 WebSocket 连接
+   * 只建立连接，不发送协议级初始化（DashScope 的 run-task 是 task 级别，每次 speak 时才发送）
+   */
+  override async connect(options?: TTSConnectOptions): Promise<TTSConnection> {
+    if (!this.apiKey) {
+      throw new Error('apiKey is required for Qwen TTS');
+    }
+
+    const timeout = options?.timeout ?? 10000;
+
+    const ws = new WebSocket(this.baseUrl, {
+      headers: this.buildAuthHeaders(),
+    });
+
+    // 带超时的连接等待
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error(`Connection timed out after ${timeout}ms`));
+        ws.close();
+      }, timeout);
+
+      ws.once('open', () => {
+        clearTimeout(timer);
+        resolve();
+      });
+
+      ws.once('error', (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+
+    return new QwenTTSConnection(ws, this);
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行流式合成
+   * 从 speakStream 中提取的核心逻辑，不创建/关闭 WebSocket
+   */
+  async *speakStreamOnConnection(
+    ws: WebSocket,
+    input: string | TextStream
+  ): AsyncIterable<TTSStreamChunk> {
+    const textStream = normalizeTextStream(input);
+
+    console.log('[连接复用-双向流] ========== 开始流式输入处理 ==========');
+
+    // 创建队列和同步机制
+    const queue: QueueItem[] = [];
+    const syncState = { resolveWait: null as (() => void) | null, finished: false };
+
+    const enqueue = (item: QueueItem) => {
+      queue.push(item);
+      syncState.resolveWait?.();
+      syncState.resolveWait = null;
+    };
+
+    // 启动处理流程（后台并发执行）
+    const processPromise = (async () => {
+      try {
+        // 生成任务 ID
+        const taskId = randomUUID();
+
+        // 1. 发送 run-task 指令
+        const runTaskMsg = createRunTaskMessage(taskId, {
+          model: this.model,
+          voice: this.voice,
+          format: this.format,
+          sampleRate: this.sampleRate,
+          volume: this.volume ? Math.round(this.volume * 100) : 50,
+          rate: this.speed,
+          pitch: this.pitch,
+        });
+        await sendMessage(ws, runTaskMsg);
+
+        // 2. 等待 task-started 事件
+        await waitForTaskStarted(ws);
+        console.log('[连接复用-双向流] 任务已启动 (task-started)');
+
+        // 3. 并发执行发送和接收
+        await Promise.all([
+          this.sendTextStreamFlow(ws, taskId, textStream),
+          this.receiveAudioFlowToQueue(ws, enqueue),
+        ]);
+      } catch (error) {
+        enqueue({
+          type: 'error',
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+      } finally {
+        syncState.finished = true;
+        syncState.resolveWait?.();
+        syncState.resolveWait = null;
+        // 不关闭 ws，由 TTSConnection 管理
+      }
+    })();
+
+    // Generator 主循环：从队列中取出数据
+    try {
+      while (!syncState.finished || queue.length > 0) {
+        while (queue.length === 0 && !syncState.finished) {
+          await new Promise<void>((resolve) => {
+            syncState.resolveWait = resolve;
+          });
+        }
+
+        if (queue.length === 0) break;
+
+        const item = queue.shift();
+        if (!item) break;
+
+        switch (item.type) {
+          case 'audio':
+            yield { audioChunk: item.chunk };
+            break;
+          case 'error':
+            throw item.error;
+          case 'end':
+            return;
+        }
+      }
+    } finally {
+      await processPromise.catch(() => {});
+    }
+  }
+
+  /**
+   * 在已建立的 WebSocket 连接上进行非流式合成
+   * 不创建/关闭 WebSocket
+   */
+  async synthesizeOnConnection(ws: WebSocket, text: string): Promise<TTSResponse> {
+    const taskId = randomUUID();
+
+    // 1. 发送 run-task 指令
+    const runTaskMsg = createRunTaskMessage(taskId, {
+      model: this.model,
+      voice: this.voice,
+      format: this.format,
+      sampleRate: this.sampleRate,
+      volume: this.volume ? Math.round(this.volume * 100) : 50,
+      rate: this.speed,
+      pitch: this.pitch,
+    });
+    await sendMessage(ws, runTaskMsg);
+
+    // 2. 等待 task-started 事件
+    await waitForTaskStarted(ws);
+
+    // 3. 发送 continue-task 指令（包含文本）
+    const continueTaskMsg = createContinueTaskMessage(taskId, text);
+    await sendMessage(ws, continueTaskMsg);
+
+    // 4. 发送 finish-task 指令
+    const finishTaskMsg = createFinishTaskMessage(taskId);
+    await sendMessage(ws, finishTaskMsg);
+
+    // 5. 收集音频数据
+    const audioChunks = await collectAudioData(ws);
+
+    if (audioChunks.length === 0) {
+      throw new Error('No audio received from Qwen TTS service');
+    }
+
+    const audio = concatArrays(audioChunks);
+
+    return {
+      audio: Buffer.from(audio),
+      format: this.format,
+    };
+  }
+}
+
+/**
+ * Qwen TTS 连接实例
+ * 通过 QwenTTS.connect() 获取，持有已建立的 WebSocket 连接
+ */
+class QwenTTSConnection implements TTSConnection {
+  private _state: TTSConnectionState = 'connected';
+
+  constructor(
+    private ws: WebSocket,
+    private provider: QwenTTS
+  ) {}
+
+  get state(): TTSConnectionState {
+    if (this.ws.readyState === WebSocket.CLOSED || this.ws.readyState === WebSocket.CLOSING) {
+      return 'closed';
+    }
+    return this._state;
+  }
+
+  speak(
+    input: string | TextStream,
+    options: SpeakInstanceOptions & { stream: true }
+  ): AsyncIterable<TTSStreamChunk>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions & { stream?: false }
+  ): Promise<TTSResponse>;
+
+  speak(
+    input: string | TextStream,
+    options?: SpeakInstanceOptions
+  ): Promise<TTSResponse> | AsyncIterable<TTSStreamChunk> {
+    this.ensureConnected();
+
+    if (options?.stream === true) {
+      return this.provider.speakStreamOnConnection(this.ws, input);
+    }
+    return this.collectResponse(input);
+  }
+
+  close(): void {
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.close();
+    }
+    this._state = 'closed';
+  }
+
+  private ensureConnected(): void {
+    if (this.state !== 'connected') {
+      throw new Error('Connection is closed');
+    }
+  }
+
+  private async collectResponse(input: string | TextStream): Promise<TTSResponse> {
+    // 非流式模式：收集文本后调用 synthesizeOnConnection
+    if (typeof input === 'string') {
+      return this.provider.synthesizeOnConnection(this.ws, input);
+    }
+
+    // 流式文本输入：先收集全部文本
+    const textChunks: string[] = [];
+    for await (const chunk of normalizeTextStream(input)) {
+      textChunks.push(chunk);
+    }
+    return this.provider.synthesizeOnConnection(this.ws, textChunks.join(''));
   }
 }

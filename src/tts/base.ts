@@ -2,6 +2,8 @@ import type {
   BaseTTSOptions,
   SpeakInstanceOptions,
   TextStream,
+  TTSConnection,
+  TTSConnectOptions,
   TTSProvider,
   TTSRequest,
   TTSResponse,
@@ -120,6 +122,16 @@ export abstract class BaseTTS implements TTSProvider {
 
   async listVoices(): Promise<TTSVoice[]> {
     return [];
+  }
+
+  /**
+   * 预建立 WebSocket 连接
+   * 默认不支持，子类可以覆盖以提供连接复用能力
+   */
+  connect(_options?: TTSConnectOptions): Promise<TTSConnection> {
+    throw new Error(
+      `${this.name} does not support connection pre-establishment. Use speak() or synthesize() directly.`
+    );
   }
 
   public buildRequestOptions(request: TTSRequest): BaseTTSOptions & { provider: string } {
