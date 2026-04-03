@@ -2,6 +2,86 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.7.0](https://github.com/shenjingnan/univoice/compare/v0.6.0...v0.7.0) (2026-04-03)
+
+### Features
+
+* **asr:** 内置 Opus 音频转换能力，新增 decodeOpusStream 和 createOggMuxer ([#205](https://github.com/shenjingnan/univoice/issues/205)) ([c8c268b](https://github.com/shenjingnan/univoice/commit/c8c268b14a80762a9e6a83b3a607fc9d0f87a87d))
+* **asr:** 支持 ASR 连接预建立，降低首次识别延迟 ([#242](https://github.com/shenjingnan/univoice/issues/242)) ([48458b0](https://github.com/shenjingnan/univoice/commit/48458b00c130a33f359069f7855afa89eb5dbfdc))
+* **asr:** 新增 Doubao ASR 连接预建立示例 ([#243](https://github.com/shenjingnan/univoice/issues/243)) ([1d4ba4a](https://github.com/shenjingnan/univoice/commit/1d4ba4a092127706ada24dd380b5c46a57fd77ea))
+* **benchmark:** 增强性能指标统计，添加 P50/P95/标准差/吞吐量 ([#185](https://github.com/shenjingnan/univoice/issues/185)) ([d5bf22c](https://github.com/shenjingnan/univoice/commit/d5bf22c2dda25be47e9636c84205be7fcdaa29f5))
+* **benchmark:** 新增 GLM ASR 矩阵测试并修复 PCM 格式兼容性 ([#202](https://github.com/shenjingnan/univoice/issues/202)) ([6a4d934](https://github.com/shenjingnan/univoice/commit/6a4d93426054bfe8b8d7ec7a2bca24fe4870ada7))
+* **benchmark:** 更新基准测试结果并增强性能指标统计 ([#188](https://github.com/shenjingnan/univoice/issues/188)) ([cc0cfb2](https://github.com/shenjingnan/univoice/commit/cc0cfb2637843e16dd0ab875f0d80c1655031eb5))
+* **benchmark:** 添加 ASR 矩阵基准测试支持 ([#194](https://github.com/shenjingnan/univoice/issues/194)) ([183a934](https://github.com/shenjingnan/univoice/commit/183a934a14c1e9b1ce5fded78e6dfeedcd0d42c1))
+* **benchmark:** 添加 MiniMax TTS 矩阵基准测试支持 ([#184](https://github.com/shenjingnan/univoice/issues/184)) ([c146bb1](https://github.com/shenjingnan/univoice/commit/c146bb128b0ecffdc3c62b62e4f7933ac62eefa7))
+* **benchmark:** 添加 Qwen Realtime TTS 基准测试支持 ([#179](https://github.com/shenjingnan/univoice/issues/179)) ([3b55f64](https://github.com/shenjingnan/univoice/commit/3b55f6467ddec6cf3ab074c9a1f860fc9b6034eb))
+* **benchmark:** 添加 Qwen TTS cosyvoice-v1 模型基准测试支持 ([#176](https://github.com/shenjingnan/univoice/issues/176)) ([9e7ab00](https://github.com/shenjingnan/univoice/commit/9e7ab00a9347452be12ec633237eaddd0706970c))
+* **benchmark:** 添加 Qwen TTS v3 系列模型基准测试支持 ([#177](https://github.com/shenjingnan/univoice/issues/177)) ([f2b37c6](https://github.com/shenjingnan/univoice/commit/f2b37c6ab91e1151ce301fec8957b5d196b284f4))
+* **benchmark:** 添加 Qwen TTS 矩阵测试场景支持 ([#172](https://github.com/shenjingnan/univoice/issues/172)) ([0713e31](https://github.com/shenjingnan/univoice/commit/0713e3164f8461017f3a0aef8abf26ded8cc9051))
+* **benchmark:** 添加智谱 GLM TTS 基准测试支持 ([#183](https://github.com/shenjingnan/univoice/issues/183)) ([8b70b1a](https://github.com/shenjingnan/univoice/commit/8b70b1a9912b634e4a15425a772880f9e35982b3))
+* **benchmark:** 添加豆包 TTS 基准测试支持 ([#182](https://github.com/shenjingnan/univoice/issues/182)) ([5d9bb95](https://github.com/shenjingnan/univoice/commit/5d9bb9598dba0e118c9884cf1ace5d1f698aa956))
+* **benchmark:** 重构基准测试架构并添加 ASR 准确率指标 ([#164](https://github.com/shenjingnan/univoice/issues/164)) ([1849362](https://github.com/shenjingnan/univoice/commit/1849362f305940ba36097af96c387287c7e62e86))
+* **doubao:** 为 DoubaoTTS 的 voice 参数添加 IDE 自动补全支持 ([#240](https://github.com/shenjingnan/univoice/issues/240)) ([4564aa2](https://github.com/shenjingnan/univoice/commit/4564aa2d4a0fd8a6bf0a9645c2e0bb897d0148aa))
+* **example:** 新增 Doubao seed-tts-1.0 直接实例化示例 ([#221](https://github.com/shenjingnan/univoice/issues/221)) ([aa5c168](https://github.com/shenjingnan/univoice/commit/aa5c168d6efa8f6ded4699e05536261c3e4c7642))
+* **example:** 新增 GLM ASR 直接实例化示例 ([#212](https://github.com/shenjingnan/univoice/issues/212)) ([1529e07](https://github.com/shenjingnan/univoice/commit/1529e07be75274bc2aa4177b4e8d2d600df55cbf))
+* **example:** 新增 GLM TTS 直接实例化示例 ([#223](https://github.com/shenjingnan/univoice/issues/223)) ([09f30e6](https://github.com/shenjingnan/univoice/commit/09f30e62f10e26ab9c69b9a38557d49e8908bd34))
+* **example:** 新增 MiniMax speech-2.8-hd 直接实例化示例 ([#225](https://github.com/shenjingnan/univoice/issues/225)) ([0781ef2](https://github.com/shenjingnan/univoice/commit/0781ef244a778194c4b9828ace8ba52c6d374592))
+* **example:** 新增 Minimax TTS 直接实例化示例 ([#226](https://github.com/shenjingnan/univoice/issues/226)) ([198db45](https://github.com/shenjingnan/univoice/commit/198db450cbb521ed2dd10021745c9a9f5d69844a))
+* **example:** 新增 Paraformer Realtime 8k v1 直接实例化示例，使用 Opus 数据包 ([#216](https://github.com/shenjingnan/univoice/issues/216)) ([#216](https://github.com/shenjingnan/univoice/issues/216)) ([a167a77](https://github.com/shenjingnan/univoice/commit/a167a7749cdc399f8fc5f8d831b4170ddcbbbcc5))
+* **example:** 新增 Paraformer Realtime v1 直接实例化示例，使用 Opus 数据包 ([#215](https://github.com/shenjingnan/univoice/issues/215)) ([7d174d2](https://github.com/shenjingnan/univoice/commit/7d174d215506118c04d5b331598a79638b1a83a9))
+* **example:** 新增 Qwen ASR 直接实例化示例，使用 Opus 数据包 ([#214](https://github.com/shenjingnan/univoice/issues/214)) ([18a544d](https://github.com/shenjingnan/univoice/commit/18a544deb4654bb4f1f5fd37db30e97229f467c0))
+* **example:** 新增 Qwen CosyVoice v1/v3-flash/v3-plus 直接实例化示例 ([#232](https://github.com/shenjingnan/univoice/issues/232)) ([a0efde7](https://github.com/shenjingnan/univoice/commit/a0efde744d2af1d8442f20915709b98a3d545ca6))
+* **example:** 新增 Qwen CosyVoice v2 直接实例化示例 ([#230](https://github.com/shenjingnan/univoice/issues/230)) ([665504c](https://github.com/shenjingnan/univoice/commit/665504c8ee8a5c4fce47638e0f4389d7a5e12d87))
+* **example:** 新增 Qwen Realtime TTS 直接实例化示例 ([#234](https://github.com/shenjingnan/univoice/issues/234)) ([ac53f58](https://github.com/shenjingnan/univoice/commit/ac53f585b26046bc126e59885e69577d8ae377d8))
+* **glm:** 为 GlmTTS 的 voice 参数添加 IDE 自动补全支持 ([#239](https://github.com/shenjingnan/univoice/issues/239)) ([2e32105](https://github.com/shenjingnan/univoice/commit/2e32105a722977c8054d1ca0b4763f226d714fc2))
+* **lint-staged:** 扩展配置支持 JSON 文件并添加 lint 检查 ([#173](https://github.com/shenjingnan/univoice/issues/173)) ([44b3d0f](https://github.com/shenjingnan/univoice/commit/44b3d0fabafc806521001ae29da565ada5e821dd))
+* **minimax:** 为 MinimaxTTS 的 voice 参数添加 IDE 自动补全支持 ([#238](https://github.com/shenjingnan/univoice/issues/238)) ([2f9e4b0](https://github.com/shenjingnan/univoice/commit/2f9e4b01fd9e7389b2b77622103310322206a5be))
+* **qwen-realtime:** 为 QwenRealtimeTTS 的 voice 参数添加 IDE 自动补全支持 ([#237](https://github.com/shenjingnan/univoice/issues/237)) ([6914438](https://github.com/shenjingnan/univoice/commit/69144383c11991e2fa142bdd8bd63352596d3129))
+* **tts:** 为 Qwen CosyVoice 添加音色类型定义及文档 ([#229](https://github.com/shenjingnan/univoice/issues/229)) ([d4c2333](https://github.com/shenjingnan/univoice/commit/d4c2333892282852edbb0d97952b0469d7137f7f))
+* **tts:** 新增 Doubao TTS 连接预建立 API 及示例 ([#245](https://github.com/shenjingnan/univoice/issues/245)) ([0c86595](https://github.com/shenjingnan/univoice/commit/0c86595e76c6bbe11fd5797919463acba4dcb5d0))
+* **tts:** 新增 TTS 连接预建立 API ([#244](https://github.com/shenjingnan/univoice/issues/244)) ([253e187](https://github.com/shenjingnan/univoice/commit/253e1875644c23ccc95cce633d6b1b2bb5008ff2))
+* **tts:** 添加 Qwen 实时语音合成支持 ([#178](https://github.com/shenjingnan/univoice/issues/178)) ([3c242e3](https://github.com/shenjingnan/univoice/commit/3c242e33500210a163443d3eb47d5c73ae674801))
+
+### Bug Fixes
+
+* **asr:** 修复裸 PCM 音频处理失败问题，新增 doubao ASR 矩阵测试 ([#201](https://github.com/shenjingnan/univoice/issues/201)) ([3780ac3](https://github.com/shenjingnan/univoice/commit/3780ac36f86235adaf78cfc9d3760945ccf4493f))
+* **doubao:** 统一环境变量命名为 DOUBAO_ACCESS_TOKEN ([#181](https://github.com/shenjingnan/univoice/issues/181)) ([843f58f](https://github.com/shenjingnan/univoice/commit/843f58f42407e638d7a1155cdc28d0771b226e51))
+* **examples:** 修复 Qwen TTS PCM 示例模型与音色不兼容问题 ([#171](https://github.com/shenjingnan/univoice/issues/171)) ([7cf6a8d](https://github.com/shenjingnan/univoice/commit/7cf6a8d223eb72b5c4b5de651d28388ae4f378b0))
+* **tts:** 修复 CosyVoice v2 流式合成音频数据为 0 的问题 ([#228](https://github.com/shenjingnan/univoice/issues/228)) ([8ce8135](https://github.com/shenjingnan/univoice/commit/8ce813518f9b9e117c023258a560256b4711b853))
+* **tts:** 修复 Doubao seed-tts-2.0 示例 voice 参数与服务端 resourceId 不匹配 ([#218](https://github.com/shenjingnan/univoice/issues/218)) ([5a031fe](https://github.com/shenjingnan/univoice/commit/5a031fe43516ed77a39e74fcbf4d8dc55a7cc77b))
+* **tts:** 修复 Qwen CosyVoice voice 属性 IDE 自动补全失效的问题 ([#231](https://github.com/shenjingnan/univoice/issues/231)) ([28a0536](https://github.com/shenjingnan/univoice/commit/28a053672b3e5075b780ec6ccb71b2257aea071c))
+* 修复依赖安全漏洞 (lodash 代码注入/原型污染, xmldom XML 注入) ([#249](https://github.com/shenjingnan/univoice/issues/249)) ([84bac67](https://github.com/shenjingnan/univoice/commit/84bac67eb6cea3d7f59de94faa5fd17a661aea45))
+
+### Code Refactoring
+
+* **benchmark:** 使用 execFileSync 替代 execSync 提升安全性 ([#170](https://github.com/shenjingnan/univoice/issues/170)) ([a69ccda](https://github.com/shenjingnan/univoice/commit/a69ccdace807cef6664cc8dd56da052f3091d756))
+* **benchmark:** 简化矩阵配置文件格式并优化格式化规则 ([#193](https://github.com/shenjingnan/univoice/issues/193)) ([5292575](https://github.com/shenjingnan/univoice/commit/529257542e66442f3a17d0f7a4bf3dc9343c1dc4))
+* **benchmark:** 统一使用包名路径导入 univoice 模块 ([#200](https://github.com/shenjingnan/univoice/issues/200)) ([d148543](https://github.com/shenjingnan/univoice/commit/d1485433db93b396a6de317ed2c60f20c06f8610))
+* **benchmark:** 重构延迟指标计算方式，改用原始时间戳 ([#186](https://github.com/shenjingnan/univoice/issues/186)) ([dad820a](https://github.com/shenjingnan/univoice/commit/dad820afdc0444e5f44d0caa2782027d185e53a3))
+* **benchmark:** 重构矩阵数据结构与加载机制 ([#189](https://github.com/shenjingnan/univoice/issues/189)) ([460874d](https://github.com/shenjingnan/univoice/commit/460874d01588b003292b7da3f55883738aa6a0f0))
+* **ci:** 简化发布流程，移除 PR-based 模式 ([#252](https://github.com/shenjingnan/univoice/issues/252)) ([38653ca](https://github.com/shenjingnan/univoice/commit/38653caf13734653d6807b658ba6fe87b92fd096))
+* **examples:** 提取项目根目录定位方法，修复 opus 数据包路径引用 ([#204](https://github.com/shenjingnan/univoice/issues/204)) ([87d2b6c](https://github.com/shenjingnan/univoice/commit/87d2b6c45cc20e8e93c2610a21944f146fe4a1af))
+* **examples:** 重构 Qwen TTS 示例代码结构 ([#198](https://github.com/shenjingnan/univoice/issues/198)) ([83adbaa](https://github.com/shenjingnan/univoice/commit/83adbaa9e45f0e08ed4f1a9a44534850b8649a14))
+* **examples:** 重构示例代码目录结构 ([#197](https://github.com/shenjingnan/univoice/issues/197)) ([2fc9b45](https://github.com/shenjingnan/univoice/commit/2fc9b45837778c7cd646e1f145b6aab4036b247d))
+* **example:** 提取 readOpusPackets 到共享工具模块，消除重复代码 ([#208](https://github.com/shenjingnan/univoice/issues/208)) ([b57db84](https://github.com/shenjingnan/univoice/commit/b57db84519fa525ef030df3dcc91ea71fdd96c7d))
+* **example:** 移除 Doubao ASR 示例中冗余的 audioFormat 配置 ([#207](https://github.com/shenjingnan/univoice/issues/207)) ([7fcb00d](https://github.com/shenjingnan/univoice/commit/7fcb00d8f726a4753f83b21cab6591a2c92393d6))
+* **example:** 重构 mockLLMStream 函数签名，支持自定义输入文本 ([#219](https://github.com/shenjingnan/univoice/issues/219)) ([0b4c21d](https://github.com/shenjingnan/univoice/commit/0b4c21d99d55cbbd2ad6f60b5e592e36d3900639))
+* **types:** 为 ASR/TTS Provider 定义专属 Options 类型，实现类型安全路由 ([#209](https://github.com/shenjingnan/univoice/issues/209)) ([1530156](https://github.com/shenjingnan/univoice/commit/1530156585f934a72f7d273db9cfd0e46ad1ca1b))
+
+### Documentation
+
+* **asr:** 新增 Doubao ASR 直接实例化 Opus 流式识别示例 ([#206](https://github.com/shenjingnan/univoice/issues/206)) ([ad51b6c](https://github.com/shenjingnan/univoice/commit/ad51b6c95db2033336637ffe7941f1830a576447))
+* **asr:** 新增智谱 GLM ASR 使用指南文档 ([#213](https://github.com/shenjingnan/univoice/issues/213)) ([0ced11a](https://github.com/shenjingnan/univoice/commit/0ced11a3ef17a19e4997f833b99b77e5082a19fb))
+* **asr:** 新增豆包 ASR 使用指南文档 ([#210](https://github.com/shenjingnan/univoice/issues/210)) ([35d572e](https://github.com/shenjingnan/univoice/commit/35d572eca299fcbe612dbec09fbfe22839fab854))
+* **asr:** 新增通义千问 ASR 使用指南文档 ([#217](https://github.com/shenjingnan/univoice/issues/217)) ([3f04ae1](https://github.com/shenjingnan/univoice/commit/3f04ae1e117c3625f8dc0fadd04e3e342e0f60eb))
+* **examples:** 统一为 ffplay 命令添加 -autoexit 参数 ([#220](https://github.com/shenjingnan/univoice/issues/220)) ([b3d47df](https://github.com/shenjingnan/univoice/commit/b3d47df7875ca0a1be5daaa060d2875c937b1243))
+* **glm:** 新增 GlmTTS SDK 使用指南文档 ([#224](https://github.com/shenjingnan/univoice/issues/224)) ([35fa1a4](https://github.com/shenjingnan/univoice/commit/35fa1a426aa6f0446a7998759f96a1de90624434))
+* **qwen:** 新增 QwenRealtimeTTS 使用指南文档 ([#235](https://github.com/shenjingnan/univoice/issues/235)) ([311e8e7](https://github.com/shenjingnan/univoice/commit/311e8e7d70ef391da7b2c0892c902b50c0c1b4b2))
+* **qwen:** 新增 QwenTTS 使用指南文档 ([#233](https://github.com/shenjingnan/univoice/issues/233)) ([ba60a27](https://github.com/shenjingnan/univoice/commit/ba60a27eef3e4beda648b8ab55e7390c52ec1fe2))
+* **readme:** 修复性能表格格式 ([#180](https://github.com/shenjingnan/univoice/issues/180)) ([7507dc8](https://github.com/shenjingnan/univoice/commit/7507dc894896ad41c410892bae5bdfe09b64faf5))
+* **tts:** 新增 DoubaoTTS 使用指南文档 ([#222](https://github.com/shenjingnan/univoice/issues/222)) ([52ad11d](https://github.com/shenjingnan/univoice/commit/52ad11d0578735687ceb26a677e3fd001bfa8f42))
+* 新增豆包、MiniMax、千问语音合成相关文档 ([#241](https://github.com/shenjingnan/univoice/issues/241)) ([c8b4b70](https://github.com/shenjingnan/univoice/commit/c8b4b709b334710305b026d7bfff18f533c5c33a))
+
 # [0.6.0](https://github.com/shenjingnan/univoice/compare/v0.5.0...v0.6.0) (2026-03-19)
 
 
