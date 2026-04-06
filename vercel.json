@@ -3,9 +3,10 @@
   "builds": [
     {
       "src": "docs/package.json",
-      "use": "@vercel/next",
+      "use": "@vercel/static",
       "config": {
-        "installCommand": "pnpm install --filter=docs"
+        "installCommand": "pnpm install --filter=docs",
+        "outputDirectory": "docs/out"
       }
     }
   ]
