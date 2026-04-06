@@ -1,0 +1,51 @@
+{
+  "name": "Univoice",
+  "description": "统一的 TTS 和 ASR SDK 文档",
+  "contentDir": "content",
+  "outputDir": "out",
+  "siteUrl": "https://univoice.shenjingnan.com",
+  "locale": "zh",
+  "navbar": {
+    "github": "https://github.com/shenjingnan/univoice"
+  },
+  "sidebar": [
+    {
+      "group": "入门",
+      "collapsed": false,
+      "pages": [
+        { "slug": "index", "title": "介绍" },
+        { "slug": "quickstart", "title": "快速上手" },
+        { "slug": "audio-format-performance", "title": "音频格式性能分析" }
+      ]
+    },
+    {
+      "group": "豆包",
+      "collapsed": false,
+      "pages": [
+        { "slug": "doubao/tts-guide", "title": "TTS 使用指南" },
+        { "slug": "doubao/asr-guide", "title": "ASR 使用指南" }
+      ]
+    },
+    {
+      "group": "智谱 GLM",
+      "collapsed": false,
+      "pages": [
+        { "slug": "glm/tts-guide", "title": "TTS 使用指南" },
+        { "slug": "glm/文字转语音", "title": "API 参考" },
+        { "slug": "glm/asr-guide", "title": "ASR 使用指南" }
+      ]
+    },
+    {
+      "group": "通义千问",
+      "collapsed": false,
+      "pages": [
+        { "slug": "qwen/tts-guide", "title": "TTS 使用指南" },
+        { "slug": "qwen/asr-guide", "title": "ASR 使用指南" },
+        { "slug": "qwen/realtime-tts-guide", "title": "Realtime TTS 使用指南" }
+      ]
+    }
+  ],
+  "theme": { "primaryHue": 240, "darkMode": true },
+  "search": { "enabled": true },
+  "mdx": { "latex": true }
+}

@@ -150,3 +150,6 @@ worktrees
 benchmark/results/
 
 settings.local.json
+
+# OpenManual build output
+docs/.openmanual/
