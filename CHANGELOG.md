@@ -2,6 +2,16 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.7.1](https://github.com/shenjingnan/univoice/compare/v0.7.0...v0.7.1) (2026-04-07)
+
+### Bug Fixes
+
+* **vercel:** 修复 Vercel 部署 404 问题 ([#257](https://github.com/shenjingnan/univoice/issues/257)) ([34a5479](https://github.com/shenjingnan/univoice/commit/34a5479740895cbcc35b838070ba177a4d12c049))
+
+### Documentation
+
+* 迁移文档站点至 OpenManual 框架 ([#253](https://github.com/shenjingnan/univoice/issues/253)) ([2f6757d](https://github.com/shenjingnan/univoice/commit/2f6757de9899a5685bbc4bae7e0cf60e5136b852))
+
 ## [0.7.0](https://github.com/shenjingnan/univoice/compare/v0.6.0...v0.7.0) (2026-04-03)
 
 ### Features

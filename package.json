@@ -1,6 +1,6 @@
 {
   "name": "univoice",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Unified Voice SDK for TTS and ASR",
   "sideEffects": [
     "**/providers/index.ts",
