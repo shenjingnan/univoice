@@ -87,6 +87,36 @@ export interface GlmASROptions extends BaseASROptions {
 }
 
 /**
+ * 科大讯飞 ASR 专属配置
+ */
+export interface XfyunASROptions extends BaseASROptions {
+  /** 讯飞开放平台 AppID */
+  appId?: string;
+  /** 讯飞开放平台 APISecret（用于 HMAC-SHA256 签名鉴权） */
+  apiSecret?: string;
+  /** 音频采样率，默认 16000 */
+  sampleRate?: number;
+  /** 音频位深度，默认 16 */
+  bitDepth?: number;
+  /** 音频声道数，默认 1 */
+  channels?: number;
+  /** 识别领域，默认 'slm' */
+  domain?: string;
+  /** 口音，默认 'mandarin' */
+  accent?: string;
+  /** 静音超时时间（毫秒），默认 6000 */
+  eos?: number;
+  /** 动态修正控制，如 'wpgs' */
+  dwa?: string;
+  /** 中英文筛选：1-不筛选 2-只出中文 3-只出英文 */
+  ltc?: number;
+  /** 应用级热词 ID */
+  resId?: string;
+  /** 会话热词 */
+  dhw?: string;
+}
+
+/**
  * ASR 工厂函数选项（判别联合类型）
  * 根据 provider 字段路由到对应 provider 的专属配置
  */
@@ -97,6 +127,7 @@ export type ASROptions =
   | ({ provider: 'minimax' } & BaseASROptions)
   | ({ provider: 'openai' } & BaseASROptions)
   | ({ provider: 'gemini' } & BaseASROptions)
+  | ({ provider: 'xfyun' } & XfyunASROptions)
   | ({ provider: string } & BaseASROptions);
 
 /**
@@ -154,7 +185,14 @@ export interface ASRProvider {
   listenStream(audio: AudioStream): AsyncIterable<ASRStreamChunk>;
 }
 
-export type ASRProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
+export type ASRProviderType =
+  | 'doubao'
+  | 'minimax'
+  | 'qwen'
+  | 'openai'
+  | 'gemini'
+  | 'xfyun'
+  | string;
 
 /** 音频流类型（异步迭代器） */
 export type AudioStream = AsyncIterable<Buffer | Uint8Array>;

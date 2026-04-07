@@ -27,6 +27,7 @@ export type {
   DoubaoASROptions,
   GlmASROptions,
   QwenASROptions,
+  XfyunASROptions,
 } from '@/types/asr';
 export type { AudioData, AudioFormat, ProviderConfig } from '@/types/index';
 export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';
