@@ -24,15 +24,22 @@
 
 | 文件 | 场景 | 说明 |
 |------|------|------|
-| `stream-in-stream-out.ts` | 流式入/流式出 | 实时语音合成 |
+| `stream-in-stream-out.ts` | 流式入/流式出 | 实时语音合成（PCM 格式） |
+| `stream-in-stream-out-ogg-opus.ts` | 流式入/流式出 | 实时语音合成（OGG Opus 格式） |
 | `non-stream-in-non-stream-out.ts` | 非流式入/非流式出 | 一次性获取完整音频 |
 
 ## 使用方法
 
-### 流式入/流式出
+### 流式入/流式出（PCM 格式）
 
 ```bash
 npx tsx examples/tts/providers/doubao/seed-tts-2.0/stream-in-stream-out.ts
+```
+
+### 流式入/流式出（OGG Opus 格式）
+
+```bash
+npx tsx examples/tts/providers/doubao/seed-tts-2.0/stream-in-stream-out-ogg-opus.ts
 ```
 
 ### 非流式入/非流式出
