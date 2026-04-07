@@ -27,6 +27,7 @@
 | `direct-instance.ts` | 直接实例化 | 不使用工厂函数，直接 `new DoubaoTTS()` 创建实例 |
 | `stream-in-stream-out.ts` | 流式入/流式出 | 实时语音合成 |
 | `non-stream-in-non-stream-out.ts` | 非流式入/非流式出 | 一次性获取完整音频 |
+| `stream-in-stream-out-ogg-opus.ts` | 流式入/流式出 (ogg_opus) | ogg_opus 格式的实时语音合成 |
 
 ## 使用方法
 
@@ -46,6 +47,12 @@ npx tsx examples/tts/providers/doubao/seed-tts-1.0/stream-in-stream-out.ts
 
 ```bash
 npx tsx examples/tts/providers/doubao/seed-tts-1.0/non-stream-in-non-stream-out.ts
+```
+
+### 流式入/流式出 (ogg_opus)
+
+```bash
+npx tsx examples/tts/providers/doubao/seed-tts-1.0/stream-in-stream-out-ogg-opus.ts
 ```
 
 ## 环境变量
