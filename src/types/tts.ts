@@ -111,6 +111,34 @@ export interface GlmTTSOptions extends BaseTTSOptions {
 }
 
 /**
+ * 讯飞超拟人 TTS 专属配置
+ */
+export interface XfyunTTSOptions extends BaseTTSOptions {
+  /** 讯飞开放平台 AppID */
+  appId?: string;
+  /** 讯飞开放平台 APISecret（用于 HMAC-SHA256 签名鉴权） */
+  apiSecret?: string;
+  /** 音频采样率，默认 24000 */
+  sampleRate?: number;
+  /** 口语化等级（仅 x4 系列发音人支持）：high | mid | low */
+  oralLevel?: 'high' | 'mid' | 'low';
+  /** 是否通过大模型进行口语化（仅 x4 系列发音人支持） */
+  sparkAssist?: number;
+  /** 是否关闭服务端拆句（仅 x4 系列发音人支持） */
+  stopSplit?: number;
+  /** 是否保留原书面语（仅 x4 系列发音人支持） */
+  remain?: number;
+  /** 英文发音方式：0-自动判断, 1-按字母, 2-按字母朗读 */
+  reg?: number;
+  /** 数字发音方式：0-自动, 1-数值, 2-字符串, 3-字符串优先 */
+  rdn?: number;
+  /** 是否返回拼音标注 */
+  rhy?: number;
+  /** 背景音：0-无, 1-有 */
+  bgs?: number;
+}
+
+/**
  * TTS 工厂函数选项（判别联合类型）
  * 根据 provider 字段路由到对应 provider 的专属配置
  */
@@ -122,6 +150,7 @@ export type TTSOptions =
   | ({ provider: 'openai' } & BaseTTSOptions)
   | ({ provider: 'gemini' } & BaseTTSOptions)
   | ({ provider: 'glm' } & GlmTTSOptions)
+  | ({ provider: 'xfyun' } & XfyunTTSOptions)
   | ({ provider: string } & BaseTTSOptions);
 
 export interface TTSRequest {
@@ -178,7 +207,14 @@ export interface TTSVoice {
   gender?: 'male' | 'female' | 'neutral';
 }
 
-export type TTSProviderType = 'doubao' | 'minimax' | 'qwen' | 'openai' | 'gemini' | string;
+export type TTSProviderType =
+  | 'doubao'
+  | 'minimax'
+  | 'qwen'
+  | 'openai'
+  | 'gemini'
+  | 'xfyun'
+  | string;
 
 /** TTS 连接状态 */
 export type TTSConnectionState = 'connected' | 'closed' | 'error';
