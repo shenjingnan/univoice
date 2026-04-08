@@ -2,6 +2,28 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.8.0](https://github.com/shenjingnan/univoice/compare/v0.7.1...v0.8.0) (2026-04-08)
+
+### Features
+
+* **asr:** 新增科大讯飞 ASR 提供商及示例代码 ([#261](https://github.com/shenjingnan/univoice/issues/261)) ([077dacd](https://github.com/shenjingnan/univoice/commit/077dacd5c1d05e10294a0259270cc3d85960a44d))
+* **benchmark,asr:** 新增科大讯飞基准测试及 ASR 发送间隔可配置化 ([#264](https://github.com/shenjingnan/univoice/issues/264)) ([c2a907d](https://github.com/shenjingnan/univoice/commit/c2a907d1cbfd945d396e93d191f80f2a3c53bdf0))
+* **examples:** 新增豆包 TTS OGG Opus 格式流式合成示例 ([#258](https://github.com/shenjingnan/univoice/issues/258)) ([4050f58](https://github.com/shenjingnan/univoice/commit/4050f58934d30e106cbe2ba873d801f3de3c3eff))
+* **tts:** 新增科大讯飞超拟人 TTS 提供商及示例代码 ([#262](https://github.com/shenjingnan/univoice/issues/262)) ([19f2779](https://github.com/shenjingnan/univoice/commit/19f2779512662db3dbc6ed2569b380bd10ab43c3))
+
+### Bug Fixes
+
+* **deps:** 修复 defu 原型链污染和 vite 多个安全漏洞 ([#263](https://github.com/shenjingnan/univoice/issues/263)) ([9b74881](https://github.com/shenjingnan/univoice/commit/9b74881d5e9f67deb07f3d146cf701cbbdaf5097))
+* **tsconfig:** 适配 TypeScript 6.0 废弃 baseUrl 导致的构建失败 ([#265](https://github.com/shenjingnan/univoice/issues/265)) ([6a2efc3](https://github.com/shenjingnan/univoice/commit/6a2efc3160712514fa7b81742894bdf18f29ba6a))
+
+### Documentation
+
+* 更新 README 反映最新项目状态及许可证变更 ([#266](https://github.com/shenjingnan/univoice/issues/266)) ([86d0d30](https://github.com/shenjingnan/univoice/commit/86d0d30722bcf99c1d8cb7af368d42993529ca8d))
+
+### Tests
+
+* **asr,tts:** 新增 ASR/TTS 模块单元测试 ([#259](https://github.com/shenjingnan/univoice/issues/259)) ([497525f](https://github.com/shenjingnan/univoice/commit/497525f0c0e8710797e6c9e1f0ccca103bb8d7d3))
+
 ## [0.7.1](https://github.com/shenjingnan/univoice/compare/v0.7.0...v0.7.1) (2026-04-07)
 
 ### Bug Fixes
