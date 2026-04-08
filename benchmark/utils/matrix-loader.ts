@@ -8,8 +8,13 @@ import {
   glmMatrixItems,
   minimaxMatrixItems,
   qwenMatrixItems,
+  xfyunMatrixItems,
 } from '../scenarios/matrix';
-import { doubaoASRMatrixItems, qwenASRMatrixItems } from '../scenarios/matrix/asr';
+import {
+  doubaoASRMatrixItems,
+  qwenASRMatrixItems,
+  xfyunASRMatrixItems,
+} from '../scenarios/matrix/asr';
 
 /**
  * 所有 TTS 矩阵测试项
@@ -20,12 +25,17 @@ export const allMatrixItems: MatrixItem[] = [
   ...doubaoMatrixItems,
   ...minimaxMatrixItems,
   ...glmMatrixItems,
+  ...xfyunMatrixItems,
 ];
 
 /**
  * 所有 ASR 矩阵测试项
  */
-export const allASRMatrixItems: ASRMatrixItem[] = [...qwenASRMatrixItems, ...doubaoASRMatrixItems];
+export const allASRMatrixItems: ASRMatrixItem[] = [
+  ...qwenASRMatrixItems,
+  ...doubaoASRMatrixItems,
+  ...xfyunASRMatrixItems,
+];
 
 /**
  * 提供商显示名称映射
@@ -36,6 +46,7 @@ const PROVIDER_DISPLAY_NAMES: Record<string, string> = {
   doubao: '火山引擎',
   glm: '智谱 GLM',
   minimax: 'Minimax',
+  xfyun: '科大讯飞',
 };
 
 /**

@@ -6,6 +6,7 @@ import { DOUBAO_MATRIX_CONFIG, doubaoMatrixItems, doubaoScenarioConfig } from '.
 import { GLM_MATRIX_CONFIG, glmMatrixItems, glmScenarioConfig } from './glm';
 import { MINIMAX_MATRIX_CONFIG, minimaxMatrixItems, minimaxScenarioConfig } from './minimax';
 import { QWEN_MATRIX_CONFIG, qwenMatrixItems, qwenScenarioConfig } from './qwen';
+import { XFYUN_MATRIX_CONFIG, xfyunMatrixItems, xfyunScenarioConfig } from './xfyun';
 
 // 重新导出各提供商配置和数据
 export {
@@ -21,6 +22,9 @@ export {
   QWEN_MATRIX_CONFIG,
   qwenMatrixItems,
   qwenScenarioConfig,
+  XFYUN_MATRIX_CONFIG,
+  xfyunMatrixItems,
+  xfyunScenarioConfig,
 };
 
 /**
@@ -31,6 +35,7 @@ export const ALL_PROVIDER_MATRIX_CONFIGS: ProviderMatrixConfig[] = [
   DOUBAO_MATRIX_CONFIG,
   GLM_MATRIX_CONFIG,
   MINIMAX_MATRIX_CONFIG,
+  XFYUN_MATRIX_CONFIG,
 ];
 
 /**
