@@ -269,7 +269,7 @@ const response = await tts.synthesize({ text: '你好' });
 import { createTTS } from 'univoice';
 
 const tts = createTTS({
-  provider: 'doubao' | 'openai' | 'minimax' | 'qwen' | 'gemini',
+  provider: 'doubao' | 'openai' | 'minimax' | 'qwen' | 'qwen-realtime' | 'gemini' | 'glm' | 'xfyun',
   // 通用配置
   apiKey?: string,
   baseUrl?: string,
@@ -314,7 +314,7 @@ const tts = createTTS({
 import { createASR } from 'univoice';
 
 const asr = createASR({
-  provider: 'doubao' | 'openai' | 'minimax' | 'qwen' | 'gemini',
+  provider: 'doubao' | 'openai' | 'minimax' | 'qwen' | 'gemini' | 'glm' | 'xfyun',
   apiKey?: string,
   baseUrl?: string,
   model?: string,
@@ -355,6 +355,7 @@ const asr = createASR({
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
 | MiniMax | `minimax` | - | - | - | - |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
+| 科大讯飞 | `xfyun` | 待实现 | 待实现 | 待实现 | 待实现 |
 
 #### TTS 能力矩阵
 
@@ -366,6 +367,7 @@ const asr = createASR({
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
 | MiniMax | `minimax` | ✅ | ✅ | ✅ | ✅ |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
+| 科大讯飞 | `xfyun` | 待实现 | 待实现 | 待实现 | 待实现 |
 
 #### 能力说明
 
@@ -471,6 +473,29 @@ const asr = createASR({
   model: 'glm-asr-2512',
   hotwords: ['人工智能', '机器学习'], // 可选：热词列表，提高特定词汇识别准确率
   context: '这是一段技术演讲',        // 可选：上下文文本，用于长文本场景优化
+});
+```
+
+#### 科大讯飞
+
+```typescript
+const tts = createTTS({
+  provider: 'xfyun',
+  appId: process.env.XFYUN_APP_ID,
+  apiSecret: process.env.XFYUN_API_SECRET,
+  apiKey: process.env.XFYUN_API_KEY,
+  voice: 'x5_lingxiaoxuan_flow',
+  model: 'super-human-tts',
+  format: 'pcm',
+  sampleRate: 16000,
+});
+
+const asr = createASR({
+  provider: 'xfyun',
+  appId: process.env.XFYUN_APP_ID,
+  apiSecret: process.env.XFYUN_API_SECRET,
+  apiKey: process.env.XFYUN_API_KEY,
+  language: 'zh-CN',
 });
 ```
 
@@ -760,26 +785,58 @@ src/
 ├── tts/               # TTS 模块
 │   ├── base.ts        # BaseTTS 抽象类
 │   ├── factory.ts     # 工厂函数
+│   ├── protocols/     # 协议实现
+│   │   ├── volcengine.ts
+│   │   ├── dashscope.ts
+│   │   ├── dashscope-realtime.ts
+│   │   ├── minimax.ts
+│   │   └── xfyun.ts
 │   ├── utils/         # 工具函数
-│   │   ├── save.ts    # 保存音频
-│   │   ├── collect.ts # 收集音频
-│   │   ├── play.ts    # 播放音频
-│   │   └── tee.ts     # 同时保存和播放
+│   │   ├── save.ts
+│   │   ├── save-audio.ts
+│   │   ├── collect.ts
+│   │   ├── play.ts
+│   │   └── tee.ts
 │   └── providers/     # 提供商实现
 │       ├── doubao.ts
 │       ├── openai.ts
 │       ├── minimax.ts
 │       ├── qwen.ts
-│       └── gemini.ts
+│       ├── qwen-realtime.ts
+│       ├── gemini.ts
+│       ├── glm.ts
+│       └── xfyun.ts
 ├── asr/               # ASR 模块
 │   ├── base.ts        # BaseASR 抽象类
 │   ├── factory.ts     # 工厂函数
+│   ├── protocols/     # 协议实现
+│   │   ├── dashscope.ts
+│   │   ├── sauc.ts
+│   │   └── xfyun.ts
 │   ├── utils/         # 工具函数
+│   │   ├── audio.ts
+│   │   ├── collect.ts
+│   │   ├── save.ts
+│   │   ├── ogg-muxer.ts
+│   │   └── opus-decode.ts
 │   └── providers/     # 提供商实现
+│       ├── doubao.ts
+│       ├── openai.ts
+│       ├── minimax.ts
+│       ├── qwen.ts
+│       ├── gemini.ts
+│       ├── glm.ts
+│       └── xfyun.ts
 └── types/             # 类型定义
-    ├── tts.ts         # TTS 相关类型
-    ├── asr.ts         # ASR 相关类型
-    └── llm-stream.ts  # LLM 流式输出类型
+    ├── index.ts
+    ├── tts.ts
+    ├── asr.ts
+    ├── llm-stream.ts
+    └── voices/
+        ├── doubao.ts
+        ├── minimax.ts
+        ├── qwen.ts
+        └── glm.ts
 ```
 
 ---
@@ -805,3 +862,4 @@ src/
 - [阿里云通义千问](https://tongyi.aliyun.com/)
 - [Google Gemini](https://ai.google.dev/)
 - [智谱 AI](https://open.bigmodel.cn/)
+- [科大讯飞](https://www.xfyun.cn/)
