@@ -27,6 +27,7 @@ export type {
   DoubaoASROptions,
   GlmASROptions,
   QwenASROptions,
+  XfyunASROptions,
 } from '@/types/asr';
 export type { AudioData, AudioFormat, ProviderConfig } from '@/types/index';
 export type { OpenAIChatCompletionChunk, OpenAIStream } from '@/types/llm-stream';
@@ -47,6 +48,7 @@ export type {
   TTSResponse,
   TTSStreamChunk,
   TTSVoice,
+  XfyunTTSOptions,
 } from '@/types/tts';
 export type {
   CosyVoiceV1Voice,

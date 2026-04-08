@@ -223,6 +223,14 @@
     "Wiselady",
     "worktree",
     "worktrees",
+    "nbest",
+    "nunum",
+    "rlang",
+    "vinfo",
+    "wbest",
+    "wpgs",
+    "xfyun",
+    "Xfyun",
     "wumei",
     "xiaochen",
     "xiaoling",
@@ -559,7 +567,11 @@
     "zhuangzhou",
     "zhubajie",
     "zifuqingnian",
-    "zixinqingnian"
+    "zixinqingnian",
+    "huabei",
+    "lingyuzhao",
+    "lingxiaoxuan",
+    "lingfeiyi"
   ],
   "ignorePaths": [
     "examples/assets",

@@ -12,5 +12,6 @@ export { GeminiTTS } from './providers/gemini';
 export { MinimaxTTS } from './providers/minimax';
 export { TTS1 } from './providers/openai';
 export { QwenTTS } from './providers/qwen';
+export { XfyunTTS } from './providers/xfyun';
 // 导出工具函数
 export * from './utils/index';

@@ -6,6 +6,7 @@ import { MinimaxTTS } from './minimax';
 import { TTS1 } from './openai';
 import { QwenTTS } from './qwen';
 import { QwenRealtimeTTS } from './qwen-realtime';
+import { XfyunTTS } from './xfyun';
 
 // 自动注册所有 provider
 registerTTSProvider('doubao', DoubaoTTS);
@@ -15,6 +16,7 @@ registerTTSProvider('qwen', QwenTTS);
 registerTTSProvider('qwen-realtime', QwenRealtimeTTS);
 registerTTSProvider('openai', TTS1);
 registerTTSProvider('gemini', GeminiTTS);
+registerTTSProvider('xfyun', XfyunTTS);
 
 // 导出所有 provider
-export { DoubaoTTS, GeminiTTS, GlmTTS, MinimaxTTS, QwenRealtimeTTS, QwenTTS, TTS1 };
+export { DoubaoTTS, GeminiTTS, GlmTTS, MinimaxTTS, QwenRealtimeTTS, QwenTTS, TTS1, XfyunTTS };

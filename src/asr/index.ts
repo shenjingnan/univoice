@@ -9,5 +9,6 @@ export { GeminiASR } from './providers/gemini';
 export { MinimaxASR } from './providers/minimax';
 export { WhisperASR } from './providers/openai';
 export { QwenASR } from './providers/qwen';
+export { XfyunASR } from './providers/xfyun';
 // 导出工具函数
 export * from './utils/index';
