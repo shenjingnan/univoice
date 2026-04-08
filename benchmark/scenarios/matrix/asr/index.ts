@@ -12,6 +12,9 @@ export {
   QWEN_ASR_MATRIX_CONFIG,
   qwenASRMatrixItems,
   qwenASRScenarioConfig,
+  XFYUN_ASR_MATRIX_CONFIG,
+  xfyunASRMatrixItems,
+  xfyunASRScenarioConfig,
 } from './providers';
 
 // 导出运行器

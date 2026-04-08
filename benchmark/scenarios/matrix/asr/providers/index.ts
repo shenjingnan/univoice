@@ -5,6 +5,7 @@ import type { ASRProviderMatrixConfig } from '../types';
 import { DOUBAO_ASR_MATRIX_CONFIG, doubaoASRMatrixItems, doubaoASRScenarioConfig } from './doubao';
 import { GLM_ASR_MATRIX_CONFIG, glmASRMatrixItems, glmASRScenarioConfig } from './glm';
 import { QWEN_ASR_MATRIX_CONFIG, qwenASRMatrixItems, qwenASRScenarioConfig } from './qwen';
+import { XFYUN_ASR_MATRIX_CONFIG, xfyunASRMatrixItems, xfyunASRScenarioConfig } from './xfyun';
 
 // 重新导出各提供商配置和数据
 export {
@@ -17,6 +18,9 @@ export {
   QWEN_ASR_MATRIX_CONFIG,
   qwenASRMatrixItems,
   qwenASRScenarioConfig,
+  XFYUN_ASR_MATRIX_CONFIG,
+  xfyunASRMatrixItems,
+  xfyunASRScenarioConfig,
 };
 
 /**
@@ -26,6 +30,7 @@ export const ALL_ASR_PROVIDER_MATRIX_CONFIGS: ASRProviderMatrixConfig[] = [
   QWEN_ASR_MATRIX_CONFIG,
   DOUBAO_ASR_MATRIX_CONFIG,
   GLM_ASR_MATRIX_CONFIG,
+  XFYUN_ASR_MATRIX_CONFIG,
 ];
 
 /**

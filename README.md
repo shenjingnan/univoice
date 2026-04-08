@@ -493,7 +493,7 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/3/29 21:20:30
+> 生成时间: 2026/4/8 17:39:11
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -588,7 +588,7 @@ const asr = createASR({
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 16000 | 3 | 653 | 62 | 3254 | 3461 | 231 | 88.9 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 24000 | 3 | 670 | 102 | 3429 | 7919 | 2209 | 59.3 |
 | 豆包 | seed-tts-1.0 | zh_male_lengkugege_emo_v2_mars_bigtts | ogg_opus | 48000 | 3 | 698 | 65 | 3217 | 3603 | 200 | 85.8 |
-| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 491 | 65 | 3810 | 3859 | **29 🏆** | 74.6 |
+| 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 8000 | 3 | 491 | 65 | 3810 | 3859 | 29 | 74.6 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 16000 | 3 | 500 | 66 | 3752 | 3832 | 43 | 75.5 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 24000 | 3 | 510 | 65 | 3760 | 3783 | 50 | 76.3 |
 | 豆包 | seed-tts-2.0 | zh_female_vv_uranus_bigtts | pcm | 48000 | 3 | 560 | 64 | 3770 | 3835 | 43 | 75.4 |
@@ -645,6 +645,9 @@ const asr = createASR({
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | 3 | 490 | 2 | 2101 | 2148 | 99 | 138.6 |
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | 3 | 448 | **2 🏆** | 1920 | 2100 | 99 | 145.2 |
 | 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 861 | *542* | 5037 | 5614 | 296 | 54.8 |
+| 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 8000 | 3 | 543 | 17 | 2704 | 2897 | 119 | 104.1 |
+| 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 16000 | 3 | 511 | 17 | 2629 | 2721 | 51 | 107.5 |
+| 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 24000 | 3 | 592 | 16 | 2690 | 2709 | **28 🏆** | 106.3 |
 
 ## ASR 性能指标
 
@@ -675,13 +678,14 @@ const asr = createASR({
 
 | 服务商 | 模型 | 语言 | 输入格式 | 采样率 (Hz) | 测试次数 | 首包延迟 (ms) | 平均间隔 (ms) | P50 (ms) | P95 (ms) | 标准差 (ms) | RTF |
 |--------|------|------|----------|-------------|----------|---------------|---------------|----------|----------|-------------|-----|
-| 通义千问 | paraformer-realtime-v2 | zh-CN | pcm | 16000 | 3 | *978* | *82* | 685 | *2085* | *666* | *1.32* |
-| 通义千问 | paraformer-realtime-v1 | zh-CN | pcm | 16000 | 3 | **439 🏆** | **29 🏆** | **498 🏆** | **509 🏆** | **10 🏆** | **0.57 🏆** |
-| 豆包 | bigmodel | zh-CN | pcm | 16000 | 3 | 513 | 69 | *904* | 960 | 107 | 0.99 |
+| 通义千问 | paraformer-realtime-v2 | zh-CN | pcm | 16000 | 3 | 978 | 82 | 685 | 2085 | *666* | *1.32* |
+| 通义千问 | paraformer-realtime-v1 | zh-CN | pcm | 16000 | 3 | **439 🏆** | **29 🏆** | **498 🏆** | **509 🏆** | **10 🏆** | 0.57 |
+| 豆包 | bigmodel | zh-CN | pcm | 16000 | 3 | 513 | 69 | 904 | 960 | 107 | 0.99 |
+| 科大讯飞 | iat | zh-CN | pcm | 16000 | 3 | *1551* | *927* | *2835* | *2948* | 587 | **0.12 🏆** |
 
 ---
 
-*数据更新于: 2026-03-29*
+*数据更新于: 2026-04-08*
 
 <!-- PERFORMANCE_TABLE_END -->
 

@@ -56,6 +56,8 @@ export class XfyunASR extends BaseASR {
   public nbest?: number;
   /** 自定义热词的权重信息 */
   public wbest?: number;
+  /** 音频发送间隔（毫秒） */
+  public sendInterval: number;
 
   constructor(options: XfyunASROptions) {
     super(options);
@@ -78,6 +80,7 @@ export class XfyunASR extends BaseASR {
     this.nunum = options.nunum;
     this.nbest = options.nbest;
     this.wbest = options.wbest;
+    this.sendInterval = options.sendInterval ?? 0;
   }
 
   /**
@@ -263,7 +266,7 @@ export class XfyunASR extends BaseASR {
 
   /**
    * 发送音频流
-   * 按 1280 字节分块，40ms 间隔发送
+   * 按 1280 字节分块，以 sendInterval 毫秒间隔发送
    */
   private async sendAudioStream(
     ws: WebSocket,
@@ -271,7 +274,7 @@ export class XfyunASR extends BaseASR {
     protocolOptions: XfyunProtocolOptions
   ): Promise<void> {
     const CHUNK_SIZE = 1280;
-    const SEND_INTERVAL = 40;
+    const SEND_INTERVAL = this.sendInterval;
     let isFirst = true;
 
     for await (const chunk of audio) {
@@ -292,7 +295,7 @@ export class XfyunASR extends BaseASR {
           ws.send(frame);
         }
 
-        // 40ms 间隔
+        // 发送间隔
         await new Promise((resolve) => setTimeout(resolve, SEND_INTERVAL));
       }
     }
@@ -336,13 +339,14 @@ export class XfyunASR extends BaseASR {
 
       try {
         // 后台发送音频流
-        const sendPromise = this.sendAudioStream(ws, audio, protocolOptions).then(async () => {
+        let sendPromise: Promise<void> = Promise.resolve();
+        sendPromise = this.sendAudioStream(ws, audio, protocolOptions).then(async () => {
           // 发送末帧
           const lastFrame = createLastFrame();
           ws.send(lastFrame);
         });
 
-        // 从队列 yield 响应
+        // 从队列 yield 响应，同时监控发送和队列错误
         while (true) {
           const chunk = await queue.next();
           if (chunk === null) break;

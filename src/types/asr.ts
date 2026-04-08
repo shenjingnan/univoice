@@ -120,6 +120,8 @@ export interface XfyunASROptions extends BaseASROptions {
   nbest?: number;
   /** 自定义热词的权重信息 */
   wbest?: number;
+  /** 音频发送间隔（毫秒），默认 0（无间隔） */
+  sendInterval?: number;
 }
 
 /**

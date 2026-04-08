@@ -19,6 +19,9 @@ export {
   QWEN_MATRIX_CONFIG,
   qwenMatrixItems,
   qwenScenarioConfig,
+  XFYUN_MATRIX_CONFIG,
+  xfyunMatrixItems,
+  xfyunScenarioConfig,
 } from './providers';
 // 导出运行器
 export {

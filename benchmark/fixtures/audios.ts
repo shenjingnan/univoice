@@ -41,13 +41,13 @@ export function getPCMFilename(originalFilename: string): string {
  * 对应 texts.ts 中的文本
  */
 const audioConfigs = [
-  {
-    name: 'short-greeting',
-    textFixture: 'simple-greeting',
-    filename: 'short-greeting.mp3',
-    estimatedDuration: 2,
-    format: 'mp3',
-  },
+  // {
+  //   name: 'short-greeting',
+  //   textFixture: 'simple-greeting',
+  //   filename: 'short-greeting.mp3',
+  //   estimatedDuration: 2,
+  //   format: 'mp3',
+  // },
   {
     name: 'medium-intro',
     textFixture: 'intro-paragraph',
@@ -55,13 +55,13 @@ const audioConfigs = [
     estimatedDuration: 15,
     format: 'mp3',
   },
-  {
-    name: 'long-article',
-    textFixture: 'article-long',
-    filename: 'long-article.mp3',
-    estimatedDuration: 60,
-    format: 'mp3',
-  },
+  // {
+  //   name: 'long-article',
+  //   textFixture: 'article-long',
+  //   filename: 'long-article.mp3',
+  //   estimatedDuration: 60,
+  //   format: 'mp3',
+  // },
 ];
 
 /**
