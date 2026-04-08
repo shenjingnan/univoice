@@ -355,7 +355,7 @@ const asr = createASR({
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
 | MiniMax | `minimax` | - | - | - | - |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
-| 科大讯飞 | `xfyun` | 待实现 | 待实现 | 待实现 | 待实现 |
+| 科大讯飞 | `xfyun` | ✅ | ✅ | ✅ | ✅ |
 
 #### TTS 能力矩阵
 
@@ -367,7 +367,7 @@ const asr = createASR({
 | OpenAI | `openai` | 待实现 | 待实现 | 待实现 | 待实现 |
 | MiniMax | `minimax` | ✅ | ✅ | ✅ | ✅ |
 | Gemini | `gemini` | 待实现 | 待实现 | 待实现 | 待实现 |
-| 科大讯飞 | `xfyun` | 待实现 | 待实现 | 待实现 | 待实现 |
+| 科大讯飞 | `xfyun` | ✅ | ✅ | ✅ | ✅ |
 
 #### 能力说明
 
