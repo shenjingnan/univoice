@@ -567,7 +567,11 @@
     "zhuangzhou",
     "zhubajie",
     "zifuqingnian",
-    "zixinqingnian"
+    "zixinqingnian",
+    "huabei",
+    "lingyuzhao",
+    "lingxiaoxuan",
+    "lingfeiyi"
   ],
   "ignorePaths": [
     "examples/assets",

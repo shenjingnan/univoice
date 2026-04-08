@@ -212,6 +212,25 @@ export function getXfyunASRConfig(): XfyunASRConfig {
   return { appId, apiKey, apiSecret };
 }
 
+/** 讯飞 TTS 配置（复用 XfyunASRConfig 接口） */
+export type XfyunTTSConfig = XfyunASRConfig;
+
+/**
+ * 获取科大讯飞 TTS 配置（从环境变量）
+ * @returns 科大讯飞 TTS 配置对象
+ * @throws 如果环境变量未设置则退出进程
+ */
+export function getXfyunTTSConfig(): XfyunTTSConfig {
+  const appId = process.env.XFYUN_APP_ID;
+  const apiKey = process.env.XFYUN_API_KEY;
+  const apiSecret = process.env.XFYUN_API_SECRET;
+  if (!appId || !apiKey || !apiSecret) {
+    console.error('请设置环境变量 XFYUN_APP_ID、XFYUN_API_KEY 和 XFYUN_API_SECRET');
+    process.exit(1);
+  }
+  return { appId, apiKey, apiSecret };
+}
+
 // ============================================
 // 模拟数据生成函数
 // ============================================

@@ -48,6 +48,7 @@ export type {
   TTSResponse,
   TTSStreamChunk,
   TTSVoice,
+  XfyunTTSOptions,
 } from '@/types/tts';
 export type {
   CosyVoiceV1Voice,
