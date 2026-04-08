@@ -22,14 +22,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "@/*": ["src/*"],
-      "univoice": ["src/index.ts"],
-      "univoice/asr": ["src/asr/index.ts"],
-      "univoice/asr/providers": ["src/asr/providers/index.ts"],
-      "univoice/tts": ["src/tts/index.ts"],
-      "univoice/tts/providers": ["src/tts/providers/index.ts"]
+      "@/*": ["./src/*"],
+      "univoice": ["./src/index.ts"],
+      "univoice/asr": ["./src/asr/index.ts"],
+      "univoice/asr/providers": ["./src/asr/providers/index.ts"],
+      "univoice/tts": ["./src/tts/index.ts"],
+      "univoice/tts/providers": ["./src/tts/providers/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "examples/**/*.ts", "benchmark/**/*.ts"],
