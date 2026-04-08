@@ -129,6 +129,29 @@ export function getASRProviderConfigs(): ASRProviderConfig[] {
     });
   }
 
+  // Xfyun
+  if (process.env.XFYUN_APP_ID && process.env.XFYUN_API_KEY && process.env.XFYUN_API_SECRET) {
+    configs.push({
+      provider: 'xfyun',
+      displayName: '科大讯飞',
+      model: 'iat',
+      streamInput: true,
+      streamOutput: true,
+      createConfig: {
+        appId: process.env.XFYUN_APP_ID,
+        apiKey: process.env.XFYUN_API_KEY,
+        apiSecret: process.env.XFYUN_API_SECRET,
+        model: 'iat',
+        language: 'zh-CN',
+        format: 'pcm',
+        dwa: 'wpgs',
+        audioFormat: {
+          sampleRate: 16000,
+        },
+      },
+    });
+  }
+
   return configs;
 }
 

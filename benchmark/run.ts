@@ -66,8 +66,8 @@ export function parseRunArgs(): {
 
 选项:
   -p, --provider <name>   指定服务商（可多次使用，支持逗号分隔）
-                          TTS: doubao, qwen, minimax, glm
-                          ASR: doubao, qwen, glm
+                          TTS: doubao, qwen, minimax, glm, xfyun
+                          ASR: doubao, qwen, glm, xfyun
   -t, --type <type>       测试类型 (tts | asr | all)，默认 all
   -i, --iterations <n>    迭代次数，默认 3
   -s, --scenario <name>   测试场景 (qwen-matrix)，默认常规测试
@@ -92,6 +92,8 @@ export function parseRunArgs(): {
   glm-matrix              GLM TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
   minimax-matrix          Minimax TTS 矩阵测试，覆盖多种模型、音色、编码、采样率组合
   qwen-asr-matrix         Qwen ASR 矩阵测试，覆盖多种模型、语言、格式、采样率组合
+  xfyun-matrix            Xfyun TTS 矩阵测试，覆盖超拟人模型不同采样率组合
+  xfyun-asr-matrix        Xfyun ASR 矩阵测试，覆盖语音听写模型
 
 示例:
   pnpm benchmark run --                         # 测试所有服务商
@@ -110,6 +112,8 @@ export function parseRunArgs(): {
   pnpm benchmark run -- -s minimax-matrix       # 运行 Minimax TTS 矩阵测试
   pnpm benchmark run -- -s qwen-matrix --interval 2000  # 矩阵测试间隔 2 秒
   pnpm benchmark run -- -s qwen-asr-matrix      # 运行 Qwen ASR 矩阵测试
+  pnpm benchmark run -- -s xfyun-matrix          # 运行 Xfyun TTS 矩阵测试
+  pnpm benchmark run -- -s xfyun-asr-matrix      # 运行 Xfyun ASR 矩阵测试
 
 注意: pnpm 需要使用 "--" 分隔符来传递参数给脚本
 `);
@@ -291,6 +295,7 @@ export async function run(options?: {
       doubao: 'Doubao',
       glm: 'GLM',
       minimax: 'Minimax',
+      xfyun: '科大讯飞',
     };
 
     console.log(
@@ -379,6 +384,7 @@ export async function run(options?: {
       doubao: 'Doubao',
       glm: 'GLM',
       minimax: 'Minimax',
+      xfyun: '科大讯飞',
     };
 
     console.log(

@@ -331,6 +331,7 @@ export function inferCapabilities(
     glm: '智谱 GLM',
     openai: 'OpenAI',
     gemini: 'Gemini',
+    xfyun: '科大讯飞',
   };
 
   return {

@@ -198,6 +198,7 @@ describe('XfyunASR listenStream()', () => {
       appId: 'test-app',
       apiKey: 'test-key',
       apiSecret: 'test-secret',
+      sendInterval: 40,
     });
     const audio = audioFrom(Buffer.from('audio'));
     const gen = asr.listenStream(audio);

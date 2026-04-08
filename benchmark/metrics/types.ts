@@ -469,7 +469,7 @@ export interface ScenarioSummary {
  */
 export interface MatrixItem {
   /** 提供商标识 */
-  provider: 'qwen' | 'qwen-realtime' | 'doubao' | 'glm' | 'minimax';
+  provider: 'qwen' | 'qwen-realtime' | 'doubao' | 'glm' | 'minimax' | 'xfyun';
   /** 模型名称 */
   model: string;
   /** 音色名称 */
@@ -486,7 +486,7 @@ export interface MatrixItem {
  */
 export interface ASRMatrixItem {
   /** 提供商标识 */
-  provider: 'qwen' | 'doubao' | 'glm' | 'minimax';
+  provider: 'qwen' | 'doubao' | 'glm' | 'minimax' | 'xfyun';
   /** 模型名称 */
   model: string;
   /** 语言 */
@@ -550,6 +550,12 @@ export type GlmMatrixConfig = MatrixItem;
  * 用于测试不同模型、音色、编码、采样率的组合
  */
 export type MinimaxMatrixConfig = MatrixItem;
+
+/**
+ * Xfyun TTS 矩阵测试配置
+ * 用于测试不同模型、音色、编码、采样率的组合
+ */
+export type XfyunMatrixConfig = MatrixItem;
 
 /**
  * 矩阵测试场景配置
