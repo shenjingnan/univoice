@@ -96,24 +96,30 @@ export interface XfyunASROptions extends BaseASROptions {
   apiSecret?: string;
   /** 音频采样率，默认 16000 */
   sampleRate?: number;
-  /** 音频位深度，默认 16 */
-  bitDepth?: number;
-  /** 音频声道数，默认 1 */
-  channels?: number;
-  /** 识别领域，默认 'slm' */
+  /** 识别领域，默认 'iat' */
   domain?: string;
   /** 口音，默认 'mandarin' */
   accent?: string;
-  /** 静音超时时间（毫秒），默认 6000 */
+  /** 静音超时时间（毫秒），默认 2000 */
   eos?: number;
   /** 动态修正控制，如 'wpgs' */
   dwa?: string;
   /** 中英文筛选：1-不筛选 2-只出中文 3-只出英文 */
   ltc?: number;
-  /** 应用级热词 ID */
-  resId?: string;
   /** 会话热词 */
   dhw?: string;
+  /** 标点符号控制：0-不返回标点 1-返回中文标点 2-返回英文标点 */
+  ptt?: number;
+  /** 语言区域，如 'zh-cn' */
+  rlang?: string;
+  /** 返回结果中是否包含词级时间戳 */
+  vinfo?: number;
+  /** 返回数值的阿拉伯数字格式 */
+  nunum?: number;
+  /** 返回候选句子数量 */
+  nbest?: number;
+  /** 自定义热词的权重信息 */
+  wbest?: number;
 }
 
 /**

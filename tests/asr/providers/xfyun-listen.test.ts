@@ -3,12 +3,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { XfyunASR } from '@/asr/providers/xfyun.js';
 import type { AudioStream } from '@/types/asr.js';
 
-// --- 科大讯飞响应构建辅助函数 ---
+// --- 科大讯飞 v2 响应构建辅助函数 ---
 
 function makeXfyunSuccessResponse(status: number): Buffer {
   return Buffer.from(
     JSON.stringify({
-      header: { code: 0, message: 'success', sid: 'iat-test-sid', status },
+      code: 0,
+      message: 'success',
+      sid: 'iat-test-sid',
+      data: { status },
     })
   );
 }
@@ -16,30 +19,29 @@ function makeXfyunSuccessResponse(status: number): Buffer {
 function makeXfyunResultResponse(
   status: number,
   text: string,
-  options: { ls?: boolean; seq?: number } = {}
+  options: { ls?: boolean; sn?: number; pgs?: string; rg?: [number, number] } = {}
 ): Buffer {
   const result = {
-    sn: options.seq ?? 1,
+    sn: options.sn ?? 1,
     ls: options.ls ?? false,
+    bg: 0,
+    ed: 0,
+    ...(options.pgs ? { pgs: options.pgs } : {}),
+    ...(options.rg ? { rg: options.rg } : {}),
     ws: text.split('').map((char) => ({
       bg: 0,
       cw: [{ w: char }],
     })),
   };
-  const base64Text = Buffer.from(JSON.stringify(result)).toString('base64');
 
   return Buffer.from(
     JSON.stringify({
-      header: { code: 0, message: 'success', sid: 'iat-test-sid', status },
-      payload: {
-        result: {
-          compress: 'raw',
-          encoding: 'utf8',
-          format: 'json',
-          seq: options.seq ?? 1,
-          status,
-          text: base64Text,
-        },
+      code: 0,
+      message: 'success',
+      sid: 'iat-test-sid',
+      data: {
+        status,
+        result,
       },
     })
   );
@@ -48,7 +50,9 @@ function makeXfyunResultResponse(
 function makeXfyunErrorResponse(code: number, message: string): Buffer {
   return Buffer.from(
     JSON.stringify({
-      header: { code, message, sid: 'iat-test-sid', status: 0 },
+      code,
+      message,
+      sid: 'iat-test-sid',
     })
   );
 }
@@ -173,18 +177,19 @@ describe('XfyunASR listenStream()', () => {
     ws.emit('message', makeXfyunSuccessResponse(0));
 
     // 模拟中间帧识别结果
-    ws.emit('message', makeXfyunResultResponse(1, '你好', { ls: false, seq: 1 }));
+    ws.emit('message', makeXfyunResultResponse(1, '你好', { ls: false, sn: 1 }));
 
     // 模拟最终帧识别结果
-    ws.emit('message', makeXfyunResultResponse(2, '你好世界', { ls: true, seq: 2 }));
+    ws.emit('message', makeXfyunResultResponse(2, '你好世界', { ls: true, sn: 2 }));
 
     await flush();
 
     const results = await collector;
     expect(results).toHaveLength(2);
+    // 累积文本：sn=1 时为 "你好"，sn=2 时累积为 "你好你好世界"
     expect(results[0].text).toBe('你好');
     expect(results[0].isFinal).toBe(false);
-    expect(results[1].text).toBe('你好世界');
+    expect(results[1].text).toBe('你好你好世界');
     expect(results[1].isFinal).toBe(true);
   });
 
@@ -220,7 +225,7 @@ describe('XfyunASR listenStream()', () => {
     await expect(collector).rejects.toThrow('Xfyun ASR error: 10105 - illegal access');
   });
 
-  it('首帧应该包含 parameter', async () => {
+  it('首帧应该包含 common 和 business', async () => {
     const asr = new XfyunASR({
       appId: 'test-app',
       apiKey: 'test-key',
@@ -241,13 +246,15 @@ describe('XfyunASR listenStream()', () => {
     await flush();
     await flush();
 
-    // 检查发送的第一帧是否包含 parameter
+    // 检查发送的第一帧是否包含 common 和 business
     const sendCalls = ws.send.mock.calls;
     if (sendCalls.length > 0) {
       const firstFrame = JSON.parse(sendCalls[0][0]);
-      expect(firstFrame.parameter).toBeDefined();
-      expect(firstFrame.parameter.iat).toBeDefined();
-      expect(firstFrame.header.status).toBe(0);
+      expect(firstFrame.common).toBeDefined();
+      expect(firstFrame.common.app_id).toBe('test-app');
+      expect(firstFrame.business).toBeDefined();
+      expect(firstFrame.business.domain).toBe('iat');
+      expect(firstFrame.data.status).toBe(0);
     }
 
     // 完成流程
@@ -256,5 +263,68 @@ describe('XfyunASR listenStream()', () => {
     await flush();
 
     await collector;
+  });
+
+  it('应该正确处理动态修正结果（pgs=rpl 时替换旧结果）', async () => {
+    const asr = new XfyunASR({
+      appId: 'test-app',
+      apiKey: 'test-key',
+      apiSecret: 'test-secret',
+      dwa: 'wpgs',
+    });
+    const audio = audioFrom(Buffer.from('audio-chunk-1'));
+    const gen = asr.listenStream(audio);
+
+    const collector = (async () => {
+      // biome-ignore lint/suspicious/noExplicitAny: test mock
+      const chunks: any[] = [];
+      for await (const c of gen) chunks.push(c);
+      return chunks;
+    })();
+
+    await flush();
+    const ws = getLastWs();
+    await flush();
+    await flush();
+
+    // 模拟首帧成功响应
+    ws.emit('message', makeXfyunSuccessResponse(0));
+
+    // sn=1: 中间结果 "你好"
+    ws.emit('message', makeXfyunResultResponse(1, '你好', { ls: false, sn: 1 }));
+
+    // sn=2: 中间结果 "世" (累积: "你好世")
+    ws.emit('message', makeXfyunResultResponse(1, '世', { ls: false, sn: 2 }));
+
+    // sn=1: 动态修正 pgs=rpl, rg=[1,2]，清除 sn 1~2 的旧结果
+    // 替换后 iatResult: [null, "今天", null]，累积为 "今天"
+    ws.emit(
+      'message',
+      makeXfyunResultResponse(1, '今天', { ls: false, sn: 1, pgs: 'rpl', rg: [1, 2] })
+    );
+
+    // sn=3: 最终结果 "天气真好" (累积: "今天天气真好")
+    ws.emit('message', makeXfyunResultResponse(2, '天气真好', { ls: true, sn: 3 }));
+
+    await flush();
+
+    const results = await collector;
+    expect(results).toHaveLength(4);
+
+    // sn=1: "你好"
+    expect(results[0].text).toBe('你好');
+    expect(results[0].isFinal).toBe(false);
+
+    // sn=2: "你好世" (累积)
+    expect(results[1].text).toBe('你好世');
+    expect(results[1].isFinal).toBe(false);
+
+    // sn=1(rpl): "今天" (rg=[1,2] 清除了 sn=1 和 sn=2 的旧结果)
+    expect(results[2].text).toBe('今天');
+    expect(results[2].isFinal).toBe(false);
+
+    // sn=3: "今天天气真好" (最终累积)
+    expect(results[3].text).toBe('今天天气真好');
+    expect(results[3].isFinal).toBe(true);
   });
 });

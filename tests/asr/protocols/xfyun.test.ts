@@ -5,7 +5,6 @@ import {
   createFirstFrame,
   createLastFrame,
   createMiddleFrame,
-  decodeResultText,
   extractTextFromResult,
   hasResultPayload,
   isFinishedResponse,
@@ -21,12 +20,10 @@ function makeProtocolOptions(overrides: Partial<XfyunProtocolOptions> = {}): Xfy
     apiSecret: 'test-api-secret',
     encoding: 'raw',
     sampleRate: 16000,
-    bitDepth: 16,
-    channels: 1,
-    domain: 'slm',
+    domain: 'iat',
     language: 'zh_cn',
     accent: 'mandarin',
-    eos: 6000,
+    eos: 2000,
     ...overrides,
   };
 }
@@ -34,15 +31,15 @@ function makeProtocolOptions(overrides: Partial<XfyunProtocolOptions> = {}): Xfy
 describe('科大讯飞 ASR 协议', () => {
   describe('buildAuthUrl', () => {
     it('应该生成包含鉴权参数的 URL', () => {
-      const url = buildAuthUrl('iat.xf-yun.com', '/v1', 'my-key', 'my-secret');
-      expect(url).toMatch(/^wss:\/\/iat\.xf-yun\.com\/v1\?/);
+      const url = buildAuthUrl('iat-api.xfyun.cn', '/v2/iat', 'my-key', 'my-secret');
+      expect(url).toMatch(/^wss:\/\/iat-api\.xfyun\.cn\/v2\/iat\?/);
       expect(url).toContain('authorization=');
       expect(url).toContain('date=');
-      expect(url).toContain('host=iat.xf-yun.com');
+      expect(url).toContain('host=iat-api.xfyun.cn');
     });
 
     it('authorization 参数应该是 base64 编码的', () => {
-      const url = buildAuthUrl('iat.xf-yun.com', '/v1', 'my-key', 'my-secret');
+      const url = buildAuthUrl('iat-api.xfyun.cn', '/v2/iat', 'my-key', 'my-secret');
       const params = new URL(url).searchParams;
       const authorization = params.get('authorization') ?? '';
       expect(authorization).toBeTruthy();
@@ -55,67 +52,71 @@ describe('科大讯飞 ASR 协议', () => {
   });
 
   describe('createFirstFrame', () => {
-    it('应该创建包含 parameter 的首帧', () => {
+    it('应该创建包含 common 和 business 的首帧', () => {
       const options = makeProtocolOptions();
       const audioBase64 = Buffer.from('audio-data').toString('base64');
-      const frame = JSON.parse(createFirstFrame(options, audioBase64, 1));
+      const frame = JSON.parse(createFirstFrame(options, audioBase64));
 
-      expect(frame.header.app_id).toBe('test-app-id');
-      expect(frame.header.status).toBe(0);
-      expect(frame.parameter).toBeDefined();
-      expect(frame.parameter.iat.domain).toBe('slm');
-      expect(frame.parameter.iat.language).toBe('zh_cn');
-      expect(frame.parameter.iat.accent).toBe('mandarin');
-      expect(frame.parameter.iat.eos).toBe(6000);
-      expect(frame.parameter.iat.result.encoding).toBe('utf8');
-      expect(frame.parameter.iat.result.format).toBe('json');
-      expect(frame.payload.audio.status).toBe(0);
-      expect(frame.payload.audio.seq).toBe(1);
-      expect(frame.payload.audio.audio).toBe(audioBase64);
+      expect(frame.common.app_id).toBe('test-app-id');
+      expect(frame.business).toBeDefined();
+      expect(frame.business.domain).toBe('iat');
+      expect(frame.business.language).toBe('zh_cn');
+      expect(frame.business.accent).toBe('mandarin');
+      expect(frame.business.eos).toBe(2000);
+      expect(frame.data.status).toBe(0);
+      expect(frame.data.format).toBe('audio/L16;rate=16000');
+      expect(frame.data.encoding).toBe('raw');
+      expect(frame.data.audio).toBe(audioBase64);
     });
 
     it('应该包含可选参数 dwa 和 ltc', () => {
       const options = makeProtocolOptions({ dwa: 'wpgs', ltc: 2 });
-      const frame = JSON.parse(createFirstFrame(options, '', 1));
+      const frame = JSON.parse(createFirstFrame(options, ''));
 
-      expect(frame.parameter.iat.dwa).toBe('wpgs');
-      expect(frame.parameter.iat.ltc).toBe(2);
+      expect(frame.business.dwa).toBe('wpgs');
+      expect(frame.business.ltc).toBe(2);
     });
 
-    it('应该包含 resId 和 dhw', () => {
-      const options = makeProtocolOptions({ resId: 'hot_words', dhw: 'dhw=utf-8;你好|大家' });
-      const frame = JSON.parse(createFirstFrame(options, '', 1));
+    it('应该包含 dhw', () => {
+      const options = makeProtocolOptions({ dhw: 'dhw=utf-8;你好|大家' });
+      const frame = JSON.parse(createFirstFrame(options, ''));
 
-      expect(frame.header.res_id).toBe('hot_words');
-      expect(frame.parameter.iat.dhw).toBe('dhw=utf-8;你好|大家');
+      expect(frame.business.dhw).toBe('dhw=utf-8;你好|大家');
+    });
+
+    it('应该包含 v2 新增参数', () => {
+      const options = makeProtocolOptions({ ptt: 1, vinfo: 1, nunum: 1, nbest: 3 });
+      const frame = JSON.parse(createFirstFrame(options, ''));
+
+      expect(frame.business.ptt).toBe(1);
+      expect(frame.business.vinfo).toBe(1);
+      expect(frame.business.nunum).toBe(1);
+      expect(frame.business.nbest).toBe(3);
     });
   });
 
   describe('createMiddleFrame', () => {
-    it('应该创建不包含 parameter 的中间帧', () => {
+    it('应该创建只包含 data 的中间帧', () => {
       const options = makeProtocolOptions();
       const audioBase64 = Buffer.from('chunk').toString('base64');
-      const frame = JSON.parse(createMiddleFrame(options, audioBase64, 5));
+      const frame = JSON.parse(createMiddleFrame(options, audioBase64));
 
-      expect(frame.header.app_id).toBe('test-app-id');
-      expect(frame.header.status).toBe(1);
-      expect(frame.parameter).toBeUndefined();
-      expect(frame.payload.audio.status).toBe(1);
-      expect(frame.payload.audio.seq).toBe(5);
-      expect(frame.payload.audio.audio).toBe(audioBase64);
+      expect(frame.common).toBeUndefined();
+      expect(frame.business).toBeUndefined();
+      expect(frame.data.status).toBe(1);
+      expect(frame.data.format).toBe('audio/L16;rate=16000');
+      expect(frame.data.encoding).toBe('raw');
+      expect(frame.data.audio).toBe(audioBase64);
     });
   });
 
   describe('createLastFrame', () => {
-    it('应该创建 audio 为空的末帧', () => {
-      const options = makeProtocolOptions();
-      const frame = JSON.parse(createLastFrame(options, 10));
+    it('应该创建 data.status=2 的末帧', () => {
+      const frame = JSON.parse(createLastFrame());
 
-      expect(frame.header.app_id).toBe('test-app-id');
-      expect(frame.header.status).toBe(2);
-      expect(frame.payload.audio.status).toBe(2);
-      expect(frame.payload.audio.seq).toBe(10);
-      expect(frame.payload.audio.audio).toBe('');
+      expect(frame.data.status).toBe(2);
+      expect(frame.common).toBeUndefined();
+      expect(frame.business).toBeUndefined();
     });
   });
 
@@ -123,42 +124,27 @@ describe('科大讯飞 ASR 协议', () => {
     it('应该解析 Buffer 类型的响应', () => {
       const data = Buffer.from(
         JSON.stringify({
-          header: { code: 0, message: 'success', sid: 'sid-1', status: 1 },
+          code: 0,
+          message: 'success',
+          sid: 'iat-test-sid',
+          data: { status: 1 },
         })
       );
       const response = parseResponse(data);
-      expect(response.header.code).toBe(0);
-      expect(response.header.message).toBe('success');
+      expect(response.code).toBe(0);
+      expect(response.message).toBe('success');
     });
 
     it('应该解析字符串类型的响应', () => {
       const response = parseResponse(
         JSON.stringify({
-          header: { code: 0, message: 'success', sid: 'sid-2', status: 0 },
+          code: 0,
+          message: 'success',
+          sid: 'iat-test-sid-2',
+          data: { status: 0 },
         })
       );
-      expect(response.header.code).toBe(0);
-    });
-  });
-
-  describe('decodeResultText', () => {
-    it('应该 base64 解码并解析 JSON', () => {
-      const result = {
-        sn: 1,
-        ls: false,
-        ws: [
-          {
-            bg: 0,
-            cw: [{ w: '你' }, { w: '好' }],
-          },
-        ],
-      };
-      const base64Text = Buffer.from(JSON.stringify(result)).toString('base64');
-      const decoded = decodeResultText(base64Text);
-      expect(decoded.sn).toBe(1);
-      expect(decoded.ls).toBe(false);
-      expect(decoded.ws).toHaveLength(1);
-      expect(decoded.ws[0].cw).toHaveLength(2);
+      expect(response.code).toBe(0);
     });
   });
 
@@ -181,42 +167,38 @@ describe('科大讯飞 ASR 协议', () => {
 
   describe('事件判断函数', () => {
     it('isSuccessResponse 应该判断 code=0', () => {
-      expect(isSuccessResponse({ header: { code: 0, message: 'ok', sid: '', status: 0 } })).toBe(
-        true
-      );
-      expect(
-        isSuccessResponse({ header: { code: 10105, message: 'err', sid: '', status: 0 } })
-      ).toBe(false);
+      expect(isSuccessResponse({ code: 0, message: 'ok', sid: '' })).toBe(true);
+      expect(isSuccessResponse({ code: 10105, message: 'err', sid: '' })).toBe(false);
     });
 
-    it('isFinishedResponse 应该判断 status=2', () => {
-      expect(isFinishedResponse({ header: { code: 0, message: '', sid: '', status: 2 } })).toBe(
-        true
-      );
-      expect(isFinishedResponse({ header: { code: 0, message: '', sid: '', status: 1 } })).toBe(
+    it('isFinishedResponse 应该判断 data.status=2', () => {
+      expect(isFinishedResponse({ code: 0, message: '', sid: '', data: { status: 2 } })).toBe(true);
+      expect(isFinishedResponse({ code: 0, message: '', sid: '', data: { status: 1 } })).toBe(
         false
       );
+      expect(isFinishedResponse({ code: 0, message: '', sid: '' })).toBe(false);
     });
 
-    it('hasResultPayload 应该判断 payload.result 是否存在', () => {
+    it('hasResultPayload 应该判断 data.result 是否存在', () => {
       expect(
         hasResultPayload({
-          header: { code: 0, message: '', sid: '', status: 1 },
-          payload: {
+          code: 0,
+          message: '',
+          sid: '',
+          data: {
+            status: 1,
             result: {
-              compress: 'raw',
-              encoding: 'utf8',
-              format: 'json',
-              seq: 1,
-              status: 1,
-              text: 'abc',
+              sn: 1,
+              ls: false,
+              bg: 0,
+              ed: 0,
+              ws: [{ bg: 0, cw: [{ w: '测试' }] }],
             },
           },
         })
       ).toBe(true);
-      expect(hasResultPayload({ header: { code: 0, message: '', sid: '', status: 0 } })).toBe(
-        false
-      );
+      expect(hasResultPayload({ code: 0, message: '', sid: '' })).toBe(false);
+      expect(hasResultPayload({ code: 0, message: '', sid: '', data: { status: 0 } })).toBe(false);
     });
   });
 });

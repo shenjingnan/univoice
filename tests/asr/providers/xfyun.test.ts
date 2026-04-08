@@ -9,15 +9,18 @@ describe('XfyunASR 构造函数', () => {
     expect(asr.apiKey).toBe('');
     expect(asr.apiSecret).toBe('');
     expect(asr.sampleRate).toBe(16000);
-    expect(asr.bitDepth).toBe(16);
-    expect(asr.channels).toBe(1);
-    expect(asr.domain).toBe('slm');
+    expect(asr.domain).toBe('iat');
     expect(asr.accent).toBe('mandarin');
-    expect(asr.eos).toBe(6000);
+    expect(asr.eos).toBe(2000);
     expect(asr.dwa).toBeUndefined();
     expect(asr.ltc).toBeUndefined();
-    expect(asr.resId).toBeUndefined();
     expect(asr.dhw).toBeUndefined();
+    expect(asr.ptt).toBeUndefined();
+    expect(asr.rlang).toBeUndefined();
+    expect(asr.vinfo).toBeUndefined();
+    expect(asr.nunum).toBeUndefined();
+    expect(asr.nbest).toBeUndefined();
+    expect(asr.wbest).toBeUndefined();
   });
 
   it('应该使用自定义选项', () => {
@@ -26,28 +29,34 @@ describe('XfyunASR 构造函数', () => {
       apiKey: 'my-api-key',
       apiSecret: 'my-api-secret',
       sampleRate: 8000,
-      bitDepth: 8,
-      channels: 2,
       domain: 'custom',
       accent: 'cantonese',
       eos: 3000,
       dwa: 'wpgs',
       ltc: 2,
-      resId: 'hot_words',
       dhw: 'dhw=utf-8;你好',
+      ptt: 1,
+      rlang: 'zh-cn',
+      vinfo: 1,
+      nunum: 1,
+      nbest: 3,
+      wbest: 5,
     });
     expect(asr.appId).toBe('my-app-id');
     expect(asr.apiKey).toBe('my-api-key');
     expect(asr.apiSecret).toBe('my-api-secret');
     expect(asr.sampleRate).toBe(8000);
-    expect(asr.bitDepth).toBe(8);
-    expect(asr.channels).toBe(2);
     expect(asr.domain).toBe('custom');
     expect(asr.accent).toBe('cantonese');
     expect(asr.eos).toBe(3000);
     expect(asr.dwa).toBe('wpgs');
     expect(asr.ltc).toBe(2);
-    expect(asr.resId).toBe('hot_words');
     expect(asr.dhw).toBe('dhw=utf-8;你好');
+    expect(asr.ptt).toBe(1);
+    expect(asr.rlang).toBe('zh-cn');
+    expect(asr.vinfo).toBe(1);
+    expect(asr.nunum).toBe(1);
+    expect(asr.nbest).toBe(3);
+    expect(asr.wbest).toBe(5);
   });
 });

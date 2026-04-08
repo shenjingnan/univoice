@@ -6,7 +6,6 @@ import {
   createFirstFrame,
   createLastFrame,
   createMiddleFrame,
-  decodeResultText,
   extractTextFromResult,
   hasResultPayload,
   isFinishedResponse,
@@ -18,7 +17,7 @@ import type { ASRStreamChunk, AudioStream, XfyunASROptions } from '@/types/asr';
 
 /**
  * 科大讯飞 ASR 提供商
- * 基于讯飞开放平台 IAT（语音听写）WebSocket JSON API 实现语音识别
+ * 基于讯飞开放平台 IAT（语音听写）WebSocket JSON API v2 实现语音识别
  *
  * 支持中英文及 202 种方言识别，音频时长不超过 60 秒
  */
@@ -32,10 +31,6 @@ export class XfyunASR extends BaseASR {
 
   /** 音频采样率 */
   public sampleRate: number;
-  /** 音频位深度 */
-  public bitDepth: number;
-  /** 音频声道数 */
-  public channels: number;
 
   /** 识别领域 */
   public domain: string;
@@ -47,29 +42,42 @@ export class XfyunASR extends BaseASR {
   public dwa?: string;
   /** 中英文筛选 */
   public ltc?: number;
-  /** 应用级热词 ID */
-  public resId?: string;
   /** 会话热词 */
   public dhw?: string;
+  /** 标点符号控制 */
+  public ptt?: number;
+  /** 语言区域 */
+  public rlang?: string;
+  /** 返回词级时间戳 */
+  public vinfo?: number;
+  /** 返回数值的阿拉伯数字格式 */
+  public nunum?: number;
+  /** 返回候选句子数量 */
+  public nbest?: number;
+  /** 自定义热词的权重信息 */
+  public wbest?: number;
 
   constructor(options: XfyunASROptions) {
     super(options);
     this.appId = options.appId || '';
     this.apiSecret = options.apiSecret || '';
 
-    // 音频配置：默认 PCM 16kHz 16bit 单声道
+    // 音频配置：默认 PCM 16kHz
     this.sampleRate = options.sampleRate ?? 16000;
-    this.bitDepth = options.bitDepth ?? 16;
-    this.channels = options.channels ?? 1;
 
     // 识别配置
-    this.domain = options.domain ?? 'slm';
+    this.domain = options.domain ?? 'iat';
     this.accent = options.accent ?? 'mandarin';
-    this.eos = options.eos ?? 6000;
+    this.eos = options.eos ?? 2000;
     this.dwa = options.dwa;
     this.ltc = options.ltc;
-    this.resId = options.resId;
     this.dhw = options.dhw;
+    this.ptt = options.ptt;
+    this.rlang = options.rlang;
+    this.vinfo = options.vinfo;
+    this.nunum = options.nunum;
+    this.nbest = options.nbest;
+    this.wbest = options.wbest;
   }
 
   /**
@@ -109,16 +117,19 @@ export class XfyunASR extends BaseASR {
       apiSecret: this.apiSecret,
       encoding: this.mapEncoding(this.format),
       sampleRate: this.sampleRate,
-      bitDepth: this.bitDepth,
-      channels: this.channels,
       domain: this.domain,
       language: this.mapLanguage(this.language),
       accent: this.accent,
       eos: this.eos,
       dwa: this.dwa,
       ltc: this.ltc,
-      resId: this.resId,
       dhw: this.dhw,
+      ptt: this.ptt,
+      rlang: this.rlang,
+      vinfo: this.vinfo,
+      nunum: this.nunum,
+      nbest: this.nbest,
+      wbest: this.wbest,
     };
   }
 
@@ -181,27 +192,41 @@ export class XfyunASR extends BaseASR {
    * 设置 WebSocket 消息处理器
    */
   private setupMessageHandler(ws: WebSocket, queue: ReturnType<typeof this.createResponseQueue>) {
+    // 累积结果数组：以 sn 为索引存储每个片段的文本，支持动态修正
+    const iatResult: (string | null)[] = [];
+
     const handleMessage = (data: WebSocket.RawData) => {
       try {
         const response = parseResponse(data);
 
         // 检查错误响应
         if (!isSuccessResponse(response)) {
-          queue.error(
-            new Error(`Xfyun ASR error: ${response.header.code} - ${response.header.message}`)
-          );
+          queue.error(new Error(`Xfyun ASR error: ${response.code} - ${response.message}`));
           return;
         }
 
         // 处理包含识别结果的响应
-        if (hasResultPayload(response) && response.payload?.result?.text) {
-          const resultText = response.payload.result.text;
-          const decoded = decodeResultText(resultText);
-          const text = extractTextFromResult(decoded);
-          const isFinal = isFinishedResponse(response) || decoded.ls === true;
+        if (hasResultPayload(response) && response.data?.result) {
+          const result = response.data.result;
+
+          // 动态修正：当 pgs==='rpl' 时，清除 rg 范围内的旧结果
+          if (result.pgs === 'rpl' && result.rg) {
+            for (let i = result.rg[0]; i <= result.rg[1]; i++) {
+              iatResult[i] = null;
+            }
+          }
+
+          // 存储当前片段文本
+          const snippetText = extractTextFromResult(result);
+          iatResult[result.sn] = snippetText;
+
+          // 拼接完整累积文本
+          const fullText = iatResult.filter((t) => t !== null).join('');
+
+          const isFinal = isFinishedResponse(response) || result.ls === true;
 
           queue.push({
-            text,
+            text: fullText,
             isFinal,
           });
         }
@@ -244,10 +269,9 @@ export class XfyunASR extends BaseASR {
     ws: WebSocket,
     audio: AudioStream,
     protocolOptions: XfyunProtocolOptions
-  ): Promise<number> {
+  ): Promise<void> {
     const CHUNK_SIZE = 1280;
     const SEND_INTERVAL = 40;
-    let seq = 0;
     let isFirst = true;
 
     for await (const chunk of audio) {
@@ -258,14 +282,13 @@ export class XfyunASR extends BaseASR {
         const end = Math.min(offset + CHUNK_SIZE, data.length);
         const piece = data.subarray(offset, end);
         const audioBase64 = piece.toString('base64');
-        seq++;
 
         if (isFirst) {
-          const frame = createFirstFrame(protocolOptions, audioBase64, seq);
+          const frame = createFirstFrame(protocolOptions, audioBase64);
           ws.send(frame);
           isFirst = false;
         } else {
-          const frame = createMiddleFrame(protocolOptions, audioBase64, seq);
+          const frame = createMiddleFrame(protocolOptions, audioBase64);
           ws.send(frame);
         }
 
@@ -273,8 +296,6 @@ export class XfyunASR extends BaseASR {
         await new Promise((resolve) => setTimeout(resolve, SEND_INTERVAL));
       }
     }
-
-    return seq;
   }
 
   /**
@@ -294,8 +315,8 @@ export class XfyunASR extends BaseASR {
 
     const protocolOptions = this.buildProtocolOptions();
 
-    // 生成鉴权 URL
-    const url = buildAuthUrl('iat.xf-yun.com', '/v1', this.apiKey, this.apiSecret);
+    // 生成鉴权 URL（v2 基础版）
+    const url = buildAuthUrl('iat-api.xfyun.cn', '/v2/iat', this.apiKey, this.apiSecret);
 
     // 建立 WebSocket 连接
     const ws = new WebSocket(url);
@@ -315,13 +336,11 @@ export class XfyunASR extends BaseASR {
 
       try {
         // 后台发送音频流
-        const sendPromise = this.sendAudioStream(ws, audio, protocolOptions).then(
-          async (lastSeq) => {
-            // 发送末帧
-            const lastFrame = createLastFrame(protocolOptions, lastSeq + 1);
-            ws.send(lastFrame);
-          }
-        );
+        const sendPromise = this.sendAudioStream(ws, audio, protocolOptions).then(async () => {
+          // 发送末帧
+          const lastFrame = createLastFrame();
+          ws.send(lastFrame);
+        });
 
         // 从队列 yield 响应
         while (true) {
