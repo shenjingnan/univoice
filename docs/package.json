@@ -9,6 +9,6 @@
     "preview": "openmanual preview"
   },
   "devDependencies": {
-    "openmanual": "^0.8.1"
+    "openmanual": "^0.8.2"
   }
 }
