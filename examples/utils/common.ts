@@ -188,6 +188,35 @@ export function getGlmApiKey(): string {
 }
 
 /**
+ * OpenAI 配置
+ */
+export interface OpenAIConfig {
+  apiKey: string;
+  baseUrl?: string;
+  ttsModel?: string;
+  asrModel?: string;
+}
+
+/**
+ * 获取 OpenAI 配置（从环境变量）
+ * @returns OpenAI 配置对象
+ * @throws 如果环境变量未设置则退出进程
+ */
+export function getOpenAIConfig(): OpenAIConfig {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.error('请设置环境变量 OPENAI_API_KEY');
+    process.exit(1);
+  }
+  return {
+    apiKey,
+    baseUrl: process.env.OPENAI_BASE_URL,
+    ttsModel: process.env.OPENAI_TTS_MODEL,
+    asrModel: process.env.OPENAI_ASR_MODEL,
+  };
+}
+
+/**
  * 科大讯飞 ASR 配置
  */
 export interface XfyunASRConfig {
