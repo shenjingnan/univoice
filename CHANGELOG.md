@@ -2,6 +2,13 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.9.0](https://github.com/shenjingnan/univoice/compare/v0.8.0...v0.9.0) (2026-04-09)
+
+### Features
+
+* **benchmark,tts:** 新增小米 Mimo TTS 提供商基准测试支持 ([#271](https://github.com/shenjingnan/univoice/issues/271)) ([0e17b82](https://github.com/shenjingnan/univoice/commit/0e17b8264a5591799269fbd4d0524bebfae43e02))
+* **tts,openai:** 实现 OpenAI TTS 提供商并支持双 API 模式 ([#268](https://github.com/shenjingnan/univoice/issues/268)) ([c7c7985](https://github.com/shenjingnan/univoice/commit/c7c79858cc46dd90009a76bf5cb30032375c030a))
+
 ## [0.8.0](https://github.com/shenjingnan/univoice/compare/v0.7.1...v0.8.0) (2026-04-08)
 
 ### Features
