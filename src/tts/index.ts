@@ -10,7 +10,7 @@ export { createTTS, getTTSProviders, registerTTSProvider } from './factory';
 export { DoubaoTTS } from './providers/doubao';
 export { GeminiTTS } from './providers/gemini';
 export { MinimaxTTS } from './providers/minimax';
-export { TTS1 } from './providers/openai';
+export { OpenAITTS, OpenAITTS as TTS1 } from './providers/openai';
 export { QwenTTS } from './providers/qwen';
 export { XfyunTTS } from './providers/xfyun';
 // 导出工具函数

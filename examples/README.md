@@ -76,7 +76,8 @@ GLM_API_KEY=your_api_key
 # OpenAI 配置（用于 LLM 示例）
 OPENAI_API_KEY=your_api_key
 OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_MODEL=gpt-4o-mini
+OPENAI_TTS_MODEL=gpt-4o-mini
+OPENAI_ASR_MODEL=whisper-1
 ```
 
 ## 快速开始

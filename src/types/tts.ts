@@ -99,9 +99,18 @@ export interface QwenRealtimeTTSOptions extends BaseTTSOptions {
 }
 
 /**
- * TTS 工厂函数选项（判别联合类型）
- * 根据 provider 字段路由到对应 provider 的专属配置
+ * OpenAI TTS 专属配置
  */
+export interface OpenAITTSOptions extends BaseTTSOptions {
+  /**
+   * API 调用模式
+   * - 'speech': 使用 audio.speech API（标准 OpenAI TTS，如 tts-1、tts-1-hd）
+   * - 'chat': 使用 chat.completions + audio 参数（兼容 mimo-v2-tts 等）
+   * 不设置时根据 model 自动推断
+   */
+  apiMode?: 'speech' | 'chat';
+}
+
 /**
  * GLM TTS 专属配置
  */
@@ -147,7 +156,7 @@ export type TTSOptions =
   | ({ provider: 'minimax' } & MinimaxTTSOptions)
   | ({ provider: 'qwen' } & QwenTTSOptions)
   | ({ provider: 'qwen-realtime' } & QwenRealtimeTTSOptions)
-  | ({ provider: 'openai' } & BaseTTSOptions)
+  | ({ provider: 'openai' } & OpenAITTSOptions)
   | ({ provider: 'gemini' } & BaseTTSOptions)
   | ({ provider: 'glm' } & GlmTTSOptions)
   | ({ provider: 'xfyun' } & XfyunTTSOptions)

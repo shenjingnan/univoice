@@ -47,7 +47,7 @@ async function main() {
   // 3. 创建 OpenAI 流式请求
   console.log('创建 OpenAI 流式请求...');
   const openaiStream = await openai.chat.completions.stream({
-    model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+    model: 'gpt-4o-mini',
     messages: [
       {
         role: 'user',

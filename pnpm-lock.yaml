@@ -27,6 +27,9 @@ importers:
 
   .:
     dependencies:
+      openai:
+        specifier: ^6.33.0
+        version: 6.33.0(ws@8.20.0)(zod@4.3.6)
       ws:
         specifier: ^8.19.0
         version: 8.20.0
