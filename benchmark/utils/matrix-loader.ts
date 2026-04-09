@@ -6,6 +6,7 @@ import type { ASRMatrixItem, MatrixItem } from '../metrics/types';
 import {
   doubaoMatrixItems,
   glmMatrixItems,
+  mimoMatrixItems,
   minimaxMatrixItems,
   qwenMatrixItems,
   xfyunMatrixItems,
@@ -25,6 +26,7 @@ export const allMatrixItems: MatrixItem[] = [
   ...doubaoMatrixItems,
   ...minimaxMatrixItems,
   ...glmMatrixItems,
+  ...mimoMatrixItems,
   ...xfyunMatrixItems,
 ];
 
@@ -46,6 +48,7 @@ const PROVIDER_DISPLAY_NAMES: Record<string, string> = {
   doubao: '火山引擎',
   glm: '智谱 GLM',
   minimax: 'Minimax',
+  mimo: '小米 Mimo',
   xfyun: '科大讯飞',
 };
 

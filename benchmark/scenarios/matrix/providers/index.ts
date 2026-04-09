@@ -4,6 +4,7 @@
 import type { ProviderMatrixConfig } from '../types';
 import { DOUBAO_MATRIX_CONFIG, doubaoMatrixItems, doubaoScenarioConfig } from './doubao';
 import { GLM_MATRIX_CONFIG, glmMatrixItems, glmScenarioConfig } from './glm';
+import { MIMO_MATRIX_CONFIG, mimoMatrixItems, mimoScenarioConfig } from './mimo';
 import { MINIMAX_MATRIX_CONFIG, minimaxMatrixItems, minimaxScenarioConfig } from './minimax';
 import { QWEN_MATRIX_CONFIG, qwenMatrixItems, qwenScenarioConfig } from './qwen';
 import { XFYUN_MATRIX_CONFIG, xfyunMatrixItems, xfyunScenarioConfig } from './xfyun';
@@ -16,7 +17,10 @@ export {
   GLM_MATRIX_CONFIG,
   glmMatrixItems,
   glmScenarioConfig,
+  MIMO_MATRIX_CONFIG,
   MINIMAX_MATRIX_CONFIG,
+  mimoMatrixItems,
+  mimoScenarioConfig,
   minimaxMatrixItems,
   minimaxScenarioConfig,
   QWEN_MATRIX_CONFIG,
@@ -34,6 +38,7 @@ export const ALL_PROVIDER_MATRIX_CONFIGS: ProviderMatrixConfig[] = [
   QWEN_MATRIX_CONFIG,
   DOUBAO_MATRIX_CONFIG,
   GLM_MATRIX_CONFIG,
+  MIMO_MATRIX_CONFIG,
   MINIMAX_MATRIX_CONFIG,
   XFYUN_MATRIX_CONFIG,
 ];
