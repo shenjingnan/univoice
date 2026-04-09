@@ -518,7 +518,7 @@ const asr = createASR({
 >
 > 如需评估服务商的真实性能，建议直接使用服务商官方 SDK 进行测试。
 
-> 生成时间: 2026/4/8 17:39:11
+> 生成时间: 2026/4/9 20:47:20
 
 > 环境: Node.js v24.14.0, darwin arm64
 
@@ -670,6 +670,7 @@ const asr = createASR({
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 32000 | 3 | 490 | 2 | 2101 | 2148 | 99 | 138.6 |
 | MiniMax | speech-01-turbo | male-qn-qingse | pcm | 44100 | 3 | 448 | **2 🏆** | 1920 | 2100 | 99 | 145.2 |
 | 智谱 GLM | glm-tts | tongtong | pcm | 24000 | 3 | 861 | *542* | 5037 | 5614 | 296 | 54.8 |
+| 小米 Mimo | mimo-v2-tts | default_zh | pcm | 24000 | - | 未测试 | - | - | - | - | - |
 | 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 8000 | 3 | 543 | 17 | 2704 | 2897 | 119 | 104.1 |
 | 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 16000 | 3 | 511 | 17 | 2629 | 2721 | 51 | 107.5 |
 | 科大讯飞 | super-human-tts | x5_lingxiaoxuan_flow | pcm | 24000 | 3 | 592 | 16 | 2690 | 2709 | **28 🏆** | 106.3 |
@@ -710,7 +711,7 @@ const asr = createASR({
 
 ---
 
-*数据更新于: 2026-04-08*
+*数据更新于: 2026-04-09*
 
 <!-- PERFORMANCE_TABLE_END -->
 

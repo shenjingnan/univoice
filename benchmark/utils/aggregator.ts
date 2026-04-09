@@ -332,6 +332,7 @@ export function inferCapabilities(
     openai: 'OpenAI',
     gemini: 'Gemini',
     xfyun: '科大讯飞',
+    mimo: '小米 Mimo',
   };
 
   return {
