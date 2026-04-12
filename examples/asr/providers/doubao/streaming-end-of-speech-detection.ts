@@ -2,21 +2,18 @@
  * Doubao ASR - 流式端点检测示例（VAD / End-of-Speech）
  *
  * 核心演示内容：
- * 1. 模拟实时流式发送音频数据（带时间间隔，模拟真实麦克风采集节奏）
+ * 1. 使用 decodeOpusStream 将 Opus 数据包解码为 PCM 音频流
  * 2. 展示 ASR 实时返回中间识别结果
  * 3. 【重点】展示 VAD 端点检测：ASR 判断用户说完话后返回 isFinal=true，
  *    并附带 segment 信息（含 start_time 和 end_time 时间戳）
  *
  * 场景说明：
- * - 音频数据：本地 opus 数据包（16kHz, 60ms/帧），用户只说了前几秒，后续为静音
- * - 发送方式：按 60ms 间隔逐帧发送，模拟实时音频流
- * - 编码格式：Ogg Opus（直接发送，无需本地 PCM 解码）
+ * - 音频数据：本地 opus 数据包（16kHz），通过 decodeOpusStream 解码为 PCM 流
+ * - 编码格式：PCM（Opus → PCM 解码）
  * - 检测机制：Doubao ASR 内置 VAD，当检测到语音结束后标记 isFinal=true
  *
  * 预期输出流程：
- *   [时间] → 发送帧 #00 (累计 0.06s)
- *   [时间] → 发送帧 #01 (累计 0.12s)
- *   ...
+ *   [时间] → 开始流式识别...
  *   [时间] [中间结果 #1] 你好...
  *   [时间] [中间结果 #2] 你好世界...
  *   [时间] ★★★ [最终结果 / VAD 端点触发] ★★★
@@ -36,71 +33,8 @@ import 'dotenv/config';
 import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import 'univoice/asr/providers';
-import { createASR, createOggMuxer } from 'univoice/asr';
+import { createASR, decodeOpusStream } from 'univoice/asr';
 import { getASRConfig, getExamplesRoot, readOpusPackets, timestamp } from '../../../utils/common';
-
-// ============================================
-// 常量配置
-// ============================================
-
-/** 每帧音频时长（毫秒） */
-const FRAME_DURATION_MS = 60;
-
-/** 发送间隔（毫秒），模拟实时采集速率 */
-const SEND_INTERVAL_MS = 60;
-
-/** 用于判断"静音区域"的帧号阈值（超过此帧号视为可能的静音区） */
-const SPEECH_APPROX_END_FRAME = 60; // 约 3.6 秒后预计无语音
-
-// ============================================
-// 工具函数：带延迟的 Opus 数据包读取
-// ============================================
-
-/** 停止信号，用于在 VAD 触发时中断音频流发送 */
-interface StopSignal {
-  stopped: boolean;
-  reason?: string;
-}
-
-/**
- * 带时间间隔的 Opus 数据包读取器
- * 在每个 packet 之间插入延迟，模拟实时音频采集
- * 支持通过 stopSignal 外部中断（如 VAD 检测到说话结束时）
- */
-async function* readOpusPacketsWithDelay(
-  directory: string,
-  intervalMs: number,
-  stopSignal: StopSignal,
-  onSend?: (index: number, totalFrames: number) => void
-): AsyncIterable<Buffer> {
-  const packets = [];
-  for await (const packet of readOpusPackets(directory)) {
-    packets.push(packet);
-  }
-
-  const total = packets.length;
-
-  for (let i = 0; i < packets.length; i++) {
-    // 检查是否已被外部中断
-    if (stopSignal.stopped) {
-      console.log(
-        `\n[${timestamp()}] \u239B 音频流已停止发送 (原因: ${stopSignal.reason || 'VAD端点触发'})`
-      );
-      console.log(
-        `[${timestamp()}]   已发送 ${i}/${total} 帧 (${formatTime(i * FRAME_DURATION_MS)} / ${formatTime(total * FRAME_DURATION_MS)})\n`
-      );
-      return; // 停止生成数据，sendAudioStream 的 for-await 循环结束 → 自动发送结束标记
-    }
-
-    onSend?.(i, total);
-    yield packets[i];
-
-    // 最后一个 packet 不需要等待
-    if (i < packets.length - 1 && intervalMs > 0) {
-      await new Promise((resolve) => setTimeout(resolve, intervalMs));
-    }
-  }
-}
 
 // ============================================
 // 格式化输出工具
@@ -144,22 +78,18 @@ async function main() {
   console.log(separator('='));
   console.log();
   console.log(`音频源: ${opusDir}`);
-  console.log(`格式: Ogg Opus, 16kHz, 单声道`);
-  console.log(`帧时长: ${FRAME_DURATION_MS}ms/帧`);
-  console.log(`发送间隔: ${SEND_INTERVAL_MS}ms (模拟实时)`);
+  console.log(`格式: Opus → PCM (decodeOpusStream), 16kHz, 单声道`);
   console.log();
 
   try {
     // ---------------------------------------------------------------
-    // 阶段 1: 创建 ASR 实例
+    // 阶段 1: 创建 ASR 实例（开启 VAD 端点检测）
     // ---------------------------------------------------------------
     const asr = createASR({
       provider: 'doubao',
       appKey,
       accessKey,
       language: 'zh-CN',
-      format: 'ogg',
-      codec: 'opus',
       audioFormat: {
         sampleRate: 16000,
       },
@@ -167,31 +97,16 @@ async function main() {
       endWindowSize: 800,
     });
 
-    console.log(
-      `[${timestamp()}] ASR 实例已创建 (provider=doubao, format=ogg/opus, VAD endWindowSize=800ms)`
-    );
+    console.log(`[${timestamp()}] ASR 实例已创建 (provider=doubao, VAD endWindowSize=800ms)`);
 
     // ---------------------------------------------------------------
-    // 阶段 2: 构建带延迟的 Ogg Opus 音频流（支持 VAD 中断）
+    // 阶段 2: 将 Opus 数据包解码为 PCM 音频流
     // ---------------------------------------------------------------
-    const stopSignal: StopSignal = { stopped: false };
+    const audioStream = decodeOpusStream(readOpusPackets(opusDir), {
+      sampleRate: 16000,
+    });
 
-    const rawPacketStream = readOpusPacketsWithDelay(
-      opusDir,
-      SEND_INTERVAL_MS,
-      stopSignal,
-      (index, total) => {
-        const elapsedMs = (index + 1) * FRAME_DURATION_MS;
-        const isLikelySilent = index > SPEECH_APPROX_END_FRAME;
-        const marker = isLikelySilent ? ' [静音区]' : '';
-        console.log(
-          `[${timestamp()}] \u2192 发送帧 #${String(index).padStart(3, '0')} ` +
-            `(累计 ${formatTime(elapsedMs)}, ${total - index - 1} 帧剩余)${marker}`
-        );
-      }
-    );
-
-    const audioStream = createOggMuxer(rawPacketStream, { sampleRate: 16000 });
+    console.log(`[${timestamp()}] 音频流已构建 (Opus → PCM, 16kHz)\n`);
 
     // ---------------------------------------------------------------
     // 阶段 3: 流式识别 + 端点检测
@@ -201,13 +116,13 @@ async function main() {
     let chunkCount = 0;
     let intermediateCount = 0;
     let finalResultTime = 0;
+    let vadEndpointTriggered = false;
     const results: Array<{
       text: string;
       time: number;
       segment?: { start: number; end: number; text: string; confidence: number };
     }> = [];
 
-    console.log();
     console.log(`[${timestamp()}] \u25b6 开始流式识别...`);
     console.log(separator('-'));
     console.log();
@@ -228,13 +143,13 @@ async function main() {
 
       if (isVadEndpoint || chunk.isFinal) {
         // ====== VAD 判停 / 最终结果 ======
-        // 立即停止发送后续音频数据，让 SDK 发送结束标记
-        if (!stopSignal.stopped) {
-          stopSignal.stopped = true;
-          stopSignal.reason = isVadEndpoint ? 'VAD端点检测(definite)' : '音频流结束';
-        }
-
         finalResultTime = now;
+
+        // 收到首个 VAD 端点或最终结果后，记录并退出循环（避免服务端重复推送）
+        if (vadEndpointTriggered) {
+          break;
+        }
+        vadEndpointTriggered = true;
 
         if (isVadEndpoint && !chunk.isFinal) {
           console.log(
