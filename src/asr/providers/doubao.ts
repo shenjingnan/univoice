@@ -48,6 +48,12 @@ export class DoubaoASR extends BaseASR {
   public enableDdc: boolean;
   public showUtterances: boolean;
 
+  // VAD 配置
+  public endWindowSize?: number;
+  public enableNonstream?: boolean;
+  public vadSegmentDuration?: number;
+  public forceToSpeechTime?: number;
+
   constructor(options: DoubaoASROptions) {
     super(options);
 
@@ -69,6 +75,12 @@ export class DoubaoASR extends BaseASR {
     this.enablePunc = options.enablePunc ?? true;
     this.enableDdc = options.enableDdc ?? false;
     this.showUtterances = options.showUtterances ?? true;
+
+    // VAD 配置
+    this.endWindowSize = options.endWindowSize;
+    this.enableNonstream = options.enableNonstream;
+    this.vadSegmentDuration = options.vadSegmentDuration;
+    this.forceToSpeechTime = options.forceToSpeechTime;
 
     // WebSocket 基础 URL
     this.baseUrl = options.baseUrl || 'wss://openspeech.bytedance.com/api/v3/sauc';
@@ -150,6 +162,15 @@ export class DoubaoASR extends BaseASR {
         enable_punc: this.enablePunc,
         enable_ddc: this.enableDdc,
         show_utterances: this.showUtterances,
+        // VAD 参数：仅在有值时传递，未传则使用服务端默认值
+        ...(this.endWindowSize !== undefined && { end_window_size: this.endWindowSize }),
+        ...(this.enableNonstream !== undefined && { enable_nonstream: this.enableNonstream }),
+        ...(this.vadSegmentDuration !== undefined && {
+          vad_segment_duration: this.vadSegmentDuration,
+        }),
+        ...(this.forceToSpeechTime !== undefined && {
+          force_to_speech_time: this.forceToSpeechTime,
+        }),
       },
     };
   }

@@ -60,6 +60,15 @@ export interface DoubaoASROptions extends BaseASROptions {
   enableDdc?: boolean;
   /** 是否显示话语级结果 */
   showUtterances?: boolean;
+  // ===== VAD 端点检测相关 =====
+  /** 强制判停时间（ms），静音超过此时长直接判停输出 definite。默认不传（服务端默认800）。最小200 */
+  endWindowSize?: number;
+  /** 开启二遍识别模式，开启后自动启用 VAD 分句（默认800ms判停） */
+  enableNonstream?: boolean;
+  /** 语义切分最大静音阈值（ms），默认3000。配合 endWindowSize 使用时失效 */
+  vadSegmentDuration?: number;
+  /** 强制语音时间（ms），音频超过此时长后才尝试判停。需配合 endWindowSize 使用 */
+  forceToSpeechTime?: number;
 }
 
 /**

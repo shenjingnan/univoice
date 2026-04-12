@@ -194,6 +194,12 @@ export interface FullClientRequestParams {
     show_utterances?: boolean;
     enable_nonstream?: boolean;
     result_type?: 'full' | 'single';
+    /** 强制判停时间（ms），静音超过此时长直接判停输出 definite */
+    end_window_size?: number;
+    /** 语义切分最大静音阈值（ms） */
+    vad_segment_duration?: number;
+    /** 强制语音时间（ms），音频超过此时长后才尝试判停 */
+    force_to_speech_time?: number;
     corpus?: {
       boosting_table_name?: string;
       boosting_table_id?: string;
