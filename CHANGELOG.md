@@ -2,6 +2,12 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.9.1](https://github.com/shenjingnan/univoice/compare/v0.9.0...v0.9.1) (2026-04-12)
+
+### Bug Fixes
+
+* **deps:** 修复 basic-ftp CRLF 注入高危漏洞 ([#276](https://github.com/shenjingnan/univoice/issues/276)) ([f720dd6](https://github.com/shenjingnan/univoice/commit/f720dd64e1399b383601529c30fdfa4c17f4609a))
+
 ## [0.9.0](https://github.com/shenjingnan/univoice/compare/v0.8.0...v0.9.0) (2026-04-09)
 
 ### Features
