@@ -2,6 +2,13 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.10.0](https://github.com/shenjingnan/univoice/compare/v0.9.1...v0.10.0) (2026-04-12)
+
+### Features
+
+* **asr:** 为 Doubao ASR 补齐 VAD 端点检测参数支持 ([#277](https://github.com/shenjingnan/univoice/issues/277)) ([22e2fb6](https://github.com/shenjingnan/univoice/commit/22e2fb6c2243ebaea3369a474ce519c22029593c))
+* **examples:** 添加 ASR 测试音频资源、Doubao 流式识别文档和覆盖率提升命令 ([#278](https://github.com/shenjingnan/univoice/issues/278)) ([e79bbe1](https://github.com/shenjingnan/univoice/commit/e79bbe118789818885a901b73d603a70b80f08ad))
+
 ## [0.9.1](https://github.com/shenjingnan/univoice/compare/v0.9.0...v0.9.1) (2026-04-12)
 
 ### Bug Fixes
