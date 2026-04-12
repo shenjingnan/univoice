@@ -84,8 +84,8 @@ importers:
   docs:
     devDependencies:
       openmanual:
-        specifier: ^0.8.1
-        version: 0.8.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3))
+        specifier: v0.10.2
+        version: 0.10.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3))
 
   examples:
     dependencies:
@@ -1505,6 +1505,9 @@ packages:
     resolution: {integrity: sha512-6hIU3RQu45B+VNTY4Ru8ppFwjVS/S5qwYyGhBotmjxfEKk41I2DlGtRfGJndZ5+6lneE2pwloqunlOyZuX/XAw==}
     cpu: [x64]
     os: [win32]
+
+  '@panzoom/panzoom@4.6.2':
+    resolution: {integrity: sha512-Zn3B5/hwa6eYIPRSKX0xf2clv8nviTX8AnAU5kU/EugiTDhG41ya2wlBqYrZJYCWQROr/5XkWObZhIkepi89qw==}
 
   '@parcel/watcher-android-arm64@2.5.6':
     resolution: {integrity: sha512-YQxSS34tPF/6ZG7r/Ih9xy+kP/WwediEUsqmtf0cuCV5TPPKw/PQHRhueUo6JdeFJaqV3pyjm0GdYjZotbRt/A==}
@@ -4231,13 +4234,15 @@ packages:
       zod:
         optional: true
 
-  openmanual@0.8.2:
-    resolution: {integrity: sha512-blEs528kR6BuYhEJYnpRJLYRAn2Ec9BBlD8DqYZ/ZV/X/28SM3EN0TxRwFD1b2cKybvzJUm8ABolUgucVTkgLQ==}
+  openmanual@0.10.2:
+    resolution: {integrity: sha512-4Hp7zktvAJVHZpSBzzUMzv/3FHFaGgM7NYqRB+GxAu+AkNNvGk5SN64XN+/RKAzS55bb5YucZUtujpbfd2Yn6A==}
     engines: {node: '>=24.0.0', pnpm: '>=10.0.0'}
     hasBin: true
     peerDependencies:
+      lucide-react: '>=0.400.0'
       mermaid: '>=11.0.0'
       next-themes: '>=0.4.0'
+      tailwind-merge: '>=2.0.0'
 
   opusscript@0.1.1:
     resolution: {integrity: sha512-mL0fZZOUnXdZ78woRXp18lApwpp0lF5tozJOD1Wut0dgrA9WuQTgSels/CSmFleaAZrJi/nci5KOVtbuxeWoQA==}
@@ -6207,6 +6212,8 @@ snapshots:
 
   '@oxc-resolver/binding-win32-x64-msvc@11.19.1':
     optional: true
+
+  '@panzoom/panzoom@4.6.2': {}
 
   '@parcel/watcher-android-arm64@2.5.6':
     optional: true
@@ -9210,8 +9217,9 @@ snapshots:
       ws: 8.20.0
       zod: 4.3.6
 
-  openmanual@0.8.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3)):
+  openmanual@0.10.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
+      '@panzoom/panzoom': 4.6.2
       chokidar: 5.0.0
       commander: 14.0.3
       fast-glob: 3.3.3
@@ -9219,11 +9227,13 @@ snapshots:
       fumadocs-mdx: 14.2.11(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(fumadocs-core@16.7.11(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(sass@1.99.0))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(zod@4.3.6))(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(sass@1.99.0))(react@19.2.5)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3))
       fumadocs-ui: 16.7.11(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/mdx@2.0.13)(@types/react@19.2.14)(fumadocs-core@16.7.11(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(sass@1.99.0))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(zod@4.3.6))(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(sass@1.99.0))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(shiki@4.0.2)(tailwindcss@4.2.2)
       gray-matter: 4.0.3
+      lucide-react: 1.8.0(react@19.2.5)
       mermaid: 11.14.0
       next: 16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(sass@1.99.0)
       next-themes: 0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
+      tailwind-merge: 3.5.0
       zod: 4.3.6
     transitivePeerDependencies:
       - '@babel/core'
@@ -9249,7 +9259,6 @@ snapshots:
       - babel-plugin-macros
       - babel-plugin-react-compiler
       - flexsearch
-      - lucide-react
       - mdast-util-directive
       - react-router
       - sass
