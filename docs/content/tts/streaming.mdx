@@ -1,0 +1,166 @@
+---
+title: 流式合成
+---
+
+`speak(input, { stream: true })` 方法实现**边合成边接收**音频块，适合实时播报、LLM 流式输出转语音等对延迟敏感的场景。
+
+## 基本用法
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice';
+
+const tts = createTTS({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  format: 'pcm',
+});
+
+for await (const chunk of tts.speak('你好，世界！', { stream: true })) {
+  // chunk.audioChunk -> Uint8Array 音频数据块
+  console.log('收到音频块:', chunk.audioChunk.length, 'bytes');
+}
+```
+
+## 返回值结构
+
+每个 `TTSStreamChunk` 包含：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `audioChunk` | `Uint8Array` | 一个音频数据块 |
+
+## 三种输入模式
+
+### 1. 字符串输入
+
+最简单的方式，适合已知文本的实时播放：
+
+```typescript
+for await (const { audioChunk } of tts.speak('欢迎来到杭州西湖！', { stream: true })) {
+  // 实时处理或播放 audioChunk
+}
+```
+
+### 2. AsyncIterable 文本流
+
+模拟 LLM 逐步输出文本的场景：
+
+```typescript
+async function* textGenerator() {
+  yield '今天天气';
+  yield '非常不错，';
+  yield '阳光明媚，';
+  yield '适合出去走走。';
+}
+
+for await (const { audioChunk } of tts.speak(textGenerator(), { stream: true })) {
+  // 文本每产生一段，对应的音频就会开始合成并返回
+}
+```
+
+这种模式下，TTS 引擎会在收到足够文本后立即开始合成，无需等待全部文本就绪——这就是**「边发边收」**的核心机制。
+
+### 3. OpenAI Stream 直接传入
+
+将 OpenAI LLM 的流式输出**直接**传入 TTS，无需手动收集文本：
+
+```typescript
+import OpenAI from 'openai';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const stream = await openai.chat.completions.stream({
+  model: 'gpt-4o-mini',
+  messages: [{ role: 'user', content: '介绍一下西湖' }],
+  stream: true,
+});
+
+// OpenAI stream 直接作为 speak 的输入
+for await (const { audioChunk } of tts.speak(stream, { stream: true })) {
+  // LLM 每输出一段 token，TTS 就开始合成对应音频
+}
+```
+
+这是 univoice 最核心的能力之一。完整的端到端示例请查看 [LLM 流式输出转语音](/llm-to-tts)。
+
+## 收集与保存流式音频
+
+### collectAudio
+
+收集所有音频块为一个数组：
+
+```typescript
+import { collectAudio } from 'univoice';
+
+const chunks = await collectAudio(tts.speak('你好世界', { stream: true }));
+// chunks: Uint8Array[]
+const fullAudio = Buffer.concat(chunks.map((c) => Buffer.from(c)));
+```
+
+### saveAudio
+
+直接保存流式输出到文件：
+
+```typescript
+import { saveAudio } from 'univoice';
+
+// 自动收集并保存
+const filepath = await saveAudio('output.pcm', tts.speak('你好世界', { stream: true }));
+console.log(`已保存到: ${filepath}`);
+```
+
+### 手动收集
+
+完全控制收集过程：
+
+```typescript
+const chunks: Uint8Array[] = [];
+for await (const { audioChunk } of tts.speak('一段很长的文本...', { stream: true })) {
+  chunks.push(audioChunk);
+
+  // 可以在这里实时播放 audioChunk
+  // 或通过网络发送给客户端
+}
+
+const buffer = Buffer.concat(chunks.map((c) => Buffer.from(c)));
+require('node:fs').writeFileSync('output.pcm', buffer);
+```
+
+## 首字延迟
+
+**首字延迟（Time to First Audio, TTFA）**指从发起请求到收到第一个音频块的时间。在流式模式下，这个指标至关重要：
+
+- **非流式模式**：需等待整个文本合成完毕才能拿到音频
+- **流式模式**：文本开始合成后即可返回首个音频块
+
+对于 LLM 流式输出转语音场景，首字延迟 = LLM 首个 token 延迟 + TTS 首包延迟。由于两者是**并行流水线**执行的，用户感知到的延迟远低于串行模式。
+
+## 格式注意事项
+
+流式输出时，推荐的音频格式：
+
+| 格式 | 推荐度 | 说明 |
+|------|--------|------|
+| `pcm` | 推荐 | 原始数据，可直接拼接播放 |
+| `opus` | 推荐 | 高压缩比，低带宽场景 |
+| `ogg_opus` | 可用 | OGG 封装的 Opus |
+| `mp3` | 不推荐 | MP3 需要完整帧才能解码，不适合流式拼接 |
+
+<Callout type="warning">
+流式模式下使用 `mp3` 格式可能导致音频无法正常拼接播放。建议使用 `pcm` 或 `opus` 格式。
+</Callout>
+
+## 仅需一次性结果？
+
+如果不需要流式处理，使用非流式模式更简单：
+
+```typescript
+// 非流式：一次性返回完整音频
+const response = await tts.speak('你好世界');
+// 或等效写法：
+const response = await tts.synthesize({ text: '你好世界' });
+```
+
+详见 [非流式合成](/synthesize)。

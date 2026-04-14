@@ -1,0 +1,156 @@
+---
+title: 非流式合成
+---
+
+`synthesize()` 方法用于一次性将完整文本转换为音频数据。这是最简单的 TTS 使用方式，适合已知完整文本的场景。
+
+## 基本用法
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice';
+
+const tts = createTTS({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '你好，世界！' });
+```
+
+## 返回值结构
+
+`TTSResponse` 包含以下字段：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `audio` | `Buffer \| Uint8Array` | 音频数据 |
+| `format` | `string` | 音频格式（如 `'mp3'`、`'pcm'`） |
+| `duration?` | `number` | 音频时长（秒），可选 |
+
+## 保存音频
+
+### 方式一：saveTTSResponse
+
+适用于 `synthesize()` 的返回值：
+
+```typescript
+import { saveTTSResponse } from 'univoice';
+
+const response = await tts.synthesize({ text: '你好世界' });
+
+// 保存到默认路径（自动生成文件名）
+const filepath = await saveTTSResponse(response);
+console.log(`已保存到: ${filepath}`);
+
+// 指定文件名
+const customPath = await saveTTSResponse(response, { filename: 'greeting.mp3' });
+```
+
+### 方式二：writeFileSync
+
+自行处理 Buffer：
+
+```typescript
+import { writeFileSync } from 'node:fs';
+
+const response = await tts.synthesize({ text: '你好世界' });
+writeFileSync('output.mp3', response.audio);
+```
+
+## 不同提供商示例
+
+### 豆包（火山引擎）
+
+```typescript
+const tts = createTTS({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  resourceId: 'seed-tts-2.0',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '欢迎来到杭州！' });
+```
+
+### OpenAI
+
+```typescript
+const tts = createTTS({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'tts-1',
+  voice: 'alloy',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: 'Hello, world!' });
+```
+
+### MiniMax
+
+```typescript
+const tts = createTTS({
+  provider: 'minimax',
+  apiKey: process.env.MINIMAX_API_KEY,
+  groupId: process.env.MINIMAX_GROUP_ID,
+  voice: 'female-tianmei',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '你好，我是 MiniMax 语音助手。' });
+```
+
+### 通义千问
+
+```typescript
+const tts = createTTS({
+  provider: 'qwen',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'cosyvoice-v3-flash',
+  voice: 'longxiaochun_v3',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '欢迎使用通义千问语音合成。' });
+```
+
+<Callout type="info">
+更多提供商的详细配置说明请查看对应的[提供商使用指南](/doubao/tts-guide)。
+</Callout>
+
+## 常用配置选项
+
+以下是 `synthesize` 可用的通用配置：
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `format` | `string` | `'mp3'` | 输出音频格式 |
+| `voice` | `string` | `'default'` | 音色/发音人 |
+| `speed` | `number` | `1.0` | 语速倍率 |
+| `volume` | `number` | `1.0` | 音量 |
+| `pitch` | `number` | `1.0` | 音调 |
+| `language` | `string` | `'zh-CN'` | 语言 |
+
+不同提供商还有各自的专属参数，详见 [TTS 配置选项](/api/tts-options)。
+
+## speak vs synthesize
+
+`speak()` 不带 `{ stream: true }` 时也等同于非流式模式，内部会调用 `synthesize()`：
+
+```typescript
+// 两种写法效果相同
+const r1 = await tts.synthesize({ text: '你好' });
+const r2 = await tts.speak('你好');  // 内部收集文本后调用 synthesize
+```
+
+区别在于 `speak()` 支持 [TextStream 输入](/concepts#textstream-类型)（字符串/异步流/OpenAI Stream），而 `synthesize()` 只接受 `{ text: string }` 格式的请求。
+
+<Callout type="info">
+需要边合成边接收音频？请查看[流式合成](/streaming)。
+</Callout>
