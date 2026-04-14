@@ -1,1 +1,188 @@
-{"name": "Univoice", "description": "统一的 TTS 和 ASR SDK 文档", "contentDir": "content", "outputDir": "out", "favicon": "/favicon.svg", "siteUrl": "https://univoice.shenjingnan.com", "locale": "zh", "navbar": {"logo": {"light": "/logo.svg", "dark": "/logo-dark.svg"}, "github": "https://github.com/shenjingnan/univoice"}, "sidebar": [{"group": "入门", "collapsed": false, "pages": [{"slug": "index", "title": "介绍"}, {"slug": "quickstart", "title": "快速上手"}, {"slug": "concepts", "title": "核心概念"}, {"slug": "audio-format-performance", "title": "音频格式性能分析"}]}, {"group": "TTS 基础", "collapsed": false, "pages": [{"slug": "tts/synthesize", "title": "非流式合成"}, {"slug": "tts/streaming", "title": "流式合成"}, {"slug": "tts/llm-to-tts", "title": "LLM 流式输出转语音"}]}, {"group": "ASR 基础", "collapsed": false, "pages": [{"slug": "asr/recognition", "title": "语音识别基础"}, {"slug": "asr/audio-formats", "title": "音频格式与处理路径"}]}, {"group": "豆包", "collapsed": false, "pages": [{"slug": "doubao/tts-guide", "title": "TTS 使用指南"}, {"slug": "doubao/asr-guide", "title": "ASR 使用指南"}]}, {"group": "通义千问", "collapsed": true, "pages": [{"slug": "qwen/tts-guide", "title": "CosyVoice TTS 使用指南"}, {"slug": "qwen/realtime-tts-guide", "title": "Realtime TTS 使用指南"}, {"slug": "qwen/asr-guide", "title": "ASR 使用指南"}]}, {"group": "智谱 GLM", "collapsed": true, "pages": [{"slug": "glm/tts-guide", "title": "TTS 使用指南"}, {"slug": "glm/asr-guide", "title": "ASR 使用指南"}]}, {"group": "MiniMax", "collapsed": true, "pages": [{"slug": "minimax/tts-guide", "title": "TTS 使用指南"}, {"slug": "minimax/asr-guide", "title": "ASR 使用指南"}]}, {"group": "OpenAI", "collapsed": true, "pages": [{"slug": "openai/tts-guide", "title": "TTS 使用指南"}, {"slug": "openai/asr-guide", "title": "ASR 使用指南"}]}, {"group": "Gemini", "collapsed": true, "pages": [{"slug": "gemini/tts-guide", "title": "TTS 使用指南"}, {"slug": "gemini/asr-guide", "title": "ASR 使用指南"}]}, {"group": "科大讯飞", "collapsed": true, "pages": [{"slug": "xfyun/tts-guide", "title": "超拟人 TTS 使用指南"}, {"slug": "xfyun/asr-guide", "title": "流式听写 ASR 使用指南"}]}], "theme": {"primaryHue": 240, "darkMode": true}, "search": {"enabled": true}, "mdx": {"latex": true}}
+{
+  "name": "Univoice",
+  "description": "统一的 TTS 和 ASR SDK 文档",
+  "contentDir": "content",
+  "outputDir": "out",
+  "favicon": "/favicon.svg",
+  "siteUrl": "https://univoice.shenjingnan.com",
+  "locale": "zh",
+  "navbar": {
+    "logo": {
+      "light": "/logo.svg",
+      "dark": "/logo-dark.svg"
+    },
+    "github": "https://github.com/shenjingnan/univoice"
+  },
+  "sidebar": [
+    {
+      "group": "入门",
+      "collapsed": false,
+      "pages": [
+        {
+          "slug": "index",
+          "title": "介绍"
+        },
+        {
+          "slug": "quickstart",
+          "title": "快速上手"
+        },
+        {
+          "slug": "concepts",
+          "title": "核心概念"
+        },
+        {
+          "slug": "audio-format-performance",
+          "title": "音频格式性能分析"
+        },
+        {
+          "slug": "benchmark",
+          "title": "性能基准测试"
+        }
+      ]
+    },
+    {
+      "group": "TTS 基础",
+      "collapsed": false,
+      "pages": [
+        {
+          "slug": "tts/synthesize",
+          "title": "非流式合成"
+        },
+        {
+          "slug": "tts/streaming",
+          "title": "流式合成"
+        },
+        {
+          "slug": "tts/llm-to-tts",
+          "title": "LLM 流式输出转语音"
+        }
+      ]
+    },
+    {
+      "group": "ASR 基础",
+      "collapsed": false,
+      "pages": [
+        {
+          "slug": "asr/recognition",
+          "title": "语音识别基础"
+        },
+        {
+          "slug": "asr/audio-formats",
+          "title": "音频格式与处理路径"
+        }
+      ]
+    },
+    {
+      "group": "豆包",
+      "collapsed": false,
+      "pages": [
+        {
+          "slug": "doubao/tts-guide",
+          "title": "TTS 使用指南"
+        },
+        {
+          "slug": "doubao/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "通义千问",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "qwen/tts-guide",
+          "title": "CosyVoice TTS 使用指南"
+        },
+        {
+          "slug": "qwen/realtime-tts-guide",
+          "title": "Realtime TTS 使用指南"
+        },
+        {
+          "slug": "qwen/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "智谱 GLM",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "glm/tts-guide",
+          "title": "TTS 使用指南"
+        },
+        {
+          "slug": "glm/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "MiniMax",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "minimax/tts-guide",
+          "title": "TTS 使用指南"
+        },
+        {
+          "slug": "minimax/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "OpenAI",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "openai/tts-guide",
+          "title": "TTS 使用指南"
+        },
+        {
+          "slug": "openai/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "Gemini",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "gemini/tts-guide",
+          "title": "TTS 使用指南"
+        },
+        {
+          "slug": "gemini/asr-guide",
+          "title": "ASR 使用指南"
+        }
+      ]
+    },
+    {
+      "group": "科大讯飞",
+      "collapsed": true,
+      "pages": [
+        {
+          "slug": "xfyun/tts-guide",
+          "title": "超拟人 TTS 使用指南"
+        },
+        {
+          "slug": "xfyun/asr-guide",
+          "title": "流式听写 ASR 使用指南"
+        }
+      ]
+    }
+  ],
+  "theme": {
+    "primaryHue": 240,
+    "darkMode": true
+  },
+  "search": {
+    "enabled": true
+  },
+  "mdx": {
+    "latex": true
+  }
+}

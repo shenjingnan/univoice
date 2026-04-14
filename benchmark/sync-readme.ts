@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * 将 benchmark 结果同步到 README.md
+ * 将 benchmark 结果同步到 README.md 和 docs/content
  * 独立脚本，需要手动执行 pnpm benchmark:sync
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { BenchmarkReport, ProviderSummary } from './metrics/types';
-import { generateMarkdownReport } from './utils/report-generator';
+import { generateDocsReport, generateMarkdownReport, syncToFile } from './utils/report-generator';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,23 +51,38 @@ function syncReadme(): void {
     process.exit(1);
   }
 
-  // 生成新的性能表格内容
-  const markdown = generateMarkdownReport(report);
-
-  // 构建新的内容（保留标记注释）
-  const beforeTable = readme.slice(0, startIndex + PERFORMANCE_TABLE_START.length);
-  const afterTable = readme.slice(endIndex);
-
-  // 替换标记之间的内容
-  const newReadme = `${beforeTable}
-
-${markdown}
-
-${afterTable}`;
-
-  writeFileSync(readmePath, newReadme);
+  // 同步到 README.md
+  const readmeMarkdown = generateMarkdownReport(report);
+  syncToFile(readmePath, readmeMarkdown);
 
   console.log('✓ README.md 性能基准测试章节已更新');
+
+  // 同步到 docs/content/benchmark.mdx（完整文件生成，不使用标记替换）
+  const docsPath = join(__dirname, '..', 'docs', 'content', 'benchmark.mdx');
+  const docsReport = generateDocsReport(report);
+
+  const docsContent = [
+    '---',
+    'title: 性能基准测试',
+    '---',
+    '',
+    '本文档展示 univoice SDK 各语音服务提供商的性能基准测试数据，数据由自动化 benchmark 测试生成并自动同步。',
+    '',
+    '<Callout type="warning">',
+    '  本报告仅反映在使用 **univoice** 时不同服务商和模型之间的**相对性能差异**，仅供参考，不代表服务商和模型的绝对性能。实际结果受网络环境、测试环境、服务商负载等多种因素影响。',
+    '</Callout>',
+    '',
+    docsReport,
+    '',
+    '<Callout type="info">',
+    '  以上数据由 benchmark 自动化测试生成。如需了解测试方法，请查看项目',
+    '  [benchmark 目录](https://github.com/shenjingnan/univoice/tree/main/benchmark)。',
+    '</Callout>',
+    '',
+  ].join('\n');
+
+  writeFileSync(docsPath, docsContent);
+  console.log('✓ docs/content/benchmark.mdx 性能基准测试章节已更新');
   console.log(`  更新时间: ${new Date().toLocaleString('zh-CN')}`);
   console.log(
     `  TTS 提供商: ${report.ttsProviders.map((p: ProviderSummary) => p.capabilities.displayName).join(', ') || '无'}`
