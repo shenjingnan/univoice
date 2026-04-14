@@ -29,4 +29,19 @@ describe('collectAudio', () => {
     const result = await collectAudio({ audio, format: 'mp3' });
     expect(result.length).toBe(0);
   });
+
+  it('onError 回调存在但无错误时不应被调用', async () => {
+    const audio = new Uint8Array([1, 2, 3]);
+    const onError = vi.fn();
+    await collectAudio({ audio, format: 'mp3' }, { onError });
+    expect(onError).not.toHaveBeenCalled();
+  });
+
+  it('Buffer 输入应触发 onComplete 回调', async () => {
+    const audio = Buffer.from([10, 20, 30]);
+    const onComplete = vi.fn();
+    const result = await collectAudio({ audio, format: 'wav' }, { onComplete });
+    expect(onComplete).toHaveBeenCalledWith(result);
+    expect(Array.from(result)).toEqual([10, 20, 30]);
+  });
 });
