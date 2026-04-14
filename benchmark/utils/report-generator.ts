@@ -1032,29 +1032,58 @@ export function generateMarkdownReport(report: BenchmarkReport): string {
 }
 
 /**
- * 将性能报告同步到 README.md
+ * 将性能报告同步到指定文件（通过标记替换）
  */
-export function syncToReadme(reportContent: string): void {
-  const readmePath = join(__dirname, 'README.md');
-  const readmeContent = readFileSync(readmePath, 'utf-8');
+export function syncToFile(
+  filePath: string,
+  reportContent: string,
+  startMarker = '<!-- PERFORMANCE_TABLE_START -->',
+  endMarker = '<!-- PERFORMANCE_TABLE_END -->'
+): void {
+  const fileContent = readFileSync(filePath, 'utf-8');
 
-  const startMarker = '<!-- PERFORMANCE_TABLE_START -->';
-  const endMarker = '<!-- PERFORMANCE_TABLE_END -->';
-
-  const startIndex = readmeContent.indexOf(startMarker);
-  const endIndex = readmeContent.indexOf(endMarker);
+  const startIndex = fileContent.indexOf(startMarker);
+  const endIndex = fileContent.indexOf(endMarker);
 
   if (startIndex === -1 || endIndex === -1) {
-    throw new Error('README.md 中找不到性能表格标记');
+    throw new Error(`${filePath} 中找不到性能表格标记`);
   }
 
-  const newReadmeContent =
-    readmeContent.slice(0, startIndex + startMarker.length) +
+  const newContent =
+    fileContent.slice(0, startIndex + startMarker.length) +
     '\n\n' +
     reportContent +
     '\n' +
-    readmeContent.slice(endIndex);
+    fileContent.slice(endIndex);
 
-  writeFileSync(readmePath, newReadmeContent);
+  writeFileSync(filePath, newContent);
+}
+
+/**
+ * 生成适合嵌入文档站点的性能报告（不含顶层 H1 标题）
+ */
+export function generateDocsReport(report: BenchmarkReport): string {
+  const fullReport = generateMarkdownReport(report);
+  // 移除第一行 H1 标题及其后的空行
+  const lines = fullReport.split('\n');
+  const contentStartIndex = lines.findIndex((line) => line.trim() !== '' && !line.startsWith('# '));
+  if (contentStartIndex === -1) return fullReport;
+  // MDX 兼容处理：
+  // 1. 独立的 --- 替换为 ***（避免被误认为 frontmatter 分隔符）
+  // 2. < 替换为 &lt;（避免被当成 JSX 标签）
+  return lines
+    .slice(contentStartIndex)
+    .map((line) => {
+      if (line === '---') return '***';
+      return line.replace(/</g, '&lt;');
+    })
+    .join('\n');
+}
+
+/**
+ * 将性能报告同步到 README.md（向后兼容）
+ */
+export function syncToReadme(reportContent: string): void {
+  syncToFile(join(__dirname, 'README.md'), reportContent);
   console.log('✓ 已同步性能报告到 README.md');
 }
