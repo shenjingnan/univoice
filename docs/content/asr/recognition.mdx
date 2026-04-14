@@ -1,0 +1,185 @@
+---
+title: 语音识别基础
+---
+
+`listen()` 方法用于将音频转换为文字。支持流式和非流式两种模式。
+
+## 基本用法
+
+### 非流式模式
+
+一次性返回完整的识别结果：
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice';
+import { readFileSync } from 'node:fs';
+
+const asr = createASR({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'whisper-1',
+});
+
+const result = await asr.listen(readFileSync('audio.mp3'));
+console.log(result.text); // "今天天气真不错"
+```
+
+### 流式模式
+
+实时返回识别过程中的中间结果：
+
+```typescript
+for await (const chunk of asr.listen(readFileSync('audio.mp3'), { stream: true })) {
+  console.log(`[${chunk.isFinal ? '最终' : '临时'}] ${chunk.text}`);
+}
+```
+
+输出示例：
+```
+[临时] 今天
+[临时] 今天天气
+[临时] 今天天气真
+[最终] 今天天气真不错
+```
+
+## 返回值结构
+
+### ASRResponse（非流式返回）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 完整识别文本 |
+| `segments?` | `ASRSegment[]` | 分段信息（部分提供商提供） |
+
+### ASRStreamChunk（流式返回）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 当前累积识别文本 |
+| `isFinal` | `boolean` | 是否为最终确认结果 |
+| `segment?` | `ASRSegment` | 当前分段信息 |
+
+### ASRSegment
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 该段文本 |
+| `start?` | `number` | 开始时间（秒） |
+| `end?` | `number` | 结束时间（秒） |
+
+## 输入类型
+
+`listen()` 接受三种类型的音频输入：
+
+| 输入类型 | 示例 | 说明 |
+|----------|------|------|
+| **文件路径（字符串）** | `'audio.mp3'` | 自动读取并转为 PCM 音频流 |
+| **Buffer / Uint8Array** | `readFileSync('audio.mp3')` | 自动转为 PCM 音频流 |
+| **AudioStream** | `AsyncIterable<Uint8Array>` | 直接使用（如来自麦克风的实时流） |
+
+```typescript
+// 方式一：文件路径
+const result1 = await asr.listen('recording.wav');
+
+// 方式二：Buffer
+const audioBuffer = readFileSync('recording.wav');
+const result2 = await asr.listen(audioBuffer);
+
+// 方式三：AudioStream（实时流）
+async function* microphoneStream(): AsyncIterable<Uint8Array> {
+  // 从麦克风实时采集音频数据
+  while (isRecording) {
+    yield await captureChunk();
+  }
+}
+for await (const chunk of asr.listen(microphoneStream(), { stream: true })) {
+  console.log(chunk.text);
+}
+```
+
+## 不同提供商示例
+
+### OpenAI Whisper
+
+最简单的 ASR 方式，只需 API Key：
+
+```typescript
+const asr = createASR({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'whisper-1',
+  language: 'zh',       // 可选，自动检测
+});
+
+const result = await asr.listen('meeting-recording.mp3');
+console.log(result.text);
+```
+
+### 豆包（火山引擎）
+
+基于 SAUC 协议的流式识别：
+
+```typescript
+const asr = createASR({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  // 可选：使用大模型识别模式
+  // model: 'bigmodel',
+});
+
+// 流式识别
+for await (const chunk of asr.listen('audio.pcm', { stream: true })) {
+  if (chunk.isFinal) {
+    console.log('→', chunk.text);
+  }
+}
+```
+
+### 通义千问
+
+基于阿里云 DashScope Paraformer 模型：
+
+```typescript
+const asr = createASR({
+  provider: 'qwen',
+  apiKey: process.env.QWEN_API_KEY,
+  model: 'paraformer-realtime-v2',
+  language: 'zh-CN',
+  format: 'pcm',
+});
+
+const result = await asr.listen('audio.pcm');
+console.log(result.text);
+```
+
+<Callout type="info">
+更多提供商的详细配置请查看对应的[提供商使用指南](/doubao/asr-guide)。
+</Callout>
+
+## 保存识别结果
+
+```typescript
+import { saveText, collectText } from 'univoice';
+
+// 方式一：从非流式结果保存
+const result = await asr.listen('audio.mp3');
+await saveText(result.text, { filename: 'result.txt' });
+
+// 方式二：从流式结果收集后保存
+const text = await collectText(asr.listen('audio.mp3', { stream: true }));
+console.log(text); // 完整识别文本
+```
+
+## 常用配置选项
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `language` | `string` | `'zh-CN'` | 识别语言 |
+| `prompt` | `string` | `''` | 提示词（改善特定领域识别准确率） |
+| `responseFormat` | `string` | `'json'` | 输出格式：`json` / `text` / `srt` / `vtt` |
+| `format` | `string` | `'pcm'` | 音频容器格式 |
+| `codec` | `string` | `'raw'` | 音频编码格式 |
+
+不同提供商还有各自的专属参数，详见 [ASR 配置选项](/api/asr-options)。

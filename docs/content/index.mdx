@@ -1,5 +1,100 @@
+---
+title: Univoice
+---
 
-## 介绍
+统一的 **TTS**（文字转语音）和 **ASR**（语音识别）SDK，一套 API 调用多种语音服务提供商。
 
-Univoice 是一个统一的语音 SDK，支持 TTS（文字转语音）和 ASR（语音转文字）。
-使用 Univoice 你可以轻松地在应用中集成语音功能。
+## 核心特性
+
+- **统一 API** — 一套接口调用豆包、通义千问、OpenAI、Gemini 等 8 种语音服务
+- **流式支持** — TTS 支持流式输入和输出，适合 LLM 流式输出场景
+- **边发边收** — LLM 流式输出可直接转换为语音，显著降低首字延迟
+- **插件化架构** — 通过 `registerTTSProvider` / `registerASRProvider` 轻松扩展新提供商
+- **TypeScript 优先** — 完整的类型定义，开发体验友好
+- **Tree-Shaking** — 按需加载 provider，减少打包体积
+
+## 适用场景
+
+| 场景 | 说明 |
+|------|------|
+| AI 助手语音交互 | LLM 回复实时转为语音输出 |
+| 有声书 / 播客生成 | 批量文本转音频文件 |
+| 客服语音系统 | 语音识别 + TTS 播报 |
+| 实时语音翻译 | ASR 识别 → 翻译 → TTS 播放 |
+| 语音消息应用 | 语音消息转文字 / 文字转语音 |
+
+## 快速体验
+
+### TTS 文字转语音
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice';
+
+const tts = createTTS({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '你好，世界！' });
+// response.audio -> 音频数据
+// response.format -> 'mp3'
+```
+
+### ASR 语音识别
+
+```typescript
+import 'univoice/asr/providers';
+import { createASR } from 'univoice';
+import { readFileSync } from 'node:fs';
+
+const asr = createASR({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'whisper-1',
+});
+
+const result = await asr.listen(readFileSync('audio.mp3'));
+// result.text -> 识别文本
+```
+
+## 支持的提供商
+
+### TTS（文字转语音）
+
+| 提供商 | 标识符 | 流式输入 | 非流式 | 流式输出 | 特色 |
+|--------|--------|----------|--------|----------|------|
+| 豆包（火山引擎） | `doubao` | ✅ | ✅ | ✅ | 双向流式 WebSocket，Seed-TTS 模型 |
+| 通义千问 | `qwen` | ✅ | ✅ | ✅ | CosyVoice 系列，多音色 |
+| 通义千问 Realtime | `qwen-realtime` | ✅ | ✅ | ✅ | 实时交互模式，超低延迟 |
+| MiniMax | `minimax` | ✅ | ✅ | ✅ | speech-02/2.6/2.8 多模型 |
+| OpenAI | `openai` | ❌ | ✅ | ❌ | tts-1 / mimo-v2-tts |
+| Gemini | `gemini` | ❌ | ✅ | ❌ | Google 原生 TTS |
+| 智谱 GLM | `glm` | ❌ | ✅ | ✅ | GLM-TTS 模型 |
+| 科大讯飞 | `xfyun` | ✅ | ✅ | ✅ | 超拟人 TTS，WebSocket 双向流式 |
+
+### ASR（语音识别）
+
+| 提供商 | 标识符 | 流式输入 | 非流式 | 流式输出 | 特色 |
+|--------|--------|----------|--------|----------|------|
+| 豆包（火山引擎） | `doubao` | ✅ | ✅ | ✅ | SAUC 协议，大模型识别 |
+| 通义千问 | `qwen` | ✅ | ✅ | ✅ | Paraformer 实时识别 |
+| OpenAI | `openai` | ❌ | ✅ | ❌ | Whisper 模型 |
+| MiniMax | `minimax` | - | - | - | 开发中 |
+| Gemini | `gemini` | ❌ | ✅ | ❌ | Google 原生 ASR |
+| 智谱 GLM | `glm` | ❌ | ✅ | ✅ | GLM-ASR 模型 |
+| 科大讯飞 | `xfyun` | ✅ | ✅ | ✅ | 流式听写 WebAPI |
+
+<Callout type="info">
+标记为「-」的功能表示当前版本暂未实现或正在开发中。具体能力矩阵详见[音频格式性能分析](/audio-format-performance)。
+</Callout>
+
+## 下一步
+
+- [快速上手](/quickstart) — 安装 SDK 并完成第一次调用
+- [核心概念](/concepts) — 了解 Provider 架构、流式模式、音频格式体系
+- [TTS 基础](/tts/synthesize) — 非流式与流式语音合成
+- [ASR 基础](/asr/recognition) — 语音识别基础用法

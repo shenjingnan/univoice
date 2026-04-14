@@ -1,101 +1,272 @@
+---
+title: 快速上手
+---
 
-# 快速上手
+本指南将带你完成安装、配置，并运行第一个 TTS 和 ASR 示例。
 
-快速入门指南将会向你展示最快速的安装和基本使用方法。
-
-完成本指南后，你将能够使用 univoice SDK 进行 TTS（文字转语音）和 ASR（语音转文字）。
+<Steps>
 
 ## 环境准备
 
-请先安装好 node（>=20.0.0）与 pnpm。
+请先安装好 **Node.js >= 20.0.0** 与 **pnpm**。
 
-<Callout type="info">如果你已经准备好 node & pnpm 可以跳过此步骤</Callout>
+<Callout type="info">如果你已经准备好 Node.js & pnpm，可以跳过此步骤</Callout>
 
-<Steps>
-## 安装Node
-    请前往 [Node官方安装地址](https://nodejs.org/en/download) 进行安装，并验证安装是否成功。
+<Tabs items={['macOS / Linux', 'Windows']}>
+<Tab>
 
-    以下为 node:22(LTS) + pnpm 的安装方式
+```bash
+# 下载并安装 nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
-    <Tabs items={['macos / linux', 'windows']}>
-      <Tab>
-        ```bash
-        # 下载并安装 nvm:
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# 重启 shell
+\. "$HOME/nvm/nvm.sh"
 
-        # 重启shell
-        \. "$HOME/.nvm/nvm.sh"
+# 下载并安装 Node.js:
+nvm install 22
 
-        # 下载并安装 Node.js:
-        nvm install 22
+# 验证 Node.js 版本:
+node -v
 
-        # 验证 Node.js 版本:
-        node -v # 应该打印出 "v22.19.0".
+# 下载并安装 pnpm:
+corepack enable pnpm
 
-        # 下载并安装 pnpm:
-        corepack enable pnpm
-
-        # 验证 pnpm 版本:
-        pnpm -v
-        ```
-      </Tab>
-
-      <Tab>
-        ```bash
-        # 下载并安装 Chocolatey:
-        powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
-
-        # 下载并安装 Node.js:
-        choco install nodejs --version="22.19.0"
-
-        # 验证 Node.js 版本:
-        node -v # 应该打印出 "v22.19.0".
-
-        # 下载并安装 pnpm:
-        corepack enable pnpm
-
-        # 验证 pnpm 版本:
-        pnpm -v
-        ```
-      </Tab>
-    </Tabs>
-
-## 安装 univoice SDK
-    <Tabs items={['pnpm', 'npm']}>
-    <Tab>
-    ```bash
-    pnpm add univoice
-    ```
-    </Tab>
-    <Tab>
-    ```bash
-    npm install univoice
-    ```
-    </Tab>
-    </Tabs>
-
-## 使用 TTS（文字转语音）
-
-```typescript
-import { TTS } from 'univoice/tts';
-
-const tts = new TTS({
-  // 配置选项
-});
-
-const audio = await tts.synthesize('你好，世界！');
+# 验证 pnpm 版本:
+pnpm -v
 ```
 
-## 使用 ASR（语音转文字）
+</Tab>
+<Tab>
+
+```bash
+# 下载并安装 Chocolatey:
+powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
+
+# 下载并安装 Node.js:
+choco install nodejs --version="22.19.0"
+
+# 验证 Node.js 版本:
+node -v
+
+# 下载并安装 pnpm:
+corepack enable pnpm
+
+# 验证 pnpm 版本:
+pnpm -v
+```
+
+</Tab>
+</Tabs>
+
+## 安装 SDK
+
+<Tabs items={['pnpm', 'npm']}>
+<Tab>
+
+```bash
+pnpm add univoice
+```
+
+</Tab>
+<Tab>
+
+```bash
+npm install univoice
+```
+
+</Tab>
+</Tabs>
+
+## TTS：文字转语音
+
+### 创建实例
+
+使用 `createTTS` 工厂函数创建 TTS 实例。需要先导入 provider 注册表：
 
 ```typescript
-import { ASR } from 'univoice/asr';
+import 'univoice/tts/providers'; // 注册所有 TTS 提供商
+import { createTTS } from 'univoice';
 
-const asr = new ASR({
-  // 配置选项
+const tts = createTTS({
+  provider: 'doubao',
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  format: 'mp3',
+});
+```
+
+<Callout type="info">
+不同提供商的配置参数不同。`provider` 字段决定使用哪个提供商，TypeScript 会根据该字段自动提示对应的专属配置项。
+详见 [TTS 配置选项](/api/tts-options) 和各提供商的使用指南。
+</Callout>
+
+### 非流式合成
+
+一次性返回完整音频，适合已知完整文本的场景：
+
+```typescript
+const response = await tts.synthesize({ text: '你好，世界！' });
+
+console.log(`音频格式: ${response.format}`);   // 'mp3'
+console.log(`音频大小: ${response.audio.length} bytes`);
+```
+
+### 流式合成
+
+边合成边接收音频块，适合实时播报或 LLM 流式输出场景：
+
+```typescript
+// 方式一：字符串输入
+for await (const { audioChunk } of tts.speak('欢迎来到杭州！', { stream: true })) {
+  // 实时处理每个音频块
+  console.log('收到音频块:', audioChunk.length);
+}
+
+// 方式二：流式文本输入（如 Generator）
+async function* textGenerator() {
+  yield '你好，';
+  yield '世界！';
+}
+for await (const { audioChunk } of tts.speak(textGenerator(), { stream: true })) {
+  console.log('收到音频块:', audioChunk.length);
+}
+```
+
+### LLM 流式输出转语音（核心特性）
+
+这是 univoice 的**核心差异化能力**——将 LLM 的流式输出直接转为语音，实现「边发边收」，显著降低首字延迟：
+
+```typescript
+import OpenAI from 'openai';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// 创建 OpenAI 流式请求
+const openaiStream = await openai.chat.completions.stream({
+  model: 'gpt-4o-mini',
+  messages: [{ role: 'user', content: '请介绍 TypeScript' }],
+  stream: true,
 });
 
-const text = await asr.recognize(audioBuffer);
+// 直接将 OpenAI stream 传入 TTS speak（无需等待 LLM 完整输出）
+const chunks: Uint8Array[] = [];
+for await (const { audioChunk } of tts.speak(openaiStream, { stream: true })) {
+  chunks.push(audioChunk);
+}
+
+// 合并并保存音频
+import { writeFileSync } from 'node:fs';
+const buffer = Buffer.concat(chunks.map((c) => Buffer.from(c)));
+writeFileSync('output.pcm', buffer);
 ```
+
+### 保存音频
+
+使用内置工具函数快速保存：
+
+```typescript
+import { saveAudio, saveTTSResponse } from 'univoice';
+
+// 保存流式输出
+await saveAudio('output.pcm', tts.speak('你好，世界！', { stream: true }));
+
+// 保存非流式输出
+const response = await tts.synthesize({ text: '你好' });
+const filepath = await saveTTSResponse(response);
+console.log(`已保存到: ${filepath}`);
+```
+
+## ASR：语音识别
+
+### 创建实例
+
+```typescript
+import 'univoice/asr/providers'; // 注册所有 ASR 提供商
+import { createASR } from 'univoice';
+import { readFileSync } from 'node:fs';
+
+const asr = createASR({
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY,
+  model: 'whisper-1',
+});
+```
+
+### 语音识别
+
+```typescript
+// 非流式模式：传入音频文件路径或 Buffer，返回完整识别结果
+const result = await asr.listen(readFileSync('audio.mp3'));
+console.log(result.text); // 识别出的文本
+
+// 流式模式：实时返回识别结果
+for await (const chunk of asr.listen(readFileSync('audio.mp3'), { stream: true })) {
+  console.log(`识别中: ${chunk.text}`);
+  if (chunk.isFinal) {
+    console.log('→ 最终结果');
+  }
+}
+```
+
+## 按需加载（Tree-Shaking）
+
+如果只需要使用特定提供商，可以按需导入以减少打包体积：
+
+<Tabs items={['自动注册全部', '手动注册单个', '直接使用类']}>
+<Tab>
+
+注册所有 provider，适合需要多提供商切换的场景：
+
+```typescript
+import 'univoice/tts/providers';
+import { createTTS } from 'univoice';
+
+const tts = createTTS({ provider: 'doubao', ... });
+```
+
+</Tab>
+<Tab>
+
+只注册需要的 provider，打包体积最小：
+
+```typescript
+import { createTTS, registerTTSProvider } from 'univoice/tts';
+import { DoubaoTTS } from 'univoice/tts/providers/doubao';
+
+registerTTSProvider('doubao', DoubaoTTS);
+
+const tts = createTTS({ provider: 'doubao', ... });
+```
+
+</Tab>
+<Tab>
+
+不使用工厂函数，最精简的方式：
+
+```typescript
+import { DoubaoTTS } from 'univoice/tts/providers/doubao';
+
+const tts = new DoubaoTTS({
+  appId: process.env.DOUBAO_APP_ID,
+  accessToken: process.env.DOUBAO_ACCESS_TOKEN,
+  voice: 'zh_female_tianmeixiaoyuan_moon_bigtts',
+  format: 'mp3',
+});
+
+const response = await tts.synthesize({ text: '你好' });
+```
+
+</Tab>
+</Tabs>
 
 </Steps>
+
+## 下一步
+
+- [核心概念](/concepts) — 了解 Provider 架构、流式/非流式、音频格式体系
+- [TTS 非流式合成](/tts/synthesize) — 深入了解 synthesize 用法
+- [TTS 流式合成](/tts/streaming) — 深入了解 speak 流式用法和三种输入模式
+- [LLM 流式输出转语音](/tts/llm-to-tts) — 完整的端到端示例
+- [ASR 语音识别基础](/asr/recognition) — ASR 完整用法指南
+- 选择一个[提供商文档](/doubao/tts-guide)查看详细配置说明
