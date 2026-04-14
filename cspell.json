@@ -577,6 +577,7 @@
     "zixinqingnian"
   ],
   "ignorePaths": [
+    "logo.svg",
     "examples/assets",
     "examples/output",
     "coverage",
