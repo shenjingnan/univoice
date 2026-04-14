@@ -86,8 +86,8 @@ importers:
   docs:
     devDependencies:
       openmanual:
-        specifier: v0.10.2
-        version: 0.10.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3))
+        specifier: v0.12.0
+        version: 0.12.0(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3))
 
   examples:
     dependencies:
@@ -4236,8 +4236,8 @@ packages:
       zod:
         optional: true
 
-  openmanual@0.10.2:
-    resolution: {integrity: sha512-4Hp7zktvAJVHZpSBzzUMzv/3FHFaGgM7NYqRB+GxAu+AkNNvGk5SN64XN+/RKAzS55bb5YucZUtujpbfd2Yn6A==}
+  openmanual@0.12.0:
+    resolution: {integrity: sha512-q9KIlyWangs1LuMm7PAIut61sEug0bsCnN3jpSMafHcBTd+ghXsS5zD6naaFB32iEZzCH+nDu74XhPGJ3h5DFg==}
     engines: {node: '>=24.0.0', pnpm: '>=10.0.0'}
     hasBin: true
     peerDependencies:
@@ -9219,7 +9219,7 @@ snapshots:
       ws: 8.20.0
       zod: 4.3.6
 
-  openmanual@0.10.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3)):
+  openmanual@0.12.0(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/mdx@2.0.13)(@types/react@19.2.14)(lucide-react@1.8.0(react@19.2.5))(mermaid@11.14.0)(next-themes@0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(sass@1.99.0)(shiki@4.0.2)(tailwind-merge@3.5.0)(tailwindcss@4.2.2)(vite@8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.2)(@types/node@25.5.0)(esbuild@0.27.7)(jiti@2.6.1)(sass@1.99.0)(tsx@4.21.0)(yaml@2.8.3)):
     dependencies:
       '@panzoom/panzoom': 4.6.2
       chokidar: 5.0.0
