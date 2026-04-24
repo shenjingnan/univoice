@@ -1,5 +1,7 @@
 export type { CollectOptions } from '@/tts/utils/collect';
 export { collectAudio } from '@/tts/utils/collect';
+export type { PcmToOpusOptions } from '@/tts/utils/pcm-to-opus';
+export { pcmToOpus } from '@/tts/utils/pcm-to-opus';
 export type { PlayOptions } from '@/tts/utils/play';
 export { playAudio } from '@/tts/utils/play';
 export type { SaveOptions } from '@/tts/utils/save';

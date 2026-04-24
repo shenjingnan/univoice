@@ -12,7 +12,14 @@ export {
   getTTSProviders,
   registerTTSProvider,
 } from '@/tts/index';
-export { collectAudio, playAudio, saveAudio, saveTTSResponse, teeAudio } from '@/tts/utils/index';
+export {
+  collectAudio,
+  pcmToOpus,
+  playAudio,
+  saveAudio,
+  saveTTSResponse,
+  teeAudio,
+} from '@/tts/utils/index';
 export type {
   ASRConnection,
   ASRConnectionState,
