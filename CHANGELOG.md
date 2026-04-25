@@ -2,6 +2,28 @@
 
 本文档记录项目的所有重要变更。
 
+## [0.11.0](https://github.com/shenjingnan/univoice/compare/v0.10.0...v0.11.0) (2026-04-25)
+
+### Features
+
+* **tts:** 新增 pcmToOpus 流式 PCM→Opus 编码函数 ([#296](https://github.com/shenjingnan/univoice/issues/296)) ([0861f1f](https://github.com/shenjingnan/univoice/commit/0861f1f338835f32608a8e1c33efc801a2ecb14b))
+
+### Bug Fixes
+
+* **examples:** 修复 Doubao ASR VAD 端点检测重复打印问题 ([#279](https://github.com/shenjingnan/univoice/issues/279)) ([44d8102](https://github.com/shenjingnan/univoice/commit/44d8102f3f22f61d1d41c4ade0b0a0d451f221bd))
+
+### Documentation
+
+* 文档站点 logo 替换为 SVG 并支持明暗主题 ([#283](https://github.com/shenjingnan/univoice/issues/283)) ([bfd63aa](https://github.com/shenjingnan/univoice/commit/bfd63aa5349a9cc711c522e2d84bf1a7f1709cb2))
+* 更新 README logo 为本地 SVG 文件 ([#281](https://github.com/shenjingnan/univoice/issues/281)) ([bf6f24e](https://github.com/shenjingnan/univoice/commit/bf6f24ea1afa193618cda872051d82915abc7aea))
+* 添加性能基准测试文档页面并增强同步脚本 ([#286](https://github.com/shenjingnan/univoice/issues/286)) ([066e26a](https://github.com/shenjingnan/univoice/commit/066e26ae95f2f5fec3cd977ef53e1e4ce3c3571a))
+* 添加文档站点 favicon SVG 文件 ([#284](https://github.com/shenjingnan/univoice/issues/284)) ([d697c65](https://github.com/shenjingnan/univoice/commit/d697c656f8b53cb788e28e82b253dd1634d77f99))
+* 重构文档站点结构并完善内容 ([#285](https://github.com/shenjingnan/univoice/issues/285)) ([d20c7d6](https://github.com/shenjingnan/univoice/commit/d20c7d6b7632fdd0e37085520e7261a1610dd5f2))
+
+### Tests
+
+* 大幅提升 GlmTTS/GlmASR/音频工具测试覆盖率 ([#287](https://github.com/shenjingnan/univoice/issues/287)) ([5e1eb68](https://github.com/shenjingnan/univoice/commit/5e1eb689aa6196e678cb340048976a0cb8d967b3))
+
 ## [0.10.0](https://github.com/shenjingnan/univoice/compare/v0.9.1...v0.10.0) (2026-04-12)
 
 ### Features
