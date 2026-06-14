@@ -143,9 +143,9 @@ pub fn encode_header(
     compression_type: u8,
 ) -> [u8; 4] {
     [
-        (ProtocolVersion::V1 as u8) << 4 | 0b0001,
-        (message_type as u8) << 4 | msg_flags,
-        serialization_type << 4 | compression_type,
+        ((ProtocolVersion::V1 as u8) << 4) | 0b0001,
+        ((message_type as u8) << 4) | msg_flags,
+        (serialization_type << 4) | compression_type,
         0x00,
     ]
 }

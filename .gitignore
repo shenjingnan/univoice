@@ -46,3 +46,4 @@ dist/
 # Generated output
 output/
 benchmark/results/
+.agents/plans
