@@ -1,0 +1,122 @@
+use std::pin::Pin;
+
+use futures_util::Stream;
+
+// ============================== 常量 ==============================
+
+/// 默认采样率 16kHz
+pub const DEFAULT_SAMPLE_RATE: u32 = 16000;
+
+/// PCM 分块大小：100ms @ 16kHz 16bit mono
+pub const DEFAULT_CHUNK_SIZE: usize = 3200;
+
+/// 默认段时长（发送给服务端）
+pub const DEFAULT_SEGMENT_DURATION: u32 = 200;
+
+/// 默认资源 ID
+pub const DEFAULT_RESOURCE_ID: &str = "volc.bigasr.sauc.duration";
+
+/// 默认 WebSocket 基础 URL
+pub const DEFAULT_BASE_URL: &str = "wss://openspeech.bytedance.com/api/v3/sauc";
+
+// ============================== 音频类型 ==============================
+
+/// 音频流类型：异步字节块序列
+pub type AudioStream = Pin<Box<dyn Stream<Item = Vec<u8>> + Send>>;
+
+/// 音频容器格式
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum AudioContainerFormat {
+    #[default]
+    Pcm,
+    Wav,
+    Ogg,
+    Mp3,
+}
+
+impl AudioContainerFormat {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Pcm => "pcm",
+            Self::Wav => "wav",
+            Self::Ogg => "ogg",
+            Self::Mp3 => "mp3",
+        }
+    }
+}
+
+/// 音频编码格式
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum AudioCodecFormat {
+    #[default]
+    Raw,
+    Opus,
+}
+
+impl AudioCodecFormat {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Raw => "raw",
+            Self::Opus => "opus",
+        }
+    }
+}
+
+// ============================== 结果类型 ==============================
+
+/// ASR 流式响应块
+#[derive(Debug, Clone)]
+pub struct AsrStreamChunk {
+    pub text: String,
+    pub is_final: bool,
+    pub confidence: Option<f64>,
+    pub segment: Option<AsrSegment>,
+}
+
+/// ASR 分段信息
+#[derive(Debug, Clone)]
+pub struct AsrSegment {
+    pub id: u32,
+    pub start: u32,
+    pub end: u32,
+    pub text: String,
+    pub speaker: Option<String>,
+    pub confidence: Option<f64>,
+}
+
+/// 非流式识别结果
+#[derive(Debug, Clone)]
+pub struct AsrResponse {
+    pub text: String,
+    pub language: Option<String>,
+    pub duration: Option<u32>,
+    pub segments: Option<Vec<AsrSegment>>,
+}
+
+// ============================== 配置类型 ==============================
+
+/// 基础 ASR 配置
+#[derive(Debug, Clone)]
+pub struct BaseProviderOption {
+    pub api_key: Option<String>,
+    pub base_url: Option<String>,
+    pub model: Option<String>,
+    pub language: Option<String>,
+    pub format: Option<AudioContainerFormat>,
+    pub codec: Option<AudioCodecFormat>,
+}
+
+impl Default for BaseProviderOption {
+    fn default() -> Self {
+        Self {
+            api_key: None,
+            base_url: None,
+            model: None,
+            language: Some("zh-CN".into()),
+            format: None,
+            codec: None,
+        }
+    }
+}

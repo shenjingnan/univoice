@@ -1,3 +1,7 @@
+/// ASR 语音识别模块
+#[allow(clippy::result_large_err)]
+pub mod asr;
+
 /// 通用工具模块
 pub mod cli;
 pub mod config;
