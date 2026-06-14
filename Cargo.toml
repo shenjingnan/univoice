@@ -8,7 +8,7 @@ license = "MIT"
 
 [dependencies]
 # CLI 框架
-clap = { version = "4", features = ["derive"] }
+clap = { version = "4", features = ["derive", "env"] }
 clap_complete = "4"
 
 # 异步运行时
@@ -30,8 +30,11 @@ chrono = "0.4"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "registry"] }
 
+# 示例依赖
+dotenvy = "0.15"                                        # .env 文件加载
+
 # --- ASR 依赖 ---
-tokio-tungstenite = "0.24"                              # WebSocket 客户端
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }    # WebSocket 客户端
 tungstenite = "0.24"                                    # WebSocket 协议底层
 futures-util = "0.3"                                    # 异步流处理
 flate2 = "1"                                            # Gzip 压缩/解压
