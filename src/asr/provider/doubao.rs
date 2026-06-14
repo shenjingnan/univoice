@@ -485,17 +485,57 @@ impl AsrConnection for DoubaoAsrConnection {
 
     async fn listen_stream(
         &mut self,
-        _audio: AudioStream,
+        audio: AudioStream,
     ) -> Result<Pin<Box<dyn Stream<Item = Result<AsrStreamChunk, AsrError>> + Send>>, AsrError>
     {
         if self.state != ConnectionState::Connected {
             return Err(AsrError::ConnectionClosed);
         }
 
+        // 取出 WS 的所有权（一期简化：每次 listen 消耗 WS）
+        let ws = self.ws.take().ok_or(AsrError::ConnectionClosed)?;
+        let (mut write, mut read) = ws.split();
+        let start_seq = self.seq;
+
+        // 创建 channel
+        let (tx, mut rx) = tokio::sync::mpsc::channel::<QueueItem>(32);
+
+        // Spawn 发送任务
+        let send_handle: tokio::task::JoinHandle<Result<i32, AsrError>> =
+            tokio::spawn(async move {
+                let final_seq =
+                    DoubaoAsr::send_audio_stream_internal(&mut write, audio, start_seq).await?;
+                Ok(final_seq)
+            });
+
+        // Spawn 接收任务
+        let recv_handle: tokio::task::JoinHandle<Result<(), AsrError>> =
+            tokio::spawn(async move { DoubaoAsr::receive_messages_internal(&mut read, tx).await });
+
+        // 构造流
+        let stream = async_stream::stream! {
+            loop {
+                tokio::select! {
+                    item = rx.recv() => {
+                        match item {
+                            Some(QueueItem::Chunk(chunk)) => yield Ok(chunk),
+                            Some(QueueItem::Complete) | None => break,
+                        }
+                    }
+                }
+            }
+
+            if let Ok(Err(e)) = send_handle.await {
+                yield Err(e);
+            }
+            if let Ok(Err(e)) = recv_handle.await {
+                yield Err(e);
+            }
+        };
+
         self.state = ConnectionState::Closed;
-        Err(AsrError::Unsupported(
-            "connection listen_stream not yet fully implemented in V1",
-        ))
+
+        Ok(Box::pin(stream))
     }
 
     async fn listen(&mut self, audio: AudioStream) -> Result<AsrResponse, AsrError> {

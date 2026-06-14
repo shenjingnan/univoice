@@ -13,5 +13,5 @@ pub use provider::{
 pub use traits::{AsrConnectOption, AsrConnection, AsrProvider, ConnectionState};
 pub use types::{
     AsrResponse, AsrSegment, AsrStreamChunk, AudioCodecFormat, AudioContainerFormat, AudioStream,
-    BaseProviderOption,
+    BaseProviderOption, DEFAULT_CHUNK_SIZE,
 };
