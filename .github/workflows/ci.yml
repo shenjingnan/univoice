@@ -1,85 +1,81 @@
 name: CI
 
+on:
+  push:
+    branches: [main]
+    paths: ['Cargo.toml', 'Cargo.lock', 'src/**/*.rs', 'tests/**']
+  pull_request:
+    branches: [main]
+    paths: ['Cargo.toml', 'Cargo.lock', 'src/**/*.rs', 'tests/**']
+
+env:
+  CARGO_TERM_COLOR: always
+
 permissions:
   contents: read
 
-# 触发条件：只在PR到main分支时运行CI
-on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
-
 jobs:
-  # CI 阶段 - 完整的代码质量和测试检查
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: ["24"]
-
+  check:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
     steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
-          fetch-depth: 0
+          components: rustfmt, clippy
 
-      - name: 启用 Corepack
-        run: corepack enable
+      - name: Ensure components for project toolchain
+        run: rustup component add rustfmt clippy
 
-      - name: 安装 pnpm
-        uses: pnpm/action-setup@v4
+      - name: Format check
+        run: cargo fmt --check
+
+      - name: Lint check
+        run: cargo clippy -- -D warnings
+
+      - name: Install typos-cli
+        uses: taiki-e/install-action@v2
         with:
-          version: 10.30.3
+          tool: typos-cli
 
-      - name: 设置 Node.js
-        uses: actions/setup-node@v4
+      - name: Spell check
+        run: typos .
+
+      - name: Tests
+        run: cargo test -- --test-threads=1
+
+      - name: Build
+        run: cargo build
+
+      - name: Install cargo-tarpaulin
+        uses: taiki-e/install-action@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          tool: cargo-tarpaulin
 
-      - name: 安装依赖
-        uses: nick-invision/retry@v3
+      - name: Generate coverage report
+        run: cargo tarpaulin --out lcov --output-dir coverage -- --test-threads=1
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v6
         with:
-          timeout_minutes: 5
-          max_attempts: 2
-          retry_on: error
-          command: pnpm install --frozen-lockfile
-
-      # 代码质量检查
-      - name: 代码检查
-        run: pnpm run lint
-
-      # 构建
-      - name: 构建
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 2
-          retry_on: error
-          command: pnpm run build
-
-      - name: 类型检查
-        run: pnpm run typecheck
-
-      - name: 拼写检查
-        run: pnpm run spellcheck
-
-      # 测试
-      - name: 测试
-        uses: nick-invision/retry@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 2
-          retry_on: error
-          command: pnpm run test:coverage
-
-      # 上传覆盖率报告
-      - name: 上传覆盖率报告
-        uses: codecov/codecov-action@v5
-        if: matrix.os == 'ubuntu-latest'
-        with:
+          files: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
+  test:
+    name: Test (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Tests
+        run: cargo test -- --test-threads=1

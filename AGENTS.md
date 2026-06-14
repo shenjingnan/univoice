@@ -1,141 +1,134 @@
-# univoice 项目指南
+# CLAUDE.md - univoice
+
+本文档为 Claude Code 提供项目上下文和开发规范。
 
 ## 项目概述
 
-**univoice** 是一个统一的 TTS（文字转语音）和 ASR（语音识别）SDK，支持多种语音服务提供商。
-
-- **版本**: 0.0.1
-- **许可证**: MIT
-- **Node.js 版本**: >=20.0.0
-- **包管理器**: pnpm 10.30.3
-
-## 语言约定
-
-本项目的核心维护者和主要使用者均为中国人，因此**优先使用中文**：
-
-- **文档**: 中文
-- **代码注释**: 中文
-- **提交 PR 的标题和改动说明**: 中文
-- **README 及各类说明文档**: 中文
-
-使用中文能够更好地持续维护和迭代当前项目。
+**univoice** 是一个统一的 TTS（文字转语音）和 ASR（语音识别）Rust SDK。
 
 ## 技术栈
 
-| 技术 | 版本 |
-|------|------|
-| TypeScript | ^5.7.0 |
-| Vitest | ^3.0.0 |
-| Biome | ^1.9.0 |
-| release-it | ^18.0.0 |
+| 技术           | 版本  | 用途                         |
+| -------------- | ----- | ---------------------------- |
+| Rust           | 1.85+ | 编程语言 / 编译 / 测试 / Lint / Format |
+| clap           | 4.x   | CLI 参数解析                 |
+| tokio          | 1.x   | 异步运行时                   |
+| serde          | 1.x   | JSON/TOML 序列化/反序列化    |
+| tracing        | 0.1   | 日志和诊断                   |
 
-## 目录结构
+## 快速命令参考
 
-\`\`\`
-src/
-├── index.ts           # 主入口
-├── tts/               # TTS 模块
-│   ├── base.ts        # BaseTTS 抽象类
-│   ├── factory.ts     # 工厂函数
-│   ├── utils/         # 工具函数 (collect, play, save, tee)
-│   └── providers/     # 提供商实现 (doubao, minimax, qwen, openai, gemini)
-└── asr/               # ASR 模块
-    ├── base.ts        # BaseASR 抽象类
-    ├── factory.ts     # 工厂函数
-    ├── utils/         # 工具函数 (collect, save)
-    └── providers/     # 提供商实现 (doubao, minimax, qwen, openai, gemini)
-types/                  # 类型定义
-tests/                  # 测试文件
-docs/                   # 文档站点 (Next.js)
-examples/               # 示例代码
-\`\`\`
-
-## 代码规范
-
-### TypeScript 配置
-
-- **目标**: ES2022
-- **严格模式**: 启用
-- **禁止 any**: \`noImplicitAny: true\`， Biome 规则 \`noExplicitAny: error\`
-
-### Biome 配置
-
-- **缩进**: 2 空格
-- **行宽**: 100 字符
-- **引号**: 单引号
-- **尾随逗号**: es5
-
-### 路径别名
-
-- \`@/*\` → \`src/*\`
-- \`@/types/*\` → \`types/*\`
-
-## 开发命令
-
-\`\`\`bash
-# 构建
-pnpm build
-
-# 开发模式（监听）
-pnpm dev
+```bash
+# 开发
+cargo run                           # 直接运行（无参进入帮助）
+cargo run -- config                 # 显示配置
+cargo run -- greet --name World     # 向用户问好
+cargo run -- completion bash        # 生成 shell 补全
 
 # 测试
-pnpm test
-pnpm test:watch
+cargo test                          # 运行测试
+cargo test -- --test-threads=1      # 单线程测试（避免 env 竞争）
 
-# 代码检查
-pnpm lint
-pnpm lint:fix
+# 代码质量
+cargo fmt                           # 格式化代码
+cargo fmt --check                   # 格式检查
+cargo clippy                        # Lint 检查
+cargo clippy -- -D warnings         # 严格 Lint 检查
+cargo test                          # 测试
+cargo fmt --check && cargo clippy -- -D warnings && cargo test   # 完整检查
 
-# 格式化
-pnpm format
+# 构建
+cargo build                         # 调试构建
+cargo build --release               # 发布构建
 
-# 拼写检查
-pnpm spellcheck
+# 文档
+cargo doc --open                    # 生成并打开 API 文档
 
-# 发布
-pnpm release
-pnpm release:dry
-\`\`\`
+# 覆盖率
+cargo tarpaulin                     # 生成覆盖率报告
+```
 
-## 质量检查
+## 代码风格规范
 
-在提交代码前，确保通过以下检查：
+由 `cargo fmt` 和 `cargo clippy` 强制执行（Rust Edition 2024）：
 
-1. **类型检查**: \`pnpm build\` (tsc 编译)
-2. **代码风格**: \`pnpm lint\`
-3. **测试**: \`pnpm test\`
+- **缩进**: 2 空格
+- **行宽**: 最大 100 字符
 
-## 架构特点
+### 命名约定
 
-- **工厂模式**: 使用工厂函数 \`createTTS()\` / \`createASR()\` 创建提供商实例
-- **插件化架构**: 通过 \`registerTTSProvider\` / \`registerASRProvider\` 注册新提供商
-- **实例方法**: TTS 实例使用 \`tts.synthesize()\`，ASR 实例使用 \`asr.listen()\`
+| 类型      | 约定                 | 示例           |
+| --------- | -------------------- | -------------- |
+| 文件      | snake_case           | `my_module.rs` |
+| 类/结构体 | PascalCase           | `MyStruct`     |
+| 函数/变量 | snake_case           | `my_function`  |
+| 常量      | SCREAMING_SNAKE_CASE | `MAX_COUNT`    |
+| 类型/trait| PascalCase           | `UserConfig`   |
+| 枚举      | PascalCase           | `ModelRole`    |
 
-## 可用技能
+## 项目结构
 
-项目配置了以下 Claude Code 技能：
+```
+├── Cargo.toml           # 项目配置和依赖
+├── rust-toolchain.toml  # Rust 工具链版本
+├── src/
+│   ├── main.rs          # 入口文件
+│   ├── lib.rs           # 库入口 + 测试工具
+│   ├── cli.rs           # CLI 命令定义
+│   ├── config/
+│   │   ├── mod.rs       # 配置模块入口
+│   │   └── settings.rs  # TOML 配置管理
+│   ├── logging.rs       # tracing 双层日志
+│   └── datetime.rs      # 日期时间工具
+├── tests/               # 集成测试
+├── .github/             # CI/CD 配置
+└── .githooks/           # Git hooks
+```
 
-- **dev-workflow-checker**: 开发流程检查，确保代码修改后执行必要的质量检查
-- **practical-development-validator**: 务实开发原则检查，避免过度设计
-- **fix-audit**: 依赖安全审计
+## 自定义指南
 
-## TTS 提供商
+1. 修改 `Cargo.toml` 中的 `name`、`version`、`description`
+2. 更新 `src/cli.rs` 中的命令名称和子命令
+3. 在 `src/config/settings.rs` 中修改 `PROJECT_DIR` 常量（`.{{project_name}}`）
+4. 在 `src/logging.rs` 中修改日志路径
+5. 更新 `AGENTS.md` 中的项目名称和描述
 
-支持以下 TTS 服务提供商：
+## Git 工作流
 
-- doubao
-- minimax
-- qwen
-- openai
-- gemini
+### 分支命名
 
-## ASR 提供商
+- `feature/xxx` - 新功能
+- `fix/xxx` - Bug 修复
+- `docs/xxx` - 文档更新
+- `refactor/xxx` - 重构
 
-支持以下 ASR 服务提供商：
+### Commit 规范
 
-- doubao
-- minimax
-- qwen
-- openai
-- gemini
+遵循 [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+```
+
+**类型**:
+
+- `feat` - 新功能
+- `fix` - Bug 修复
+- `docs` - 文档更新
+- `style` - 代码格式
+- `refactor` - 重构
+- `perf` - 性能优化
+- `test` - 测试相关
+- `chore` - 构建/工具
+
+## 模板使用
+
+### 开始新项目
+
+1. 克隆此仓库或 fork
+2. 默认的 CLI 命令名称是 `univoice`
+3. 配置文件存储在 `~/.univoice/` 目录
+4. 修改 `Cargo.toml` 中的项目元信息
+5. 开始编写你的业务代码

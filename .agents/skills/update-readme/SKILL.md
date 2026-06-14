@@ -9,19 +9,16 @@ description: 根据项目当前状态更新根目录 README.md
 
 ## 执行步骤
 
-1. 阅读 `package.json` 获取项目名称、版本号、描述、脚本列表等信息
-2. 阅读 `src/` 目录下的源码，了解项目当前导出的 API（函数、类、接口、类型等）
-3. 阅读当前的 `README.md`，对比现状识别需要更新的内容
+1. 读取 `Cargo.toml` 获取项目名称、版本号、描述、依赖等信息
+2. 读取 `src/` 目录下的源码，了解项目当前导出的公开 API（结构体、函数、trait 等）
+3. 读取当前的 `README.md`，对比现状识别需要更新的内容
 4. 更新 README.md 中的以下部分（按需）：
-   - **项目描述**: 与 `package.json` 中的 description 保持一致
-   - **特性列表**: 反映项目实际使用的技术栈和工具
-   - **快速开始**: 安装命令和使用示例
+   - **项目描述**: 与 `Cargo.toml` 中的 description 保持一致
+   - **技术栈**: Rust 版本、关键依赖（clap、tokio、serde 等）
+   - **快速开始**: 使用示例
    - **项目结构**: 与实际目录结构一致
-   - **可用脚本**: 与 `package.json` 中的 scripts 保持同步
-   - **API 文档**: 与 `src/` 导出的公开 API 保持同步
-   - **配置说明**: 项目实际的配置项和选项
-5. 运行拼写检查: `pnpm run spellcheck`
-6. 如有拼写问题，修复后重新检查
+   - **可用命令**: `cargo run -- <command>` 格式
+5. 运行格式检查: `cargo fmt --check`
 
 ## 更新原则
 
@@ -32,4 +29,5 @@ description: 根据项目当前状态更新根目录 README.md
 
 ## 注意事项
 
-- 徽章（badges）中的仓库地址保持占位符形式（如 `your-username/your-project`）
+- 不要添加与项目无关的具体业务描述
+- 所有命令示例使用 `cargo`
