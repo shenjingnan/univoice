@@ -9,7 +9,8 @@ pub mod utils;
 
 pub use error::AsrError;
 pub use provider::{
-    AudioInput, DoubaoAsr, DoubaoAsrConnection, DoubaoAsrMode, DoubaoAsrOption, adapt_audio_input,
+    AudioInput, DoubaoAsr, DoubaoAsrConnection, DoubaoAsrMode, DoubaoAsrOption, QwenAsr,
+    QwenAsrConnection, QwenAsrOption, adapt_audio_input,
 };
 pub use traits::{AsrConnectOption, AsrConnection, AsrProvider, ConnectionState};
 pub use types::{
