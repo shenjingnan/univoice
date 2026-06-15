@@ -46,6 +46,9 @@ tokio-stream = "0.1"                                    # 流式扩展
 async-trait = "0.1"                                     # 异步 trait
 async-stream = "0.3"                                    # 流式宏
 
+# HTTP 客户端（用于 GLM REST API，multipart + 流式响应）
+reqwest = { version = "0.12", default-features = false, features = ["multipart", "stream", "native-tls"] }
+
 # Opus 解码（可选，通过 opus-decoder feature 启用）
 opus2 = { version = "0.4", features = ["bundled"], optional = true }
 
