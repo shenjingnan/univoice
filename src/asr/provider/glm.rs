@@ -591,7 +591,7 @@ mod tests {
 
     #[test]
     fn test_sse_partial_json() {
-        assert!(parse_sse_data(r#"{"type":"transcript.text.delta","delta":"hel"#).is_none());
+        assert!(parse_sse_data(r#"{"type":"transcript.text.delta","delta":"par"#).is_none());
     }
 
     #[test]
@@ -755,15 +755,15 @@ mod tests {
 
     #[test]
     fn test_partial_line_accumulation() {
-        let mut buffer = b"data: {\"type\":\"transcript.text.delta\",\"delta\":\"hel".to_vec();
+        let mut buffer = b"data: {\"type\":\"transcript.text.delta\",\"delta\":\"par".to_vec();
         let (chunks, _done) = process_sse_buffer(&mut buffer);
         assert_eq!(chunks.len(), 0);
         assert!(!buffer.is_empty());
 
-        buffer.extend_from_slice(b"lo\"}\n");
+        buffer.extend_from_slice(b"tial\"}\n");
         let (chunks, _done) = process_sse_buffer(&mut buffer);
         assert_eq!(chunks.len(), 1);
-        assert_eq!(chunks[0].text, "hello");
+        assert_eq!(chunks[0].text, "partial");
     }
 
     #[test]
@@ -846,15 +846,15 @@ mod tests {
 
     #[test]
     fn test_buffer_reuse_after_partial() {
-        let mut buffer = b"data: {\"type\":\"transcript.text.delta\",\"delta\":\"hel".to_vec();
+        let mut buffer = b"data: {\"type\":\"transcript.text.delta\",\"delta\":\"par".to_vec();
         let (_, _) = process_sse_buffer(&mut buffer);
         assert!(!buffer.is_empty());
 
-        buffer.extend_from_slice(b"lo\"}\n");
+        buffer.extend_from_slice(b"tial\"}\n");
         let (chunks, _done) = process_sse_buffer(&mut buffer);
         assert!(!_done);
         assert_eq!(chunks.len(), 1);
-        assert_eq!(chunks[0].text, "hello");
+        assert_eq!(chunks[0].text, "partial");
     }
 
     #[test]
