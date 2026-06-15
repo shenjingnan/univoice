@@ -39,6 +39,12 @@ pub enum AsrError {
     #[error("Unsupported operation: {0}")]
     Unsupported(&'static str),
 
+    #[error("HTTP request failed: {0}")]
+    HttpRequest(String),
+
+    #[error("HTTP error {status}: {message}")]
+    HttpStatus { status: u16, message: String },
+
     #[error("{0}")]
     Other(String),
 }

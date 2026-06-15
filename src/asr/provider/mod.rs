@@ -1,7 +1,9 @@
 pub mod doubao;
+pub mod glm;
 pub mod qwen;
 
 pub use doubao::{DoubaoAsr, DoubaoAsrConnection, DoubaoAsrMode, DoubaoAsrOption};
+pub use glm::{GlmAsr, GlmAsrOption};
 pub use qwen::{QwenAsr, QwenAsrConnection, QwenAsrOption};
 
 use crate::asr::types::AudioStream;
