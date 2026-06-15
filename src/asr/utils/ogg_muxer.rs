@@ -11,32 +11,36 @@
 /// - 后续: 音频数据包
 use std::time::{SystemTime, UNIX_EPOCH};
 
-/// CRC32 表（IEEE 多项式 0x04C11DB7）
+/// OGG CRC32 查找表（前向 CRC32，多项式 0x04C11DB7）
+///
+/// OGG 规范要求使用前向（MSB-first）CRC32，而非标准的反射 CRC32。
+/// 参考: https://en.wikipedia.org/wiki/Cyclic_redundancy_check
 const CRC32_TABLE: [u32; 256] = {
     let mut table = [0u32; 256];
     let mut i = 0;
     while i < 256 {
-        let mut crc = i as u32;
+        let mut r = i << 24;
         let mut j = 0;
         while j < 8 {
-            if crc & 1 != 0 {
-                crc = 0xed_b8_83_20 ^ (crc >> 1);
+            if r & 0x8000_0000 != 0 {
+                r = (r << 1) ^ 0x04c1_1db7;
             } else {
-                crc >>= 1;
+                r <<= 1;
             }
             j += 1;
         }
-        table[i] = crc;
+        table[i as usize] = r;
         i += 1;
     }
     table
 };
 
-/// 计算 OGG CRC32（标准 IEEE CRC32 多项式）
+/// 计算 OGG 前向 CRC32
 fn ogg_crc32(data: &[u8]) -> u32 {
     let mut crc: u32 = 0;
     for &byte in data {
-        crc = CRC32_TABLE[((crc ^ (byte as u32)) & 0xFF) as usize] ^ (crc >> 8);
+        let idx = (((crc >> 24) ^ (byte as u32)) & 0xFF) as usize;
+        crc = (crc << 8) ^ CRC32_TABLE[idx];
     }
     crc
 }
@@ -67,7 +71,6 @@ pub struct OggMuxer {
     serial_number: u32,
     page_sequence: u32,
     granule_position: u64,
-    sample_rate: u32,
     channels: u8,
     frame_size_ms: u32,
     started: bool,
@@ -93,8 +96,9 @@ impl OggMuxer {
         Self {
             serial_number,
             page_sequence: 0,
-            granule_position: 0,
-            sample_rate: options.sample_rate,
+            // Opus pre-skip: 对于 48kHz Opus 内部采样率，推荐值为 312
+            // 参考: RFC 7845 Section 5.1
+            granule_position: 312,
             channels: options.channels,
             frame_size_ms: options.frame_size_ms,
             started: false,
@@ -118,7 +122,9 @@ impl OggMuxer {
         }
 
         // 更新 granule position
-        let samples_per_frame = self.sample_rate as u64 * self.frame_size_ms as u64 / 1000;
+        // Opus 内部采样率总是 48000Hz，颗粒位置使用 48kHz 计算
+        // 参考: RFC 7845 Section 3
+        let samples_per_frame = (48000u64 * self.frame_size_ms as u64) / 1000;
         self.granule_position += samples_per_frame;
 
         // 创建数据页面
@@ -148,8 +154,8 @@ impl OggMuxer {
         packet.push(1);
         // Channel count
         packet.push(self.channels);
-        // Pre-skip (0)
-        packet.extend_from_slice(&0u16.to_le_bytes());
+        // Pre-skip (312 for 48kHz, RFC 7845 Section 5.1)
+        packet.extend_from_slice(&312u16.to_le_bytes());
         // Input sample rate (always 48000 for Opus)
         packet.extend_from_slice(&48000u32.to_le_bytes());
         // Output gain (0)
