@@ -15,8 +15,8 @@ use clap::Parser;
 use futures_util::StreamExt;
 
 use univoice::asr::{
-    AsrProvider, AudioInput, BaseProviderOption, DEFAULT_CHUNK_SIZE, QwenAsr, QwenAsrOption,
-    adapt_audio_input,
+    AsrProvider, AudioContainerFormat, AudioInput, BaseProviderOption, DEFAULT_CHUNK_SIZE, QwenAsr,
+    QwenAsrOption, adapt_audio_input,
 };
 
 #[derive(Parser)]
@@ -34,9 +34,26 @@ struct Args {
     #[arg(long)]
     model: Option<String>,
 
-    /// 采样率（可选，不指定则由服务端自动检测）
+    /// 采样率（可选，PCM 文件建议指定，默认 16000）
     #[arg(long)]
     sample_rate: Option<u32>,
+
+    /// 音频格式（可选，默认从文件扩展名推断: pcm/wav/mp3）
+    #[arg(long)]
+    format: Option<String>,
+}
+
+/// 从文件扩展名推断音频容器格式
+fn detect_format(path: &PathBuf) -> AudioContainerFormat {
+    match path.extension().and_then(|s| s.to_str()) {
+        Some("pcm") => AudioContainerFormat::Pcm,
+        Some("wav") => AudioContainerFormat::Wav,
+        Some("mp3") => AudioContainerFormat::Mp3,
+        _ => {
+            eprintln!("提示: 无法从文件扩展名推断格式，默认使用 mp3");
+            AudioContainerFormat::Mp3
+        }
+    }
 }
 
 #[tokio::main]
@@ -65,8 +82,35 @@ async fn main() {
         }
     };
 
+    // 检测音频格式
+    let format = match &args.format {
+        Some(f) => match f.as_str() {
+            "pcm" => AudioContainerFormat::Pcm,
+            "wav" => AudioContainerFormat::Wav,
+            "mp3" => AudioContainerFormat::Mp3,
+            _ => {
+                eprintln!("错误: 不支持的格式 '{}'，支持: pcm, wav, mp3", f);
+                std::process::exit(1);
+            }
+        },
+        None => detect_format(&args.file),
+    };
+
+    // PCM 文件默认采样率 16000
+    let sample_rate = args.sample_rate.or_else(|| {
+        if format == AudioContainerFormat::Pcm {
+            Some(16000)
+        } else {
+            None
+        }
+    });
+
     println!("\n=== Qwen ASR - 流式识别 ===");
     println!("音频文件: {}", args.file.display());
+    println!("音频格式: {:?}", format);
+    if let Some(sr) = sample_rate {
+        println!("采样率: {} Hz", sr);
+    }
     println!("音频大小: {} 字节\n", audio_data.len());
 
     // 创建 Qwen ASR 实例
@@ -74,9 +118,10 @@ async fn main() {
         base: BaseProviderOption {
             api_key: Some(args.api_key),
             model: args.model,
+            format: Some(format),
             ..Default::default()
         },
-        sample_rate: args.sample_rate,
+        sample_rate,
         ..Default::default()
     });
 
