@@ -1,9 +1,11 @@
 pub mod doubao;
 pub mod glm;
+pub mod minimax;
 pub mod qwen;
 
 pub use doubao::{DoubaoAsr, DoubaoAsrConnection, DoubaoAsrMode, DoubaoAsrOption};
 pub use glm::{GlmAsr, GlmAsrOption};
+pub use minimax::{MinimaxAsr, MinimaxAsrOption};
 pub use qwen::{QwenAsr, QwenAsrConnection, QwenAsrOption};
 
 use crate::asr::types::AudioStream;
