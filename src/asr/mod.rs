@@ -5,6 +5,7 @@ pub mod provider;
 pub mod registry;
 pub mod traits;
 pub mod types;
+pub mod utils;
 
 pub use error::AsrError;
 pub use provider::{

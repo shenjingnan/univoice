@@ -46,8 +46,19 @@ tokio-stream = "0.1"                                    # 流式扩展
 async-trait = "0.1"                                     # 异步 trait
 async-stream = "0.3"                                    # 流式宏
 
+# Opus 解码（可选，通过 opus-decoder feature 启用）
+opus2 = { version = "0.4", features = ["bundled"], optional = true }
+
+[features]
+default = []
+opus-decoder = ["opus2"]
+
 [dev-dependencies]
 tempfile = "3"
+
+[[example]]
+name = "asr_doubao_vad"
+required-features = ["opus-decoder"]
 
 [profile.dist]
 inherits = "release"
