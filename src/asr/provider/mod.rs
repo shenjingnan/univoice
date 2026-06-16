@@ -2,11 +2,13 @@ pub mod doubao;
 pub mod glm;
 pub mod mimo;
 pub mod qwen;
+pub mod xfyun;
 
 pub use doubao::{DoubaoAsr, DoubaoAsrConnection, DoubaoAsrMode, DoubaoAsrOption};
 pub use glm::{GlmAsr, GlmAsrOption};
 pub use mimo::{MimoAsr, MimoAsrOption};
 pub use qwen::{QwenAsr, QwenAsrConnection, QwenAsrOption};
+pub use xfyun::{XfyunAsr, XfyunAsrOption};
 
 use crate::asr::types::AudioStream;
 
