@@ -2,6 +2,10 @@
 #[allow(clippy::result_large_err)]
 pub mod asr;
 
+/// TTS 语音合成模块
+#[allow(clippy::result_large_err)]
+pub mod tts;
+
 /// 通用工具模块
 pub mod cli;
 pub mod config;
