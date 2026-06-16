@@ -49,8 +49,12 @@ async-stream = "0.3"                                    # 流式宏
 # HTTP 客户端（用于 GLM REST API，multipart + 流式响应）
 reqwest = { version = "0.12", default-features = false, features = ["multipart", "stream", "native-tls"] }
 
-# Base64 编解码（用于 MIMO ASR data URL）
+# Base64 编解码（用于 MIMO ASR data URL + Xfyun 鉴权）
 base64 = "0.22"
+
+# Xfyun ASR 鉴权（HMAC-SHA256 签名）
+hmac = "0.12"
+sha2 = "0.10"
 
 # Opus 解码（可选，通过 opus-decoder feature 启用）
 opus2 = { version = "0.4", features = ["bundled"], optional = true }
