@@ -1787,6 +1787,7 @@ dependencies = [
  "anyhow",
  "async-stream",
  "async-trait",
+ "base64",
  "bytes",
  "chrono",
  "clap",
