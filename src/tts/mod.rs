@@ -5,6 +5,7 @@ pub mod provider;
 pub mod registry;
 pub mod traits;
 pub mod types;
+pub mod utils;
 
 pub use error::TtsError;
 pub use traits::{TtsConnection, TtsProvider};

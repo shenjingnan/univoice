@@ -67,7 +67,7 @@ impl AudioCodecFormat {
 // ============================== 结果类型 ==============================
 
 /// ASR 流式响应块
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct AsrStreamChunk {
     pub text: String,
     pub is_final: bool,
@@ -76,7 +76,7 @@ pub struct AsrStreamChunk {
 }
 
 /// ASR 分段信息
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct AsrSegment {
     pub id: u32,
     pub start: u32,
@@ -87,7 +87,7 @@ pub struct AsrSegment {
 }
 
 /// 非流式识别结果
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct AsrResponse {
     pub text: String,
     pub language: Option<String>,
