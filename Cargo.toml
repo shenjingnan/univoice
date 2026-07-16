@@ -56,12 +56,13 @@ base64 = "0.22"
 hmac = "0.12"
 sha2 = "0.10"
 
-# Opus 解码（可选，通过 opus-decoder feature 启用）
+# Opus 编解码（可选，通过 opus-decoder / opus-encoder feature 启用）
 opus2 = { version = "0.4", features = ["bundled"], optional = true }
 
 [features]
 default = []
 opus-decoder = ["opus2"]
+opus-encoder = ["opus2"]
 
 [dev-dependencies]
 tempfile = "3"
