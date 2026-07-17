@@ -4,6 +4,7 @@ use std::time::Duration;
 use futures_util::Stream;
 
 use crate::tts::error::TtsError;
+use crate::tts::voice_id::VoiceId;
 
 /// TTS 流式文本输入
 pub type TextStream = Pin<Box<dyn Stream<Item = String> + Send>>;
@@ -55,7 +56,7 @@ pub struct BaseTtsOption {
     pub api_key: Option<String>,
     pub base_url: Option<String>,
     pub model: Option<String>,
-    pub voice: Option<String>,
+    pub voice: Option<VoiceId>,
     pub speed: Option<f32>,
     pub volume: Option<f32>,
     pub pitch: Option<f32>,

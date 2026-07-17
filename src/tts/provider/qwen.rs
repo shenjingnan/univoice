@@ -13,6 +13,8 @@ use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsConnectOption, TtsRequest, TtsResponse,
     TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
+use crate::tts::voices;
 
 // ============================== 常量 ==============================
 
@@ -35,7 +37,7 @@ const CONNECT_TIMEOUT: Duration = Duration::from_secs(1);
 #[derive(Debug, Clone)]
 struct QwenTtsConfig {
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: Option<u32>,
     speed: f32,
@@ -61,7 +63,7 @@ pub struct QwenTts {
     api_key: String,
     base_url: String,
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: Option<u32>,
     speed: f32,
@@ -86,7 +88,7 @@ impl QwenTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| QWEN_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(QWEN_DEFAULT_VOICE)),
             format: base.format.clone().unwrap_or_else(|| "mp3".into()),
             sample_rate: options.sample_rate,
             speed: base.speed.unwrap_or(1.0),
@@ -152,7 +154,7 @@ impl QwenTts {
         let vol = (self.volume * 100.0) as u32;
         TtsRunTaskParams {
             model: self.model.clone(),
-            voice: self.voice.clone(),
+            voice: self.voice.as_str().to_string(),
             format: self.format.clone(),
             sample_rate: self.sample_rate,
             volume: Some(vol),
@@ -219,7 +221,7 @@ impl TtsProvider for QwenTts {
     }
 
     async fn list_voices(&self) -> Result<Vec<TtsVoice>, TtsError> {
-        Ok(Vec::new())
+        Ok(voices::qwen::list_voices_for_model(Some(&self.model)))
     }
 }
 
@@ -437,7 +439,7 @@ impl QwenTtsConnection {
         let vol = (self.config.volume * 100.0) as u32;
         TtsRunTaskParams {
             model: self.config.model.clone(),
-            voice: self.config.voice.clone(),
+            voice: self.config.voice.as_str().to_string(),
             format: self.config.format.clone(),
             sample_rate: self.config.sample_rate,
             volume: Some(vol),
@@ -455,7 +457,7 @@ impl QwenTtsConnection {
             state,
             config: QwenTtsConfig {
                 model: String::new(),
-                voice: String::new(),
+                voice: VoiceId::new(""),
                 format: String::new(),
                 sample_rate: None,
                 speed: 1.0,
@@ -734,7 +736,7 @@ mod tests {
             api_key: "k".into(),
             base_url: "not a valid url".into(),
             model: String::new(),
-            voice: String::new(),
+            voice: VoiceId::new(""),
             format: String::new(),
             sample_rate: None,
             speed: 1.0,
@@ -752,7 +754,7 @@ mod tests {
             api_key: "k".into(),
             base_url: "wss://dashscope.aliyuncs.com/api-ws/v1/inference/".into(),
             model: String::new(),
-            voice: String::new(),
+            voice: VoiceId::new(""),
             format: String::new(),
             sample_rate: None,
             speed: 1.0,
@@ -770,7 +772,7 @@ mod tests {
             api_key: "k".into(),
             base_url: "wss://host:8443/path".into(),
             model: String::new(),
-            voice: String::new(),
+            voice: VoiceId::new(""),
             format: String::new(),
             sample_rate: None,
             speed: 1.0,
@@ -792,7 +794,7 @@ mod tests {
             api_key: "k".into(),
             base_url: "wss://host/path?version=2".into(),
             model: String::new(),
-            voice: String::new(),
+            voice: VoiceId::new(""),
             format: String::new(),
             sample_rate: None,
             speed: 1.0,
@@ -965,7 +967,7 @@ mod tests {
     // -------- 2.6 list_voices --------
 
     #[test]
-    fn test_l1_list_voices_empty() {
+    fn test_l1_list_voices_not_empty() {
         let provider = QwenTts::new(QwenTtsOption {
             base: BaseTtsOption {
                 api_key: Some("k".into()),
@@ -975,6 +977,6 @@ mod tests {
         });
         let rt = tokio::runtime::Runtime::new().unwrap();
         let voices = rt.block_on(provider.list_voices()).unwrap();
-        assert!(voices.is_empty());
+        assert!(!voices.is_empty(), "Qwen list_voices should not be empty");
     }
 }

@@ -24,6 +24,7 @@ use crate::tts::traits::TtsProvider;
 use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsRequest, TtsResponse, TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
 
 // ============================== 常量 ==============================
 
@@ -67,7 +68,7 @@ pub struct XfyunTts {
     api_key: String,
     api_secret: String,
     app_id: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: u32,
     speed: f32,
@@ -94,7 +95,7 @@ impl XfyunTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| xfyun::XFYUN_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(xfyun::XFYUN_DEFAULT_VOICE)),
             format: base.format.clone().unwrap_or_else(|| "mp3".into()),
             sample_rate: options
                 .sample_rate
@@ -122,7 +123,7 @@ impl XfyunTts {
     fn build_protocol_options(&self) -> XfyunTtsProtocolOptions {
         XfyunTtsProtocolOptions {
             app_id: self.app_id.clone(),
-            vcn: self.voice.clone(),
+            vcn: self.voice.as_str().to_string(),
             speed: Self::map_param(self.speed),
             volume: Self::map_param(self.volume),
             pitch: Self::map_param(self.pitch),

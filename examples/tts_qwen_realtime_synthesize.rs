@@ -27,6 +27,7 @@ use std::path::PathBuf;
 use clap::Parser;
 
 use univoice::tts::provider::{QwenRealtimeTts, QwenRealtimeTtsOption};
+use univoice::tts::voice_id;
 use univoice::tts::{BaseTtsOption, TtsProvider, TtsRequest};
 
 #[derive(Parser)]
@@ -51,7 +52,7 @@ struct Args {
     #[arg(short, long, default_value = "output.pcm")]
     output: PathBuf,
 
-    /// 音色名称（默认 Cherry）
+    /// 音色名称（默认 Cherry。可选值见 `voice_id::qwen_realtime::*` 常量，如 SERENA/ETHAN/MOMO/STELLA 等）
     #[arg(long)]
     voice: Option<String>,
 
@@ -92,11 +93,12 @@ async fn main() {
     println!("输出: {}", args.output.display());
 
     // 创建 Qwen Realtime TTS 实例
+    // 提示: 可用 `voice_id::qwen_realtime::SERENA.into()` 等常量代替字符串
     let tts = QwenRealtimeTts::new(QwenRealtimeTtsOption {
         base: BaseTtsOption {
             api_key: Some(args.api_key),
             model: args.model,
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             format: args.format,
             ..Default::default()
         },

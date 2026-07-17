@@ -126,7 +126,7 @@ async fn main() {
     let tts = XfyunTts::new(XfyunTtsOption {
         base: BaseTtsOption {
             api_key: Some(args.api_key),
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             speed: args.speed,
             volume: args.volume,
             pitch: args.pitch,

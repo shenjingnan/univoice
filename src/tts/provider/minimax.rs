@@ -22,6 +22,8 @@ use crate::tts::traits::TtsProvider;
 use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsRequest, TtsResponse, TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
+use crate::tts::voices;
 
 // ============================== 常量 ==============================
 
@@ -60,7 +62,7 @@ pub struct MinimaxTts {
     api_key: String,
     base_url: String,
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     speed: Option<f32>,
     volume: Option<f32>,
@@ -94,7 +96,7 @@ impl MinimaxTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| MINIMAX_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(MINIMAX_DEFAULT_VOICE)),
             format: base
                 .format
                 .clone()
@@ -129,7 +131,7 @@ impl MinimaxTts {
             text: input.to_string(),
             stream: if stream { Some(true) } else { None },
             voice_setting: VoiceSetting {
-                voice_id: self.voice.clone(),
+                voice_id: self.voice.as_str().to_string(),
                 speed: self.speed,
                 vol: self.volume,
                 pitch: self.pitch,
@@ -313,7 +315,7 @@ impl TtsProvider for MinimaxTts {
     }
 
     async fn list_voices(&self) -> Result<Vec<TtsVoice>, TtsError> {
-        Ok(system_voices())
+        Ok(voices::minimax::list_voices())
     }
 }
 
@@ -352,68 +354,6 @@ fn process_data(data: &str) -> Option<MinimaxStreamEvent> {
         Ok(None) => None,
         Err(e) => Some(MinimaxStreamEvent::Error(e)),
     }
-}
-
-/// 常用系统音色列表（核心音色，完整列表参见官方文档）
-fn system_voices() -> Vec<TtsVoice> {
-    let voices = [
-        // 中文（普通话）
-        ("male-qn-qingse", "male-qn-qingse", "zh-CN"),
-        ("male-qn-jingying", "male-qn-jingying", "zh-CN"),
-        ("male-qn-badao", "male-qn-badao", "zh-CN"),
-        ("male-qn-daxuesheng", "male-qn-daxuesheng", "zh-CN"),
-        ("female-shaonv", "female-shaonv", "zh-CN"),
-        ("female-yujie", "female-yujie", "zh-CN"),
-        ("female-chengshu", "female-chengshu", "zh-CN"),
-        ("female-tianmei", "female-tianmei", "zh-CN"),
-        (
-            "Chinese (Mandarin)_Lyrical_Voice",
-            "Chinese (Mandarin)_Lyrical_Voice",
-            "zh-CN",
-        ),
-        (
-            "Chinese (Mandarin)_News_Anchor",
-            "Chinese (Mandarin)_News_Anchor",
-            "zh-CN",
-        ),
-        // 英文
-        ("English_Graceful_Lady", "English_Graceful_Lady", "en-US"),
-        (
-            "English_Insightful_Speaker",
-            "English_Insightful_Speaker",
-            "en-US",
-        ),
-        (
-            "English_Trustworthy_Man",
-            "English_Trustworthy_Man",
-            "en-US",
-        ),
-        ("English_Persuasive_Man", "English_Persuasive_Man", "en-US"),
-        // 日文
-        ("Japanese_Whisper_Belle", "Japanese_Whisper_Belle", "ja-JP"),
-        (
-            "Japanese_IntellectualSenior",
-            "Japanese_IntellectualSenior",
-            "ja-JP",
-        ),
-        // 韩文
-        ("Korean_SweetGirl", "Korean_SweetGirl", "ko-KR"),
-        (
-            "Korean_CheerfulBoyfriend",
-            "Korean_CheerfulBoyfriend",
-            "ko-KR",
-        ),
-    ];
-
-    voices
-        .into_iter()
-        .map(|(id, name, lang)| TtsVoice {
-            id: id.into(),
-            name: name.into(),
-            language: lang.into(),
-            gender: None,
-        })
-        .collect()
 }
 
 #[cfg(test)]

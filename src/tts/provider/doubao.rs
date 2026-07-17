@@ -18,6 +18,8 @@ use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsConnectOption, TtsRequest, TtsResponse,
     TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
+use crate::tts::voices;
 
 // ============================================================================
 // 常量
@@ -53,7 +55,7 @@ type WsStream = WebSocketStream<MaybeTlsStream<TcpStream>>;
 /// DoubaoTTS 运行时配置快照 (用于连接复用)
 #[derive(Debug, Clone)]
 struct DoubaoTtsConfig {
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: u32,
     enable_timestamp: bool,
@@ -84,7 +86,7 @@ pub struct DoubaoTts {
     access_token: String,
     resource_id: String,
     base_url: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: u32,
     enable_timestamp: bool,
@@ -107,7 +109,7 @@ impl DoubaoTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| DOUBAO_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(DOUBAO_DEFAULT_VOICE)),
             format: base
                 .format
                 .clone()
@@ -179,7 +181,7 @@ impl DoubaoTts {
                 "uid": uuid::Uuid::new_v4().to_string()
             },
             "req_params": {
-                "speaker": self.voice,
+                "speaker": self.voice.as_str(),
                 "audio_params": {
                     "format": self.format,
                     "sample_rate": self.sample_rate,
@@ -199,7 +201,7 @@ impl DoubaoTts {
                 "uid": uuid::Uuid::new_v4().to_string()
             },
             "req_params": {
-                "speaker": self.voice,
+                "speaker": self.voice.as_str(),
                 "audio_params": {
                     "format": self.format,
                     "sample_rate": self.sample_rate,
@@ -480,7 +482,7 @@ impl TtsProvider for DoubaoTts {
     }
 
     async fn list_voices(&self) -> Result<Vec<TtsVoice>, TtsError> {
-        Ok(Vec::new())
+        Ok(voices::doubao::list_voices())
     }
 }
 
@@ -495,7 +497,7 @@ impl DoubaoTts {
                 "uid": uuid::Uuid::new_v4().to_string()
             },
             "req_params": {
-                "speaker": config.voice,
+                "speaker": config.voice.as_str(),
                 "audio_params": {
                     "format": config.format,
                     "sample_rate": config.sample_rate,
@@ -587,7 +589,7 @@ impl DoubaoTtsConnection {
             ws: None,
             state,
             config: DoubaoTtsConfig {
-                voice: String::new(),
+                voice: VoiceId::new(""),
                 format: String::new(),
                 sample_rate: 24000,
                 enable_timestamp: false,
@@ -794,7 +796,7 @@ impl DoubaoTtsConnection {
                 "uid": uuid::Uuid::new_v4().to_string()
             },
             "req_params": {
-                "speaker": config.voice,
+                "speaker": config.voice.as_str(),
                 "audio_params": {
                     "format": config.format,
                     "sample_rate": config.sample_rate,
@@ -1019,7 +1021,7 @@ mod tests {
             access_token: "token".into(),
             resource_id: "res".into(),
             base_url: "not a valid url".into(),
-            voice: String::new(),
+            voice: VoiceId::new(""),
             format: String::new(),
             sample_rate: 24000,
             enable_timestamp: false,
@@ -1115,7 +1117,7 @@ mod tests {
     // ---- L1: list_voices ----
 
     #[test]
-    fn test_l1_list_voices_empty() {
+    fn test_l1_list_voices_all_have_id() {
         let provider = DoubaoTts::new(DoubaoTtsOption {
             app_id: Some("a".into()),
             access_token: Some("t".into()),
@@ -1123,6 +1125,9 @@ mod tests {
         });
         let rt = tokio::runtime::Runtime::new().unwrap();
         let voices = rt.block_on(provider.list_voices()).unwrap();
-        assert!(voices.is_empty());
+        assert!(!voices.is_empty(), "Doubao list_voices should not be empty");
+        for v in &voices {
+            assert!(!v.id.is_empty(), "Each voice must have a non-empty id");
+        }
     }
 }

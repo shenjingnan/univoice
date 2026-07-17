@@ -88,7 +88,7 @@ async fn main() {
     // 创建 Doubao TTS 实例
     let tts = DoubaoTts::new(DoubaoTtsOption {
         base: BaseTtsOption {
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             format: args.format,
             ..Default::default()
         },
