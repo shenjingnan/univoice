@@ -7,7 +7,7 @@ description: 提交、推送并创建 PR
 
 以下命令将在技能加载时自动执行，结果将注入到上下文中供分析：
 
-- 全部上下文: !`bash .agents/skills/commit-push-pr/scripts/collect-context.sh`
+- 全部上下文: !`bash -c 'cd "$(git rev-parse --show-toplevel 2>/dev/null)" && bash .agents/skills/commit-push-pr/scripts/collect-context.sh'`
 
 ## Attribution 信息
 

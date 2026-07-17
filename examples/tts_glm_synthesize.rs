@@ -24,6 +24,7 @@ use std::path::PathBuf;
 use clap::Parser;
 
 use univoice::tts::provider::{GlmTts, GlmTtsOption};
+use univoice::tts::voice_id;
 use univoice::tts::{BaseTtsOption, TtsProvider, TtsRequest};
 
 #[derive(Parser)]
@@ -45,7 +46,7 @@ struct Args {
     #[arg(short, long, default_value = "output_glm.wav")]
     output: PathBuf,
 
-    /// 音色名称（默认 tongtong；可选 chuichui/xiaochen/jam/kazi/douji/luodo）
+    /// 音色名称（默认 tongtong。可选值见 `voice_id::glm::*` 常量）
     #[arg(long)]
     voice: Option<String>,
 
@@ -85,11 +86,12 @@ async fn main() {
     println!("输出: {}", args.output.display());
 
     // 创建 GLM TTS 实例
+    // 提示: 可用 `voice_id::glm::XIAOCHEN.into()` 等常量代替字符串
     let tts = GlmTts::new(GlmTtsOption {
         base: BaseTtsOption {
             api_key: Some(args.api_key),
             model: args.model,
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             speed: args.speed,
             volume: args.volume,
             format: Some(args.format),

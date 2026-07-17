@@ -40,6 +40,8 @@ use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsConnectOption, TtsRequest, TtsResponse,
     TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
+use crate::tts::voices;
 
 // ============================== 常量 ==============================
 
@@ -87,7 +89,7 @@ pub struct QwenRealtimeTtsOption {
 struct QwenRealtimeConfig {
     #[allow(dead_code)]
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: u32,
     instruction: Option<String>,
@@ -105,7 +107,7 @@ pub struct QwenRealtimeTts {
     api_key: String,
     base_url: String,
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     sample_rate: u32,
     instruction: Option<String>,
@@ -132,7 +134,7 @@ impl QwenRealtimeTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| QWEN_REALTIME_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(QWEN_REALTIME_DEFAULT_VOICE)),
             format: base
                 .format
                 .clone()
@@ -166,7 +168,7 @@ impl QwenRealtimeTts {
 
     fn build_session_params(&self) -> SessionUpdateParams {
         SessionUpdateParams {
-            voice: self.voice.clone(),
+            voice: self.voice.as_str().to_string(),
             mode: self.mode,
             language_type: self.language_type.clone(),
             format: self.format.clone(),
@@ -249,7 +251,7 @@ impl TtsProvider for QwenRealtimeTts {
     }
 
     async fn list_voices(&self) -> Result<Vec<TtsVoice>, TtsError> {
-        Ok(Vec::new())
+        Ok(voices::qwen_realtime::list_voices())
     }
 }
 
@@ -463,7 +465,7 @@ pub struct QwenRealtimeTtsConnection {
 impl QwenRealtimeTtsConnection {
     fn build_session_params(&self) -> SessionUpdateParams {
         SessionUpdateParams {
-            voice: self.config.voice.clone(),
+            voice: self.config.voice.as_str().to_string(),
             mode: self.config.mode,
             language_type: self.config.language_type.clone(),
             format: self.config.format.clone(),
@@ -485,7 +487,7 @@ impl QwenRealtimeTtsConnection {
             state,
             config: QwenRealtimeConfig {
                 model: String::new(),
-                voice: String::new(),
+                voice: VoiceId::new(""),
                 format: String::new(),
                 sample_rate: 24000,
                 instruction: None,

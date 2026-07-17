@@ -86,7 +86,7 @@ async fn main() {
         base: BaseTtsOption {
             api_key: Some(args.api_key),
             model: args.model,
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             speed: args.speed,
             format: args.format,
             ..Default::default()

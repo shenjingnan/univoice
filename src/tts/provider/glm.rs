@@ -26,6 +26,8 @@ use crate::tts::traits::TtsProvider;
 use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsRequest, TtsResponse, TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
+use crate::tts::voices;
 
 // ============================== 常量 ==============================
 
@@ -55,7 +57,7 @@ pub struct GlmTts {
     api_key: String,
     base_url: String,
     model: String,
-    voice: String,
+    voice: VoiceId,
     format: String,
     speed: Option<f32>,
     volume: Option<f32>,
@@ -83,7 +85,7 @@ impl GlmTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| GLM_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(GLM_DEFAULT_VOICE)),
             format: base
                 .format
                 .clone()
@@ -115,7 +117,7 @@ impl GlmTts {
         GlmSpeechRequest {
             model: self.model.clone(),
             input: input.to_string(),
-            voice: self.voice.clone(),
+            voice: self.voice.as_str().to_string(),
             response_format,
             stream: if stream { Some(true) } else { None },
             encode_format: if stream { Some("base64".into()) } else { None },
@@ -248,7 +250,7 @@ impl TtsProvider for GlmTts {
     }
 
     async fn list_voices(&self) -> Result<Vec<TtsVoice>, TtsError> {
-        Ok(glm_system_voices())
+        Ok(voices::glm::list_voices())
     }
 }
 
@@ -299,27 +301,6 @@ fn process_data(data: &str) -> Option<Outcome> {
         Ok(None) => None,
         Err(e) => Some(Outcome::Error(e)),
     }
-}
-
-/// GLM 系统音色（7 个）
-fn glm_system_voices() -> Vec<TtsVoice> {
-    [
-        ("tongtong", "彤彤"),
-        ("chuichui", "锤锤"),
-        ("xiaochen", "小陈"),
-        ("jam", "jam"),
-        ("kazi", "kazi"),
-        ("douji", "douji"),
-        ("luodo", "luodo"),
-    ]
-    .into_iter()
-    .map(|(id, name)| TtsVoice {
-        id: id.into(),
-        name: name.into(),
-        language: "zh-CN".into(),
-        gender: None,
-    })
-    .collect()
 }
 
 #[cfg(test)]

@@ -29,6 +29,7 @@ use crate::tts::traits::TtsProvider;
 use crate::tts::types::{
     BaseTtsOption, TextStream, TtsAudioStream, TtsRequest, TtsResponse, TtsStreamChunk, TtsVoice,
 };
+use crate::tts::voice_id::VoiceId;
 
 // ============================== 常量 ==============================
 
@@ -56,7 +57,7 @@ pub struct GeminiTts {
     api_key: String,
     base_url: String,
     model: String,
-    voice: String,
+    voice: VoiceId,
     client: reqwest::Client,
 }
 
@@ -80,7 +81,7 @@ impl GeminiTts {
             voice: base
                 .voice
                 .clone()
-                .unwrap_or_else(|| GEMINI_DEFAULT_VOICE.into()),
+                .unwrap_or_else(|| VoiceId::from(GEMINI_DEFAULT_VOICE)),
             client,
         }
     }
@@ -104,7 +105,7 @@ impl GeminiTts {
                 type_: "audio".into(),
             },
             generation_config: GenerationConfig {
-                speech_config: vec![SpeechConfigItem::single(&self.voice)],
+                speech_config: vec![SpeechConfigItem::single(self.voice.as_str())],
             },
             stream: None,
         }
@@ -119,7 +120,7 @@ impl GeminiTts {
                 type_: "audio".into(),
             },
             generation_config: GenerationConfig {
-                speech_config: vec![SpeechConfigItem::single(&self.voice)],
+                speech_config: vec![SpeechConfigItem::single(self.voice.as_str())],
             },
             stream: Some(true),
         }

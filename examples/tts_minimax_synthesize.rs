@@ -28,6 +28,7 @@ use std::path::PathBuf;
 use clap::Parser;
 
 use univoice::tts::provider::{MinimaxTts, MinimaxTtsOption};
+use univoice::tts::voice_id;
 use univoice::tts::{BaseTtsOption, TtsProvider, TtsRequest};
 
 #[derive(Parser)]
@@ -49,7 +50,7 @@ struct Args {
     #[arg(short, long, default_value = "output.mp3")]
     output: PathBuf,
 
-    /// 音色名称（默认 male-qn-qingse）
+    /// 音色名称（默认 male-qn-qingse。可选值见 `voice_id::minimax::*` 常量）
     #[arg(long)]
     voice: Option<String>,
 
@@ -106,11 +107,12 @@ async fn main() {
     println!("输出: {}", args.output.display());
 
     // 创建 MiniMax TTS 实例
+    // 提示: 可用 `voice_id::minimax::FEMALE_SHAONV.into()` 等常量代替字符串
     let tts = MinimaxTts::new(MinimaxTtsOption {
         base: BaseTtsOption {
             api_key: Some(args.api_key),
             model: args.model,
-            voice: args.voice,
+            voice: args.voice.map(Into::into),
             speed: args.speed,
             volume: args.volume,
             pitch: args.pitch,
