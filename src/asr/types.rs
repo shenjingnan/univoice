@@ -120,3 +120,92 @@ impl Default for BaseProviderOption {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // ====== AudioContainerFormat ======
+
+    #[test]
+    fn test_a1_container_as_str() {
+        assert_eq!(AudioContainerFormat::Pcm.as_str(), "pcm");
+        assert_eq!(AudioContainerFormat::Wav.as_str(), "wav");
+        assert_eq!(AudioContainerFormat::Ogg.as_str(), "ogg");
+        assert_eq!(AudioContainerFormat::Mp3.as_str(), "mp3");
+    }
+
+    #[test]
+    fn test_a2_container_default() {
+        assert_eq!(AudioContainerFormat::default(), AudioContainerFormat::Pcm);
+    }
+
+    // ====== AudioCodecFormat ======
+
+    #[test]
+    fn test_a3_codec_as_str() {
+        assert_eq!(AudioCodecFormat::Raw.as_str(), "raw");
+        assert_eq!(AudioCodecFormat::Opus.as_str(), "opus");
+    }
+
+    #[test]
+    fn test_a4_codec_default() {
+        assert_eq!(AudioCodecFormat::default(), AudioCodecFormat::Raw);
+    }
+
+    // ====== BaseProviderOption ======
+
+    #[test]
+    fn test_a5_base_option_default() {
+        let opt = BaseProviderOption::default();
+        assert_eq!(opt.language, Some("zh-CN".into()));
+        assert!(opt.api_key.is_none());
+        assert!(opt.base_url.is_none());
+        assert!(opt.model.is_none());
+        assert!(opt.format.is_none());
+        assert!(opt.codec.is_none());
+    }
+
+    // ====== AsrStreamChunk / AsrSegment / AsrResponse ======
+
+    #[test]
+    fn test_a6_asr_stream_chunk_construction() {
+        let chunk = AsrStreamChunk {
+            text: "hello".into(),
+            is_final: false,
+            confidence: Some(0.95),
+            segment: None,
+        };
+        assert_eq!(chunk.text, "hello");
+        assert!(!chunk.is_final);
+        assert_eq!(chunk.confidence, Some(0.95));
+    }
+
+    #[test]
+    fn test_a7_asr_segment_construction() {
+        let seg = AsrSegment {
+            id: 1,
+            start: 0,
+            end: 1000,
+            text: "测试".into(),
+            speaker: Some("spk1".into()),
+            confidence: Some(0.9),
+        };
+        assert_eq!(seg.id, 1);
+        assert_eq!(seg.text, "测试");
+        assert_eq!(seg.speaker, Some("spk1".into()));
+    }
+
+    #[test]
+    fn test_a8_asr_response_construction() {
+        let resp = AsrResponse {
+            text: "result".into(),
+            language: Some("zh-CN".into()),
+            duration: Some(5000),
+            segments: None,
+        };
+        assert_eq!(resp.text, "result");
+        assert_eq!(resp.duration, Some(5000));
+        assert!(resp.segments.is_none());
+    }
+}

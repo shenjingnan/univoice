@@ -20,7 +20,12 @@ use opus2::{self, Application, Channels};
 use crate::asr::utils::OggMuxer;
 use crate::asr::utils::OggMuxerOptions;
 use crate::tts::error::TtsError;
-use crate::tts::types::{TtsAudioStream, TtsStreamChunk};
+use crate::tts::types::TtsAudioStream;
+#[cfg(test)]
+use crate::tts::types::TtsStreamChunk;
+
+/// PCM → Opus 编码后的流类型
+type OpusStream = Pin<Box<dyn Stream<Item = Result<Vec<u8>, TtsError>> + Send>>;
 
 /// Opus 支持的帧时长（毫秒）
 const VALID_FRAME_DURATIONS_MS: &[u32] = &[2, 5, 10, 20, 40, 60, 120];
@@ -86,7 +91,7 @@ impl Default for PcmToOpusOptions {
 pub fn pcm_to_opus(
     pcm_stream: TtsAudioStream,
     options: PcmToOpusOptions,
-) -> Result<Pin<Box<dyn Stream<Item = Result<Vec<u8>, TtsError>> + Send>>, TtsError> {
+) -> Result<OpusStream, TtsError> {
     // ====== 参数校验 ======
     validate_options(&options)?;
 
@@ -120,7 +125,7 @@ pub fn pcm_to_opus(
 
     // ====== 准备 OGG Muxer（如果启用）======
     let use_ogg = options.ogg;
-    let ogg_encoder_name = options
+    let _ogg_encoder_name = options
         .ogg_encoder
         .clone()
         .unwrap_or_else(|| "univoice-rs".to_string());
@@ -132,7 +137,7 @@ pub fn pcm_to_opus(
         if use_ogg {
             ogg_muxer = Some(OggMuxer::new(OggMuxerOptions {
                 sample_rate: options.sample_rate,
-                channels: options.channels as u8,
+                channels: options.channels,
                 frame_size_ms: options.frame_duration_ms,
             }));
         }

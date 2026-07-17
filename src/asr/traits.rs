@@ -67,3 +67,29 @@ impl Default for AsrConnectOption {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_t1_connection_state_debug_clone() {
+        assert_eq!(format!("{:?}", ConnectionState::Connected), "Connected");
+        assert_eq!(format!("{:?}", ConnectionState::Closed), "Closed");
+        assert_ne!(ConnectionState::Connected, ConnectionState::Closed);
+    }
+
+    #[test]
+    fn test_t2_connect_option_default() {
+        let opt = AsrConnectOption::default();
+        assert_eq!(opt.timeout, Duration::from_secs(10));
+    }
+
+    #[test]
+    fn test_t3_connect_option_custom() {
+        let opt = AsrConnectOption {
+            timeout: Duration::from_secs(30),
+        };
+        assert_eq!(opt.timeout, Duration::from_secs(30));
+    }
+}
