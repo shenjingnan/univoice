@@ -71,6 +71,12 @@ tempfile = "3"
 name = "asr_doubao_vad"
 required-features = ["opus-decoder"]
 
+[[example]]
+name = "tts_openai_synthesize"
+
+[[example]]
+name = "tts_openai_stream"
+
 [profile.dist]
 inherits = "release"
 lto = "thin"

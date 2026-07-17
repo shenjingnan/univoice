@@ -402,6 +402,30 @@ pub mod gemini {
     pub const SULAFAT: &str = "Sulafat";
 }
 
+/// OpenAI TTS 音色常量
+pub mod openai {
+    /// 预设 1（默认）
+    pub const ALLOY: &str = "alloy";
+    /// 预设 2
+    pub const ECHO: &str = "echo";
+    /// 预设 3
+    pub const FABLE: &str = "fable";
+    /// 预设 4
+    pub const NOVA: &str = "nova";
+    /// 预设 5
+    pub const SHIMMER: &str = "shimmer";
+    /// 预设 6
+    pub const ASH: &str = "ash";
+    /// 预设 7
+    pub const BALLAD: &str = "ballad";
+    /// 预设 8
+    pub const CORAL: &str = "coral";
+    /// 预设 9
+    pub const SAGE: &str = "sage";
+    /// 预设 10
+    pub const VERSE: &str = "verse";
+}
+
 /// Xfyun 音色常量
 pub mod xfyun {
     /// x5_lingxiaoxuan_flow（默认）
@@ -508,7 +532,21 @@ mod tests {
     }
 
     #[test]
-    fn test_k6_doubao_constants() {
+    fn test_k6_openai_constants() {
+        assert_eq!(openai::ALLOY, "alloy");
+        assert_eq!(openai::ECHO, "echo");
+        assert_eq!(openai::FABLE, "fable");
+        assert_eq!(openai::NOVA, "nova");
+        assert_eq!(openai::SHIMMER, "shimmer");
+        assert_eq!(openai::ASH, "ash");
+        assert_eq!(openai::BALLAD, "ballad");
+        assert_eq!(openai::CORAL, "coral");
+        assert_eq!(openai::SAGE, "sage");
+        assert_eq!(openai::VERSE, "verse");
+    }
+
+    #[test]
+    fn test_k7_doubao_constants() {
         assert_eq!(doubao::DEFAULT, "zh_female_tianmeixiaoyuan_moon_bigtts");
         assert_eq!(doubao::VV, "zh_female_vv_uranus_bigtts");
     }
