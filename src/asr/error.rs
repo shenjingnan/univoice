@@ -55,3 +55,26 @@ impl AsrError {
         Self::Timeout(timeout.as_millis() as u64)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_e1_from_elapsed_millis() {
+        let err = AsrError::from_elapsed(Duration::from_millis(500));
+        assert!(matches!(err, AsrError::Timeout(500)));
+    }
+
+    #[test]
+    fn test_e2_from_elapsed_seconds() {
+        let err = AsrError::from_elapsed(Duration::from_secs(30));
+        assert!(matches!(err, AsrError::Timeout(30_000)));
+    }
+
+    #[test]
+    fn test_e3_from_elapsed_zero() {
+        let err = AsrError::from_elapsed(Duration::ZERO);
+        assert!(matches!(err, AsrError::Timeout(0)));
+    }
+}

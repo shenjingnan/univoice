@@ -60,7 +60,7 @@ sha2 = "0.10"
 opus2 = { version = "0.4", features = ["bundled"], optional = true }
 
 [features]
-default = []
+default = ["opus-decoder", "opus-encoder"]
 opus-decoder = ["opus2"]
 opus-encoder = ["opus2"]
 

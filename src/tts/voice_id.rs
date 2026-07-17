@@ -517,13 +517,13 @@ mod tests {
     fn test_k3_qwen_realtime_constants() {
         assert_eq!(qwen_realtime::DEFAULT, "Cherry");
         assert_eq!(qwen_realtime::CHERRY, "Cherry");
-        assert!(qwen_realtime::SERENA.len() > 0);
+        assert!(!qwen_realtime::SERENA.is_empty());
     }
 
     #[test]
     fn test_k4_gemini_constants() {
         assert_eq!(gemini::DEFAULT, "Zephyr");
-        assert!(gemini::PUCK.len() > 0);
+        assert!(!gemini::PUCK.is_empty());
     }
 
     #[test]
@@ -549,5 +549,53 @@ mod tests {
     fn test_k7_doubao_constants() {
         assert_eq!(doubao::DEFAULT, "zh_female_tianmeixiaoyuan_moon_bigtts");
         assert_eq!(doubao::VV, "zh_female_vv_uranus_bigtts");
+    }
+
+    // -------- S1-S2: serde 序列化/反序列化 --------
+
+    #[test]
+    fn test_s1_serde_roundtrip() {
+        let v: VoiceId = "test-voice-id".into();
+        let json = serde_json::to_string(&v).unwrap();
+        assert_eq!(json, "\"test-voice-id\"");
+
+        let deserialized: VoiceId = serde_json::from_str(&json).unwrap();
+        assert_eq!(deserialized, "test-voice-id");
+    }
+
+    #[test]
+    fn test_s2_serde_empty_string() {
+        let v: VoiceId = "".into();
+        let json = serde_json::to_string(&v).unwrap();
+        assert_eq!(json, "\"\"");
+
+        let deserialized: VoiceId = serde_json::from_str(&json).unwrap();
+        assert_eq!(deserialized.as_str(), "");
+    }
+
+    // -------- P1-P2: PartialEq 边界 --------
+
+    #[test]
+    fn test_p1_eq_str() {
+        let v: VoiceId = "hello".into();
+        assert!(v == "hello");
+        assert!(v != "world");
+    }
+
+    #[test]
+    fn test_p2_eq_ref_str() {
+        let v: VoiceId = "hello".into();
+        let s: &str = "hello";
+        let rs: &&str = &s;
+        assert_eq!(v, *rs);
+    }
+
+    // -------- X1: xfyun constants --------
+
+    #[test]
+    fn test_x1_xfyun_constants() {
+        assert_eq!(xfyun::DEFAULT, "x5_lingxiaoxuan_flow");
+        assert_eq!(xfyun::X5_LINGXIAOXUAN, "x5_lingxiaoxuan_flow");
+        assert_eq!(xfyun::X5_LINGFEIYI, "x5_lingfeiyi_flow");
     }
 }
