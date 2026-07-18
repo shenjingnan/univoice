@@ -80,3 +80,9 @@ name = "tts_openai_stream"
 [profile.dist]
 inherits = "release"
 lto = "thin"
+
+# ============================== Binary Targets ==============================
+
+[[bin]]
+name = "univoice-bench"
+path = "src/bin/bench.rs"
