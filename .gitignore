@@ -47,3 +47,7 @@ dist/
 output/
 benchmark/results/
 .agents/plans
+
+# Claude AI plans (development artifacts)
+.claude/plans/
+.claude/
