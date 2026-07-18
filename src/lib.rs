@@ -6,6 +6,9 @@ pub mod asr;
 #[allow(clippy::result_large_err)]
 pub mod tts;
 
+/// Benchmark 性能基准测试模块
+pub mod benchmark;
+
 /// 通用工具模块
 pub mod cli;
 pub mod config;
