@@ -1,0 +1,16 @@
+[files]
+extend-exclude = [
+  "docs/tmp/**",
+  "examples/output/**",
+  "examples/assets/**",
+  "examples/tts/**/output/**",
+  "examples/node_modules/**",
+  "dist/**",
+]
+
+[default.extend-words]
+# 厂商音色名称（非拼写错误）
+didi = "didi"
+Claus = "Claus"
+SantaClaus = "SantaClaus"
+Ono = "Ono"

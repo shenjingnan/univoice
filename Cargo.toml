@@ -1,0 +1,94 @@
+[package]
+name = "univoice"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Unified Voice SDK for TTS and ASR (Rust edition)"
+license = "MIT"
+repository = "https://github.com/shenjingnan/univoice"
+homepage = "https://github.com/shenjingnan/univoice"
+documentation = "https://docs.rs/univoice"
+keywords = ["tts", "asr", "voice", "speech", "sdk"]
+categories = ["api-bindings", "multimedia::audio"]
+include = ["/src", "/examples/*.rs", "/tests", "/Cargo.toml", "/LICENSE", "/README.md"]
+
+[dependencies]
+# CLI 框架
+clap = { version = "4", features = ["derive", "env"] }
+clap_complete = "4"
+
+# 异步运行时
+tokio = { version = "1", features = ["full"] }
+
+# 序列化
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# 错误处理
+thiserror = "2"
+anyhow = "1"
+
+# 时间处理
+chrono = "0.4"
+
+# 日志
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "registry"] }
+
+# 示例依赖
+dotenvy = "0.15"                                        # .env 文件加载
+
+# --- ASR 依赖 ---
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }    # WebSocket 客户端
+tungstenite = "0.24"                                    # WebSocket 协议底层
+futures-util = "0.3"                                    # 异步流处理
+flate2 = "1"                                            # Gzip 压缩/解压
+uuid = { version = "1", features = ["v4"] }             # UUID 生成
+http = "1"                                              # HTTP 头操作
+bytes = "1"                                             # 字节缓冲区
+url = "2"                                               # URL 解析
+tokio-stream = "0.1"                                    # 流式扩展
+async-trait = "0.1"                                     # 异步 trait
+async-stream = "0.3"                                    # 流式宏
+
+# HTTP 客户端（用于 GLM REST API，multipart + 流式响应）
+reqwest = { version = "0.12", default-features = false, features = ["multipart", "stream", "native-tls"] }
+
+# Base64 编解码（用于 MIMO ASR data URL + Xfyun 鉴权）
+base64 = "0.22"
+
+# Xfyun ASR 鉴权（HMAC-SHA256 签名）
+hmac = "0.12"
+sha2 = "0.10"
+
+# Opus 编解码（可选，通过 opus-decoder / opus-encoder feature 启用）
+opus2 = { version = "0.4", features = ["bundled"], optional = true }
+
+[features]
+default = ["opus-decoder", "opus-encoder"]
+opus-decoder = ["opus2"]
+opus-encoder = ["opus2"]
+
+[dev-dependencies]
+tempfile = "3"
+
+[[example]]
+name = "asr_doubao_vad"
+required-features = ["opus-decoder"]
+
+[[example]]
+name = "tts_openai_synthesize"
+
+[[example]]
+name = "tts_openai_stream"
+
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+# ============================== Binary Targets ==============================
+
+[[bin]]
+name = "univoice-bench"
+path = "src/bin/bench.rs"
