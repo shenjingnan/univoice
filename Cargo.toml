@@ -5,6 +5,12 @@ edition = "2024"
 rust-version = "1.85"
 description = "Unified Voice SDK for TTS and ASR (Rust edition)"
 license = "MIT"
+repository = "https://github.com/shenjingnan/univoice"
+homepage = "https://github.com/shenjingnan/univoice"
+documentation = "https://docs.rs/univoice"
+keywords = ["tts", "asr", "voice", "speech", "sdk"]
+categories = ["api-bindings", "multimedia::audio"]
+include = ["/src", "/examples/*.rs", "/tests", "/Cargo.toml", "/LICENSE", "/README.md"]
 
 [dependencies]
 # CLI 框架

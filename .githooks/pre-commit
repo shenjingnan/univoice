@@ -15,8 +15,8 @@ cargo clippy -- -D warnings 2>/dev/null || {
     exit 1
 }
 
-echo "Running cargo test..."
-cargo test 2>/dev/null || {
+echo "Running cargo test (single-threaded to avoid registry/env race conditions)..."
+cargo test -- --test-threads=1 2>/dev/null || {
     echo "Error: Tests failed. Please fix them before committing."
     exit 1
 }
